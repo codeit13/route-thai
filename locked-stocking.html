@@ -1,0 +1,806 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Welcome</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="css/font-awesome.css" />
+  <link type="text/css" rel="stylesheet" href="css/jquery.bxslider.css" />
+  <link href="css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/offcanvas.css">
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="header" id="home">
+    <div class="container-fluid">
+      <div class="header-bottom">
+        <nav id="navigation" class="navigation navigation-landscape navbar-light bg-light">
+          <div class="nav-header">
+            <a class="navbar-brand  dark-mode-img" href="index.html">
+              <img src="img/logo.png" class="black-logo" alt="">
+              <img src="img/logo.png" class="white_logo" alt="">
+            </a>
+            <div class="nav-toggle"></div>
+            <li class="onsubmenu visible-xs"><a class="bell" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i> <span>05</span></a>
+            </li> <a class="btn btn-primary" href="signup.html"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+            <img src="img/logo.png" class="black-logo onlymobile visible-xs" alt="">
+          </div>
+          <div class="nav-menus-wrapper" style="transition-property: none;">
+            <ul class="nav-menu">
+              <li class="nav-item"> <a class="nav-link" href="p2p.html">P2P Exchange</a>
+              </li>
+              <li class="nav-item"> <a class="nav-link" href="#">Mortgage Loan</a>
+              </li>
+              <li class="nav-item"> <a class="nav-link" href="#">Staking</a>
+              </li>
+              <li class="nav-item"> <a class="nav-link" href="#">Auto Trading</a>
+              </li>
+              <li class="nav-item"> <a class="nav-link" href="#">ICO Information</a>
+              </li>
+              <li class="nav-item"> <a class="nav-link" href="#">Arbitrage</a>
+              </li>
+            </ul>
+            <div class="right_side  my-2 my-lg-0">
+              <ul class="main_ul">
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Wallet
+                </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <ul>
+                      <li><a href="#">Fiat Wallet <!-- <span>(Deposit & Withdraw)</span> --></a>
+                      </li>
+                      <li><a href="#">P2P wallet</a>
+                      </li>
+                      <li><a href="#">Deposit</a>
+                      </li>
+                      <li><a href="#">Deposit history</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <!-- <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Order
+                </a>
+                <div class="dropdown-menu max-w" aria-labelledby="navbarDropdown">
+                  <ul>
+                    <li><a href="#">Spot Order</a></li>
+                    <li><a href="#">Margin Order</a></li>
+                    <li><a href="#">Futures Order</a></li>
+                    <li><a href="#">P2P Order</a></li>
+                    <li><a href="#">Dual Currency Order</a></li>
+                    <li><a href="#">Earn History</a></li>
+                    <li><a href="#">Buy Crypto History</a></li>
+                    <li><a href="#">Loan History</a></li>
+                    <li><a href="#">Convert History</a></li>
+                    <li><a href="#">Launchpad History</a></li>
+                  </ul> 
+                </div>
+              </li> -->
+                <li class="onsubmenu">
+                  <div class="dropdown currency_two">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <img src="img/GBP.svg" alt="">English</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span>
+                        <a class="dropdown-item  myLink" href="">
+                          <img src="img/kr.svg" alt="">Korean</span>
+                        </a>
+                        <a class="dropdown-item myLink" href="">
+                          <img src="img/th.svg" alt="">Thailand</span>
+                        </a>
+                        <a class="dropdown-item myLink" href="">
+                          <img src="img/cn.svg" alt="">Chineese</span>
+                        </a>
+                        <a class="dropdown-item myLink" href="">
+                          <img src="img/jp.svg" alt="">Japanese</span>
+                        </a>
+                      </form>
+                    </div>
+                  </div>
+                </li>
+                <li class="onsubmenu">
+                  <div class="dropdown currency_two">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <img src="img/GBP.svg" alt=""> <span>United States Dollar</span> USD</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span>
+                        <a class="dropdown-item  myLink" href="usd">
+                          <img src="img/AUD.svg" alt="">Australian Dollar <span>USD</span>
+                        </a>
+                        <a class="dropdown-item myLink" href="krw">
+                          <img src="img/EUR.svg" alt="">Korean won <span>KRW</span>
+                        </a>
+                        <a class="dropdown-item myLink" href="inr">
+                          <img src="img/inr.svg" alt="">Indian Rupee <span>INR</span>
+                        </a>
+                        <a class="dropdown-item myLink" href="thb">
+                          <img src="img/thb.svg" alt="">Thai Baht <span>THB</span>
+                        </a>
+                      </form>
+                    </div>
+                  </div>
+                </li>
+                <li class="nav-item dropdown hidden-xs">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                  </a>
+                  <div class="dropdown-menu max-w" aria-labelledby="navbarDropdown">
+                    <ul>
+                      <li> <a class="not-c" href="mailto:rahul@routecoin.com">rahul@routecoin.com<br>
+                      <label><i class="fa fa-diamond" aria-hidden="true"></i> VIP <span>Verified</span></label></a>
+                      </li>
+                      <li><a href="#">Security</a>
+                      </li>
+                      <li><a href="#">Identification</a>
+                      </li>
+                      <li><a href="#">API Management</a>
+                      </li>
+                      <li><a href="#">Reward Center</a>
+                      </li>
+                      <li><a href="#">Task Center</a>
+                      </li>
+                      <li><a href="#">Referral <mark>Earn bonus</mark></a>
+                      </li>
+                      <li><a href="#">Logout</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="onsubmenu hidden-xs"><a class="bell" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i> <span>05</span></a>
+                </li>
+                <li class="onsubmenu">
+                  <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i>
+                    <span class="visible-xs">Dark Mode</span>
+                </li>
+              </ul>
+              </div>
+            </div>
+        </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section id="banner_search" class="locked">
+    <div class="container">
+      <div class="row">
+        <div class="col text-left xs-center">
+          <h2>Stake Your Crypto Assets<br>
+          and Earn Rewards</h2>
+          <p>Route provides an all-in-one staking solution. Let us do the work,
+            <br>while you earn the rewards</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="locked_staking">
+    <div class="locked-head">
+      <div class="container">
+        <div class="row">
+          <div class="col text-left">
+            <ul>
+              <li class="active"><a href="#">Locked Staking</a>
+              </li>
+              <li><a href="#">DeFi Staking</a>
+              </li>
+              <li><a href="#">Wallet</a>
+              </li>
+              <li><a href="#">Exchanges</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+          <table>
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Est. APY</th>
+                <th>Duration (days)</th>
+                <th class="img-p">
+                  <img src="img/icon-4.png" alt="" />&nbsp; Minimum Locked Amount</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <img src="img/bitcoin.png" alt="" />Bitcoin</td>
+                <td class="green">
+                  <label class="visible-xs">Est. APY</label>14.79%</td>
+                <td>  <a class="green">30</a>
+                  <a>60</a>
+                  <a>90</a>
+                </td>
+                <td>0.1BTC</td>
+                <td><a href="#" class="table_btn" data-toggle="modal" data-target="#myModal2">Stake Now</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="img/icon-5.png" alt="" />Ethereum</td>
+                <td class="green">
+                  <label class="visible-xs">Est. APY</label>10.79%</td>
+                <td>
+                  <label class="visible-xs">Duration (days)</label> <a class="green">30</a>
+                  <a>60</a>
+                  <a>90</a>
+                </td>
+                <td>0.1ETH</td>
+                <td><a href="#" class="table_btn">Stake Now</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="img/icon-6.png" alt="" />Binance</td>
+                <td class="green">
+                  <label class="visible-xs">Est. APY</label>5.99%</td>
+                <td>
+                  <label class="visible-xs">Duration (days)</label> <a class="green">30</a>
+                  <a>60</a>
+                  <a>90</a>
+                </td>
+                <td>0.1BNB</td>
+                <td><a href="#" class="table_btn">Stake Now</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="img/icon-7.png" alt="" />BUSD</td>
+                <td class="green">
+                  <label class="visible-xs">Est. APY</label>3.79%</td>
+                <td>
+                  <label class="visible-xs">Duration (days)</label> <a class="green">30</a>
+                  <a>60</a>
+                  <a>90</a>
+                </td>
+                <td>0.1BUSD</td>
+                <td><a href="#" class="table_btn">Stake Now</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="img/icon-8.png" alt="" />TEZOS</td>
+                <td class="green">
+                  <label class="visible-xs">Est. APY</label>5.5%</td>
+                <td>
+                  <label class="visible-xs">Duration (days)</label> <a class="green">30</a>
+                  <a>60</a>
+                  <a>90</a>
+                </td>
+                <td>0.1TEZ</td>
+                <td><a href="#" class="table_btn">Stake Now</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="img/bitcoin.png" alt="" />Bitcoin</td>
+                <td class="green">
+                  <label class="visible-xs">Est. APY</label>14.79%</td>
+                <td>  <a class="green">30</a>
+                  <a>60</a>
+                  <a>90</a>
+                </td>
+                <td>0.1BTC</td>
+                <td><a href="#" class="table_btn">Stake Now</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="img/icon-5.png" alt="" />Ethereum</td>
+                <td class="green">
+                  <label class="visible-xs">Est. APY</label>10.79%</td>
+                <td>
+                  <label class="visible-xs">Duration (days)</label> <a class="green">30</a>
+                  <a>60</a>
+                  <a>90</a>
+                </td>
+                <td>0.1ETH</td>
+                <td><a href="#" class="table_btn">Stake Now</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="img/icon-6.png" alt="" />Binance</td>
+                <td class="green">
+                  <label class="visible-xs">Est. APY</label>5.99%</td>
+                <td>
+                  <label class="visible-xs">Duration (days)</label> <a class="green">30</a>
+                  <a>60</a>
+                  <a>90</a>
+                </td>
+                <td>0.1BNB</td>
+                <td><a href="#" class="table_btn">Stake Now</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="img/icon-7.png" alt="" />BUSD</td>
+                <td class="green">
+                  <label class="visible-xs">Est. APY</label>3.79%</td>
+                <td>
+                  <label class="visible-xs">Duration (days)</label> <a class="green">30</a>
+                  <a>60</a>
+                  <a>90</a>
+                </td>
+                <td>0.1BUSD</td>
+                <td><a href="#" class="table_btn">Stake Now</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="img/icon-8.png" alt="" />TEZOS</td>
+                <td class="green">
+                  <label class="visible-xs">Est. APY</label>5.5%</td>
+                <td>
+                  <label class="visible-xs">Duration (days)</label> <a class="green">30</a>
+                  <a>60</a>
+                  <a>90</a>
+                </td>
+                <td>0.1TEZ</td>
+                <td><a href="#" class="table_btn">Stake Now</a>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center size" colspan="5">Expand all 20 Locked Staking products</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-lg-12 top-tb col-sm-12 col-xs-12">
+          <p>* current average staking return per protocol</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="below-port" class="locked-below">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <h3>GET STARTED EASILY</h3>
+          <p class="main_pre">Route makes it easy to earn rewards with staking.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-xs-12 col-sm-4 text-center">
+          <img src="img/icon-1.png" alt="">
+          <h4>Sign Up & Request the<br>
+          Staking Contract</h4>
+          <p>Fill in your details and upload the required identity documents. Request and sign the staking contract.</p>
+        </div>
+        <div class="col-lg-4 col-xs-12 col-sm-4 text-center">
+          <img src="img/icon-2.png" alt="">
+          <h4>Fund Your Account</h4>
+          <p>After successful onboarding, you can fund your account via bank or crypto transfer.</p>
+        </div>
+        <div class="col-lg-4 col-xs-12 col-sm-4 text-center">
+          <img src="img/icon-3.png" alt="">
+          <h4>Start Earning</h4>
+          <p>Start earning staking rewards directly in your Route Online Account.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 text-center col-sm-12 col-xs-12"> <a href="#" class="btn-info">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="faq">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12 text-center">
+          <h2>frequently asked questions</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-6 col-xs-12">
+          <p class="faq_step">
+            <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              <img src="img/plus.png">How to Complete Identity Verification?</a>
+          </p>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</div>
+          </div>
+          <br/>
+          <p class="faq_step">
+            <a data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
+              <img src="img/plus.png">How to Buy Cryptocurrency on Route P2P?</a>
+          </p>
+          <div class="collapse" id="collapseExample2">
+            <div class="card card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</div>
+          </div>
+          <br/>
+          <p class="faq_step">
+            <a data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3">
+              <img src="img/plus.png">Where can you learn about Crypto Derivatives on Route?</a>
+          </p>
+          <div class="collapse" id="collapseExample3">
+            <div class="card card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</div>
+          </div>
+          <br/>
+          <p class="faq_step">
+            <a data-toggle="collapse" href="#collapseExample4" role="button" aria-expanded="false" aria-controls="collapseExample4">
+              <img src="img/plus.png">How to get started with Route Launchpool?</a>
+          </p>
+          <div class="collapse" id="collapseExample4">
+            <div class="card card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-6 col-xs-12">
+          <p class="faq_step">
+            <a data-toggle="collapse" href="#collapseExample5" role="button" aria-expanded="false" aria-controls="collapseExample5">
+              <img src="img/plus.png">How to Complete Identity Verification?</a>
+          </p>
+          <div class="collapse" id="collapseExample5">
+            <div class="card card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</div>
+          </div>
+          <br/>
+          <p class="faq_step">
+            <a data-toggle="collapse" href="#collapseExample6" role="button" aria-expanded="false" aria-controls="collapseExample6">
+              <img src="img/plus.png">How to Buy Cryptocurrency on Route P2P?</a>
+          </p>
+          <div class="collapse" id="collapseExample6">
+            <div class="card card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</div>
+          </div>
+          <br/>
+          <p class="faq_step">
+            <a data-toggle="collapse" href="#collapseExample7" role="button" aria-expanded="false" aria-controls="collapseExample7">
+              <img src="img/plus.png">Where can you learn about Crypto Derivatives on Route?</a>
+          </p>
+          <div class="collapse" id="collapseExample7">
+            <div class="card card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</div>
+          </div>
+          <br/>
+          <p class="faq_step">
+            <a data-toggle="collapse" href="#collapseExample8" role="button" aria-expanded="false" aria-controls="collapseExample8">
+              <img src="img/plus.png">How to get started with Route Launchpool?</a>
+          </p>
+          <div class="collapse" id="collapseExample8">
+            <div class="card card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+          <ul class="Company-main">
+            <li class="Company">Company</li>
+            <li><a href="#">About</a>
+            </li>
+            <li><a href="#">Careers</a>
+            </li>
+            <li><a href="#">Affiliates</a>
+            </li>
+            <li><a href="#">Blog</a>
+            </li>
+            <li><a href="#">Press</a>
+            </li>
+            <li><a href="#">Investors</a>
+            </li>
+            <li><a href="#">Legal & privacy</a>
+            </li>
+            <li><a href="#">Cookie policy</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+          <ul class="Individuals-main">
+            <li class="Individuals">Individuals</li>
+            <li><a href="#">Buy & sell</a>
+            </li>
+            <li><a href="#">Earn free crypto</a>
+            </li>
+            <li><a href="#">Wallet</a>
+            </li>
+            <li><a href="#">Card</a>
+            </li>
+            <li>Businesses</li>
+            <li><a href="#">Prime</a>
+            </li>
+            <li><a href="#">Custody</a>
+            </li>
+            <li><a href="#">Asset Hub</a>
+            </li>
+            <li><a href="#">Commerce</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+          <ul class="Learn-main">
+            <li class="Learn">Learn</li>
+            <li><a href="#">Help center</a>
+            </li>
+            <li><a href="#">Contact us</a>
+            </li>
+            <li><a href="#">Create account</a>
+            </li>
+            <li><a href="#">ID verification</a>
+            </li>
+            <li><a href="#">Account information</a>
+            </li>
+            <li><a href="#">Payment methods</a>
+            </li>
+            <li><a href="#">Account access</a>
+            </li>
+            <li><a href="#">Supported crypto</a>
+            </li>
+            <li><a href="#">Supported countries</a>
+            </li>
+            <li><a href="#">Status</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+          <ul class="Support-main">
+            <li class="Support">Learn</li>
+            <li><a href="#">Browse crypto prices</a>
+            </li>
+            <li><a href="#">Crypto basics</a>
+            </li>
+            <li><a href="#">Tips & tutorials</a>
+            </li>
+            <li><a href="#">Market updates</a>
+            </li>
+            <li><a href="#">What is Bitcoin?</a>
+            </li>
+            <li><a href="#">What is crypto?</a>
+            </li>
+            <li><a href="#">What is a blockchain?</a>
+            </li>
+            <li><a href="#">How to set up a crypto wallet</a>
+            </li>
+            <li><a href="#">How to send crypto</a>
+            </li>
+            <li><a href="#">Taxes</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="copy">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <p>© Copyright 2021 Route Company</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <img src="img/close.png" alt="" />
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row row-eq-height">
+            <div class="col-lg-7 col-sm-7 col-12">
+              <h3>Locked Staking</h3>
+              <div class="field">
+                <h4 class="text-uppercase"><img src="img/icon-9.png" alt=""/>&nbsp; easy</h4>
+              </div>
+              <div class="field">
+                <label>Type</label>
+                <input type="text" placeholder="Locked" />
+              </div>
+              <div class="field">
+                <label>Duration</label>
+                <div class="row">
+                  <div class="col-lg-4 col-sm-4 col-12">  <a class="active" href="#">15 Days</a>
+                  </div>
+                  <div class="col-lg-4 col-sm-4 col-12">  <a href="#">30 Days</a>
+                  </div>
+                  <div class="col-lg-4 col-sm-4 col-12">  <a href="#">60 Days</a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-4 col-sm-4 col-12">  <a href="#">90 Days</a>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6 col-12">
+                    <label class="mini-size">Lock Amount</label>
+                  </div>
+                  <div class="col-lg-6 col-sm-6 text-right col-12">
+                    <label class="mini-size">Available amount 0 EASY</label>
+                  </div>
+                </div>
+                <div class="amount">
+                  <div class="row">
+                    <div class="col-lg-8 col-sm-8 col-5">
+                      <input type="text" placeholder="Please enter the amount" />
+                    </div>
+                    <div class="col-lg-4 top-space col-sm-4 col-6">
+                      <button type="submit">EASY</button> <span>|</span>
+                      <button class="max" type="submit">Max</button>
+                    </div>
+                  </div>
+                </div>
+                <p class="red">There is not enough asset in your balance.</p>
+              </div>
+              <div class="field">
+                <label>Locked Amount Limitation</label>
+                <label class="w-auto">Minimum : <span>0.5 EASY</span>
+                </label>
+                <label class="w-auto">Minimum : <span>15 EASY</span>
+                </label>
+              </div>
+            </div>
+            <div class="col-lg-5 summary col-sm-5 col-12">
+              <h3 class="b-none">Summary</h3>
+              <ul>
+                <li>
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-12">Stake Date</div>
+                    <div class="col-lg-6 text-right col-sm-6 col-12">2021-03-31 11:05</div>
+                  </div>
+                </li>
+                <li>
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-12">Value Date</div>
+                    <div class="col-lg-6 text-right col-sm-6 col-12">2021-04-01 00:00</div>
+                  </div>
+                </li>
+                <li>
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-12">Interest Period</div>
+                    <div class="col-lg-6 text-right col-sm-6 col-12">1 Days</div>
+                  </div>
+                </li>
+                <li class="intrest">
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-12">Interest End Date</div>
+                    <div class="col-lg-6 text-right col-sm-6 col-12">2021-04-15 23:59</div>
+                  </div>
+                </li>
+                <li class="b-none">
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-12">Redemption Period</div>
+                    <div class="col-lg-6 text-right col-sm-6 col-12">1 Days</div>
+                  </div>
+                </li>
+                <li>
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-12">Redemption Date</div>
+                    <div class="col-lg-6 text-right col-sm-6 col-12">2021-04-18</div>
+                  </div>
+                </li>
+              </ul>
+              <div class="field">
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6 col-12">Est. APY</div>
+                  <div class="col-lg-6 text-right col-sm-6 col-12">40.56%</div>
+                </div>
+              </div>
+              <div class="field">
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6 col-12">Estimated Interests</div>
+                  <div class="col-lg-6 c-green text-right col-sm-6 col-12">0.00000000 EASY</div>
+                </div>
+              </div>
+              <div class="field yellow">
+                <div class="row">
+                  <div class="col-lg-12 col-sm-12 col-12">
+                    <label>
+                      <img src="img/icon-10.png" alt="" />The APY is adjusted daily based on the on-chain staking rewards, and the specific APY is subject to the page display on the day</label>
+                  </div>
+                </div>
+              </div>
+              <div class="field space-0">
+                <div class="row">
+                  <div class="col-lg-12 col-sm-12 col-12">
+                    <label>*Check holding assets under Wallet - Earn - Locked Staking</label>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <div class="row">
+                  <div class="col-lg-12 col-sm-12 col-12">
+                    <label class="check">
+                      <input type="checkbox" />I have read and I agree to <a href="#">Route Staking Service
+                      Agreement</a>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <div class="row">
+                  <div class="col-lg-12 col-sm-12 col-12">
+                    <button type="submit">Confirm purchase</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal alert_poup fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img src="{{ asset('img/Image 17.png') }}" class="header_img" alt="">
+          <img src="{{ asset('img/coin_base.svg')}}" class="header_img" alt="">
+          <img src="{{ asset('img/bitCoinBig.svg')}}" class="header_img" alt="">
+          <h2>10.99%</h2>
+          <a href="#" class="btn-primary btn" class="close" data-dismiss="modal" aria-label="Close">Close this alert</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="js/jquery.dataTables.min.js"></script>
+  <script src="js/dataTables.bootstrap4.min.js"></script>
+  <script src="js/dataTables.rowReorder.min.js"></script>
+  <script src="js/dataTables.responsive.min.js"></script>
+  <script src="js/darkmode.js" charset="utf-8"></script>
+  <script src="js/offcanvas.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+              $('.bxslider').bxSlider({
+                auto:false,
+                controls:true,
+                pager:false,
+                slideWidth: 280,
+                minSlides: 1,
+                maxSlides: 4,
+                moveSlides: 1,
+                slideMargin: 0,
+                speed: 300,
+                touchEnabled: true
+              });
+          $("#footer ul li.Company:first-child").click(function(){
+            $("ul.Company-main li").toggle();
+          });
+          $("#footer ul li.Individuals:first-child").click(function(){
+            $("ul.Individuals-main li").toggle();
+          });
+          $("#footer ul li.Learn:first-child").click(function(){
+            $("ul.Learn-main li").toggle();
+          });
+          $("#footer ul li.Support:first-child").click(function(){
+            $("ul.Support-main li").toggle();
+          });
+             });
+  </script>
+</body>
+
+</html>
