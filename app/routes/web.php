@@ -25,3 +25,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes(['verify'=>true]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/wallet/p2p',[App\Http\Controllers\WalletController::class, 'index'])->name('wallet.p2p');
+
+Route::get('/wallet/deposit',[App\Http\Controllers\WalletController::class, 'create'])->name('wallet.deposit');
+
+Route::post('/wallet/create/deposit',[App\Http\Controllers\WalletController::class, 'store'])->name('wallet.create.deposit');
