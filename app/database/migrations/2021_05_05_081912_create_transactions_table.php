@@ -20,9 +20,9 @@ class CreateTransactionsTable extends Migration
 
             $table->boolean('type');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('receiver_id');
-            $table->decimal('balance_before_trans',16,2);
-            $table->decimal('trans_amount',16,2);
+            $table->unsignedBigInteger('receiver_id')->nullable();
+            $table->decimal('balance_before_trans',16,2)->nullable();
+            $table->decimal('trans_amount',16,2)->nullable();
 
          
 

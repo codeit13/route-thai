@@ -26,31 +26,65 @@
 			<div class="col-lg-12  col-sm-12 col-12">
 				<div class="white-box m-top-0">
 					<ul class="janral-head">
-						<li class="active"><a href="#">Crypto</a></li>
-						<li><a href="#">Fiat</a></li>
-						<li class="last"><a href="#"><img src="img/icon-13.png" alt=""/></a></li>
+						@foreach($currency_types as $index => $currency_type)
+						<li class="{{($index==0)?'active':''}}"><a href="#">{{__($currency_type->type)}}</a></li>
+
+						@endforeach
+					
+						<li class="last"><a href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a></li>
 					</ul>
 					<div class="row">
 						<div class="col-lg-6 p-text col-sm-6 col-12">
 							<form method="POST" action="{{ route('wallet.create.deposit') }}">
 								@csrf
+
+								@foreach($currency_types as $index => $currency_type)
+
+								@if($index==0)
+
+
+
 								<div class="field">
 									<label>Coin</label>
+
 									<ul class="btc">
-										<li class="init"><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> BTC <span>Bitcoin</span></li>
-										<li data-value="value 1"><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> BTC <span>Bitcoin</span></li>
+										@foreach($currency_type->currency as $cIndex=> $currency)
+
+										
+
+
+
+										<li data-value="{{$currency->id}}" class="{{$cIndex==0?'init':''}}">
+
+											@if($currency->hasMedia('icon'))
+    
+                                      
+
+											<img src="{{asset($currency->firstMedia('icon')->getUrl())}}" alt=""/> 
+
+											@endif
+
+											{{__($currency->short_name)}} <span>{{__($currency->name)}}</span></li>
+
+									<!-- 	<li data-value="value 1"><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> BTC <span>Bitcoin</span></li>
 										<li data-value="value 2"><img src="{{asset('front/img/icon-5.png')}}" alt=""/> ETH <span>Ethereum</span></li>
-										<li data-value="value 3"><img src="{{asset('front/img/icon-6.png')}}" alt=""/> BNB <span>BNB</span></li>
+										<li data-value="value 3"><img src="{{asset('front/img/icon-6.png')}}" alt=""/> BNB <span>BNB</span></li> -->
+
+										@endforeach
 									</ul>
-									<input type="hidden" id="coin" value="1"/>
+									<input type="hidden" name="currency_id" id="coin_id" value="1"/>
 
 									<span class="total">Total balance: <b>0.00000000 BTC</b></span>
 								</div>
+
+								@endif
+
+								@endforeach
 								<div class="field qq">
 									<!-- <label>Quantity</label> -->
 									<div class="form-group">
                                         <label for="quantity">{{__('Quantity')}}</label>
-                                        <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"  value="" required="" id="quantity" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus="">
+                                        <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"   required="" id="quantity" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus="">
                                     </div>
                                      @error('quantity')
                                 <p class="invalid-value" role="alert">
@@ -239,6 +273,10 @@ $("ul.btc").on("click", "li:not(.init)", function() {
     $(this).addClass('selected');
     $("ul.btc").children('.init').html($(this).html());
     allOptions.toggle();
+
+    var coin_id=$(this).attr('data-value');
+
+    $('#coin_id').val(coin_id);
 });
 </script>
 @endsection    

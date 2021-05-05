@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Wallet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-
-class WalletController extends Controller
+class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +13,7 @@ class WalletController extends Controller
      */
     public function index()
     {
-//         $user = Auth::guard('admin')->user();
-//         echo '<pre>';print_r($user
-// );die;
-        
+        return view('front.p2p-wallet');
     }
 
     /**
@@ -29,7 +23,14 @@ class WalletController extends Controller
      */
     public function create()
     {
-        
+        $currency_types=\App\Models\CurrencyType::all();
+
+    //     foreach($currency_types[0]->currency as $currency):
+    //         echo '<pre>';print_r($currency->getMedia('icon')->first()->getDiskPath());die;
+
+    // endforeach;
+
+        return view('front.wallet-deposit',compact('currency_types'));
     }
 
     /**
@@ -40,16 +41,35 @@ class WalletController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(['quantity'=>'required']);
+
+
+
+        $transaction=['quantity'=>$request->quantity,
+                     'currency_id'=>$request->coin_id,
+                     'type'=>1,
+                     'trans_amount'=>$request->quantity
+                     ];
+
+        $user=\App\Models\User::find(1);
+
+       $transaction=$user->transactions()->create($transaction);
+
+       $transaction->trans_id=generate_unique_id();
+
+       $transaction->save();
+
+        echo '<pre>';print_r($transaction);die;
         
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Wallet  $wallet
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Wallet $wallet)
+    public function show($id)
     {
         //
     }
@@ -57,10 +77,10 @@ class WalletController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Wallet  $wallet
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Wallet $wallet)
+    public function edit($id)
     {
         //
     }
@@ -69,10 +89,10 @@ class WalletController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Wallet  $wallet
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Wallet $wallet)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -80,10 +100,10 @@ class WalletController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Wallet  $wallet
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Wallet $wallet)
+    public function destroy($id)
     {
         //
     }

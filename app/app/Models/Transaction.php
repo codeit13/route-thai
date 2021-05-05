@@ -9,6 +9,8 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    protected $fillable=['currency_id','type','trans_amount'];
+
     public function currency()
     {
          return $this->belongsTo('App\Models\Currency','currency_id','id');
