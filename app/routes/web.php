@@ -31,3 +31,9 @@ Route::get('/wallet/p2p',[App\Http\Controllers\WalletController::class, 'index']
 Route::get('/wallet/deposit',[App\Http\Controllers\WalletController::class, 'create'])->name('wallet.deposit');
 
 Route::post('/wallet/create/deposit',[App\Http\Controllers\WalletController::class, 'store'])->name('wallet.create.deposit');
+
+// OTP
+Route::post('/mobile/otp/send',[App\Http\Controllers\HomeController::class, 'sendOTP'])->name('send.otp');
+Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
+
+Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class, 'sendOTPOnLogin'])->name('send.otp.login');

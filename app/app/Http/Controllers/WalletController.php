@@ -16,9 +16,7 @@ class WalletController extends Controller
      */
     public function index()
     {
-//         $user = Auth::guard('admin')->user();
-//         echo '<pre>';print_r($user
-// );die;
+
         return view('front.p2p-wallet');
     }
 
