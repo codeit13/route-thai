@@ -18,17 +18,8 @@
                             <div class="login_forms">
                                 <h2>{{ __('Create a free account') }}</h2>
                                 <p>{{ __('Welcome to Route') }}</p>
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                            aria-controls="home" aria-selected="true">Email</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                            aria-controls="profile" aria-selected="false">Mobile</a>
-                                    </li>
-                                </ul>
-                                <form method="POST" id="loginform" action="{{ route('register') }}">
+                            
+                                <form method="POST" id="loginform" action="{{ route('otp.register') }}">
                                     @csrf
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home" role="tabpanel"
@@ -53,29 +44,20 @@
                                                     name="password" required id="exampleInputPassword1" placeholder=""
                                                     name="password">
                                             </div>
-
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Phone Number</label>
+                                                <input type="text" class="form-control" id="mobile_no"
+                                                    aria-describedby="emailHelp" placeholder="Enter mobile No" name="mobile">
+                                            </div>
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                                 <label class="form-check-label" for="exampleCheck1">I have read and agree to
                                                     the Terms of Service. Routes Terms</label>
                                             </div>
-                                            <button type="submit" class="btn btn-primary">Create
+                                            <button type="submit" id="send-otp" class="btn btn-primary">Create
                                                 Account</button>
                                     </div>
                                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="form-group">
-                                            <p></p>
-                                            <label for="exampleInputEmail1">Phone Number</label>
-                                            <input type="text" class="form-control" id="mobile_no"
-                                                aria-describedby="emailHelp" placeholder="Enter mobile No" name="mobile">
-                                        </div>
-                                        <div class="form-group otp" style="display: none">
-                                            <p></p>
-                                            <label for="exampleInputEmail1">OTP</label>
-                                            <input type="text" class="form-control" id="otp"
-                                                aria-describedby="emailHelp" placeholder="Enter OTP" name="otp">
-                                            <input type="hidden" id="session_id" value="">    
-                                        </div>
                                         <button type="button" class="btn btn-primary submit-login" disabled>Create Account</button>
                                     </div>
                                 </form>
@@ -89,9 +71,6 @@
     </section>
 @section('page_scripts')
     <script>
-        $('#send-otp').click(function() {
-            $("#profile-tab").trigger('click');
-        });
         $('#mobile_no').on('keyup',function(){
             var dis = $(this);
             if(dis.val().length == 10){
