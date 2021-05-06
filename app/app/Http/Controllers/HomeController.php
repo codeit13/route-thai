@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\SMSService;
+use App\Http\Requests\SendOTPRequest;
+use App\Http\Requests\VerifyOTPRequest;
+use App\Http\Requests\SendOTPonLogin;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -11,9 +16,11 @@ class HomeController extends Controller
      *
      * @return void
      */
+    private $service;
+
     public function __construct()
     {
-        // $this->middleware('auth');
+        $this->service = new SMSService();
     }
 
     /**
@@ -25,4 +32,21 @@ class HomeController extends Controller
     {
         return view('front.home');
     }
+
+    public function sendOTP(SendOTPRequest $request)
+    {   
+        return $this->service->sendOtpSms($request->mobile);
+    }
+
+    public function verifyOTP(VerifyOTPRequest $request)
+    {   
+        return $this->service->verifyOtpSms($request->mobile, $request->code, $request->sessionid);
+    }
+
+    public function sendOTPOnLogin(SendOTPonLogin $request)
+    {   
+        $user = User::select('mobile')->where('email',$request->email)->first();
+        return $this->service->sendOtpSms($user->mobile);
+    }
 }
+    
