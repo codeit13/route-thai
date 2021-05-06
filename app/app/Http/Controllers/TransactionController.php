@@ -11,9 +11,19 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($type)
     {
-        return view('front.p2p-wallet');
+        $user=\App\Models\User::find(1);
+
+        $transactions=$user->transactions()->select('*')->selectRaw('sum(trans_amount) as total')->whereHas('currency', function ($query)use ($type) {
+        $query->where('type_id',$type);
+    })->groupBy('currency_id')->paginate(10);
+
+
+        $walletType=\App\Models\CurrencyType::find($type);
+
+ 
+        return view('front.wallet-transactions',compact('transactions','walletType'));
     }
 
     /**
@@ -41,25 +51,55 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
+
+
+
         $request->validate(['quantity'=>'required']);
 
+         
+
+        
 
 
-        $transaction=['quantity'=>$request->quantity,
-                     'currency_id'=>$request->coin_id,
-                     'type'=>1,
-                     'trans_amount'=>$request->quantity
-                     ];
 
         $user=\App\Models\User::find(1);
 
-       $transaction=$user->transactions()->create($transaction);
+        $wallet=$user->wallet->find($request->currency_id);
+
+        $balance_before_trans=$wallet->sum('coin');
+
+
+
+        $request->merge(['type'=>1,
+                         'trans_amount'=>$request->quantity,
+                         ]);
+
+
+
+       $transaction=$user->transactions()->create($request->all());
+
+       $media=\MediaUploader::fromSource($request->transaction_image)
+                               ->toDirectory('transactions')
+                               ->upload();
+
+       $transaction->attachMedia($media,'file');
 
        $transaction->trans_id=generate_unique_id();
 
+       $transaction->balance_before_trans=$balance_before_trans;
+
        $transaction->save();
 
-        echo '<pre>';print_r($transaction);die;
+
+
+        return redirect()->back()->with('success','The deposit is created.');
+
+
+
+       
+
+       
+
         
     }
 
