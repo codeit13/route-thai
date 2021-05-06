@@ -9,6 +9,10 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest')-
 
     // Route::group(function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+
+        Route::get('deposit/requests','TransactionController@show')->name('deposit.requests.show');
+
+        Route::get('wallet/deposit/{transaction}/change/status/{status}','TransactionController@changeStatus')->name('wallet.deposit.status');
     // });
 });
 

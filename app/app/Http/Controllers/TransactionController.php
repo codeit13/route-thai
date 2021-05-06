@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class TransactionController extends Controller
 {
@@ -11,19 +13,9 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($type)
+    public function index()
     {
-        $user=\App\Models\User::find(1);
-
-        $transactions=$user->transactions()->select('*')->selectRaw('sum(trans_amount) as total')->whereHas('currency', function ($query)use ($type) {
-        $query->where('type_id',$type);
-    })->groupBy('currency_id')->paginate(10);
-
-
-        $walletType=\App\Models\CurrencyType::find($type);
-
- 
-        return view('front.wallet-transactions',compact('transactions','walletType'));
+      return view('front.wallet-deposit-history');
     }
 
     /**
@@ -53,8 +45,8 @@ class TransactionController extends Controller
     {
 
 
-
-        $request->validate(['quantity'=>'required']);
+    
+        $request->validate(['quantity'=>'required','transaction_image']);
 
          
 
@@ -62,11 +54,17 @@ class TransactionController extends Controller
 
 
 
-        $user=\App\Models\User::find(1);
+        $user=Auth::user();
 
-        $wallet=$user->wallet->find($request->currency_id);
+        //echo '<pre>';print_r($request->currency_id);die;
 
-        $balance_before_trans=$wallet->sum('coin');
+
+
+        $wallet=$user->wallet()->where('currency_id',$request->currency_id)->first();
+
+
+
+        $balance_before_trans=$wallet?$wallet->sum('coin'):0;
 
 
 
@@ -109,9 +107,19 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($type)
     {
-        //
+          $user=Auth::user();
+
+        $transactions=$user->transactions()->select('*')->selectRaw('sum(trans_amount) as total')->where('status','approved')->whereHas('currency', function ($query)use ($type) {
+        $query->where('type_id',$type);
+    })->groupBy('currency_id')->paginate(10);
+
+
+        $walletType=\App\Models\CurrencyType::find($type);
+
+ 
+        return view('front.wallet-transactions',compact('transactions','walletType'));
     }
 
     /**

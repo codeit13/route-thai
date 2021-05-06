@@ -233,7 +233,7 @@
 				</button>
 			</div>
 			<div class="modal-body text-center">
-				<img src="img/icon-16.png" alt=""/>
+				<img src="{{asset('front/img/icon-16.png')}}" alt=""/>
 				<h6>You have successfully completed the request</h6>
 				<h4>Please wait until your assets<br>
 				gets allocated</h4>
@@ -246,6 +246,7 @@
 
 @section('page_scripts')
 <script> 
+
     $(document).ready(function(){
         $('.bxslider').bxSlider({
             auto:false,
@@ -259,6 +260,15 @@
             speed: 300,
             touchEnabled: true
         });
+
+        @if(session('success'))
+
+        $('#exampleModal1').modal('show');
+
+
+
+
+        @endif
     });
 </script>
 

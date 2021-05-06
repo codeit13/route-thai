@@ -82,13 +82,13 @@
                       <span class="avatar avatar-sm rounded-circle">
                       <img alt=" Image placeholder" src="{{ asset('back/img/theme/team-4.png') }}">
                       </span>
-                      <div class="media-body  ml-2  d-none d-lg-block"> <span class="mb-0 text-sm  font-weight-bold">{{ Auth::guard('admin')->user()->name }}</span>
+                      <div class="media-body  ml-2  d-none d-lg-block"> <span class="mb-0 text-sm  font-weight-bold">{{ Auth::guard('admin')->user()->name??'' }}</span>
                       </div>
                    </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right ">
                    <div class="dropdown-header noti-title">
-                      <h6 class="text-overflow m-0">/h6>
+                      <h6 class="text-overflow m-0"></h6>
                    </div>
                    <!-- <a href="#!" class="dropdown-item"> <i class="ni ni-single-02"></i>
                    <span>My profile</span>
