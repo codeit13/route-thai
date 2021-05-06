@@ -5,16 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Wallet extends Model
+class CurrencyType extends Model
 {
     use HasFactory;
 
-    protected $table='wallet';
-
-    public function user()
+    public function currency()
     {
-    	return $this->belongsTo('App\Models\User','user_id','id');
+    	return $this->hasMany('App\Models\Currency','type_id','id');
     }
-
-
 }
