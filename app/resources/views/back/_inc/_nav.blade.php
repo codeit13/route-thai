@@ -16,15 +16,16 @@
              <!-- Nav items -->
               <ul class="navbar-nav">
                   <li class="nav-item">
-                     <a class="nav-link" href="#"> <i class="ni ni-tv-2 text-primary"></i>
+                     <a class="nav-link" href="{{ route('admin.dashboard') }}"> <i class="ni ni-tv-2 text-primary"></i>
                      <span class="nav-link-text">Dashboard</span>
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" href="#"> <i class="fa fa-user-circle text-orange" aria-hidden="true"></i>
-                     <span class="nav-link-text"></span>
+                     <a class="nav-link" href="{{ route('admin.users') }}"> <i class="fa fa-user-circle text-orange" aria-hidden="true"></i>
+                        <span class="nav-link-text">User Management</span>
                      </a>
                   </li>
+                  {{-- 
                   <li class="nav-item">
                      <a class="nav-link" href="#"> <i class="fa fa-file-excel-o" aria-hidden="true"></i>
                      <span class="nav-link-text"></span>
@@ -97,7 +98,7 @@
                      <a class="nav-link" href="#"><i class="fa fa-list text-yellow" aria-hidden="true"></i>
                        <span class="nav-link-text"></span>
                      </a>
-                  </li>
+                  </li> --}}
                 </ul>
                  <!-- Divider -->
                    
@@ -106,7 +107,7 @@
                    <span class="docs-normal"></span>
                  </h6>
                  <ul class="navbar-nav">
-                  <li class="nav-item">
+                  {{-- <li class="nav-item">
                      <a class="nav-link" href="#"><i class="fa fa-language text-green" aria-hidden="true"></i>
                        <span class="nav-link-text"></span>
                      </a>
@@ -115,7 +116,7 @@
                      <a class="nav-link" href="#"><i class="fa fa-language text-red" aria-hidden="true"></i>
                        <span class="nav-link-text"></span>
                      </a>
-                  </li>
+                  </li> --}}
              </ul>
           </div>
        </div>
