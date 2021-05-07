@@ -3,7 +3,7 @@
         <div class="header-bottom">
             <nav id="navigation" class="navigation navigation-landscape navbar-light bg-light">
                 <div class="nav-header">
-                    <a class="navbar-brand  dark-mode-img" href="index.html">
+                    <a class="navbar-brand  dark-mode-img" href="{{ route('home') }}">
                         <img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
                         <img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
                     </a>
