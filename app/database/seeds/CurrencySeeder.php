@@ -77,5 +77,51 @@ class CurrencySeeder extends Seeder
 
 
         }
+
+        //forth row
+
+               $currency4= new \App\Models\Currency;
+
+                      if(!$currency4->where('name','BNB')->where('type_id',2)->exists())
+      {
+
+
+              $currency4= $currency4::create(['name'=>'BNB',
+                                     'short_name'=>'BNB',
+                                     'type_id'=>2,
+                                    
+             ]);
+
+              $media=\MediaUploader::fromSource(public_path('front/img/icon-6.png'))
+                               ->toDirectory('currency-icons')
+                               ->upload();
+
+              $currency4->attachMedia($media,'icon');
+
+
+
+
+        }
+
+        //fifth row
+    $currency5= new \App\Models\Currency;
+
+                if(!$currency5->where('name','Ethereum')->where('type_id',2)->exists())
+      {
+
+
+              $currency5= $currency5::create(['name'=>'Ethereum',
+                                     'short_name'=>'ETH',
+                                     'type_id'=>2,
+                                    
+             ]);
+
+              $media=\MediaUploader::fromSource(public_path('front/img/icon-5.png'))
+                               ->toDirectory('currency-icons')
+                               ->upload();
+
+              $currency5->attachMedia($media,'icon');
+
+          }
     }
 }

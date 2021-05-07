@@ -23,16 +23,30 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($type='',$typename='',$currency='',$currencyname='')
     {
         $currency_types=\App\Models\CurrencyType::all();
 
-    //     foreach($currency_types[0]->currency as $currency):
-    //         echo '<pre>';print_r($currency->getMedia('icon')->first()->getDiskPath());die;
+        
+        $currentCurrency=$currency;
 
-    // endforeach;
 
-        return view('front.wallet-deposit',compact('currency_types'));
+        $walletType=new \App\Models\CurrencyType;
+
+        if($type)
+        {
+
+          $walletType=$walletType->find($type);
+          $currencies=\App\Models\Currency::where('type_id',$type)->get();
+
+        }
+        else
+        {
+            $currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
+        }
+
+
+        return view('front.wallet-deposit',compact('currency_types','walletType','currencies','currentCurrency'));
     }
 
     /**
@@ -56,7 +70,7 @@ class TransactionController extends Controller
 
         $user=Auth::user();
 
-        //echo '<pre>';print_r($request->currency_id);die;
+        //echo '<pre>';print_r($request->transaction_image);die;
 
 
 
@@ -76,7 +90,10 @@ class TransactionController extends Controller
 
        $transaction=$user->transactions()->create($request->all());
 
+       $fileName=time().'____'.$request->file('transaction_image')->getClientOriginalName();
+
        $media=\MediaUploader::fromSource($request->transaction_image)
+                               ->useFilename($fileName)
                                ->toDirectory('transactions')
                                ->upload();
 
@@ -111,15 +128,20 @@ class TransactionController extends Controller
     {
           $user=Auth::user();
 
-        $transactions=$user->transactions()->select('*')->selectRaw('sum(trans_amount) as total')->where('status','approved')->whereHas('currency', function ($query)use ($type) {
-        $query->where('type_id',$type);
-    })->groupBy('currency_id')->paginate(10);
+    //     $transactions=$user->transactions()->select('*')->selectRaw('sum(trans_amount) as total')->where('status','approved')->whereHas('currency', function ($query)use ($type) {
+    //     $query->where('type_id',$type);
+    // })->groupBy('currency_id')->paginate(10);
+
+          $currencies=\App\Models\Currency::where('type_id',$type)->paginate(10);
 
 
-        $walletType=\App\Models\CurrencyType::find($type);
+
+         $walletType=\App\Models\CurrencyType::find($type);
+
+        //echo "<pre>" ;print_r($walletType->toArray());die;
 
  
-        return view('front.wallet-transactions',compact('transactions','walletType'));
+        return view('front.wallet-transactions',compact('walletType','currencies'));
     }
 
     /**

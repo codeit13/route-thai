@@ -35,11 +35,11 @@
 				<div class="white-box">
 					<div class="row">
 						<div class="col-lg-6 col-sm-6 col-6">
-							<h3>{{__($walletType->type)}} {{__('Wallet')}} <a href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i> {{__('Hide Balance')}}</a></h3>
+							<h3>{{__($walletType->type)}} {{__('Wallet')}} <a onclick="toggleBalance(this)" href="#"><i class="fa fa-eye-slash"  aria-hidden="true"></i> {{__('Hide Balance')}}</a></h3>
 						</div>
 						<div class="col-lg-6 text-right col-sm-6 col-6">
 							<a href="#" class="btn-primary">Buy</a>
-							<a href="{{route('wallet.deposit')}}" class="btn-success">{{ __('Deposit')}}
+							<a href="{{route('wallet.deposit',['type'=>$walletType->id,'typename'=>strtolower($walletType->type)])}}" class="btn-success">{{ __('Deposit')}}
 							</a>
 							<a class="mobile-tag" href="#"><img src="img/icon-13.png" alt=""/></a>
 						</div>
@@ -48,7 +48,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12 hidden-xs col-sm-12 col-12">
+			<div class="col-lg-12 hidden-xs col-sm-12 col-12" id="balanceDiv">
 				<div class="white-box">
 					<div class="row">
 						<div class="col-lg-4 col-sm-4 col-6">
@@ -95,17 +95,17 @@
 								</thead>
 								<tbody>
 
-									@foreach($transactions as $transaction)
+									@foreach($currencies as $currency)
 									<tr>
 										<td>
-											<img src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{$transaction->currency->name}}"/>
-											<label>{{__($transaction->currency->short_name)}}<br><span>{{__($transaction->currency->name)}}</span></label>
+											<img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{$currency->name}}"/>
+											<label>{{__($currency->short_name)}}<br><span>{{__($currency->name)}}</span></label>
 										</td>
-										<td>{{$transaction->total}}</td>
+										<td>{{$currency->user_total}}</td>
 
-										<td>{{$transaction->available_balance()}}</td>
+										<td>{{$currency->user_balance}}</td>
 										<td>
-											<a href="#" class="btn-success">Deposit</a>
+											<a href="{{route('wallet.deposit',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-success">Deposit</a>
 											<a href="#" class="btn-primary">P2P Trading</a>
 										</td>
 									</tr>
@@ -118,7 +118,7 @@
 					<div class="row">
 						<div class="col-lg-12 text-center nav-pagi hidden-xs col-sm-12 col-12">
 
-							{{ $transactions->links('front._inc._paginator') }}
+							{{ $currencies->links('front._inc._paginator') }}
 						
 						</div>
 					</div>
@@ -171,6 +171,19 @@
             speed: 300,
             touchEnabled: true
         });
+
+
     });
+
+    function toggleBalance(selector) {
+  var x = document.getElementById("balanceDiv");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    selector.innerHTML='<i class="fa fa-eye-slash"  aria-hidden="true"></i> {{__("Hide Balance")}}</a>';
+  } else {
+    x.style.display = "none";
+    selector.innerHTML='<i class="fa fa-eye"  aria-hidden="true"></i> {{__("Show Balance")}}</a>';
+  }
+}
 </script>
 @endsection     

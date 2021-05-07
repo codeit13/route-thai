@@ -1,4 +1,4 @@
-<div id="header" id="home">
+<div id="header" id="home" class="p2p-wallet">
     <div class="container-fluid">
         <div class="header-bottom">
             <nav id="navigation" class="navigation navigation-landscape navbar-light bg-light">
@@ -12,11 +12,11 @@
                 </div>
                 <div class="nav-menus-wrapper" style="transition-property: none;">
                     <ul class="nav-menu">
-                        <li class="nav-item"> <a class="nav-link" href="p2p.html">P2P Exchange</a>
+                        <li class="nav-item {{\Route::is("p2p.exchange")?'active':''}}" > <a class="nav-link" href="{{route('p2p.exchange')}}">P2P Exchange</a>
                         </li>
                         <li class="nav-item"> <a class="nav-link" href="#">Mortgage Loan</a>
                         </li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Staking</a>
+                        <li class="nav-item {{\Route::is("staking")?'active':''}}"> <a class="nav-link" href="{{route('staking')}}">Staking</a>
                         </li>
                         <li class="nav-item"> <a class="nav-link" href="#">Auto Trading</a>
                         </li>
@@ -129,6 +129,7 @@
 
         </div>
     </div>
+    @yield('header-bar')
 </div>
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     {{ csrf_field() }}
