@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title')
-    Route: P2P Trading Platform | P2P Wallet
+    Route: P2P Trading Platform | {{__($walletType->type)}} Wallet
 @endsection
 @section('content')
 
@@ -35,7 +35,7 @@
 				<div class="white-box">
 					<div class="row">
 						<div class="col-lg-6 col-sm-6 col-6">
-							<h3>P2P Wallet <a href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i> Hide Balance</a></h3>
+							<h3>{{__($walletType->type)}} {{__('Wallet')}} <a href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i> {{__('Hide Balance')}}</a></h3>
 						</div>
 						<div class="col-lg-6 text-right col-sm-6 col-6">
 							<a href="#" class="btn-primary">Buy</a>
@@ -94,103 +94,32 @@
 									</tr>
 								</thead>
 								<tbody>
+
+									@foreach($transactions as $transaction)
 									<tr>
 										<td>
-											<img src="img/bitcoin.png" alt=""/>
-											<label>BTC<br><span>Bitcoin</span></label>
+											<img src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{$transaction->currency->name}}"/>
+											<label>{{__($transaction->currency->short_name)}}<br><span>{{__($transaction->currency->name)}}</span></label>
 										</td>
-										<td>0.00000000</td>
-										<td>0.00000000</td>
+										<td>{{$transaction->total}}</td>
+
+										<td>{{$transaction->available_balance()}}</td>
 										<td>
 											<a href="#" class="btn-success">Deposit</a>
 											<a href="#" class="btn-primary">P2P Trading</a>
 										</td>
 									</tr>
-									<tr>
-										<td>
-											<img src="img/icon-5.png" alt=""/>
-											<label>ETH<br><span>Ethereum</span></label>
-										</td>
-										<td>0.00000000</td>
-										<td>0.00000000</td>
-										<td>
-											<a href="#" class="btn-success">Deposit</a>
-											<a href="#" class="btn-primary">P2P Trading</a>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<img src="img/icon-6.png" alt=""/>
-											<label>BNB<br><span>BNB</span></label>
-										</td>
-										<td>0.00000000</td>
-										<td>0.00000000</td>
-										<td>
-											<a href="#" class="btn-success">Deposit</a>
-											<a href="#" class="btn-primary">P2P Trading</a>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<img src="img/icon-7.png" alt=""/>
-											<label>BUSD<br><span>BNB</span></label>
-										</td>
-										<td>0.00000000</td>
-										<td>0.00000000</td>
-										<td>
-											<a href="#" class="btn-success">Deposit</a>
-											<a href="#" class="btn-primary">P2P Trading</a>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<img src="img/bitcoin.png" alt=""/>
-											<label>BTC<br><span>Bitcoin</span></label>
-										</td>
-										<td>0.00000000</td>
-										<td>0.00000000</td>
-										<td>
-											<a href="#" class="btn-success">Deposit</a>
-											<a href="#" class="btn-primary">P2P Trading</a>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<img src="img/icon-5.png" alt=""/>
-											<label>ETH<br><span>Ethereum</span></label>
-										</td>
-										<td>0.00000000</td>
-										<td>0.00000000</td>
-										<td>
-											<a href="#" class="btn-success">Deposit</a>
-											<a href="#" class="btn-primary">P2P Trading</a>
-										</td>
-									</tr>
+									@endforeach
+									
 								</tbody>
 							</table>	
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-12 text-center nav-pagi hidden-xs col-sm-12 col-12">
-							<nav aria-label="Page navigation">
-								<ul class="pagination">
-									<li>
-										<a href="#" aria-label="Previous">
-											<span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
-										</a>
-									</li>
-									<li class="active"><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">...</a></li>
-									<li><a href="#">24</a></li>
-									<li>
-										<a href="#" aria-label="Next">
-											<span aria-hidden="true"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-										</a>
-									</li>
-								</ul>
-							</nav>
+
+							{{ $transactions->links('front._inc._paginator') }}
+						
 						</div>
 					</div>
 				</div>

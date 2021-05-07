@@ -35,7 +35,7 @@
 					</ul>
 					<div class="row">
 						<div class="col-lg-6 p-text col-sm-6 col-12">
-							<form method="POST" action="{{ route('wallet.create.deposit') }}">
+							<form method="POST" action="{{ route('wallet.create.deposit') }}" enctype="multipart/form-data">
 								@csrf
 
 								@foreach($currency_types as $index => $currency_type)
@@ -60,7 +60,7 @@
     
                                       
 
-											<img src="{{asset($currency->firstMedia('icon')->getUrl())}}" alt=""/> 
+											<img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
 
 											@endif
 
@@ -95,7 +95,7 @@
 								<div class="field">
 									<div class="input-group">
 										<div class="custom-file">
-											<input type="file" class="custom-file-input" id="inputGroupFile01">
+											<input type="file" class="custom-file-input" id="inputGroupFile01" name="transaction_image">
 											<label class="custom-file-label" for="inputGroupFile01">Upload</label>
 										</div>
 									</div>
@@ -233,7 +233,7 @@
 				</button>
 			</div>
 			<div class="modal-body text-center">
-				<img src="img/icon-16.png" alt=""/>
+				<img src="{{asset('front/img/icon-16.png')}}" alt=""/>
 				<h6>You have successfully completed the request</h6>
 				<h4>Please wait until your assets<br>
 				gets allocated</h4>
@@ -246,6 +246,7 @@
 
 @section('page_scripts')
 <script> 
+
     $(document).ready(function(){
         $('.bxslider').bxSlider({
             auto:false,
@@ -259,6 +260,15 @@
             speed: 300,
             touchEnabled: true
         });
+
+        @if(session('success'))
+
+        $('#exampleModal1').modal('show');
+
+
+
+
+        @endif
     });
 </script>
 

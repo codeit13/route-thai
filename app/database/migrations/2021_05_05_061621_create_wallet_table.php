@@ -21,7 +21,7 @@ class CreateWalletTable extends Migration
 
             $table->boolean('status');
 
-            $table->integer('coin');
+            $table->decimal('coin',16,5);
 
             $table->unsignedBigInteger('currency_id');
 

@@ -11,6 +11,8 @@ class Wallet extends Model
 
     protected $table='wallet';
 
+    protected $fillable=['coin','currency_id'];
+
     public function user()
     {
     	return $this->belongsTo('App\Models\User','user_id','id');

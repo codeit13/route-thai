@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class TransactionController extends Controller
 {
@@ -13,7 +15,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return view('front.p2p-wallet');
+      return view('front.wallet-deposit-history');
     }
 
     /**
@@ -41,25 +43,61 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['quantity'=>'required']);
+
+
+    
+        $request->validate(['quantity'=>'required','transaction_image']);
+
+         
+
+        
 
 
 
-        $transaction=['quantity'=>$request->quantity,
-                     'currency_id'=>$request->coin_id,
-                     'type'=>1,
-                     'trans_amount'=>$request->quantity
-                     ];
+        $user=Auth::user();
 
-        $user=\App\Models\User::find(1);
+        //echo '<pre>';print_r($request->currency_id);die;
 
-       $transaction=$user->transactions()->create($transaction);
+
+
+        $wallet=$user->wallet()->where('currency_id',$request->currency_id)->first();
+
+
+
+        $balance_before_trans=$wallet?$wallet->sum('coin'):0;
+
+
+
+        $request->merge(['type'=>1,
+                         'trans_amount'=>$request->quantity,
+                         ]);
+
+
+
+       $transaction=$user->transactions()->create($request->all());
+
+       $media=\MediaUploader::fromSource($request->transaction_image)
+                               ->toDirectory('transactions')
+                               ->upload();
+
+       $transaction->attachMedia($media,'file');
 
        $transaction->trans_id=generate_unique_id();
 
+       $transaction->balance_before_trans=$balance_before_trans;
+
        $transaction->save();
 
-        echo '<pre>';print_r($transaction);die;
+
+
+        return redirect()->back()->with('success','The deposit is created.');
+
+
+
+       
+
+       
+
         
     }
 
@@ -69,9 +107,19 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($type)
     {
-        //
+          $user=Auth::user();
+
+        $transactions=$user->transactions()->select('*')->selectRaw('sum(trans_amount) as total')->where('status','approved')->whereHas('currency', function ($query)use ($type) {
+        $query->where('type_id',$type);
+    })->groupBy('currency_id')->paginate(10);
+
+
+        $walletType=\App\Models\CurrencyType::find($type);
+
+ 
+        return view('front.wallet-transactions',compact('transactions','walletType'));
     }
 
     /**

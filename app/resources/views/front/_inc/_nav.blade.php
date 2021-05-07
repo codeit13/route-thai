@@ -34,6 +34,13 @@
                                     <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i></div>
                                 </li>
                             @else
+
+                            @php
+
+                            $wallet_types=\App\Models\CurrencyType::all();
+
+
+                            @endphp
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,11 +48,17 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <ul>
-                                            <li><a href="#">Fiat Wallet
-                                                    <!-- <span>(Deposit & Withdraw)</span> -->
+
+                                            @foreach($wallet_types as $wallet)
+
+                                            <li><a href="{{route('wallet.history',['type'=>$wallet->id,'typename'=>strtolower($wallet->type)])}}">{{__($wallet->type)}} {{__('Wallet')}}
+                                                  
                                                 </a></li>
-                                            <li><a href="#">P2P wallet</a></li>
-                                            <li><a href="#">Deposit</a></li>
+
+                                            @endforeach
+                                            
+                                            
+                                            <li><a href="{{route('wallet.deposit')}}">Deposit</a></li>
                                             <li><a href="#">Deposit history</a></li>
                                         </ul>
                                     </div>
