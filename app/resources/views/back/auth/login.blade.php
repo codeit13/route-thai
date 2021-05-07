@@ -1,4 +1,4 @@
-@extends('layouts.back')
+@extends('layouts.back_auth')
 
 @section('content')
 <style>

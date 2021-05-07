@@ -1,11 +1,7 @@
 @extends('layouts.back')
 @section('content')
 
-<style>
-    .scrollbar-inner {
-        background:#19213a
-    }
-    </style>
+
     
     <div class="header bg-primary pb-6">
     <div class="container-fluid">

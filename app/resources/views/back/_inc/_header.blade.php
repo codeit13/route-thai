@@ -29,11 +29,12 @@
                 <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main"> <i class="ni ni-zoom-split-in"></i>
                 </a>
              </li>
+             @if(Auth::guard('admin')->check())
              <li>
-               <div class="dark-light">
-                 <i class="fa fa-moon-o" aria-hidden="true"></i>
-               </div>
+               <a href="#"
+               onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
              </li>
+             @endif
              <li class="nav-item dropdown">
                 <li class="dropdown language-selector">
                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true" aria-expanded="false">
@@ -82,7 +83,11 @@
                       <span class="avatar avatar-sm rounded-circle">
                       <img alt=" Image placeholder" src="{{ asset('back/img/theme/team-4.png') }}">
                       </span>
+
                       <div class="media-body  ml-2  d-none d-lg-block"> <span class="mb-0 text-sm  font-weight-bold">{{ Auth::guard('admin')->user()->name??'' }}</span>
+                      @if(Auth::guard('admin')->check())
+                           <div class="media-body  ml-2  d-none d-lg-block"> <span class="mb-0 text-sm  font-weight-bold">{{ Auth::guard('admin')->user()->name }}</span>                              
+                      @endif
                       </div>
                    </div>
                 </a>
@@ -90,11 +95,12 @@
                    <div class="dropdown-header noti-title">
                       <h6 class="text-overflow m-0"></h6>
                    </div>
+                   
                    <!-- <a href="#!" class="dropdown-item"> <i class="ni ni-single-02"></i>
                    <span>My profile</span>
                    </a>
                    <a href="#!" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i>
-                   <span>Settings</span>
+                    <span>Settings</span>
                    </a>
                    <a href="#!" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i>
                    <span>Activity</span>
@@ -112,3 +118,6 @@
        </div>
     </div>
  </nav>
+ <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+   {{ csrf_field() }}
+</form>

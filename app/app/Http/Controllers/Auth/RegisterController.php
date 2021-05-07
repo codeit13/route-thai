@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Services\SMSService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -40,6 +42,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->service = new SMSService();
     }
 
     /**
@@ -53,6 +56,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
+            'otp' => ['required','array'],
             'mobile' => ['required']
         ]);
     }
@@ -66,15 +70,38 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-
             'email' => $data['email'],
             'mobile' => $data['mobile'],
             'password' => Hash::make($data['password']),
         ]);
     }
 
+    public function register(Request $request){
+           $this->verifyOTP($request);
+
+           $this->create($request->all());
+           if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+             return redirect()->intended('/home');
+           } 
+           return redirect()->intended($this->redirectTo);
+
+    }
+
+    public function verifyOTP($request){
+    
+        $otp = implode('',$request->otp);
+        $response = $this->service->verifyOtpSms($request->mobile, $request->code, $request->session);
+        $response = json_decode($response);
+        return $response->Status == 'success' ?  true: false;
+    }
+
     public function showRegistrationForm(Request $request){
         return view('front.auth.register');
+    }
+
+    public function showOTPForm(Request $request){
+        $data = $this->service->sendOtpSms($request->mobile);
+        return view('front.auth.otp',compact('request','data'));
     }
 }
 
