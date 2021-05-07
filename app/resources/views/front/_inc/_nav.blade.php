@@ -39,7 +39,6 @@
 
                             $wallet_types=\App\Models\CurrencyType::all();
 
-
                             @endphp
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -88,8 +87,7 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="onsubmenu hidden-xs"><a class="bell" href="#"><i class="fa fa-bell-o"
-                                            aria-hidden="true"></i> <span>05</span></a></li>
+                                <li class="onsubmenu hidden-xs"><a class="bell" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i> <span>05</span></a></li>
                                 <li class="onsubmenu">
                                     <div class="dropdown currency_two">
                                         <button class="btn btn-secondary dropdown-toggle" type="button"
