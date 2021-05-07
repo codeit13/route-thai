@@ -4,13 +4,21 @@
             <nav id="navigation" class="navigation navigation-landscape navbar-light bg-light">
                 <div class="nav-header">
                     <a class="navbar-brand  dark-mode-img" href="{{ route('home') }}">
-                        <img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
-                        <img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
+                       <img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
+                       <img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
                     </a>
                     <div class="nav-toggle"></div>
-                    <a class="btn btn-primary" href="#">Register</a>
-                </div>
+                    <a class="mobile_logo visible-xs" href="{{ route('home') }}">
+                       <img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
+                    </a>
+                 </div>
                 <div class="nav-menus-wrapper" style="transition-property: none;">
+                    @if (!Auth::check())
+                    <div class="mobile_menu visible-xs"> 
+                        <a class="" href="{{ route('login')}}">Log In</a>
+                        <a class="btn btn-primary" href="{{ route('register')}}">Register</a>
+                    </div>
+                    @endif
                     <ul class="nav-menu">
                         <li class="nav-item"> <a class="nav-link" href="p2p.html">P2P Exchange</a>
                         </li>
@@ -22,14 +30,37 @@
                         </li>
                         <li class="nav-item"> <a class="nav-link" href="#">ICO Information</a>
                         </li>
+                        <li class="nav-item"> <a class="nav-link" href="#">Arbitrage</a>
+                        </li>
                     </ul>
                     <div class="right_side  my-2 my-lg-0">
 
                         <ul class="main_ul">
-                            @if (!Auth::check())
-                                <li><a class="" href="{{ route('login') }}">Log In</a></li>
-                                <li class="hd_small"><a class="btn btn-primary"
-                                        href="{{ route('register') }}">Register</a></li>
+                                @if (!Auth::check())<li class="hd_small"><a class="" href="{{ route('login') }}">Log In</a></li>
+                                <li class="hd_small"><a class="btn btn-primary" href="{{ route('register') }}">Register</a></li>
+                                <li class="onsubmenu">
+                                    <div class="dropdown currency_two">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="{{ asset('front/img/GBP.svg') }}" alt="">English</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <form class="form-inline">
+                                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                <a class="dropdown-item  myLink" href="">
+                                                <img src="img/kr.svg" alt="">Korean</span>
+                                                </a>
+                                                <a class="dropdown-item myLink" href="">
+                                                <img src="img/th.svg" alt="">Thailand</span>
+                                                </a>
+                                                <a class="dropdown-item myLink" href="">
+                                                <img src="img/cn.svg" alt="">Chineese</span>
+                                                </a>
+                                                <a class="dropdown-item myLink" href="">
+                                                <img src="img/jp.svg" alt="">Japanese</span>
+                                                </a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    </li>
                                 <li>
                                     <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i></div>
                                 </li>
@@ -47,19 +78,64 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <ul>
-
                                             @foreach($wallet_types as $wallet)
-
-                                            <li><a href="{{route('wallet.history',['type'=>$wallet->id,'typename'=>strtolower($wallet->type)])}}">{{__($wallet->type)}} {{__('Wallet')}}
-                                                  
-                                                </a></li>
-
-                                            @endforeach
-                                            
-                                            
+                                            <li><a href="{{route('wallet.history',['type'=>$wallet->id,'typename'=>strtolower($wallet->type)])}}">{{__($wallet->type)}} {{__('Wallet')}}</a></li>
+                                            @endforeach                                            
                                             <li><a href="{{route('wallet.deposit')}}">Deposit</a></li>
                                             <li><a href="#">Deposit history</a></li>
                                         </ul>
+                                    </div>
+                                </li>
+                                
+                                <li class="onsubmenu">
+                                    <div class="dropdown currency_two">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="{{ asset('front/img/GBP.svg') }}" alt="">English</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <form class="form-inline">
+                                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                <a class="dropdown-item  myLink" href="">
+                                                <img src="img/kr.svg" alt="">Korean</span>
+                                                </a>
+                                                <a class="dropdown-item myLink" href="">
+                                                <img src="img/th.svg" alt="">Thailand</span>
+                                                </a>
+                                                <a class="dropdown-item myLink" href="">
+                                                <img src="img/cn.svg" alt="">Chineese</span>
+                                                </a>
+                                                <a class="dropdown-item myLink" href="">
+                                                <img src="img/jp.svg" alt="">Japanese</span>
+                                                </a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    </li>
+                                <li class="onsubmenu">
+                                    <div class="dropdown currency_two">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <img src="{{ asset('front/img/GBP.svg') }}" alt=""> <span>United States Dollar</span>
+                                            USD</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <form class="form-inline">
+                                                <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                                                    aria-label="Search"> <span><i class="fa fa-search"
+                                                        aria-hidden="true"></i></span>
+                                                <a class="dropdown-item  myLink" href="usd">
+                                                    <img src="img/AUD.svg" alt="">Australian Dollar <span>USD</span>
+                                                </a>
+                                                <a class="dropdown-item myLink" href="krw">
+                                                    <img src="img/EUR.svg" alt="">Korean won <span>KRW</span>
+                                                </a>
+                                                <a class="dropdown-item myLink" href="inr">
+                                                    <img src="img/inr.svg" alt="">Indian Rupee <span>INR</span>
+                                                </a>
+                                                <a class="dropdown-item myLink" href="thb">
+                                                    <img src="img/thb.svg" alt="">Thai Baht <span>THB</span>
+                                                </a>
+                                            </form>
+                                        </div>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown hidden-xs">
@@ -88,34 +164,6 @@
                                     </div>
                                 </li>
                                 <li class="onsubmenu hidden-xs"><a class="bell" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i> <span>05</span></a></li>
-                                <li class="onsubmenu">
-                                    <div class="dropdown currency_two">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <img src="img/GBP.svg" alt=""> <span>United States Dollar</span>
-                                            USD</button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <form class="form-inline">
-                                                <input class="form-control mr-sm-2" type="search" placeholder="Search"
-                                                    aria-label="Search"> <span><i class="fa fa-search"
-                                                        aria-hidden="true"></i></span>
-                                                <a class="dropdown-item  myLink" href="usd">
-                                                    <img src="img/AUD.svg" alt="">Australian Dollar <span>USD</span>
-                                                </a>
-                                                <a class="dropdown-item myLink" href="krw">
-                                                    <img src="img/EUR.svg" alt="">Korean won <span>KRW</span>
-                                                </a>
-                                                <a class="dropdown-item myLink" href="inr">
-                                                    <img src="img/inr.svg" alt="">Indian Rupee <span>INR</span>
-                                                </a>
-                                                <a class="dropdown-item myLink" href="thb">
-                                                    <img src="img/thb.svg" alt="">Thai Baht <span>THB</span>
-                                                </a>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </li>
                                 <li class="onsubmenu">
                                     <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i></div>
                                 </li>

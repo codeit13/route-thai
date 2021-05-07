@@ -27,8 +27,7 @@
 				<div class="white-box m-top-0">
 					<ul class="janral-head">
 						@foreach($currency_types as $index => $currency_type)
-						<li class="{{($index==0)?'active':''}}"><a href="#">{{__($currency_type->type)}}</a></li>
-
+						<li class="{{ ( $index == 0 ) ? 'active' : ''}}"><a href="#">{{__($currency_type->type)}}</a></li>
 						@endforeach
 					
 						<li class="last"><a href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a></li>
@@ -37,46 +36,22 @@
 						<div class="col-lg-6 p-text col-sm-6 col-12">
 							<form method="POST" action="{{ route('wallet.create.deposit') }}" enctype="multipart/form-data">
 								@csrf
-
 								@foreach($currency_types as $index => $currency_type)
-
 								@if($index==0)
-
-
-
-								<div class="field">
-									<label>Coin</label>
-
-									<ul class="btc">
-										@foreach($currency_type->currency as $cIndex=> $currency)
-
-										
-
-
-
-										<li data-value="{{$currency->id}}" class="{{$cIndex==0?'init':''}}">
-
-											@if($currency->hasMedia('icon'))
-    
-                                      
-
-											<img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
-
-											@endif
-
-											{{__($currency->short_name)}} <span>{{__($currency->name)}}</span></li>
-
-									<!-- 	<li data-value="value 1"><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> BTC <span>Bitcoin</span></li>
-										<li data-value="value 2"><img src="{{asset('front/img/icon-5.png')}}" alt=""/> ETH <span>Ethereum</span></li>
-										<li data-value="value 3"><img src="{{asset('front/img/icon-6.png')}}" alt=""/> BNB <span>BNB</span></li> -->
-
-										@endforeach
-									</ul>
-									<input type="hidden" name="currency_id" id="coin_id" value="1"/>
-
-									<span class="total">Total balance: <b>0.00000000 BTC</b></span>
-								</div>
-
+									<div class="field">
+										<label>Coin</label>
+										<ul class="btc">
+											@foreach($currency_type->currency as $cIndex=> $currency)
+											<li data-value="{{$currency->id}}" class="{{$cIndex==0?'init':''}}">
+												@if($currency->hasMedia('icon'))
+													<img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+												@endif
+												{{__($currency->short_name)}} <span>{{__($currency->name) }}</span></li>
+											@endforeach
+										</ul>
+										<input type="hidden" name="currency_id" id="coin_id_{{ $currency->id }}" value="{{ $currency->id }}"/>
+										<span class="total">Total balance: <b>0.00000000 BTC</b></span>
+									</div>
 								@endif
 
 								@endforeach
@@ -145,7 +120,7 @@
 														<h3>1JFAe8qq9wshJRLkdia3zZ94Nk9VLc4W3y</h3>
 													</div>
 													<div class="col-6 text-right col-sm-6 col-lg-6">
-														<img class="small_mobiledd" src="img/icon-14.png" alt=""/>
+														<img class="small_mobiledd" src="{{ asset('front/img/icon-14.png') }}" alt=""/>
 													</div>
 												</div>
 											</div>	
@@ -174,7 +149,7 @@
 														<h3>1JFAe8qq9wshJRLkdia3zZ94Nk9VLc4W3y</h3>
 													</div>
 													<div class="col-6 text-right col-sm-6 col-lg-6">
-														<img src="img/icon-14.png" alt=""/>
+														<img src="{{ asset('front/img/icon-14.png') }}" alt=""/>
 													</div>
 												</div>
 											</div>	

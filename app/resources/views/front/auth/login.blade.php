@@ -11,12 +11,16 @@
                                 <img src="{{ asset('front/img/login_ve.png') }}" alt="">
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
                 <div class="col-lg-5 col-sm-5 col-xs-12 flush">
                     <div class="tableRow">
                         <div class="tableCell">
                             <div class="login_forms">
+                                <a class="navbar-brand  dark-mode-img" href={{ route('home') }}>
+									<img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
+									<img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
+								</a>
                                 <h2>{{__("Welcome to Route")}}</h2>
                                 <p>{{__("Please sign-in to your account and start the adventure")}}</p>
                                   <form method="POST"  id="loginform" action="{{ route('login') }}">

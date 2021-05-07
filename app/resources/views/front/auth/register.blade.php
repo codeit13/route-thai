@@ -22,15 +22,17 @@
                     <div class="tableRow">
                         <div class="tableCell">
                             <div class="login_forms">
+                                <a class="navbar-brand  dark-mode-img" href={{ route('home') }}>
+									<img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
+									<img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
+								</a>
                                 <h2>{{ __('Create a free account') }}</h2>
                                 <p>{{ __('Welcome to Route') }}</p>
-                            
                                 <form method="POST" id="loginform" action="{{ route('otp.register') }}">
                                     @csrf
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                                             aria-labelledby="home-tab">
-                                            <p></p>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
                                                 <input type="email"
@@ -61,7 +63,7 @@
                                                 <label class="form-check-label" for="exampleCheck1">I have read and agree to
                                                     the Terms of Service. Routes Terms</label>
                                             </div>
-                                            <button type="submit" id="send-otp" class="btn btn-primary">Create
+                                            <button type="submit"  class="btn btn-primary">Create
                                                 Account</button>
                                     </div>
                                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -70,12 +72,13 @@
                                 </form>
                             </div>
                    
-                        <p class="not_m">Already a member? <a href="login.html">Sign in</a></p>
+                        <p class="not_m">Already a member? <a href="{{ route('login') }}">Sign in</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+@endsection
 @section('page_scripts')
     <script>
         $('#mobile_no').on('keyup',function(){
@@ -131,15 +134,11 @@
             else {
                 console.log('errors');
                 return false; 
-        }
-});
+            }
+        });
     </script>
-
-{{-- <script src="https://code.jquery.com/jquery-1.11.1.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.14/js/utils.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.14/js/intlTelInput.js"></script>
-
-
 <script>
     $(document).ready(function() {
         $("#hide").click(function() {
@@ -153,8 +152,5 @@
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.14/js/utils.js"
         });
     });
-    
-
 </script>
-@endsection
 @endsection

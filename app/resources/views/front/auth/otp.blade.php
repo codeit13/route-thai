@@ -40,15 +40,6 @@
 					</div>
 				</div>			
 			</div>
-			<div class="col-lg-7 visible-xs col-sm-7 col-xs-12 text-center flush">
-				<div class="side_image">
-					<div class="tableRow">
-						<div class="tableCell">
-							<img src="img/phone_otp.png" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </section>	

@@ -1,6 +1,6 @@
 @extends('layouts.back')
 @section('content')
-<div class="header filter bg-primary pb-6">
+{{-- <div class="header filter bg-primary pb-6">
     <div class="container-fluid">
        <div class="header-body">
           <div class="row align-items-center py-4">
@@ -22,9 +22,9 @@
           </div>
        </div>
     </div>
- </div>
+ </div> --}}
  <!-- Page content -->
- <div class="container-fluid mt--6 team-members">
+ <div class="container-fluid mt-4 team-members">
     <div class="row">
        <div class="col-xl-12">
           <div class="card text-center trade two">
@@ -57,8 +57,7 @@
                             <td> {{ $item->email}}</td>
                             <td> {{ $item->mobile }}</td>
                             <td> {{ $item->created_at }}</td>
-                            <td> <button type="button" class="btn btn-primary my-4">Edit Data</button>
-                                <button type="button" class="btn btn-success my-4">Save Data</button>
+                            <td> <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i> Edit Data</a>
                             </td>
                            </tr> 
                            @endforeach 
@@ -66,7 +65,6 @@
                    <tfoot class="tfoot-light">
                     <tr>
                        <th colspan="7">{{ $users->links() }}</th>
-                        
                     </tr>
                  </tfoot>
                 </table>
