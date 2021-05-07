@@ -48,4 +48,9 @@ class LoginController extends Controller
     protected function guard(){
         return Auth::guard('admin');
     }
+
+    public function logout(Request $request) {
+        Auth::guard('admin')->logout();
+        return redirect('/login');
+      }
 }
