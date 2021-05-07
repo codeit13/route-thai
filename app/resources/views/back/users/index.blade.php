@@ -1,29 +1,11 @@
 @extends('layouts.back')
 @section('content')
-{{-- <div class="header filter bg-primary pb-6">
-    <div class="container-fluid">
-       <div class="header-body">
-          <div class="row align-items-center py-4">
-             <div class="col-lg-12">
-                <div class="card">
-                   <ul>
-                      <li>
-                         <h3><i class="fa fa-pencil-square-o" aria-hidden="true"></i> </h3>
-                      </li>
-                      <li class="last">
-                         <form class="search needs-validation" target="_blank" action="trades_data.php" method="POST" novalidate id="search_trans_id">
-                            <input name="search_transaction_id" type="text" class="form-control" id="search_transaction_id" required>
-                            <button type="submit" class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
-                         </form>
-                      </li>
-                   </ul>
-                </div>
-             </div>
-          </div>
-       </div>
-    </div>
- </div> --}}
- <!-- Page content -->
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
  <div class="container-fluid mt-4 team-members">
     <div class="row">
        <div class="col-xl-12">
