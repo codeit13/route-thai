@@ -83,12 +83,10 @@
                       <span class="avatar avatar-sm rounded-circle">
                       <img alt=" Image placeholder" src="{{ asset('back/img/theme/team-4.png') }}">
                       </span>
-
-                      <div class="media-body  ml-2  d-none d-lg-block"> <span class="mb-0 text-sm  font-weight-bold">{{ Auth::guard('admin')->user()->name??'' }}</span>
                       @if(Auth::guard('admin')->check())
-                           <div class="media-body  ml-2  d-none d-lg-block"> <span class="mb-0 text-sm  font-weight-bold">{{ Auth::guard('admin')->user()->name }}</span>                              
-                      @endif
+                      <div class="media-body  ml-2  d-none d-lg-block"> <span class="mb-0 text-sm  font-weight-bold">{{ Auth::guard('admin')->user()->name }}</span>
                       </div>
+                      @endif
                    </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right ">

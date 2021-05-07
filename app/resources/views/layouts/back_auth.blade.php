@@ -11,7 +11,7 @@
     @yield('content')
     @include('back._inc._footer')
     @include('back._inc._copyright')
-    @include('back._inc._scripts') 
+    @include('back._inc._scripts')     
     @yield('page_scripts')
  </body>
-</html>
+</html>   

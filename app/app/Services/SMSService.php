@@ -24,12 +24,12 @@ class SMSService
     public function __construct()
     {
         $this->secret = config('services.sms.secret');
-        $this->baseUri = config('services.sms.base_uri');   
-        
+        $this->baseUri = config('services.sms.base_uri');
     }
 
     public function sendOtpSms($mobile){
-        return $this->performRequest('GET', $this->secret.'/SMS/+91'.$mobile.'/AUTOGEN');
+        $mobile = str_replace([' ','-','(',')'],'',$mobile);
+        return $this->performRequest('GET', $this->secret.'/SMS'.'/'.$mobile.'/AUTOGEN');
     }
     public function verifyOtpSms($mobile, $code, $session){ 
         return $this->performRequest('GET', $this->secret.'/SMS/VERIFY/'.$session.'/'.trim($code));

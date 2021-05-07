@@ -25,6 +25,11 @@
                         <span class="nav-link-text">User Management</span>
                      </a>
                   </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="{{ route('admin.deposit.requests.show') }}"> <i class="fa fa-money" aria-hidden="true"></i>
+                        <span class="nav-link-text">Deposit Requests</span>
+                     </a>
+                  </li>
                   {{-- 
                   <li class="nav-item">
                      <a class="nav-link" href="#"> <i class="fa fa-file-excel-o" aria-hidden="true"></i>

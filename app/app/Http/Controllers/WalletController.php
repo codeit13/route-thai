@@ -27,7 +27,7 @@ class WalletController extends Controller
      */
     public function create()
     {
-        
+        return view('front.wallet-deposit');
     }
 
     /**
@@ -38,7 +38,7 @@ class WalletController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $request->validate(['quantity'=>'required','coin'=>'required']);
     }
 
     /**
