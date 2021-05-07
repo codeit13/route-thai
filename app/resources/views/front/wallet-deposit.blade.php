@@ -39,7 +39,7 @@
 						@endif
 
 
-						<li class="{{ ( $index == 0 ) ? 'active' : ''}}"><a href="#">{{__($currency_type->type)}}</a></li>
+						
 
 						@endforeach
 					
