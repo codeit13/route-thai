@@ -5,17 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>@yield('title')</title>
     @include('back._inc._styles')
-    <style> .scrollbar-inner { background:#19213a } </style>
  </head>
- <body>   
-   @include('back._inc._nav')
+ <body>
    <div class="main-content" id="panel">
-         @include('back._inc._header')
     @yield('content')
     @include('back._inc._footer')
     @include('back._inc._copyright')
-    @include('back._inc._scripts') 
-    
+    @include('back._inc._scripts')     
     @yield('page_scripts')
  </body>
 </html>   

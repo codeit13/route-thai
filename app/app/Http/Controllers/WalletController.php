@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\CurrencyType;
+use App\Http\Requests\RequestDeposit;
+use App\Models\User;
 
 class WalletController extends Controller
 {
@@ -26,8 +28,9 @@ class WalletController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        
+    {   
+        $currency_types = CurrencyType::all();
+        return view('front.wallet-deposit',compact('currency_types'));
     }
 
     /**
@@ -36,9 +39,20 @@ class WalletController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequestDeposit $request)
     {
+        $transaction = ['quantity'     => $request->quantity,
+                        'currency_id'  => $request->currency_id,
+                        'type'         => 1,
+                        'trans_amount' => $request->quantity,
+                        'trans_id' => generate_unique_id()
+                    ];
+
+        $user = User::find(1);
+
+        $transaction = $user->transactions()->create($transaction);
         
+        return view('front.wallet.transactions',compact('transaction'));
     }
 
     /**

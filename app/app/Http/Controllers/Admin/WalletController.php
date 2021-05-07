@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Transaction;
 
-class TransactionController extends Controller
+class WalletController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -45,10 +44,9 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        $transactions= Transaction::where('type',1)->get();
-        return view('back.wallet.deposit-requests',compact('transactions'));
+        //
     }
 
     /**
@@ -83,44 +81,5 @@ class TransactionController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function changeStatus(\App\Models\Transaction $transaction,$status)
-    {
-       if($transaction->status!='rejected' && $transaction->status!='approved'){
-
-        if($status=='approved'){
-            $this->updateUserWallet($transaction);
-        }
-         $transaction->status=$status;
-
-         $transaction->save();
-
-         return redirect()->back()->with('success','The status is updated.');
-       }
-       else
-       {
-         return redirect()->back()->with('warning','No data affected.');
-
-       }
-    }
-
-    public function updateUserWallet($transaction)
-    {
-        if($transaction->user->wallet()->where('currency_id',$transaction->currency_id)->exists())
-        {
-            $wallet=$transaction->user->wallet()->where('currency_id',$transaction->currency_id)->first();
-
-            $wallet->coin=$wallet->coin+$transaction->trans_amount;
-
-            $wallet->save();
-
-
-
-        }
-        else
-        {
-             $transaction->user->wallet()->create(['coin'=>$transaction->trans_amount,'currency_id'=>$transaction->currency_id]);
-        }
     }
 }

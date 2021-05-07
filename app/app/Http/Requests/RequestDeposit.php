@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class VerifyOTPRequest extends FormRequest
+class RequestDeposit extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,8 @@ class VerifyOTPRequest extends FormRequest
     public function rules()
     {
         return [
-<<<<<<< Updated upstream
-=======
-            'mobile' => ['required'],
->>>>>>> Stashed changes
-            'code' => ['required'],
-            'sessionid' => ['required']
+            'quantity'=>'required',
+            'currency_id'=>'required'
         ];
     }
 }

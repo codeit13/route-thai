@@ -1,4 +1,5 @@
 @extends('layouts.front_auth')
+
 @section('content')
     <section id="main-content" class="login_page">
         <div class="container-fluid">
@@ -10,22 +11,18 @@
                                 <img src="{{ asset('front/img/login_ve.png') }}" alt="">
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
                 <div class="col-lg-5 col-sm-5 col-xs-12 flush">
                     <div class="tableRow">
                         <div class="tableCell">
                             <div class="login_forms">
+                                <a class="navbar-brand  dark-mode-img" href={{ route('home') }}>
+									<img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
+									<img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
+								</a>
                                 <h2>{{__("Welcome to Route")}}</h2>
                                 <p>{{__("Please sign-in to your account and start the adventure")}}</p>
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Email</a>
-                                    </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Mobile</a>
-                                    </li>
-                                  </ul>
                                   <form method="POST"  id="loginform" action="{{ route('login') }}">
                                     @csrf
                                   <div class="tab-content" id="myTabContent">
@@ -51,7 +48,12 @@
                                         <label for="exampleInputPassword1">{{__("Password")}}</label>
                                         <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required id="exampleInputPassword1" autocomplete="cc-additional-name">
                                     </div>
-                                    
+                                    <div class="form-group otp" style="display: none">
+                                        <label for="exampleInputEmail1">OTP</label>
+                                        <input type="text" class="form-control" id="otp"
+                                            aria-describedby="emailHelp" placeholder="Enter OTP" name="otp">
+                                        <input type="hidden" id="session_id" value="">    
+                                    </div>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                         <label class="form-check-label" for="exampleCheck1">Remember me</label>
@@ -124,7 +126,8 @@
                     async: true,
                     cache: false,
                     success: function (data) {
-                        console.log('end');
+                        $('#send-otp').hide();
+                        $('#create-account').show();
                     },
                     error: function (event) { 
                         
@@ -137,6 +140,7 @@
         }
         });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/js/intlTelInput.min.js"></script>
 @endsection
 
     {{-- <div class="container">

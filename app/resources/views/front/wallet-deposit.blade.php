@@ -28,6 +28,7 @@
 					<ul class="janral-head">
 						@foreach($currency_types as $index => $currency_type)
 
+
 						@if(isset($walletType->id) && $walletType->id==$currency_type->id)
 
 						<li class="active"><a href="#">{{__($currency_type->type)}}</a></li>
@@ -38,6 +39,8 @@
 						@endif
 
 
+						<li class="{{ ( $index == 0 ) ? 'active' : ''}}"><a href="#">{{__($currency_type->type)}}</a></li>
+
 						@endforeach
 					
 						<li class="last"><a href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a></li>
@@ -46,6 +49,7 @@
 						<div class="col-lg-6 p-text col-sm-6 col-12">
 							<form method="POST" action="{{ route('wallet.create.deposit') }}" enctype="multipart/form-data">
 								@csrf
+
 
 							
 
@@ -121,6 +125,8 @@
 								</div>
 
 							
+
+						
 								<div class="field qq">
 									<!-- <label>Quantity</label> -->
 									<div class="form-group">
@@ -186,7 +192,7 @@
 														<h3>1JFAe8qq9wshJRLkdia3zZ94Nk9VLc4W3y</h3>
 													</div>
 													<div class="col-6 text-right col-sm-6 col-lg-6">
-														<img class="small_mobiledd" src="img/icon-14.png" alt=""/>
+														<img class="small_mobiledd" src="{{ asset('front/img/icon-14.png') }}" alt=""/>
 													</div>
 												</div>
 											</div>	
@@ -215,7 +221,7 @@
 														<h3>1JFAe8qq9wshJRLkdia3zZ94Nk9VLc4W3y</h3>
 													</div>
 													<div class="col-6 text-right col-sm-6 col-lg-6">
-														<img src="img/icon-14.png" alt=""/>
+														<img src="{{ asset('front/img/icon-14.png') }}" alt=""/>
 													</div>
 												</div>
 											</div>	
