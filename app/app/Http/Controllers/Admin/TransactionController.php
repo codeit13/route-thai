@@ -45,9 +45,15 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($type,$name)
     {
-        $transactions= Transaction::where('type',1)->get();
+
+        $transactions= Transaction::where('type',1)
+                                  ->whereHas('currency', function ($query)use ($type) {
+                                          $query->where('type_id',$type);
+
+                                        })->get();
+
         return view('back.wallet.deposit-requests',compact('transactions'));
     }
 

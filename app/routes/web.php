@@ -36,14 +36,25 @@ Route::middleware('auth')->group(function()
 
 //wallet
 
-Route::get('wallet/deposit/history',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.deposit');
+Route::get('wallet/withdraw/history',[App\Http\Controllers\TransactionController::class, 'withdraw_history'])->name('wallet.withdraw.history');
 
-Route::get('/wallet/deposit/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create'])->name('wallet.deposit');
-
-Route::get('/wallet/{type}/{typename?}',[App\Http\Controllers\TransactionController::class, 'show'])->name('wallet.history');
+Route::get('wallet/withdraw/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create_withdraw'])->name('wallet.withdraw');
 
 
-Route::post('/wallet/create/deposit/',[App\Http\Controllers\TransactionController::class, 'store'])->name('wallet.create.deposit');
+
+
+Route::get('wallet/deposit/history',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.deposit.history');
+
+Route::get('wallet/deposit/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create'])->name('wallet.deposit');
+
+Route::get('wallet/{type}/{typename?}',[App\Http\Controllers\TransactionController::class, 'show'])->name('wallet.history');
+
+
+Route::post('wallet/create/deposit/',[App\Http\Controllers\TransactionController::class, 'store'])->name('wallet.create.deposit');
+
+
+
+
 
 });
 
