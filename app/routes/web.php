@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function()
 
 Route::get('wallet/deposit/history',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.deposit');
 
-Route::get('/wallet/deposit',[App\Http\Controllers\TransactionController::class, 'create'])->name('wallet.deposit');
+Route::get('/wallet/deposit/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create'])->name('wallet.deposit');
 
 Route::get('/wallet/{type}/{typename?}',[App\Http\Controllers\TransactionController::class, 'show'])->name('wallet.history');
 
@@ -43,11 +43,7 @@ Route::post('/wallet/create/deposit/',[App\Http\Controllers\TransactionControlle
 
 });
 
-Route::get('/wallet/p2p',[App\Http\Controllers\WalletController::class, 'index'])->name('wallet.p2p');
 
-Route::get('/wallet/deposit',[App\Http\Controllers\WalletController::class, 'create'])->name('wallet.deposit');
-
-Route::post('/wallet/create/deposit',[App\Http\Controllers\WalletController::class, 'store'])->name('wallet.create.deposit');
 
 // OTP
 Route::post('/mobile/otp/send',[App\Http\Controllers\HomeController::class, 'sendOTP'])->name('send.otp');
@@ -55,4 +51,20 @@ Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'v
 
 Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class, 'sendOTPOnLogin'])->name('send.otp.login');
 
+
+// Exchange
+
+Route::get('p2p/exchange',function()
+{
+	return view('front.exchange');
+})->name('p2p.exchange');
+
+// Staking
+Route::get('staking',function()
+{
+	return view('front.staking');
+
+})->name('staking');
+
 Route::post('/verify/register',[App\Http\Controllers\Auth\RegisterController::class, 'showOTPForm'])->name('otp.register');
+

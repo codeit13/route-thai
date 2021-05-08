@@ -24,10 +24,34 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($type='',$typename='',$currency='',$currencyname='')
     {
-        $currency_types  =  CurrencyType::all(); 
-        return view('front.wallet-deposit',compact('currency_types'));
+
+        $currency_types=\App\Models\CurrencyType::all();
+
+        
+        $currentCurrency=$currency;
+
+
+        $walletType=new \App\Models\CurrencyType;
+
+        if($type)
+        {
+
+          $walletType=$walletType->find($type);
+          $currencies=\App\Models\Currency::where('type_id',$type)->get();
+
+        }
+        else
+        {
+            $currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
+        }
+
+
+        return view('front.wallet-deposit',compact('currency_types','walletType','currencies','currentCurrency'));
+
+       
+
     }
 
     /**
@@ -40,14 +64,22 @@ class TransactionController extends Controller
     {
 
     
-        $request->validate(['quantity' =>'required','transaction_image']);
+        $request->validate(['quantity' =>'required','transaction_image'=>'required']);
 
         $user = Auth::user();
 
-        $wallet = $user->wallet()->where('currency_id',$request->currency_id)->first();
+
+  
 
 
-        $balance_before_trans = $wallet?$wallet->sum('coin'):0;
+
+        $wallet=$user->wallet()->where('currency_id',$request->currency_id)->first();
+
+
+
+        $balance_before_trans=$wallet?$wallet->sum('coin'):0;
+
+      
 
         $request->merge(['type'=>1,
                          'trans_amount'=>$request->quantity,
@@ -55,8 +87,14 @@ class TransactionController extends Controller
 
        $transaction = $user->transactions()->create($request->all());
 
-       $media = MediaUploader::fromSource($request->transaction_image)
-                               ->toDirectory('transactions')
+
+     
+
+       $fileName=time().'____'.$request->file('transaction_image')->getClientOriginalName();
+
+       $media=\MediaUploader::fromSource($request->transaction_image)
+                               ->useFilename($fileName)
+                              ->toDirectory('transactions')
                                ->upload();
 
        $transaction->attachMedia($media,'file');
@@ -90,15 +128,21 @@ class TransactionController extends Controller
     {
           $user = Auth::user();
 
-        $transactions = $user->transactions()->select('*')->selectRaw('sum(trans_amount) as total')->where('status','approved')->whereHas('currency', function ($query)use ($type) {
-        $query->where('type_id',$type);
-    })->groupBy('currency_id')->paginate(10);
 
+    //     $transactions=$user->transactions()->select('*')->selectRaw('sum(trans_amount) as total')->where('status','approved')->whereHas('currency', function ($query)use ($type) {
+    //     $query->where('type_id',$type);
+    // })->groupBy('currency_id')->paginate(10);
+
+          $currencies=\App\Models\Currency::where('type_id',$type)->paginate(10);
+
+
+     
 
         $walletType = \App\Models\CurrencyType::find($type);
 
+
  
-        return view('front.wallet-transactions',compact('transactions','walletType'));
+        return view('front.wallet-transactions',compact('walletType','currencies'));
     }
 
     /**
