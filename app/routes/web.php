@@ -19,6 +19,10 @@ Route::get('/clear-cache', function() {
     return "Cache is cleared";
 });
 
+Route::get('/createstoragelink', function () {
+    Artisan::call('storage:link');
+});
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
