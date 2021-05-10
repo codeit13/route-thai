@@ -27,4 +27,9 @@ class SendOTPonLogin extends FormRequest
             'email' => ['required', 'string', 'email', 'exists:users,email'],
         ];
     }
+    public function messages(){
+        return [
+            "email.exists" =>'The entered email is not registered with us. Please check once'
+        ];
+    }
 }

@@ -71,6 +71,7 @@ class RegisterController extends Controller
     {
         return User::create([
             'email' => $data['email'],
+            'name' => null,
             'mobile' => $data['mobile'],
             'password' => Hash::make($data['password']),
         ]);
@@ -78,13 +79,13 @@ class RegisterController extends Controller
 
     public function register(Request $request){
 
-           $this->verifyOTP($request);
+        // if($this->verifyOTP($request)) {
            $this->create($request->all());
            if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
              return redirect()->intended('/home');
            } 
-           return redirect()->intended($this->redirectTo);
-
+        // }
+        return redirect()->intended('register')->withInput($request->all())->with('message', 'The entered OTP is wrong');
     }
 
     public function verifyOTP($request){

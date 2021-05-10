@@ -22,7 +22,8 @@
 							<h2>Account Verification</h2>
 							<p>Please enter the 6 digit verification code that was 
 							send to <b>{{ $request->mobile }}</b>.  The code is valid for 10 minutes.</p>
-                            <form action="{{ route('register') }}" method="POST">
+							<p class="msg"></p>
+							<form action="{{ route('register') }}" method="POST">
                                 @csrf()
 							  <div class="form-group">
 							  	<label>Enter verification code</label>
@@ -33,9 +34,11 @@
                               <input type="hidden" name="email" value="{{ $request->email }}">
                               <input type="hidden" name="mobile" value="{{ $request->mobile }}">
                               <input type="hidden" name="password" value="{{ $request->password }}">
-                              <input type="hidden" name="session" value="{{ json_decode($data)->Details }}">
+                              <input type="hidden" id="session_id" name="session" value="{{ json_decode($data)->Details }}">
 							</form>
-							<p class="not_m text-left">Resend Email - <b class="time">(30)</b></p>
+							
+							<p class="not_m text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<span id="timer"></span>
+							</b></p>
 						</div>	
 					</div>
 				</div>			
@@ -52,5 +55,56 @@ $(".otp").keyup(function () {
       $(this).next('.otp').focus();
     }
 });
+var defaultCount = 300;
+var count=defaultCount;
+var send = 1;
+var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
+
+function timer()
+{
+  count = count-1;
+  if (count <= 0)
+  {
+	 clearInterval(counter);
+	 $('.time a').attr('onclick',"sendOTP()")
+	 $("#timer").html('');
+     return;
+  }
+  var minutes = Math.floor(count / 60);
+  var seconds = count - minutes * 60;
+  var html = "in ";
+  if(minutes > 0 ) html = html + minutes + " mins ";
+  if(seconds > 0 ) html = html + seconds + " secs ";
+  $("#timer").html(html);
+
+}
+
+
+function sendOTP(){
+	
+	$.ajax({
+		url: "{{ route('send.otp') }}",
+		headers: {
+			'X-CSRF-Token': "{{ csrf_token() }}"
+		},
+		method: "POST",
+		async: true,
+		cache: false,
+		data: { _token: "{{ csrf_token() }}", mobile: $('input[name=mobile]').val() },
+		dataType: "json",
+		success: function (data) {
+			$('#session_id').val(data.Details);
+			send++;
+			count = defaultCount * send;
+			setInterval(timer, 500*send);
+			$('.msg').html("The OTP has been sent.");
+			$('.time a').attr('onclick',"")
+			setTimeout( function() { $('.msg').html("") }, 3500); 
+		},
+		error: function (event) { 
+			
+		},
+	}); 
+}
 </script>
 @endsection
