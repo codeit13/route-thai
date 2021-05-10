@@ -30,7 +30,7 @@
                         </li>
                         <li class="nav-item"> <a class="nav-link" href="#">ICO Information</a>
                         </li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Arbitrage</a>
+                        <li class="nav-item"> <a target="_blank" class="nav-link" href="//arbitrage.route-thai.com">Arbitrage</a>
                         </li>
                     </ul>
                     <div class="right_side  my-2 my-lg-0">
