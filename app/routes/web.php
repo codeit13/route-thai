@@ -40,10 +40,12 @@ Route::get('wallet/withdraw/history',[App\Http\Controllers\TransactionController
 
 Route::get('wallet/withdraw/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create_withdraw'])->name('wallet.withdraw');
 
+Route::post('wallet/create/withdraw/',[App\Http\Controllers\TransactionController::class, 'store_withdraw'])->name('wallet.create.withdraw');
 
 
 
-Route::get('wallet/deposit/history',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.deposit.history');
+
+Route::get('wallet/deposit/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.deposit.history');
 
 Route::get('wallet/deposit/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create'])->name('wallet.deposit');
 

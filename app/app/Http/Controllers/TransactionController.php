@@ -14,11 +14,35 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($type='',$typename='')
     {
-      $transactions=Auth::user()->transactions()->where('type',1)->get();
+      $currency_types=\App\Models\CurrencyType::all();
+       
 
-      return view('front.wallet-deposit-history',compact('transactions'));
+      $walletType=new \App\Models\CurrencyType;
+
+
+      if($type)
+        {
+
+          $walletType=$walletType->find($type);
+          $currencies=\App\Models\Currency::where('type_id',$type)->get();
+
+        }
+        else
+        {
+            $currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
+             $type=$currency_types[0]->id;
+        }
+
+        $transactions= \App\Models\Transaction::where('type',1)
+                                  ->whereHas('currency', function ($query)use ($type) {
+                                          $query->where('type_id',$type);
+
+                                        })->paginate(10);
+
+
+      return view('front.wallet.wallet-deposit-history',compact('transactions','currencies','currency_types','walletType'));
     }
 
     /**
@@ -50,7 +74,7 @@ class TransactionController extends Controller
         }
 
 
-        return view('front.wallet-deposit',compact('currency_types','walletType','currencies','currentCurrency'));
+        return view('front.wallet.wallet-deposit',compact('currency_types','walletType','currencies','currentCurrency'));
 
        
 
@@ -66,50 +90,28 @@ class TransactionController extends Controller
     {
 
     
-        $request->validate(['quantity' =>'required','transaction_image'=>'required']);
-
-        $user = Auth::user();
+        $request->validate(['quantity' =>'required|numeric','currency_id'=>'required|numeric','transaction_image'=>'required']);
 
 
-  
-
-
-
-        $wallet=$user->wallet()->where('currency_id',$request->currency_id)->first();
-
-
-
-        $balance_before_trans=$wallet?$wallet->sum('coin'):0;
-
-      
-
-        $request->merge(['type'=>1,
-                         'trans_amount'=>$request->quantity,
-                         ]);
-
-       $transaction = $user->transactions()->create($request->all());
-
-
-     
-
-       $fileName=time().'____'.$request->file('transaction_image')->getClientOriginalName();
+        $fileName=time().'____'.$request->file('transaction_image')->getClientOriginalName();
 
        $media=\MediaUploader::fromSource($request->transaction_image)
                                ->useFilename($fileName)
                               ->toDirectory('transactions')
                                ->upload();
 
-       $transaction->attachMedia($media,'file');
-
-       $transaction->trans_id = generate_unique_id();
-
-       $transaction->balance_before_trans = $balance_before_trans;
-
-       $transaction->save();
+       $type=1;  //for deposit
 
 
+        if($this->makeTransaction($request,$type,$media))
+        {
 
-        return redirect()->back()->with('success','The deposit is created.');
+          return redirect()->back()->with('success','The deposit request is created.');
+
+        }
+
+
+
 
 
 
@@ -144,7 +146,7 @@ class TransactionController extends Controller
 
 
  
-        return view('front.wallet-transactions',compact('walletType','currencies'));
+        return view('front.wallet.wallet-transactions',compact('walletType','currencies'));
     }
 
 
@@ -194,37 +196,58 @@ class TransactionController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
+     /**
+     * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function store_withdraw(Request $request)
     {
-        //
+
+    
+        $request->validate(['quantity' =>'required|numeric','currency_id'=>'required|numeric','address'=>'required']);
+
+        $type=2;  //for withdraw
+ 
+        if($this->makeTransaction($request,$type))
+        {
+
+          return redirect()->back()->with('success','The withdraw request is created.');
+
+        }
+       
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function makeTransaction($request,$type,$media='')
     {
-        //
+         $user = Auth::user();
+
+
+        $wallet=$user->wallet()->where('currency_id',$request->currency_id)->first();
+
+
+        $balance_before_trans=$wallet?$wallet->sum('coin'):0;
+
+      
+        $request->merge(['type'=>$type,
+                         'trans_amount'=>$request->quantity,
+                         ]);
+
+       $transaction = $user->transactions()->create($request->all());
+     
+       if($media)
+       {
+         
+          $transaction->attachMedia($media,'file');
+
+       }
+
+       $transaction->trans_id = generate_unique_id();
+
+       $transaction->balance_before_trans = $balance_before_trans;
+
+       return $transaction->save();
     }
 }
