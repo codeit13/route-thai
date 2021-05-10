@@ -106,7 +106,7 @@
 										<td>{{$currency->user_balance}}</td>
 										<td>
 											<a href="{{route('wallet.deposit',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-success">Deposit</a>
-											<a href="#" class="btn-primary">P2P Trading</a>
+											<a href="{{route('wallet.withdraw',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-primary">P2P Trading</a>
 										</td>
 									</tr>
 									@endforeach

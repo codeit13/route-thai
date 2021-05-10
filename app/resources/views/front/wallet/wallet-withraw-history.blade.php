@@ -10,7 +10,7 @@
 					<div class="white-box" style="background:none; box-shadow:none;">
 						<div class="row">
 							<div class="col-lg-12 col-sm-12 col-12">
-								<h3>{{__('Deposit History')}}</h3>
+								<h3>Withdrawal History</h3>
 							</div>
 						</div>
 						<div class="head-xs visible-xs">
@@ -18,7 +18,7 @@
 								<div class="col-7">
 									<div class="row">
 										<div class="col-12">
-											<label>{{__('Date')}}</label>
+											<label>Date</label>
 										</div>
 									</div>
 									<div class="row">
@@ -33,7 +33,7 @@
 								<div class="col-5 sp-left">
 									<div class="row">
 										<div class="col-12">
-											<label>{{__('Types of Currency')}}</label>
+											<label>Types of Currency</label>
 										</div>
 									</div>
 									<div class="dropdown currency_two three_coins crypto">
@@ -85,7 +85,7 @@
 												    <img src="{{asset('front/img/bitcoin.png')}}" alt=""> BTC <span>Bitcoin</span>
 												  </button>
 												  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-		              								<a class="dropdown-item" href="#"><img src="{{asset('front/img/bitcoin.png')}}" alt=""> BTC <span>Bitcoin</a>
+			          								<a class="dropdown-item" href="#"><img src="{{asset('front/img/bitcoin.png')}}" alt=""> BTC <span>Bitcoin</a>
 												    <a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-5.png')}}" alt=""> ETH <span>Ethereum</a>
 												    <a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-6.png')}}" alt=""> BNB <span>BNB</span></a>
 												  </div>
@@ -110,14 +110,14 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-12 history-details with-history hidden-xs view-c  col-sm-12 col-12">
+							<div class="col-lg-12 history-details with-history hidden-xs  col-sm-12 col-12">
 								<table>
 									<thead>
 										<tr>
 											<th>Crypto</th>
 											<th>Date</th>
-											<th class="text-center">Quantity</th>
-											<th class="text-center">Wallet Details</th>
+											<th>Quantity</th>
+											<th>Wallet Details</th>
 											<th>Status</th>
 										</tr>
 									</thead>
@@ -130,8 +130,8 @@
 												</label>
 											</td>
 											<td>04/05/2021<span>10:19:44</span></td>
-											<td class="text-center">1.00000</td>
-											<td class="text-center"><a href="#" class="btn-success">View File</a></td>
+											<td>1.00000</td>
+											<td>1ARk1BUmaZPaJzrPBNQXFxshZttjMojkBU</td>
 											<td class="top-right-radius"><img src="{{asset('front/img/icon-27.png')}}" alt="">In progress</td>
 										</tr>
 										<tr>
@@ -142,8 +142,8 @@
 												</label>
 											</td>
 											<td>04/05/2021<span>10:19:44</span></td>
-											<td class="text-center">57800</td>
-											<td class="text-center"><a href="#" class="btn-success">View File</a></td>
+											<td>57800</td>
+											<td>1ARk1BUmaZPaJzrPBNQXFxshZttjMojkBU</td>
 											<td><img src="{{asset('front/img/icon-27.png')}}" alt="">In progress</td>
 										</tr>
 										<tr>
@@ -154,8 +154,8 @@
 												</label>
 											</td>
 											<td>04/05/2021<span>10:19:44</span></td>
-											<td class="text-center">57800</td>
-											<td class="text-center"><a href="#" class="btn-success">View File</a></td>
+											<td>57800</td>
+											<td>1ARk1BUmaZPaJzrPBNQXFxshZttjMojkBU</td>
 											<td><img src="{{asset('front/img/icon-27.png')}}" alt="">In progress</td>
 										</tr>
 										<tr>
@@ -166,8 +166,8 @@
 												</label>
 											</td>
 											<td>04/05/2021<span>10:19:44</span></td>
-											<td class="text-center">57800</td>
-											<td class="text-center"><a href="#" class="btn-success">View File</a></td>
+											<td>57800</td>
+											<td>1ARk1BUmaZPaJzrPBNQXFxshZttjMojkBU</td>
 											<td><img src="{{asset('front/img/icon-27.png')}}" alt="">In progress</td>
 										</tr>
 									</tbody>
@@ -176,8 +176,9 @@
 							<div class="col-lg-12 xs-flush only-xs visible-xs  col-sm-12 col-12">
 								<table>
 									<tbody>
-										<tr class="first text-left">
+										<tr class="first">
 											<td>2021-03-29 11:56:29</td>
+											<td><img src="{{asset('front/img/icon-27.png')}}" alt=""/> In Progress</td>
 										</tr>
 										<tr>
 											<td>
@@ -189,11 +190,12 @@
 											<td>
 												<span>Quantity</span>1.0000
 											</td>
-											<td class="w-details"><a href="#" class="btn-success">View File</a></td>
-											<td class="code"><img src="{{asset('front/img/icon-27.png')}}" alt=""/> In Progress</td>
+											<td class="w-details">Wallet Details</td>
+											<td class="code">bnb136ns6lfw4zs5hg4n85vdthaad7h</td>
 										</tr>
-										<tr class="first text-left">
+										<tr class="first">
 											<td>2021-03-29 11:56:29</td>
+											<td><img src="{{asset('front/img/icon-27.png')}}" alt=""/> In Progress</td>
 										</tr>
 										<tr>
 											<td>
@@ -205,8 +207,8 @@
 											<td>
 												<span>Quantity</span>1.0000
 											</td>
-											<td class="w-details"><a href="#" class="btn-success">View File</a></td>
-											<td class="code"><img src="{{asset('front/img/icon-27.png')}}" alt=""/> In Progress</td>
+											<td class="w-details">Wallet Details</td>
+											<td class="code">bnb136ns6lfw4zs5hg4n85vdthaad7h</td>
 										</tr>
 										<tr>
 											<td>
@@ -218,8 +220,8 @@
 											<td>
 												<span>Quantity</span>1.0000
 											</td>
-											<td class="w-details"><a href="#" class="btn-success">View File</a></td>
-											<td class="code"><img src="{{asset('front/img/icon-27.png')}}" alt=""/> In Progress</td>
+											<td class="w-details">Wallet Details</td>
+											<td class="code">bnb136ns6lfw4zs5hg4n85vdthaad7h</td>
 										</tr>
 									</tbody>
 								</table>	
@@ -230,12 +232,13 @@
 			</div>
 		</div>
 	</section>
+
 	@endsection
 
 @section('page_scripts')
 <script src="js/main.js"></script> <!-- Gem jQuery -->
 	<script src="js/bootstrap-datepicker.js"></script>
-		<script>
+<script>
 		$('#datepicker').datepicker('toggle');
 		$('#datepickertwo').datepicker('toggle');
 		$('#datepickerthree').datepicker('toggle');
