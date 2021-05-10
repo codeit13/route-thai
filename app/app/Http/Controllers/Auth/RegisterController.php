@@ -54,10 +54,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {        
         return Validator::make($data, [
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
-            'otp' => ['required','array'],
-            'mobile' => ['required']
+            'otp' => ['sometimes','array'],
+            'mobile' => ['required','unique:users,mobile']
         ]);
     }
 
@@ -93,7 +93,7 @@ class RegisterController extends Controller
         $otp = implode('',$request->otp);
         $response = $this->service->verifyOtpSms($request->mobile, $request->code, $request->session);
         $response = json_decode($response);
-        return $response->Status == 'success' ?  true: false;
+        return $response->Status == 'Success' ?  true: false;
     }
 
     public function showRegistrationForm(Request $request){
