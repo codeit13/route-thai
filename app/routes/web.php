@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function()
 
 //wallet
 
-Route::get('wallet/withdraw/history',[App\Http\Controllers\TransactionController::class, 'withdraw_history'])->name('wallet.withdraw.history');
+Route::get('wallet/withdraw/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'withdraw_history'])->name('wallet.withdraw.history');
 
 Route::get('wallet/withdraw/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create_withdraw'])->name('wallet.withdraw');
 

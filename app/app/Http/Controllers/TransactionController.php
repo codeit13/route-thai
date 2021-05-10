@@ -155,9 +155,35 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function withdraw_history()
+    public function withdraw_history($type='',$typename='')
     {
-      return view('front.wallet.wallet-withraw-history');
+      $currency_types=\App\Models\CurrencyType::all();
+       
+
+      $walletType=new \App\Models\CurrencyType;
+
+
+      if($type)
+        {
+
+          $walletType=$walletType->find($type);
+          $currencies=\App\Models\Currency::where('type_id',$type)->get();
+
+        }
+        else
+        {
+            $currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
+             $type=$currency_types[0]->id;
+        }
+
+        $transactions= \App\Models\Transaction::where('type',2)
+                                  ->whereHas('currency', function ($query)use ($type) {
+                                          $query->where('type_id',$type);
+
+                                        })->paginate(10);
+
+
+      return view('front.wallet.wallet-withdraw-history',compact('transactions','currencies','currency_types','walletType'));
     }
 
 
