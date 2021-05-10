@@ -1,7 +1,8 @@
 @extends('layouts.front_auth')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.14/css/intlTelInput.css" rel="stylesheet" />
+<link href="{{ asset('front/css/flags.css')}}" rel="stylesheet" />
+<link href="{{ asset('front/css/intlTelInput.css')}}" rel="stylesheet" />
 <style>
-    .intl-tel-input.allow-dropdown {
+    .iti.iti--allow-dropdown {
         width: 100%;
     }
     </style>
@@ -22,12 +23,21 @@
                     <div class="tableRow">
                         <div class="tableCell">
                             <div class="login_forms">
-                                <a class="navbar-brand  dark-mode-img" href={{ route('home') }}>
+                                <a class="navbar-brand  dark-mode-img dark-logo" href={{ route('home') }}>
 									<img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
 									<img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
 								</a>
                                 <h2>{{ __('Create a free account') }}</h2>
                                 <p>{{ __('Welcome to Route') }}</p>
+                                <p class="error">
+                                    @if ($message = Session::get('message'))
+                                    <div class="alert alert-danger alert-block">
+                                        <a type="button" class="close" data-dismiss="alert">×</a>	
+                                            <strong>{{ $message }}</strong>
+                                    </div>
+                                    @endif
+                                </p>
+                                <p class="error msg"></p>
                                 <form method="POST" id="loginform" action="{{ route('otp.register') }}">
                                     @csrf
                                     <div class="tab-content" id="myTabContent">
@@ -50,12 +60,12 @@
                                                 <input type="password"
                                                     class="form-control @error('password') is-invalid @enderror"
                                                     name="password" required id="exampleInputPassword1" placeholder=""
-                                                    name="password">
+                                            name="password">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Phone Number</label>
-                                                <input type="tel" class="form-control" id="mobile_no"
-                                                    aria-describedby="emailHelp" placeholder="Enter mobile No" name="mobile">
+                                                <input type="tel" value="{{ old('mobile')}}" class="form-control" id="mobile_no"
+                                                    aria-describedby="emailHelp" required placeholder="Enter mobile No" name="mobile">
                                             </div>
 
                                             <div class="form-check">
@@ -80,7 +90,7 @@
     </section>
 @endsection
 @section('page_scripts')
-    <script>
+<script>
         $('#mobile_no').on('keyup',function(){
             var dis = $(this);
             if(dis.val().length == 10){
@@ -138,19 +148,34 @@
         });
     </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.14/js/utils.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.14/js/intlTelInput.js"></script>
+<script src="{{ asset('front/js/intlTelInput.js')}}"></script>
+<script src="{{ asset('front/js/jquery.flagstrap.js')}}"></script>
 <script>
-    $(document).ready(function() {
-        $("#hide").click(function() {
-            $(".alertbox").hide();
-        });
-        $("#show").click(function() {
-            $(".alertbox").show();
-        });
-        $("#mobile_no").intlTelInput({
-            dropdownContainer: 'body',
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.14/js/utils.js"
-        });
+$(document).ready(function() {
+    $("#hide").click(function() {
+        $(".alertbox").hide();
     });
+    $("#show").click(function() {
+        $(".alertbox").show();
+    });
+    var input = document.querySelector("#mobile_no");
+    let iti = intlTelInput(input, {
+        dropdownContainer: document.body,
+        geoIpLookup: function(callback) {
+        $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            var countryCode = (resp && resp.country) ? resp.country : "";
+            callback(countryCode);
+        });
+        },
+        initialCountry: "th",
+        utilsScript: "{{ asset('front/js/utils.js')}}",
+    });
+    $('#mobile_no').on("keyup", function() {
+            let mobileNo = iti.getNumber();
+            console.log(iti.getSelectedCountryData().dialCode);
+            let phone_Validity;
+            $(this).val(mobileNo);
+    });
+});
 </script>
 @endsection

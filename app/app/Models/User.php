@@ -47,5 +47,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\Transaction','user_id','id');
     }
 
+    public function setNameAttribute($value)
+    {
+        $parts = explode("@",  strtolower($this->attributes['email']));
+        $email = $parts[0];
+        $username = $value;
+        do
+        { 
+            $username = $email.rand(00, 9999999);
+        }
+        while(User::whereName($email)->exists());
+        
+        $this->attributes['name'] = $username;
+    }
+
     
 }

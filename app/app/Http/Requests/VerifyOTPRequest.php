@@ -24,9 +24,6 @@ class VerifyOTPRequest extends FormRequest
     public function rules()
     {
         return [
-
-        //    'mobile' => ['required'],
-
             'code' => ['required'],
             'sessionid' => ['required']
         ];

@@ -1,5 +1,10 @@
 @extends('layouts.front_auth')
-
+<style>
+    .error{
+        color:red !important;
+        text-align: left !important;
+    }
+    </style>
 @section('content')
     <section id="main-content" class="login_page">
         <div class="container-fluid">
@@ -17,12 +22,13 @@
                     <div class="tableRow">
                         <div class="tableCell">
                             <div class="login_forms">
-                                <a class="navbar-brand  dark-mode-img" href={{ route('home') }}>
+                                <a class="navbar-brand  dark-mode-img dark-logo" href={{ route('home') }}>
 									<img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
 									<img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
 								</a>
                                 <h2>{{__("Welcome to Route")}}</h2>
                                 <p>{{__("Please sign-in to your account and start the adventure")}}</p>
+                               
                                   <form method="POST"  id="loginform" action="{{ route('login') }}">
                                     @csrf
                                   <div class="tab-content" id="myTabContent">
@@ -53,27 +59,19 @@
                                         <input type="text" class="form-control" id="otp"
                                             aria-describedby="emailHelp" placeholder="Enter OTP" name="otp">
                                         <input type="hidden" id="session_id" value="">    
+                                        <p class="not_m mb-0 resend-btn text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<span id="timer"></span>
+                                        </b></p>
+                                        <p class="otp-msg mb-0 text-left text-green"></p>
                                     </div>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                        <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                                        <label class="form-check-label" for="exampleCheck1">{{__("Remember me")}}</label>
                                         <a href="{{ route('password.request') }}">{{__("Forgot Password?")}}</a>
                                     </div>
-                                    <button type="button" id="send-otp" class="btn btn-primary">{{__("Sign In")}}</button>
-                               
-                                <p class="not_m">{{__("New on our platform?")}} <a href="{{ route('register') }}">{{__("Create an account")}}</a></p>
+                                    <button type="button" id="send-otp" class="btn btn-primary">{{__("Send OTP")}}</button>
+                                    <button type="submit" disabled  id="login" style="display: none" class="btn btn-primary">{{__("Sign In")}}</button>
+                                    <p class="not_m">{{__("New on our platform?")}} <a href="{{ route('register') }}">{{__("Create an account")}}</a></p>
                             </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" >
-                                <p></p>
-                                <div class="form-group otp">
-                                    <p></p>
-                                    <label for="exampleInputEmail1">OTP</label>
-                                    <input type="text" class="form-control" id="otp"
-                                        aria-describedby="emailHelp" placeholder="Enter OTP" name="otp">
-                                    <input type="hidden" id="session_id" value="">    
-                                </div>
-                                <button type="submit" class="btn btn-primary">Login</button>
-                             </div>
                             </form>
                           </div>
                         </div>
@@ -84,29 +82,36 @@
     </section>
 @section('page_scripts')
 <script>
+var defaultCount = 300;
+var count=defaultCount;
+var send = 1;
+var counter = null;
     $('#send-otp').click(function(e) {
         e.preventDefault();
-        $("#profile-tab").trigger('click'); 
         var dis = $('#email');
                 $.ajax({
                     url: "{{ route('send.otp.login')}}",
-                    
                     headers: {
                        'X-CSRF-Token': "{{ csrf_token() }}"
                     },
                     method: "POST",
                     async: true,
                     cache: false,
-
                     data: { _token: "{{ csrf_token() }}", email: dis.val() },
                     dataType: "json",
-                    success: function (data) {
-                        
-                        $('#session_id').val(data.Details);
-                        setTimeout( function() { $('.otp').show(); }, 800); 
+                    success: function (data) {    
+                        setTimeout( function() { $('.otp').show();
+                            $('#session_id').val(data.Details);
+                            $('#send-otp').hide();
+                            $('#login').show();
+                           counter = setInterval(timer, 1000);
+                        }, 500);     
                     },
-                    error: function (event) { 
-                        
+                    error: function (data) { 
+                        response = JSON.parse(data.responseText);
+                        $(response.errors).each(function(index,value){
+                               $('p.msg').html(value.email)
+                        })
                     },
                 });
         }); 
@@ -125,9 +130,17 @@
                     dataType: "json",
                     async: true,
                     cache: false,
+                    beforeSend:function(){
+                        $('.otp-msg').html("Checking...");
+                    },
                     success: function (data) {
-                        $('#send-otp').hide();
-                        $('#create-account').show();
+                            setTimeout( function() { 
+                                $('#send-otp').hide();
+                                $('.otp-msg').html("The OTP is verified successfully.");
+                                $('.resend-btn').hide();
+                                $('#login').attr('disabled',false)
+                            }, 1500);
+                            $('.msg').html("");
                     },
                     error: function (event) { 
                         
@@ -138,78 +151,55 @@
                 console.log('errors');
                 return false; 
         }
-        });
+    });
+ 
+function timer()
+{
+    count = count-1;
+    if (count <= 0)
+    {
+        clearInterval(counter);
+        $('.time a').attr('onclick',"sendOTP()")
+        $("#timer").html('');
+        return;
+    }
+    var minutes = Math.floor(count / 60);
+    var seconds = count - minutes * 60;
+    var html = "in ";
+    if(minutes > 0 ) html = html + minutes + " mins ";
+    if(seconds > 0 ) html = html + seconds + " secs ";
+    $("#timer").html(html);
+
+}
+
+
+function sendOTP(){
+    var dis = $('#email');
+	$.ajax({
+        url: "{{ route('send.otp.login')}}",
+        headers: {
+            'X-CSRF-Token': "{{ csrf_token() }}"
+        },
+        method: "POST",
+        async: true,
+        cache: false,
+        data: { _token: "{{ csrf_token() }}", email: dis.val() },
+		dataType: "json",
+		success: function (data) {
+			$('#session_id').val(data.Details);
+			send++;
+			count = defaultCount * send;
+			setInterval(timer, 500*send);
+			$('.msg').html("The OTP has been sent.");
+			$('.time a').attr('onclick',"")
+			setTimeout( function() { $('.msg').html("") }, 3500); 
+		},
+		error: function (event) { 
+			
+		},
+	}); 
+}
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/js/intlTelInput.min.js"></script>
 @endsection
-
-    {{-- <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-value" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
 @endsection
