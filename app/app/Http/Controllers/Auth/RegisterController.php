@@ -79,12 +79,12 @@ class RegisterController extends Controller
 
     public function register(Request $request){
 
-        // if($this->verifyOTP($request)) {
+        if($this->validator($request->all()) && $this->verifyOTP($request)) {
            $this->create($request->all());
            if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
              return redirect()->intended('/home');
            } 
-        // }
+        }
         return redirect()->intended('register')->withInput($request->all())->with('message', 'The entered OTP is wrong');
     }
 
