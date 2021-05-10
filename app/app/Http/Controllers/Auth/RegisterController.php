@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\VerifyOTPRequest;
 
 class RegisterController extends Controller
 {
@@ -79,19 +80,22 @@ class RegisterController extends Controller
 
     public function register(Request $request){
 
-        if($this->validator($request->all()) && $this->verifyOTP($request)) {
-           $this->create($request->all());
-           if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-             return redirect()->intended('/home');
-           } 
+        if($this->verifyOTP($request)) {
+            if( $validator = $this->validator($request->all())) {
+                $this->create($request->all());
+                if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+                    return redirect()->intended('/home');
+                } 
+            } else{
+                return redirect()->intended('register')->withInput($request->all())->withErrors($validator);
+            }
         }
         return redirect()->intended('register')->withInput($request->all())->with('message', 'The entered OTP is wrong');
     }
 
-    public function verifyOTP($request){
-    
+    public function verifyOTP(Request $request){    
         $otp = implode('',$request->otp);
-        $response = $this->service->verifyOtpSms($request->mobile, $request->code, $request->session);
+        $response = $this->service->verifyOtpSms($request->mobile, $otp, $request->session);
         $response = json_decode($response);
         return $response->Status == 'Success' ?  true: false;
     }
