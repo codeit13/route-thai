@@ -12,9 +12,8 @@ class Currency extends Model
 
     protected $table='currency';
 
-     protected $attributes = [
-       'user_total' => '0.00000000',
-    ];
+
+
 
     public function currency_type()
     {

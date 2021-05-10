@@ -11,7 +11,7 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest')-
 
     // Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
-        Route::get('deposit/requests','TransactionController@show')->name('deposit.requests.show');
+        Route::get('deposit/requests/{type}/{name}','TransactionController@show')->name('deposit.requests.show');
         Route::get('wallet/deposit/{transaction}/change/status/{status}','TransactionController@changeStatus')->name('wallet.deposit.status');
         Route::get('users', 'UserController@index')->name('users');
     // });

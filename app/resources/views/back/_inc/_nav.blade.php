@@ -25,11 +25,21 @@
                         <span class="nav-link-text">User Management</span>
                      </a>
                   </li>
+                  @php 
+
+                  $requestsTypes=\App\Models\CurrencyType::all();
+
+
+                  @endphp
+
+                  @foreach($requestsTypes as $rqType)
                   <li class="nav-item">
-                     <a class="nav-link" href="{{ route('admin.deposit.requests.show') }}"> <i class="fa fa-money" aria-hidden="true"></i>
-                        <span class="nav-link-text">Deposit Requests</span>
+                     <a class="nav-link" href="{{ route('admin.deposit.requests.show',['type'=>$rqType->id,'name'=>$rqType->type]) }}"> <i class="fa fa-money" aria-hidden="true"></i>
+                        <span class="nav-link-text">{{__($rqType->type)}}{{__(' Deposit Requests')}}</span>
                      </a>
                   </li>
+
+                  @endforeach
                   {{-- 
                   <li class="nav-item">
                      <a class="nav-link" href="#"> <i class="fa fa-file-excel-o" aria-hidden="true"></i>

@@ -24,10 +24,9 @@ class VerifyOTPRequest extends FormRequest
     public function rules()
     {
         return [
-<<<<<<< Updated upstream
-=======
-            'mobile' => ['required'],
->>>>>>> Stashed changes
+
+        //    'mobile' => ['required'],
+
             'code' => ['required'],
             'sessionid' => ['required']
         ];

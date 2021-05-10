@@ -54,7 +54,7 @@
                                  @foreach($transactions as $index => $transaction)
 
                                  <tr role="row" class="even">
-                                    <td class="dtr-control" tabindex="0">{{$transaction->trans_id}}</td>
+                                    <td class="dtr-control" tabindex="0">{{$transaction->id}}</td>
                                     <td class="sorting_1">{{__($transaction->user->name)}}</td>
                                     <td class="sorting_1">@if($transaction->currency->hasMedia('icon'))
                                        <img src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 

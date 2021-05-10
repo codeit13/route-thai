@@ -16,7 +16,9 @@ class TransactionController extends Controller
      */
     public function index()
     {
-      return view('front.wallet-deposit-history');
+      $transactions=Auth::user()->transactions()->where('type',1)->get();
+
+      return view('front.wallet-deposit-history',compact('transactions'));
     }
 
     /**
@@ -143,6 +145,53 @@ class TransactionController extends Controller
 
  
         return view('front.wallet-transactions',compact('walletType','currencies'));
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function withdraw_history()
+    {
+      return view('front.wallet.wallet-withraw-history');
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create_withdraw($type='',$typename='',$currency='',$currencyname='')
+    {
+
+        $currency_types=\App\Models\CurrencyType::all();
+
+        
+        $currentCurrency=$currency;
+
+
+        $walletType=new \App\Models\CurrencyType;
+
+        if($type)
+        {
+
+          $walletType=$walletType->find($type);
+          $currencies=\App\Models\Currency::where('type_id',$type)->get();
+
+        }
+        else
+        {
+            $currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
+        }
+
+
+        return view('front.wallet.wallet-withdraw',compact('currency_types','walletType','currencies','currentCurrency'));
+
+       
+
     }
 
     /**
