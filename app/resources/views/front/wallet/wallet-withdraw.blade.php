@@ -60,13 +60,74 @@
                   <div class="field">
                     <label>Coin</label>
                     <div class="dropdown currency_two three_coins crypto">
+
+                        @foreach($currencies as $cIndex=> $currency)
+
+                    @if($currency->id==$currentCurrency)
+
                       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="img/bitcoin.png" alt=""> BTC <span>Bitcoin</span>
+                        
+                      @if($currency->hasMedia('icon'))
+    
+                                      
+
+                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+
+                      @endif
+
+                      {{__($currency->short_name)}} <span>{{__($currency->name)}}</span>
                       </button>
+                      @endif
+
+                      @endforeach
+
+                      
+                    @if(!$currentCurrency)
+
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        
+                      @if($currencies[0]->hasMedia('icon'))
+    
+                                      
+
+                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+
+                      @endif
+
+                      {{__($currencies[0]->short_name)}} <span>{{__($currencies[0]->name)}}</span>
+                      </button>
+
+
+
+                    @endif
+
+
+
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#"><img src="img/bitcoin.png" alt=""> BTC <span>Bitcoin</a>
+
+                           @foreach($currencies as $cIndex=> $currency)
+
+                            <a class="dropdown-item" href="#">
+
+                                 @if($currency->hasMedia('icon'))
+    
+                                      
+
+                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+
+                      @endif
+
+                      {{__($currency->short_name)}} <span>{{__($currency->name)}}</span>
+
+
+
+                            </a>
+
+
+                    @endforeach
+                           <!--    <a class="dropdown-item" href="#"><img src="img/bitcoin.png" alt=""> BTC <span>Bitcoin</a>
                         <a class="dropdown-item" href="#"><img src="img/icon-5.png" alt=""> ETH <span>Ethereum</a>
-                        <a class="dropdown-item" href="#"><img src="img/icon-6.png" alt=""> BNB <span>BNB</span></a>
+                        <a class="dropdown-item" href="#"><img src="img/icon-6.png" alt=""> BNB <span>BNB</span></a> -->
                       </div>
                     </div>
                   </div>
@@ -199,6 +260,11 @@
         $("ul.btc").children('.init').html($(this).html());
         allOptions.toggle();
     });
+
+    $(".currency_two .dropdown-menu .dropdown-item").on("click", function(e) { e.preventDefault();
+    $('.currency_two .dropdown-toggle').html($(this).html());
+});
+
   </script>
 
   @endsection
