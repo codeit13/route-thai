@@ -64,7 +64,7 @@
                                         <p class="otp-msg mb-0 text-left"></p>
                                     </div>
                                     <div class="form-check">
-                                        <input type="checkbox" name="remember_me" class="form-check-input" id="exampleCheck1" required>
+                                        <input type="checkbox" name="remember_me" class="form-check-input" id="exampleCheck1">
                                         <label class="form-check-label" for="exampleCheck1">{{__("Remember me")}}</label>
                                         <a href="{{ route('password.request') }}">{{__("Forgot Password?")}}</a>
                                     </div>
