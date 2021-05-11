@@ -5,6 +5,8 @@
     .iti.iti--allow-dropdown {
         width: 100%;
     }
+
+    
     </style>
 @section('content')
     <section id="main-content" class="login_page">
@@ -24,7 +26,7 @@
                         <div class="tableCell">
                             <div class="login_forms">
                                 <a class="navbar-brand  dark-mode-img dark-logo" href={{ route('home') }}>
-									<img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
+									<img src="{{ asset('front/img/dark-logo.png') }}" class="black-logo" alt="">
 									<img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
 								</a>
                                 <h2>{{ __('Create a free account') }}</h2>
@@ -55,9 +57,10 @@
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
                                                 <input type="email"
-                                                    class="form-control @error('email') is-invalid @enderror" name="email"
-                                                    value="{{ old('email') }}" required id="exampleInputEmail1"
+                                                    class="form-control @error('email') is-invalid @enderror"
+                                                    value="{{ old('email') }}" required id="email"
                                                     aria-describedby="emailHelp" placeholder="" name="email">
+                                                    <label id="email-err"></label>
                                             </div>
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
@@ -75,10 +78,11 @@
                                                 <label for="exampleInputEmail1">Phone Number</label>
                                                 <input type="tel" value="{{ old('mobile')}}" class="form-control" id="mobile_no"
                                                     aria-describedby="emailHelp" required placeholder="Enter mobile No" name="mobile">
+                                                <label id="mobile-no-err"></label>
                                             </div>
 
                                             <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
                                                 <label class="form-check-label" for="exampleCheck1">I have read and agree to
                                                     the Terms of Service. Routes Terms</label>
                                             </div>
@@ -92,6 +96,15 @@
                             </div>
                    
                         <p class="not_m">Already a member? <a href="{{ route('login') }}">Sign in</a></p>
+                        <ul>
+                            <li>
+                                <div class="flot_btn">
+                                    <div class="dark-light">
+                                        <i class="fa fa-moon-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -180,10 +193,82 @@ $(document).ready(function() {
         utilsScript: "{{ asset('front/js/utils.js')}}",
     });
     $('#mobile_no').on("keyup", function() {
+        var dis = $(this);
             let mobileNo = iti.getNumber();
-            console.log(iti.getSelectedCountryData().dialCode);
             let phone_Validity;
             $(this).val(mobileNo);
+            if(dis.val().length > 10){
+              jQuery.ajax({
+                type: 'POST',
+                url: "{{ route('mobile-check') }}",
+                data: {
+                  action: "mobile-no-check",
+                  mobile: mobileNo,
+                  _token: "{{ csrf_token() }}"
+                },
+                success: function(res) {
+                  cls = '';
+                  if (res.status == 'OK') {
+                    phone_Validity = false;
+                    cls  = 'text-success';
+                  } else if (res.status == 'NOT OK') {
+                    phone_Validity = true;
+                    cls  = 'text-danger';
+                  }
+                  if (!phone_Validity) {
+                    $('#phone').removeClass('is-valid');
+                    $('#phone').addClass('is-invalid');                    
+                  } else {
+                    $('#phone').removeClass('is-invalid');
+                    $('#phone').addClass('is-valid');
+                  }
+                  $('#mobile-no-err').html("<span class='"+ cls +"'>"+res.message+"</span>");
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                  console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        } else $('#mobile-no-err').html("");
+    });
+    $('#email').on("keyup", function() {
+        var dis = $(this);
+            let email_Validity;
+        if(dis.val().length > 10){
+            jQuery.ajax({
+            type: 'POST',
+            url: "{{ route('email-check') }}",
+            data: {
+                action: "email-check",
+                email: dis.val(),
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(res) {
+                cls = '';
+                if (res.status == 'OK') {
+                email_Validity = false;
+                cls  = 'text-success';
+                } else if (res.status == 'NOT OK') {
+                email_Validity = true;
+                cls  = 'text-danger';
+                }
+                if (!email_Validity) {
+                $('#email').removeClass('is-valid');
+                $('#email').addClass('is-invalid');                    
+                } else {
+                $('#email').removeClass('is-invalid');
+                $('#email').addClass('is-valid');
+                }
+                $('#email-err').html("<span class='"+ cls +"'>"+res.message+"</span>");
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+        } else {
+            ('#email-err').html("");
+        }
     });
 });
 </script>

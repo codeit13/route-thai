@@ -431,6 +431,8 @@ li.hd_small a {
 #header .dropdown-menu.show img {
     height: 20px;
     margin-right: 10px;
+    border-radius: 50px;
+    width: 20px;
 }
 #header .dropdown-menu.show span {
     color: #00c98e;
@@ -439,9 +441,10 @@ li.hd_small a {
 #topbar .dropdown-menu.show a,
 #header .dropdown-menu.show a {
     color: #fff;
-    padding: 10px 15px;
+    padding: 8px 15px;
     text-transform: capitalize;
     margin: 0px;
+    border-radius: 5px;
     width: 100%;
     line-height: 23px !important;
 }
@@ -1682,7 +1685,7 @@ span#thb_eth_volume {
     height: 100vh;
     text-align: center;
     padding: 0px 8%;
-    background-color: #FAFAFA;
+    background-color: var(--body-bg);
 }
 .login_forms {
     display: inline-block;
@@ -1741,7 +1744,7 @@ span#thb_eth_volume {
     font-size: 16px !important;
     text-align: center;
 }
-/* .login_forms ul li {
+.login_forms ul li {
     display: inline-block;
     margin-bottom: 25px;
     padding-right: 10px;
@@ -1758,8 +1761,8 @@ span#thb_eth_volume {
     font-size: 14px;
     border-radius: 8px;
     text-decoration: none;
-} */
-/* .login_forms span {
+}
+.login_forms span {
     display: inline-block;
     width: 100%;
     margin-bottom: 20px;
@@ -1767,10 +1770,32 @@ span#thb_eth_volume {
     text-align: center;
     z-index: 999999;
     color: #6e6d7a;
-} */
+}
 .login_forms span b {
     background: var(--body-bg);
     padding: 0px 10px;
+}
+span.fa.fa-fw.field-icon.toggle-password.fa-eye, span.fa.fa-fw.field-icon.toggle-password.fa-eye-slash {
+    border: none;
+    display: inline-block;
+    float: right;
+    text-align: right;
+    top: -27px;
+    right: 12px;
+    width: auto;
+}
+
+span.fa.fa-fw.field-icon.toggle-password.fa-eye::after, span.fa.fa-fw.field-icon.toggle-password.fa-eye-slash::after {
+    display: inline-block;
+    content: "";
+    position: absolute;
+    top: 11px;
+    background-color: #e0e0e0;
+    height: 1px;
+    width: 100%;
+    display: none;
+    left: 0;
+    z-index: -1;
 }
 .login_forms span::after {
     display: inline-block;
@@ -2699,6 +2724,13 @@ h3.wa_text {
     margin-bottom: 15px !important;
     font-family: 'Open Sans', sans-serif;
     color: var(--white-black-text) !important;
+}
+
+.flot_btn {
+    float: right;
+    position: fixed;
+    right: 10px;
+    bottom: 25px;
 }
 /*****======= Responsive Style Css ======***********/
 
@@ -4911,7 +4943,7 @@ button.close {
     margin: 0px;
 }
 #myModal2 .modal-body .summary label.check input[type="checkbox"]:checked:before {
-    content: '\✓';
+    content: '\âœ“';
  position: absolute;
     top: 0px;
     left: 0px;
@@ -5050,7 +5082,7 @@ button.close {
     outline: 0;
 }
 #wallet-content .white-box label input[type="checkbox"]:checked:before {
-    content: '\✓';
+    content: '\âœ“';
  position: absolute;
     top: 0px;
     left: 0px;
@@ -5399,6 +5431,16 @@ a.bell span {
     background: var(--body-bg);
     padding: 20px 10px;
     margin-bottom: 15px;
+    z-index: 9999;
+    position: relative;
+}
+#wallet-content.request .tab-content .gray-c ul li {
+    display: inline-block;
+    padding-left: 15px;
+}
+#wallet-content.request .tab-content .gray-c ul li a {
+    color: var(--white-black-text);
+    font-size: 25px;
 }
 #wallet-content.request .tab-content h6 {
     color: var(--white-black-text);

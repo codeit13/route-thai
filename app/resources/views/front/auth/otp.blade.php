@@ -39,6 +39,15 @@
 							
 							<p class="not_m text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<span id="timer"></span>
 							</b></p>
+							<ul>
+								<li>
+									<div class="flot_btn">
+										<div class="dark-light">
+											<i class="fa fa-moon-o" aria-hidden="true"></i>
+										</div>
+									</div>
+								</li>
+							</ul>
 						</div>	
 					</div>
 				</div>			

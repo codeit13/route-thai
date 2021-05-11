@@ -106,8 +106,25 @@ class RegisterController extends Controller
     }
 
     public function showOTPForm(Request $request){
+        $validator = $this->validator($request->all());
+        // dd($validator->errors());
+        if ($validator->errors()->count() > 0)
+        return redirect()->back()->withInput($request->all())->withErrors($validator); 
         $data = $this->service->sendOtpSms($request->mobile);
         return view('front.auth.otp',compact('request','data'));
     }
+
+    public function isMobileNoExist(Request $request){
+        $status = User::where('mobile',$request->mobile)->count() == 0 ? 'OK': 'NOT OK';
+        $message = $status == 'OK' ? 'Congrats! You can register with this number':'Sorry ! This Mobile Number is already registered.';
+        return response()->json(['status'=>$status,'message'=>$message]);
+    }
+
+    public function isEmailExist(Request $request){
+        $status = User::where('email',$request->email)->count() == 0 ? 'OK': 'NOT OK';
+        $message = $status == 'OK' ? 'Congrats! You can register with this email address.':'Sorry ! This email address is already registered.';
+        return response()->json(['status'=>$status,'message'=>$message]);
+    }
 }
+
 
