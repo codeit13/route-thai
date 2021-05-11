@@ -222,7 +222,7 @@ $(document).ready(function() {
                     $('#phone').removeClass('is-invalid');
                     $('#phone').addClass('is-valid');
                   }
-                  $('#mobile-no-err').html("<span class='"+ cls +"'>"+res.message+"</span>");
+                  $('#mobile-no-err').html("<label class='"+ cls +"'>"+res.message+"</label>");
 
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -259,7 +259,7 @@ $(document).ready(function() {
                 $('#email').removeClass('is-invalid');
                 $('#email').addClass('is-valid');
                 }
-                $('#email-err').html("<span class='"+ cls +"'>"+res.message+"</span>");
+                $('#email-err').html("<label class='"+ cls +"'>"+res.message+"</label>");
 
             },
             error: function(xhr, ajaxOptions, thrownError) {
