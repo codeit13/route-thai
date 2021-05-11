@@ -26,7 +26,9 @@ Route::get('/createstoragelink', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes(['verify'=>true]);
+Auth::routes(['verify'=>true,'request'=>true]);
+
+Route::get('password/email', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('passwords.email');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

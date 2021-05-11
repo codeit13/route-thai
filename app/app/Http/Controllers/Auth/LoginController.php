@@ -7,7 +7,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\User;
+use Cookie;
 
 class LoginController extends Controller
 {
@@ -53,9 +54,21 @@ class LoginController extends Controller
             'password' => 'required|min:6'
         ]);
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-            return redirect()->intended('/home');
+        $credential = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+
+        $remember_me  = ( !empty( $request->remember_me ) )? TRUE : FALSE;
+
+        if(Auth::attempt($credential) || Auth::viaRemember()){
+            $user = User::where(["email" => $credential['email']])->first();
+            Auth::login($user, $remember_me);
+            return redirect()->withCookie(Cookie::make('logged_in', $user->remember_token, 43200))->intended('/home');
         }
+        // if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+        //     return redirect()->intended('/home');
+        // }
         return back()->withInput($request->only('email', 'remember'));
     }
 }

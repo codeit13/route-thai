@@ -25,17 +25,15 @@
                                 <a class="navbar-brand  dark-mode-img dark-logo" href={{ route('home') }}>
 									<img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
 									<img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
-								</a>
-                                <h2>{{__("Welcome to Route")}}</h2>
-                                <p>{{__("Please sign-in to your account and start the adventure")}}</p>
-                               
-                                  <form method="POST"  id="loginform" action="{{ route('login') }}">
+                                </a>                               
+                                <h2>{{ __('Reset Password') }}</h2>
+                                  <form method="POST"  id="loginform" action="{{ route('password.email') }}">
                                     @csrf
                                   <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                         @error('email')
-                                        <p class="invalid-value" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                        <p class="error" role="alert">
+                                            {{ $message }}
                                         </p>
                                         @enderror
                                         @error('password')
@@ -49,27 +47,7 @@
                                         <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required id="email"
                                             aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus>
                                     </div>
-                                    <p></p>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">{{__("Password")}}</label>
-                                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required id="exampleInputPassword1" autocomplete="cc-additional-name">
-                                    </div>
-                                    <div class="form-group otp" style="display: none">
-                                        <label for="exampleInputEmail1">OTP</label>
-                                        <input type="text" class="form-control" id="otp"
-                                            aria-describedby="emailHelp" placeholder="Enter OTP" name="otp">
-                                        <input type="hidden" id="session_id" value="">    
-                                        <p class="not_m mb-0 resend-btn text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<span id="timer"></span>
-                                        </b></p>
-                                        <p class="otp-msg mb-0 text-left"></p>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" name="remember_me" class="form-check-input" id="exampleCheck1" required>
-                                        <label class="form-check-label" for="exampleCheck1">{{__("Remember me")}}</label>
-                                        <a href="{{ route('password.request') }}">{{__("Forgot Password?")}}</a>
-                                    </div>
-                                    <button type="button" id="send-otp" class="btn btn-primary">{{__("Send OTP")}}</button>
-                                    <button type="submit" disabled  id="login" style="display: none" class="btn btn-primary">{{__("Sign In")}}</button>
+                                    <button type="submit" id="reset" class="btn btn-primary">{{__("Send Password Reset Link")}}</button>
                                     <p class="not_m">{{__("New on our platform?")}} <a href="{{ route('register') }}">{{__("Create an account")}}</a></p>
                                 </div>
                             </form>
