@@ -25,6 +25,8 @@
                      </form>
                   </div>
                </div>
+
+               
             </div>
          </div>
       </div>
@@ -70,8 +72,8 @@
                                     <td>
                                        @switch($transaction->status)
                                           @case('pending')
-                                             <a class="btn btn-sm text-success approve-btn" href="{{route('admin.wallet.change.status',['type'=>'deposit','status'=>'approved','transaction'=>$transaction->id])}}" >Accept</a>
-                                             <a class="btn btn-sm text-danger reject-btn" href="{{route('admin.wallet.change.status',['type' => 'deposit','status'=>'rejected','transaction'=>$transaction->id])}}">Reject</a>
+                                             <a class="btn btn-sm text-success approve-btn" href="{{route('admin.wallet.change.status',['type'=>'withdraw','status'=>'approved','transaction'=>$transaction->id])}}" >Accept</a>
+                                             <a class="btn btn-sm text-danger reject-btn" href="{{route('admin.wallet.change.status',['type'=>'withdraw','status'=>'rejected','transaction'=>$transaction->id])}}">Reject</a>
                                           @break
                                           @case('rejected')
                                              <span class="btn-sm text-red">REJECTED</span>

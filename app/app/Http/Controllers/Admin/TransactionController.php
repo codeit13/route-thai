@@ -57,6 +57,46 @@ class TransactionController extends Controller
         return view('back.wallet.deposit-requests',compact('transactions'));
     }
 
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_withdraw($type='',$name='')
+    {
+
+        $currency_types=\App\Models\CurrencyType::all();
+       
+
+        $walletType=new \App\Models\CurrencyType;
+
+
+      if($type)
+        {
+
+          $walletType=$walletType->find($type);
+         // $currencies=\App\Models\Currency::where('type_id',$type)->get();
+
+        }
+        else
+        {
+            //$currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
+             $type=$currency_types[0]->id;
+        }
+
+
+        $transactions= Transaction::where('type',2)
+                                  ->whereHas('currency', function ($query)use ($type) {
+                                          $query->where('type_id',$type);
+
+                                        })->get();
+
+        return view('back.wallet.withdraw-requests',compact('transactions','currency_types','walletType'));
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -91,12 +131,12 @@ class TransactionController extends Controller
         //
     }
 
-    public function changeStatus(\App\Models\Transaction $transaction,$status)
+    public function changeStatus($type,\App\Models\Transaction $transaction,$status)
     {
        if($transaction->status!='rejected' && $transaction->status!='approved'){
 
         if($status=='approved'){
-            $this->updateUserWallet($transaction);
+            $this->updateUserWallet($transaction,$type);
         }
          $transaction->status=$status;
 
@@ -111,13 +151,24 @@ class TransactionController extends Controller
        }
     }
 
-    public function updateUserWallet($transaction)
+    public function updateUserWallet($transaction,$type)
     {
         if($transaction->user->wallet()->where('currency_id',$transaction->currency_id)->exists())
         {
             $wallet=$transaction->user->wallet()->where('currency_id',$transaction->currency_id)->first();
 
+            if($type=='withdraw')
+            {
+            $wallet->coin=$wallet->coin-$transaction->trans_amount;
+                  
+            }
+            else
+            {
+
             $wallet->coin=$wallet->coin+$transaction->trans_amount;
+
+            }
+
 
             $wallet->save();
 

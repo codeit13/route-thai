@@ -11,7 +11,7 @@ class Transaction extends Model
 {
     use HasFactory,Mediable;
 
-    protected $fillable=['currency_id','type','trans_amount'];
+    protected $fillable=['currency_id','type','trans_amount','address'];
 
     public function currency()
     {

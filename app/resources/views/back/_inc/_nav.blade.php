@@ -40,6 +40,15 @@
                   </li>
 
                   @endforeach
+
+                  @foreach($requestsTypes as $rqType)
+                  <li class="nav-item">
+                     <a class="nav-link" href="{{ route('admin.withdraw.requests.show',['type'=>$rqType->id,'name'=>$rqType->type]) }}"> <i class="fa fa-money" aria-hidden="true"></i>
+                        <span class="nav-link-text">{{__($rqType->type)}}{{__(' Withdraw Requests')}}</span>
+                     </a>
+                  </li>
+
+                  @endforeach
                   {{-- 
                   <li class="nav-item">
                      <a class="nav-link" href="#"> <i class="fa fa-file-excel-o" aria-hidden="true"></i>
