@@ -250,11 +250,11 @@ function sendOTP(){
                   if (!phone_Validity) {
                     $('#mobile').removeClass('is-valid');
                     $('#mobile').addClass('is-invalid');
-                    $('#mobile-no-err').html("<span class='"+ cls +"'>"+msg+"</span>");                   
+                    $('#mobile-no-err').html("<label class='"+ cls +"'>"+msg+"</label>");                   
                   } else {
                     $('#mobile').removeClass('is-invalid');
                     $('#mobile').addClass('is-valid');
-                    $('#mobile-no-err').html("<span class='"+ cls +"'>"+msg+"</span>");
+                    $('#mobile-no-err').html("<label class='"+ cls +"'>"+msg+"</label>");
                   }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {

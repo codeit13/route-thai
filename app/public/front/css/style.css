@@ -6416,3 +6416,6 @@ a.method {
 	padding:0px 20px !important;
 	background:#eeeeee !important;	
 }
+.dark-mode .iti__country .iti__country-name {
+    color:#0e0e18;
+}

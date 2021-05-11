@@ -59,7 +59,7 @@
                                         <input type="text" class="form-control" id="otp"
                                             aria-describedby="emailHelp" placeholder="Enter OTP" name="otp">
                                         <input type="hidden" id="session_id" value="">    
-                                        <p class="not_m mb-0 resend-btn text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<span id="timer"></span>
+                                        <p class="not_m mb-0 resend-btn text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<label id="timer"></label>
                                         </b></p>
                                         <p class="otp-msg mb-0 text-left"></p>
                                     </div>
