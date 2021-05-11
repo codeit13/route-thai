@@ -54,11 +54,12 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {        
+        // dd($data);
         return Validator::make($data, [
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'otp' => ['sometimes','array'],
-            'mobile' => ['required','unique:users,mobile']
+            'mobile' => ['required','unique:users']
         ]);
     }
 
@@ -81,15 +82,15 @@ class RegisterController extends Controller
     public function register(Request $request){
 
         if($this->verifyOTP($request)) {
-            if( $validator = $this->validator($request->all())) {
-                $this->create($request->all());
-                if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-                    return redirect()->intended('/home');
-                } 
-            } else{
-                return redirect()->intended('register')->withInput($request->all())->withErrors($validator);
-            }
-        }
+            $validator = $this->validator($request->all());
+            if ($validator->errors()->count() == 0)
+                return redirect()->intended('register')->withInput($request->all())->withErrors($validator); 
+                
+            $this->create($request->all());
+            if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+                return redirect()->intended('/home');
+            } 
+        } 
         return redirect()->intended('register')->withInput($request->all())->with('message', 'The entered OTP is wrong');
     }
 
