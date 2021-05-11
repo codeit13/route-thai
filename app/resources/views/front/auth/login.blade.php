@@ -69,7 +69,7 @@
                                         <a href="{{ route('password.request') }}">{{__("Forgot Password?")}}</a>
                                     </div>
                                     <button type="button" id="send-otp" class="btn btn-primary">{{__("Send OTP")}}</button>
-                                    <button type="submit" disabled  id="login" style="display: none" class="btn btn-primary">{{__("Sign In")}}</button>
+                                    <button type="submit" disabled id="login" style="display: none" class="btn btn-primary">{{__("Sign In")}}</button>
                                     <p class="not_m">{{__("New on our platform?")}} <a href="{{ route('register') }}">{{__("Create an account")}}</a></p>
                                     <ul>
                                         <li>
@@ -116,7 +116,6 @@ var counter = null;
                         counter = setInterval(timer, 1000);
                     },
                     error: function (data) {
-                        console.log(data); 
                         response = JSON.parse(data.responseText);
                         $(response.errors).each(function(index,value){
                             $('p.msg').html(value.email);
@@ -126,9 +125,8 @@ var counter = null;
                 });
         }); 
         
-        $(document).find('#otp').on('change',function(){
+        $(document).find('#otp').on('change keyup',function(){
             var dis = $(this);
-            console.log('started');
             if(dis.val().length == 6){
                 $.ajax({
                     url: "{{ route('verify.otp')}}",
