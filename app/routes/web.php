@@ -28,7 +28,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes(['verify'=>true,'request'=>true]);
 
-Route::get('password/email', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('passwords.email');
+Route::post('register/mobile-check',[App\Http\Controllers\Auth\RegisterController::class,'isMobileNoExist'])->name('mobile-check');
+Route::post('register/email-check',[App\Http\Controllers\Auth\RegisterController::class,'isEmailExist'])->name('email-check');
+
+Route::post('password/update', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('passwords.reset');
+
+Route::post('password/reset', [App\Http\Controllers\HomeController::class, 'resetPassword'])->name('passwords.update');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

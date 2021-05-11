@@ -23,7 +23,7 @@
                         <div class="tableCell">
                             <div class="login_forms">
                                 <a class="navbar-brand  dark-mode-img dark-logo" href={{ route('home') }}>
-									<img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
+									<img src="{{ asset('front/img/dark-logo.png') }}" class="black-logo" alt="">
 									<img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
 								</a>
                                 <h2>{{__("Welcome to Route")}}</h2>
@@ -71,6 +71,15 @@
                                     <button type="button" id="send-otp" class="btn btn-primary">{{__("Send OTP")}}</button>
                                     <button type="submit" disabled  id="login" style="display: none" class="btn btn-primary">{{__("Sign In")}}</button>
                                     <p class="not_m">{{__("New on our platform?")}} <a href="{{ route('register') }}">{{__("Create an account")}}</a></p>
+                                    <ul>
+                                        <li>
+                                            <div class="flot_btn">
+                                                <div class="dark-light">
+                                                    <i class="fa fa-moon-o" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </form>
                           </div>
@@ -202,6 +211,5 @@ function sendOTP(){
 	}); 
 }
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/js/intlTelInput.min.js"></script>
 @endsection
 @endsection

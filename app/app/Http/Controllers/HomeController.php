@@ -8,6 +8,7 @@ use App\Http\Requests\SendOTPRequest;
 use App\Http\Requests\VerifyOTPRequest;
 use App\Http\Requests\SendOTPonLogin;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -47,6 +48,17 @@ class HomeController extends Controller
     {   
         $user = User::select('mobile')->where('email',$request->email)->first();
         return $this->service->sendOtpSms($user->mobile);
+    }
+    public function updatePassword(Request $request){
+        return view('front.auth.update_password',compact('request'));
+    }
+
+    public function resetPassword(Request $request){
+        
+        $user = User::where('mobile',$request->mobile)->first();
+        $user->password = Hash::make($request->password);
+        $user->update();
+        return redirect()->intended('login')->with('message', 'The password has been updated.');
     }
 }
     
