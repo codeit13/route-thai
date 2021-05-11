@@ -83,7 +83,7 @@ class RegisterController extends Controller
 
         if($this->verifyOTP($request)) {
             $validator = $this->validator($request->all());
-            if ($validator->errors()->count() == 0)
+            if ($validator->errors()->count() > 0)
                 return redirect()->intended('register')->withInput($request->all())->withErrors($validator); 
                 
             $this->create($request->all());

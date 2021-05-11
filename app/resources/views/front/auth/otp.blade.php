@@ -37,7 +37,7 @@
                               <input type="hidden" id="session_id" name="session" value="{{ json_decode($data)->Details }}">
 							</form>
 							
-							<p class="not_m text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<span id="timer"></span>
+							<p class="not_m text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<label id="timer"></label>
 							</b></p>
 							<ul>
 								<li>
