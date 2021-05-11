@@ -62,11 +62,6 @@
                                                     aria-describedby="emailHelp" placeholder="" name="email">
                                                     <label id="email-err"></label>
                                             </div>
-                                            @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Password</label>
                                                 <input type="password"
