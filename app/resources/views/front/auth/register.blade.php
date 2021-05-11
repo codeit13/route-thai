@@ -1,13 +1,11 @@
 @extends('layouts.front_auth')
 <link href="{{ asset('front/css/flags.css')}}" rel="stylesheet" />
 <link href="{{ asset('front/css/intlTelInput.css')}}" rel="stylesheet" />
-<style>
-    .iti.iti--allow-dropdown {
-        width: 100%;
-    }
-
-    
-    </style>
+<style>    
+.iti.iti--allow-dropdown {
+    width: 100%;
+}
+</style>
 @section('content')
     <section id="main-content" class="login_page">
         <div class="container-fluid">
@@ -43,7 +41,7 @@
                                     <div class="alert alert-danger">
                                         <ul>
                                             @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
+                                                <li class="mb-0">{{ $error }}</li>
                                             @endforeach
                                         </ul>
                                     </div>
