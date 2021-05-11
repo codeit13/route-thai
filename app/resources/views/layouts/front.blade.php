@@ -11,6 +11,8 @@
 
     @yield('content')
 
+    @include('front._inc._success-modal');
+
     @include('front._inc._footer')
     @include('front._inc._copyright')
     @include('front._inc._scripts') 

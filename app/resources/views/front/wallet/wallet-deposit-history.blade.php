@@ -13,6 +13,32 @@
 								<h3>{{__('Deposit History')}}</h3>
 							</div>
 						</div>
+
+						<div class="row">
+							<div class="white-box" style="background:none; box-shadow:none;">
+                              <ul class="janral-head">
+						@foreach($currency_types as $index => $currency_type)
+
+
+						@if(isset($walletType->id) && $walletType->id==$currency_type->id)
+
+						<li class="active"><a href="#">{{__($currency_type->type)}}</a></li>
+						@elseif(!isset($walletType->id) && $index==0)
+						<li class="active"><a href="#">{{__($currency_type->type)}}</a></li>
+						@else
+						<li class=""><a href="{{route('wallet.deposit.history',['type'=>$currency_type->id,'typename'=>strtolower($currency_type->type)])}}">{{__($currency_type->type)}}</a></li>
+						@endif
+
+
+						
+
+						@endforeach
+					
+						<li class="last"><a href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a></li>
+					</ul>
+
+						</div>
+					</div>
 						<div class="head-xs visible-xs">
 							<div class="row">
 								<div class="col-7">
@@ -76,6 +102,8 @@
 										</tr>
 									</thead>
 									<tbody>
+
+
 										<tr>
 											<td><input class="date" id="datepickerthree" type="text" placeholder="22/04/2021"/></td>
 											<td><input class="date" id="datepickerfour" type="text" placeholder="22/04/2021"/></td>
@@ -114,65 +142,63 @@
 								<table>
 									<thead>
 										<tr>
-											<th>Crypto</th>
+											<th>{{__('Currecny')}}</th>
 											<th>Date</th>
-											<th class="text-center">Quantity</th>
-											<th class="text-center">Wallet Details</th>
-											<th>Status</th>
+											<th class="text-center">{{__('Quantity')}}</th>
+											<th class="text-center">{{__('Details')}}</th>
+											<th>{{__('Status')}}</th>
 										</tr>
 									</thead>
 									<tbody>
+
+										@foreach($transactions as $tindex => $transaction)
 										<tr class="top-radius">
 											<td class="top-left-radius">
-												<img src="{{asset('front/img/bitcoin.png')}}" alt="">
-												<label>BTC
-													<br><span>BTC</span>
+												@if($transaction->currency->hasMedia('icon'))
+    
+                                      
+
+											<img src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 
+
+											@endif
+
+											<label>{{__($transaction->currency->short_name)}} <br><span>{{__($transaction->currency->name)}}</span>
 												</label>
 											</td>
-											<td>04/05/2021<span>10:19:44</span></td>
-											<td class="text-center">1.00000</td>
-											<td class="text-center"><a href="#" class="btn-success">View File</a></td>
-											<td class="top-right-radius"><img src="{{asset('front/img/icon-27.png')}}" alt="">In progress</td>
+											<td>{{$transaction->created_at->format('d/m/Y')}}<span>&nbsp;&nbsp;{{$transaction->created_at->format('h:i:s')}}</span></td>
+											<td class="text-center">{{$transaction->trans_amount}}</td>
+											<td class="text-center"><a class="btn-success" target="_blank" href="{{$transaction->firstMedia('file')->getUrl()}}">View File</a></td>
+
+											@switch($transaction->status)
+
+											@case('pending')
+
+											<td class="top-right-radius"><img src="{{asset('front/img/icon-27.png')}}" alt="">{{__('In progress')}}</td>
+
+											@break
+
+											@case('approved')
+
+											<td class="top-right-radius"><img src="{{asset('front/img/icon-28.png')}}" alt="">{{__('Approved')}}</td>
+
+											@break
+
+											@case('rejected')
+
+											<td class="top-right-radius"><img src="{{asset('front/img/icon-29.png')}}" alt="">{{__('Rejected')}}</td>
+
+											@break
+
+											@endswitch
+											
 										</tr>
-										<tr>
-											<td>
-												<img src="{{asset('front/img/icon-5.png')}}" alt="">
-												<label>ETH
-													<br><span>Ethereum</span>
-												</label>
-											</td>
-											<td>04/05/2021<span>10:19:44</span></td>
-											<td class="text-center">57800</td>
-											<td class="text-center"><a href="#" class="btn-success">View File</a></td>
-											<td><img src="{{asset('front/img/icon-27.png')}}" alt="">In progress</td>
-										</tr>
-										<tr>
-											<td>
-												<img src="{{asset('front/img/icon-5.png')}}" alt="">
-												<label>BNB
-													<br><span>Binance Coin</span>
-												</label>
-											</td>
-											<td>04/05/2021<span>10:19:44</span></td>
-											<td class="text-center">57800</td>
-											<td class="text-center"><a href="#" class="btn-success">View File</a></td>
-											<td><img src="{{asset('front/img/icon-27.png')}}" alt="">In progress</td>
-										</tr>
-										<tr>
-											<td>
-												<img src="{{asset('front/img/icon-5.png')}}" alt="">
-												<label>BUSD
-													<br><span>BUSD Coin</span>
-												</label>
-											</td>
-											<td>04/05/2021<span>10:19:44</span></td>
-											<td class="text-center">57800</td>
-											<td class="text-center"><a href="#" class="btn-success">View File</a></td>
-											<td><img src="{{asset('front/img/icon-27.png')}}" alt="">In progress</td>
-										</tr>
+
+										@endforeach
+										
 									</tbody>
 								</table>
 							</div>
+							
 							<div class="col-lg-12 xs-flush only-xs visible-xs  col-sm-12 col-12">
 								<table>
 									<tbody>
@@ -225,6 +251,13 @@
 								</table>	
 							</div>
 						</div>
+						<div class="row">
+						<div class="col-lg-12 text-center nav-pagi hidden-xs col-sm-12 col-12">
+
+							{{ $transactions->links('front._inc._paginator') }}
+						
+						</div>
+					</div>
 					</div>
 				</div>
 			</div>

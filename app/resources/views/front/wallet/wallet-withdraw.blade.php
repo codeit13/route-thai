@@ -11,11 +11,11 @@
           <div class="white-box">
             <div class="row">
               <div class="col-lg-6 col-sm-6 col-6">
-                <h3>Withdraw Assest</h3>
+                <h3>{{__('Withdraw Assest')}}</h3>
               </div>
               <div class="col-lg-6 text-right col-sm-6 col-6">  
-                <a href="#" class="btn-success">Transfer</a>
-                <a href="#" class="btn-primary">P2P Trading</a>
+                <a href="#" class="btn-success">{{__('Transfer')}}</a>
+                <a href="#" class="btn-primary">{{__('P2P Trading')}}</a>
                 <!--
                 <a class="mobile-tag" href="#">
                   <img src="img/icon-13.png" alt="" />
@@ -28,7 +28,7 @@
       </div>
       <div class="row visible-xs">
         <div class="col-lg-12 col-sm-12 col-12">
-          <h3 class="wa_text">Withdraw Assest</h3>
+          <h3 class="wa_text">{{__('Withdraw Assest')}}</h3>
         </div>
       </div>
       <div class="row">
@@ -56,9 +56,13 @@
             </ul>
             <div class="row">
               <div class="col-lg-6 p-text col-sm-6 col-12">
-                <form>
+
+
+                <form action="{{route('wallet.create.withdraw')}}" method="post">
+
+                  @csrf
                   <div class="field">
-                    <label>Coin</label>
+                    <label>{{__('Coin')}}</label>
                     <div class="dropdown currency_two three_coins crypto">
 
                         @foreach($currencies as $cIndex=> $currency)
@@ -107,7 +111,7 @@
 
                            @foreach($currencies as $cIndex=> $currency)
 
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" data-id="{{$currency->id}}" href="#">
 
                                  @if($currency->hasMedia('icon'))
     
@@ -130,31 +134,47 @@
                         <a class="dropdown-item" href="#"><img src="img/icon-6.png" alt=""> BNB <span>BNB</span></a> -->
                       </div>
                     </div>
+                    <input type="hidden" name="currency_id" id="coin_id" value="{{($currentCurrency)?$currentCurrency:$currencies[0]->id}}"/>
+                          @error('currency_id')
+                                <p class="invalid-value" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
                   </div>
                   <div class="field qq">
-                    <label>Total Quantity</label>
-                    <div class="dropdown currency_two three_coins crypto">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        1
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">2</a>
-                        <a class="dropdown-item" href="#">3</a>
-                        <a class="dropdown-item" href="#">4</a>
-                      </div>
-                    </div>
-                    <span class="total">Total balance: <b>0.00000000 BTC</b></span>
+                    <label>{{__('Total Quantity')}}</label>
+                   
+                                  
+                                        <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"   required="" id="quantity" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus="">
+                                    
+                                     @error('quantity')
+                                <p class="invalid-value" role="alert">
+                                    <strong>{{__($message) }}</strong>
+                                </p>
+                                @enderror
+                    <span class="total">{{__('Total balance')}}: <b>0.00000000 {{__('BTC')}}</b></span>
                   </div>
                   <div class="field">
-                    <label>Address</label>
+                    <label>{{__('Address')}}</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <textarea placeholder="Wallet Details"></textarea>
+                        <textarea name="address" placeholder="Wallet Details"></textarea>
                       </div>
+                   
                     </div>
+
+                    @error('address')
+                                <p class="invalid-value mt-4" role="alert">
+                                    <strong>{{__($message) }}</strong>
+                                </p>
+                                @enderror
+
                   </div>
+                 
+                     
+                             
                   <div class="field">
-                    <button type="button">Withdrawal</button>
+                    <button type="submit">{{__('Withdrawal')}}</button>
                   </div>
                 </form>
               </div>
@@ -262,6 +282,10 @@
     });
 
     $(".currency_two .dropdown-menu .dropdown-item").on("click", function(e) { e.preventDefault();
+
+      var currency_id=$(this).attr('data-id');
+
+      $('#coin_id').val(currency_id);
     $('.currency_two .dropdown-toggle').html($(this).html());
 });
 

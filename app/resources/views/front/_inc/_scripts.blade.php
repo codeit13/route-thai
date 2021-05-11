@@ -26,5 +26,14 @@
     $("#footer ul li.Support:first-child").click(function(){
         $("ul.Support-main li").toggle();
     });
+
+    // show success message modal
+
+    @if(session('success'))
+
+        $('#successModal101').modal('show');
+
+
+        @endif
     });
 </script>

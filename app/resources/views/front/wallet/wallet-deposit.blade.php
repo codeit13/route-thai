@@ -11,11 +11,11 @@
 				<div class="white-box">
 					<div class="row">
 						<div class="col-lg-6 col-sm-6 col-6">
-							<h3>Request Asset</h3>
+							<h3>{{__('Request Asset')}}</h3>
 						</div>
 						<div class="col-lg-6 text-right col-sm-6 col-6">
-							<a href="#" class="btn-success">Transfer</a>
-							<a href="#" class="btn-primary">P2P Trading</a>
+							<a href="#" class="btn-success">{{__('Transfer')}}</a>
+							<a href="#" class="btn-primary">{{__('P2P Trading')}}</a>
 							<a class="mobile-tag" href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a>
 						</div>
 					</div>
@@ -119,9 +119,14 @@
 
 										@endforeach
 									</ul>
+									      @error('currency_id')
+                                <p class="invalid-value" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
 									<input type="hidden" name="currency_id" id="coin_id" value="{{($currentCurrency)?$currentCurrency:$currencies[0]->id}}"/>
 
-									<span class="total">Total balance: <b>0.00000000 BTC</b></span>
+									<span class="total">{{__('Total balance')}}: <b>0.00000000 {{__('BTC')}}</b></span>
 								</div>
 
 							
@@ -135,7 +140,7 @@
                                     </div>
                                      @error('quantity')
                                 <p class="invalid-value" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                    <strong>{{ __($message) }}</strong>
                                 </p>
                                 @enderror
 								</div>
@@ -143,12 +148,18 @@
 									<div class="input-group">
 										<div class="custom-file">
 											<input type="file" class="custom-file-input" id="inputGroupFile01" name="transaction_image">
-											<label class="custom-file-label" for="inputGroupFile01">Upload</label>
+											<label class="custom-file-label" for="inputGroupFile01">{{__('Upload')}}</label>
 										</div>
 									</div>
+
 								</div>
+								@error('transaction_image')
+                                <p class="invalid-value" role="alert">
+                                    <strong>{{__('This field is required.') }}</strong>
+                                </p>
+                                @enderror
 								<div class="field">
-									<button type="submit">Request</button>
+									<button type="submit">{{__('Request')}}</button>
 									<!-- <button type="button" data-toggle="modal" data-target="#exampleModal1">Request</button> -->
 								</div>
 							</form>	
@@ -264,23 +275,7 @@
 	</div>
  </div>
 </div>
-<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body text-center">
-				<img src="{{asset('front/img/icon-16.png')}}" alt=""/>
-				<h6>You have successfully completed the request</h6>
-				<h4>Please wait until your assets<br>
-				gets allocated</h4>
-			</div>
-		</div>
-	</div>
-</div>
+
 
 @endsection
 
@@ -301,14 +296,7 @@
             touchEnabled: true
         });
 
-        @if(session('success'))
-
-        $('#exampleModal1').modal('show');
-
-
-
-
-        @endif
+        
     });
 </script>
 
