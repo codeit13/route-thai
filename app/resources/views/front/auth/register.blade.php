@@ -64,8 +64,9 @@
                                                 <label for="exampleInputPassword1">Password</label>
                                                 <input type="password"
                                                     class="form-control @error('password') is-invalid @enderror"
-                                                    name="password" required id="exampleInputPassword1" placeholder=""
+                                                    name="password" required id="password" placeholder=""
                                             name="password">
+                                            <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Phone Number</label>
@@ -264,5 +265,17 @@ $(document).ready(function() {
         }
     });
 });
+
+$(".toggle-password").click(function() {
+
+$(this).toggleClass("fa-eye fa-eye-slash");
+var input = $($(this).attr("toggle"));
+if (input.attr("type") == "password") {
+  input.attr("type", "text");
+} else {
+  input.attr("type", "password");
+}
+});
+
 </script>
 @endsection

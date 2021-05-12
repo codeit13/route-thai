@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>@yield('title')</title>
+    <title>@yield('title') Route - P2P Crypto Trading Platform</title>
     @include('back._inc._styles')
     <style> .scrollbar-inner { background:#19213a } </style>
  </head>

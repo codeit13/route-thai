@@ -54,12 +54,14 @@
                                     <p class="msg error"></p>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__('Password')}}</label>
-                                        <input type="text" class="form-control @error('email') is-invalid @enderror" placeholder="Password" name="password" value="{{ old('mobile') }}" required id="password" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus>
+                                        <input type="text" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" value="{{ old('mobile') }}" required id="password" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus>
+                                        <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         <label id="mobile-no-err"></label>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__("Confirm Password")}}</label>
-                                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Confirm Password" name="confirm_password">
+                                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Confirm Password" name="confirm_password" id="confirm_password">
+                                        <span toggle="#confirm_password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         <input type="hidden" name="mobile" value="{{ $request->mobile}}">    
                                         <p class="otp-msg mb-0 text-left"></p>
                                     </div>
@@ -95,6 +97,27 @@ rules : {
         minlength : 5,
         equalTo : "#password"
     }
+}
+});
+
+$(".toggle-password").click(function() {
+
+$(this).toggleClass("fa-eye fa-eye-slash");
+var input = $($(this).attr("toggle"));
+if (input.attr("type") == "password") {
+  input.attr("type", "text");
+} else {
+  input.attr("type", "password");
+}
+});
+$(".toggle-password").click(function() {
+
+$(this).toggleClass("fa-eye fa-eye-slash");
+var input = $($(this).attr("toggle"));
+if (input.attr("type") == "password") {
+  input.attr("type", "text");
+} else {
+  input.attr("type", "password");
 }
 });
 </script>
