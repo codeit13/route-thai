@@ -31,8 +31,7 @@
              </li>
              @if(Auth::guard('admin')->check())
              <li>
-               <a href="#"
-               onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+               <a href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
              </li>
              @endif
              <li class="nav-item dropdown">

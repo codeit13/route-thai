@@ -25,70 +25,40 @@ Route::get('/createstoragelink', function () {
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes(['verify'=>true,'request'=>true]);
 
+// User Auth
 Route::post('register/mobile-check',[App\Http\Controllers\Auth\RegisterController::class,'isMobileNoExist'])->name('mobile-check');
 Route::post('register/email-check',[App\Http\Controllers\Auth\RegisterController::class,'isEmailExist'])->name('email-check');
-
 Route::post('password/update', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('passwords.reset');
-
 Route::post('password/reset', [App\Http\Controllers\HomeController::class, 'resetPassword'])->name('passwords.update');
-
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
-Route::middleware('auth')->group(function()
-{
-
-//wallet
-
-// Route::get('wallet/withdraw/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'withdraw_history'])->name('wallet.withdraw.history');
-
-Route::get('wallet/withdraw/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create_withdraw'])->name('wallet.withdraw');
-
-Route::post('wallet/create/withdraw/',[App\Http\Controllers\TransactionController::class, 'store_withdraw'])->name('wallet.create.withdraw');
-
-
-
-
-Route::get('wallet/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.request.history');
-
-Route::get('wallet/deposit/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create'])->name('wallet.deposit');
-
-Route::get('wallet/{type}/{typename?}',[App\Http\Controllers\TransactionController::class, 'show'])->name('wallet.history');
-
-
-Route::post('wallet/create/deposit/',[App\Http\Controllers\TransactionController::class, 'store'])->name('wallet.create.deposit');
-
-
-
-
-
-});
-
-
 
 // OTP
 Route::post('/mobile/otp/send',[App\Http\Controllers\HomeController::class, 'sendOTP'])->name('send.otp');
 Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
-
 Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class, 'sendOTPOnLogin'])->name('send.otp.login');
 
+Route::middleware('auth')->group(function(){    
+    // Profile
+    Route::prefix('user')->name('user.')->group(function(){ 
+        Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
+    });
+    
+    //Wallet
+    Route::prefix('wallet')->group(function(){
+        Route::get('withdraw/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'withdraw_history'])->name('wallet.withdraw.history');
+        Route::get('withdraw/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create_withdraw'])->name('wallet.withdraw');
+        Route::post('create/withdraw/',[App\Http\Controllers\TransactionController::class, 'store_withdraw'])->name('wallet.create.withdraw');
+        Route::get('deposit/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.deposit.history');
+        Route::get('deposit/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create'])->name('wallet.deposit');
+        Route::get('{type}/{typename?}',[App\Http\Controllers\TransactionController::class, 'show'])->name('wallet.history');
+        Route::post('create/deposit/',[App\Http\Controllers\TransactionController::class, 'store'])->name('wallet.create.deposit');
+    });
+});
 
 // Exchange
+Route::get('p2p/exchange',function(){ return view('front.exchange'); })->name('p2p.exchange');
 
-Route::get('p2p/exchange',function()
-{
-	return view('front.exchange');
-})->name('p2p.exchange');
-
-// Staking
-Route::get('staking',function()
-{
-	return view('front.staking');
-
-})->name('staking');
-
-Route::post('/verify/register',[App\Http\Controllers\Auth\RegisterController::class, 'showOTPForm'])->name('otp.register');
-
+// Stocking
+Route::get('staking',function() { return view('front.staking'); })->name('staking');

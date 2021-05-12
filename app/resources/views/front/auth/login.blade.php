@@ -52,7 +52,8 @@
                                     <p></p>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">{{__("Password")}}</label>
-                                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required id="exampleInputPassword1" autocomplete="cc-additional-name">
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required id="password-field" autocomplete="cc-additional-name">
+                                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </div>
                                     <div class="form-group otp" style="display: none">
                                         <label for="exampleInputEmail1">OTP</label>
@@ -208,6 +209,18 @@ function sendOTP(){
 		},
 	}); 
 }
+
+$(".toggle-password").click(function() {
+
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+        input.attr("type", "text");
+        } else {
+        input.attr("type", "password");
+        }
+});
+
 </script>
 @endsection
 @endsection

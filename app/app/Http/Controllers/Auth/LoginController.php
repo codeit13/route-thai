@@ -60,7 +60,8 @@ class LoginController extends Controller
         ];
 
         $remember_me  = ( !empty( $request->remember_me ) )? TRUE : FALSE;
-
+        // dd($credential);
+        
         if(Auth::attempt($credential) || Auth::viaRemember()){
             $user = User::where(["email" => $credential['email']])->first();
             Auth::login($user, $remember_me);

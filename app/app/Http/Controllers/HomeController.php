@@ -54,7 +54,6 @@ class HomeController extends Controller
     }
 
     public function resetPassword(Request $request){
-        
         $user = User::where('mobile',$request->mobile)->first();
         $user->password = Hash::make($request->password);
         $user->update();

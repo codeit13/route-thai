@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Wallet;
 use App\Services\SMSService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -86,7 +87,8 @@ class RegisterController extends Controller
             if ($validator->errors()->count() > 0)
                 return redirect()->intended('register')->withInput($request->all())->withErrors($validator); 
                 
-            $this->create($request->all());
+            $user = $this->create($request->all());
+            $wallet = Wallet::create(['user_id'=>$user->id,'coin'=>0,'currency_id'=>1]);
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
                 return redirect()->intended('/home');
             } 
