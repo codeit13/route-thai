@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>@yield('title') {!! env("APP_NAME") !!}</title>
     @include('front._inc._styles')
+    @yield('page_styles')
  </head>
  <body>
     @include('front._inc._nav')

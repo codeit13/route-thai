@@ -94,7 +94,7 @@
     
                                       
 
-                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
 
                       @endif
 
@@ -152,7 +152,7 @@
                                     <strong>{{__($message) }}</strong>
                                 </p>
                                 @enderror
-                    <span class="total">{{__('Total balance')}}: <b>0.00000000 {{__('BTC')}}</b></span>
+                    <span class="total">{{__('Total balance')}}: <b id="totalBalance">0.00000000 {{__('BTC')}}</b></span>
                   </div>
                   <div class="field">
                     <label>{{__('Address')}}</label>
@@ -241,6 +241,12 @@
 
 
     <script type="text/javascript">
+
+      var wallets=@json($wallets);
+
+     var currencies=@json($currencies);
+
+
     $(document).ready(function(){
       $('.bxslider').bxSlider({
         auto:false,
@@ -285,9 +291,45 @@
 
       var currency_id=$(this).attr('data-id');
 
+   changeShowBalance(currency_id);
+
+
       $('#coin_id').val(currency_id);
     $('.currency_two .dropdown-toggle').html($(this).html());
 });
+
+    function changeShowBalance(coin_id)
+{
+
+    var balance=0.00000000;
+
+    var balanceRow=wallets.filter(function(wallet){
+          return wallet.currency_id==coin_id;
+    })
+
+    balanceRow=balanceRow[0];
+
+    var currencyRow=currencies.filter(function(currency)
+    {
+       return currency.id==coin_id;
+    })
+
+    currencyRow=currencyRow[0];
+
+    balance=balance+' '+currencyRow.short_name;
+
+    if(balanceRow.coin.length)
+    {
+         balance=balanceRow.coin + ' '+currencyRow.short_name;
+    }
+
+    $('#totalBalance').text(balance);
+}
+
+var currentCurrency='{{($currentCurrency)?$currentCurrency:$currencies[0]->id}}';
+
+
+changeShowBalance(currentCurrency);
 
   </script>
 
