@@ -95,7 +95,7 @@
 
 											{{__($currency->short_name)}} <span>{{__($currency->name)}}</span></li>
 
-											@else
+											@endif
 
 												<li data-value="{{$currency->id}}" class="">
 
@@ -113,7 +113,7 @@
 
 
 
-											@endif
+											
 
 									
 
@@ -126,7 +126,7 @@
                                 @enderror
 									<input type="hidden" name="currency_id" id="coin_id" value="{{($currentCurrency)?$currentCurrency:$currencies[0]->id}}"/>
 
-									<span class="total">{{__('Total balance')}}: <b>0.00000000 {{__('BTC')}}</b></span>
+									<span class="total">{{__('Total balance')}}: <b id="totalBalance">0.00000000 {{__('BTC')}}</b></span>
 								</div>
 
 							
@@ -301,6 +301,12 @@
 </script>
 
 <script>
+var wallets=@json($wallets);
+
+var currencies=@json($currencies);
+
+
+
 $("ul.btc").on("click", ".init", function() {
     $(this).closest("ul.btc").children('li:not(.init)').toggle();
 });
@@ -314,7 +320,47 @@ $("ul.btc").on("click", "li:not(.init)", function() {
 
     var coin_id=$(this).attr('data-value');
 
+   
+   changeShowBalance(coin_id);
+
+
+    
+
     $('#coin_id').val(coin_id);
 });
+
+function changeShowBalance(coin_id)
+{
+
+    var balance=0.00000000;
+
+    var balanceRow=wallets.filter(function(wallet){
+          return wallet.currency_id==coin_id;
+    })
+
+    balanceRow=balanceRow[0];
+
+    var currencyRow=currencies.filter(function(currency)
+    {
+       return currency.id==coin_id;
+    })
+
+    currencyRow=currencyRow[0];
+
+    balance=balance+' '+currencyRow.short_name;
+
+    if(balanceRow.coin.length)
+    {
+         balance=balanceRow.coin + ' '+currencyRow.short_name;
+    }
+
+    $('#totalBalance').text(balance);
+}
+
+var currentCurrency='{{($currentCurrency)?$currentCurrency:$currencies[0]->id}}';
+
+
+changeShowBalance(currentCurrency);
+
 </script>
 @endsection    
