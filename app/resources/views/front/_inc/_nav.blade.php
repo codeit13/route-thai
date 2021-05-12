@@ -46,16 +46,16 @@
                                             <form class="form-inline">
                                                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span>
                                                 <a class="dropdown-item  myLink" href="">
-                                                <img src="img/kr.svg" alt="">Korean</span>
+                                                <img src="{{ asset('front/img/kr.svg')}}" alt="">Korean</span>
                                                 </a>
                                                 <a class="dropdown-item myLink" href="">
-                                                <img src="img/th.svg" alt="">Thailand</span>
+                                                <img src="{{ asset('front/img/th.svg')}}" alt="">Thailand</span>
                                                 </a>
                                                 <a class="dropdown-item myLink" href="">
-                                                <img src="img/cn.svg" alt="">Chineese</span>
+                                                <img src="{{ asset('front/img/cn.svg')}}" alt="">Chineese</span>
                                                 </a>
                                                 <a class="dropdown-item myLink" href="">
-                                                <img src="img/jp.svg" alt="">Japanese</span>
+                                                <img src="{{ asset('front/img/jp.svg')}}" alt="">Japanese</span>
                                                 </a>
                                             </form>
                                         </div>
@@ -100,16 +100,16 @@
                                             <form class="form-inline">
                                                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span>
                                                 <a class="dropdown-item  myLink" href="">
-                                                <img src="img/kr.svg" alt="">Korean</span>
+                                                <img src="{{ asset('front/img/kr.svg')}}" alt="">Korean</span>
                                                 </a>
                                                 <a class="dropdown-item myLink" href="">
-                                                <img src="img/th.svg" alt="">Thailand</span>
+                                                <img src="{{ asset('front/img/th.svg')}}" alt="">Thailand</span>
                                                 </a>
                                                 <a class="dropdown-item myLink" href="">
-                                                <img src="img/cn.svg" alt="">Chineese</span>
+                                                <img src="{{ asset('front/img/cn.svg')}}" alt="">Chineese</span>
                                                 </a>
                                                 <a class="dropdown-item myLink" href="">
-                                                <img src="img/jp.svg" alt="">Japanese</span>
+                                                <img src="{{ asset('front/img/jp.svg')}}" alt="">Japanese</span>
                                                 </a>
                                             </form>
                                         </div>
@@ -128,16 +128,16 @@
                                                     aria-label="Search"> <span><i class="fa fa-search"
                                                         aria-hidden="true"></i></span>
                                                 <a class="dropdown-item  myLink" href="usd">
-                                                    <img src="img/AUD.svg" alt="">Australian Dollar <span>USD</span>
+                                                    <img src="{{ asset('front/img/AUD.svg')}}" alt="">Australian Dollar <span>USD</span>
                                                 </a>
                                                 <a class="dropdown-item myLink" href="krw">
-                                                    <img src="img/EUR.svg" alt="">Korean won <span>KRW</span>
+                                                    <img src="{{ asset('front/img/EUR.svg')}}" alt="">Korean won <span>KRW</span>
                                                 </a>
                                                 <a class="dropdown-item myLink" href="inr">
-                                                    <img src="img/inr.svg" alt="">Indian Rupee <span>INR</span>
+                                                    <img src="{{ asset('front/img/inr.svg')}}" alt="">Indian Rupee <span>INR</span>
                                                 </a>
                                                 <a class="dropdown-item myLink" href="thb">
-                                                    <img src="img/thb.svg" alt="">Thai Baht <span>THB</span>
+                                                    <img src="{{ asset('front/img/thb.svg')}}" alt="">Thai Baht <span>THB</span>
                                                 </a>
                                             </form>
                                         </div>

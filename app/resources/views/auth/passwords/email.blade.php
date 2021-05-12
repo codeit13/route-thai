@@ -63,7 +63,7 @@
                                         <input type="text" class="form-control" id="otp"
                                             aria-describedby="emailHelp" placeholder="Enter OTP" name="otp">
                                         <input type="hidden" id="session_id" value="">    
-                                        <p class="not_m mb-0 resend-btn text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<span id="timer"></span>
+                                        <p class="not_m mb-0 resend-btn text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<label id="timer"></label>
                                         </b></p>
                                         <p class="otp-msg mb-0 text-left"></p>
                                     </div>
@@ -228,6 +228,7 @@ function sendOTP(){
             let phone_Validity;
             $(this).val(mobileNo);
             if(dis.val().length > 11){
+              $('#send-otp').attr('disabled',true);
               jQuery.ajax({
                 type: 'POST',
                 url: "{{ route('mobile-check') }}",
@@ -243,18 +244,20 @@ function sendOTP(){
                     phone_Validity = false;
                     cls  = 'text-danger';
                     msg = 'The entered mobile no is not registered. Please check once before trying.'
-                  } else if (res.status == 'NOT OK') {
+                  } else {
                     phone_Validity = true;
                     cls  = 'text-success';
                   }
                   if (!phone_Validity) {
                     $('#mobile').removeClass('is-valid');
                     $('#mobile').addClass('is-invalid');
-                    $('#mobile-no-err').html("<label class='"+ cls +"'>"+msg+"</label>");                   
+                    $('#mobile-no-err').html("<label class='"+ cls +"'>"+msg+"</label>");     
+                    $('#send-otp').attr('disabled',true);
                   } else {
                     $('#mobile').removeClass('is-invalid');
                     $('#mobile').addClass('is-valid');
                     $('#mobile-no-err').html("<label class='"+ cls +"'>"+msg+"</label>");
+                    $('#send-otp').attr('disabled',false);
                   }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
