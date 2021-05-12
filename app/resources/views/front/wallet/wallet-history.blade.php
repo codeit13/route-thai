@@ -34,6 +34,8 @@
 						<div class="row">
 							<div class="white-box" style="background:none; box-shadow:none;">
                               <ul class="janral-head">
+
+
 						@foreach($currency_types as $index => $currency_type)
 
 
@@ -43,7 +45,7 @@
 						@elseif(!isset($walletType->id) && $index==0)
 						<li class="active"><a href="#">{{__($currency_type->type)}}</a></li>
 						@else
-						<li class=""><a href="{{route('wallet.request.history',['type'=>$currency_type->id,'typename'=>strtolower($currency_type->type)])}}">{{__($currency_type->type)}}</a></li>
+						<li class=""><a href="{{route('wallet.request.history',['type'=>$currency_type->id,'typename'=>strtolower($currency_type->type)]).'?type='.$request->type??''}}">{{__($currency_type->type)}}</a></li>
 						@endif
 
 

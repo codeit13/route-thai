@@ -52,7 +52,7 @@ Route::post('wallet/create/withdraw/',[App\Http\Controllers\TransactionControlle
 
 
 
-Route::get('wallet/deposit/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.request.history');
+Route::get('wallet/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.request.history');
 
 Route::get('wallet/deposit/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create'])->name('wallet.deposit');
 
