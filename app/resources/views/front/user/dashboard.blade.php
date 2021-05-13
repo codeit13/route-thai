@@ -7,28 +7,15 @@
 <section id="dashboard">
     <div class="container-fluid">
        <div class="row">
-          <div class="col-lg-2 col-xs-12 flush">
-             <div class="sidebar">
-                <ul>
-                   <li class="active"><a href="#"><i class="fa fa-tv-alt"></i> Dashboard</a>
-                   </li>
-                   <li> <a href="#"><i class="fa fa-user"></i> Basic Info</a>
-                   </li>
-                   <li> <a href="#"><i class="fa fa-credit-card"></i> Payment</a>
-                   </li>
-                   <li> <a href="#"><i class="fa fa-lock"></i> Securtiy</a>
-                   </li>
-                </ul>
-             </div>
-          </div>
+          @include('front.user._sidebar')
           <div class="col-lg-10 col-xs-12 flush">
              <div class="content_dashboard">
                 <div class="container">
                    <div class="row">
-                      <div class="col user_details"> <i class="fa fa-user-circle"></i>
+                      <div class="col user_details"> <i class="fal fa-user-circle"></i>
                          <div class="user_data">
-                            <h3>{{ Auth::user()->email }}</h3>
-                            <h4>Mobile Number : <span>{{ Auth::user()->mobile}}</span></h4>
+                            <h3>@php $minFill = 4; echo preg_replace_callback('/^(.)(.*?)([^@]?)(?=@[^@]+$)/u',function ($m) use ($minFill) {return $m[1] . str_repeat("*", max($minFill, mb_strlen($m[1], 'UTF-8'))) . ($m[3] ?: $m[0]); }, Auth::user()->email ); @endphp </h3>
+                            <h4>Mobile Number : <span>{{  substr(Auth::user()->mobile, 0, -6) . "****".substr(Auth::user()->mobile, -2)}}</span></h4>
                          </div>
                          <p>Last login time: 2021-05-04 22:19:31 <span>IP: 103.103.162.223</span>
                          </p>
@@ -51,7 +38,7 @@
                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                   <div class="row under_tabs">
                                      <div class="col-lg-6">
-                                        <h4>Account Balance: <a href="#">Hide Balance <i class="fa fa-eye-slash"></i></a></h4>
+                                        <h4>Account Balance: <a href="#">Hide Balance <i class="fal fa-eye-slash"></i></a></h4>
                                      <h1>{{ Auth::user()->wallet()->get(['coin','currency_id'])->sum('coin') }}<span>{{ Auth::user()->wallet()->get(['coin','currency_id'])->first()->currency->name }}</span></h1>
                                         <h3>Estimated Value:</h3>
                                         <h6 style="font-family: 'Open Sans', sans-serif;">₹108.6</h6>
@@ -75,17 +62,17 @@
                             <h2>Profile Details</h2>
                             <hr/>
                             <label>Username:</label>
-                            <p>shavez_mirza_786 <a href="#"><i class="fa fa-edit"></i></a></p>
+                            <p>{{ Auth::user()->name }} <a href="#"><i class="fal fa-edit"></i></a></p>
                             <label>Currency</label>
                             <div class="dropdown currency_two three_coins crypto">
                               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ asset('front/img/inr.svg') }}" alt="">INR
+                                <img src="{{ asset('front/img/Indian Rupee.png') }}" alt="">INR
                               </button>
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="dropdown-item" href="#"><img src="{{ asset('front/img/kr.svg') }}" alt=""> KRW</a>
-                                <a class="dropdown-item" href="#"><img src="{{ asset('front/img/usd.svg') }}" alt=""> USD</a>
-                                <a class="dropdown-item" href="#"><img src="{{ asset('front/img/th.svg') }}" alt=""> THB</a>
-                                <a class="dropdown-item" href="#"><img src="{{ asset('front/img/yen.svg') }}" alt=""> JPY</a>
+                                  <a class="dropdown-item" href="#"><img src="{{ asset('front/img/Korean Won.png') }}" alt=""> KRW</a>
+                                <a class="dropdown-item" href="#"><img src="{{ asset('front/img/USD Dollar.png') }}" alt=""> USD</a>
+                                <a class="dropdown-item" href="#"><img src="{{ asset('front/img/Thai Baht.png') }}" alt=""> THB</a>
+                                <a class="dropdown-item" href="#"><img src="{{ asset('front/img/Japenese Yuan.png') }}" alt=""> JPY</a>
                               </div>
                             </div>
                             <label>Language</label>
@@ -101,14 +88,14 @@
                               </div>
                             </div>
                             <div class="sn_notificatio">
-                               <i class="fa fa-comment-alt-lines"></i>
+                               <i class="fal fa-comment-alt-lines"></i>
                                SMS Notification
                                <button type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
                                  <div class="handle"></div>
                                </button>
                             </div>  
                             <div class="sn_notificatio">
-                               <i class="fa fa-bell"></i>
+                               <i class="fal fa-bell"></i>
                                Line Notification
                                <button type="button" class="btn btn-sm btn-toggle active" data-toggle="button" aria-pressed="false" autocomplete="off">
                                  <div class="handle"></div>
@@ -178,10 +165,10 @@
                             <h2>Security <span>3/4</span></h2>
                             <hr/>
                             <ul>
-                               <li><i class="fa fa-check"></i> Enable 2FA</li>
-                               <li><i class="fa fa-check"></i> Verified</li>
-                               <li><i class="fa fa-check"></i> Enable Anti-phishing Code</li>
-                               <li><i class="fa fa-times"></i> Turn-on withdrawal whitelist <span>Turn On</span></li>
+                               <li><i class="fal fa-check"></i> Enable 2FA</li>
+                               <li><i class="fal fa-check"></i> Verified</li>
+                               <li><i class="fal fa-check"></i> Enable Anti-phishing Code</li>
+                               <li><i class="fal fa-times"></i> Turn-on withdrawal whitelist <span>Turn On</span></li>
                             </ul>         
                          </div>
                       </div>
@@ -212,4 +199,79 @@
        </div>
     </div>
  </section>
+ @section('page_scripts')
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>
+   <script>
+       var colors = [
+        'rgb(247, 131, 38)',
+        'rgb(55, 215, 84)',
+        'rgb(68, 148, 251)',
+        'rgb(158, 163, 165)',
+        'rgb(51, 143, 82)',
+        'rgb(77, 83, 96)',
+        'rgb(180, 142, 173)',
+        'rgb(150, 181, 180)',
+        'rgb(235, 203, 138)',
+        /*'rgb(94, 65, 149)',
+        'rgb(171, 121, 103)',
+        'rgb(134, 175, 18)'*/
+      ];
+      var labels = ["BNB 1.000", "DoT .5000", "ETH .4000", "Others .1000"];
+      var data = [794, 458, 169, 103];
+      var bgColor = colors;
+      var dataChart = {
+        labels: labels,
+        datasets: [{
+          data: data,
+          backgroundColor: bgColor
+        }]
+      };
+      var config = {
+        type: 'doughnut',
+        data: dataChart,
+        options: {
+          maintainAspectRatio: false,
+          cutoutPercentage: 45,
+          legend: {
+            display: false
+          },
+          legendCallback: function(chart) {
+            var text = [];
+            text.push('<ul class="doughnut-legend">');
+            if (chart.data.datasets.length) {
+              for (var i = 0; i < chart.data.datasets[0].data.length; ++i) {
+                text.push('<li><span class="doughnut-legend-icon" style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '"></span>');
+                if (chart.data.labels[i]) {
+                  text.push('<span class="doughnut-legend-text">' + chart.data.labels[i] + '</span>');
+                }
+                text.push('</li>');
+              }
+            }
+            text.push('</ul>');
+            return text.join("");
+          },
+          tooltips: {
+            yPadding: 10,
+            callbacks: {
+              label: function(tooltipItem, data) {
+                var total = 0;
+                data.datasets[tooltipItem.datasetIndex].data.forEach(function(element /*, index, array*/ ) {
+                  total += element;
+                });
+                var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                var percentTxt = Math.round(value / total * 100);
+                return data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + ' (' + percentTxt + '%)';
+              }
+            }
+          }
+        }
+      };
+        var ctx = document.getElementById("doughnutChart").getContext("2d");
+         var doughnutChart = new Chart(ctx, config);
+
+      var legend = doughnutChart.generateLegend();
+      var legendHolder = document.getElementById("legend");
+      legendHolder.innerHTML = legend + '';
+   </script>
+ @endsection
  @endsection
