@@ -25,7 +25,7 @@ class TransactionController extends Controller
 
       $walletType=new \App\Models\CurrencyType;
 
-      $transaction_type=$request->type??1;
+      $transaction_type=$request->type??'deposit';
 
 
       if($type)
@@ -150,7 +150,7 @@ class TransactionController extends Controller
                               ->toDirectory('transactions')
                                ->upload();
 
-       $type=1;  //for deposit
+       $type='deposit'; 
 
 
         if($this->makeTransaction($request,$type,$media))
@@ -288,7 +288,7 @@ class TransactionController extends Controller
     
         $request->validate(['quantity' =>'required|numeric','currency_id'=>'required|numeric','address'=>'required']);
 
-        $type=2;  //for withdraw
+        $type='withdraw';  //for withdraw
  
         if($this->makeTransaction($request,$type))
         {

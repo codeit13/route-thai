@@ -27,4 +27,40 @@ class Transaction extends Model
     {
     	return $this->user->wallet()->where('currency_id',$this->currency_id)->sum('coin');
     }
+
+    public function buyer_requests()
+    {
+        return $this->hasMany('App\Models\BuyerRequest','transaction_id','id');
+    }
+
+    public function hasBuyerRequest()
+{
+     $user=\Auth::user();
+     $request=$this->buyer_requests()->where('user_id',$user->id)->first();
+
+     //echo '<pre>';print_r($request->toArray());die;
+
+     if($request && $this->timer < $this->getRequestTime($request))
+     {
+        return true;
+     }
+     else
+     {
+       
+           return false;
+     }
+}
+
+public function getRequestTime($request)
+{
+    $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $request->created_at);
+
+    $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i',\Carbon\Carbon::now());
+
+
+    $diff_in_minutes = $to->diffInMinutes($from);
+
+     return $diff_in_minutes;
+}
+
 }
