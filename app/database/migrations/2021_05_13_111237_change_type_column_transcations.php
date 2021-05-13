@@ -19,7 +19,7 @@ class ChangeTypeColumnTranscations extends Migration
         });
 
         Schema::table('transactions', function (Blueprint $table) {
-            $table->enum('type', [1,2,3,4])->comment('1 for deposit,2 for withdraw, 3 for sell and 4 for buy');
+            $table->enum('type', ['sell','buy','deposit','withdraw']);
         });
     }
 
