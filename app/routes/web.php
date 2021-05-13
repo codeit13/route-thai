@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function(){
     // Profile
     Route::prefix('user')->name('user.')->group(function(){ 
         Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
+        Route::get('profile',[App\Http\Controllers\UserController::class, 'profile'])->name('profile');
     });
     
     //Wallet

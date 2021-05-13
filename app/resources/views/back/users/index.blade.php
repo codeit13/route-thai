@@ -18,7 +18,7 @@
              <br><button type="submit" class="btn btn-danger" id="bulk-delete" style="display:none"><i class="fa fa-trash" aria-hidden="true"></i> </button>
              <div class="table-responsive red-scrollbar">
                 <!-- Projects table -->
-                <table class="display2 table align-items-center table-flush table table-striped table-bordered" id="" style="width:100%; display: inline-table !important;">
+                <table class="datatables table align-items-center table-flush table table-striped table-bordered" id="" style="width:100%; display: inline-table !important;">
                    <thead class="thead-light">
                       <tr>
                          <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
@@ -56,4 +56,14 @@
        </div>
     </div>
  </div>
- @endsection
+ @section('page_scripts')
+    <script>
+        $('.datatables').DataTable({
+         "paging":   false,
+        });
+        // $('select[name]').addClass('form-control-plaintext');
+    </script>
+@endsection
+
+@endsection
+ 
