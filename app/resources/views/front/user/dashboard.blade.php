@@ -15,7 +15,7 @@
                       <div class="col user_details"> <i class="fal fa-user-circle"></i>
                          <div class="user_data">
                             <h3>@php $minFill = 4; echo preg_replace_callback('/^(.)(.*?)([^@]?)(?=@[^@]+$)/u',function ($m) use ($minFill) {return $m[1] . str_repeat("*", max($minFill, mb_strlen($m[1], 'UTF-8'))) . ($m[3] ?: $m[0]); }, Auth::user()->email ); @endphp </h3>
-                            <h4>Mobile Number : <span>{{  substr(Auth::user()->mobile, 0, -6) . "****".substr(Auth::user()->mobile, -2)}}</span></h4>
+                            <h4>Mobile Number : <span>{{ substr(Auth::user()->mobile, 0, -6) . "****".substr(Auth::user()->mobile, -2)}}</span></h4>
                          </div>
                          <p>Last login time: 2021-05-04 22:19:31 <span>IP: 103.103.162.223</span>
                          </p>
@@ -25,8 +25,9 @@
                       <div class="col-lg-8 col-xs-12 flush">
                          <div class="card">
                             <h2>Balance Details</h2>
-                            <div class="button_ggrop"> <a href="#" class="green_btn">Deposit</a>
-                               <a href="#" class="white_btn">Withdraw</a>
+                            <div class="button_ggrop"> 
+                               <a href="{{ route('wallet.deposit') }}" class="green_btn">Deposit</a>
+                               <a href="{{ route('wallet.withdraw') }}" class="white_btn">Withdraw</a>
                             </div>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                <li class="nav-item"> <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Crypto</a>

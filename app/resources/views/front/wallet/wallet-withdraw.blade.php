@@ -301,7 +301,7 @@
     function changeShowBalance(coin_id)
 {
 
-    var balance=0.00000000;
+    var balance='0.00000000';
 
     var balanceRow=wallets.filter(function(wallet){
           return wallet.currency_id==coin_id;
@@ -318,7 +318,7 @@
 
     balance=balance+' '+currencyRow.short_name;
 
-    if(balanceRow.coin.length)
+    if( balanceRow && typeof balanceRow.coin !='undefined')
     {
          balance=balanceRow.coin + ' '+currencyRow.short_name;
     }

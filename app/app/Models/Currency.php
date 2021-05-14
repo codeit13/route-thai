@@ -26,7 +26,7 @@ class Currency extends Model
     public function getUserTotalAttribute()
 {
 	$user=\Auth::user();
-	$total=$user->transactions()->where('status','approved')->where('type',1)->where('currency_id',$this->id)->sum('trans_amount');
+	$total=$user->transactions()->where('status','approved')->where('type','deposit')->where('currency_id',$this->id)->sum('trans_amount');
     return ($total>0)?$total:'0.00000000';
 }
 

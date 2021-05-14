@@ -67,7 +67,7 @@
                             @else
 
                             @php $wallet_types = \App\Models\CurrencyType::all(); @endphp
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown onhover">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Wallet
@@ -89,8 +89,8 @@
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <img src="{{ asset('front/img/GBP.svg') }}" alt="">English</button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <form class="form-inline">
-                                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span>
+                                            {{-- <form class="form-inline"> --}}
+                                                {{-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span> --}}
                                                 <a class="dropdown-item  myLink" href="">
                                                 <img src="{{ asset('front/img/kr.svg')}}" alt="">Korean</span>
                                                 </a>
@@ -103,7 +103,7 @@
                                                 <a class="dropdown-item myLink" href="">
                                                 <img src="{{ asset('front/img/jp.svg')}}" alt="">Japanese</span>
                                                 </a>
-                                            </form>
+                                            {{-- </form> --}}
                                         </div>
                                     </div>
                                     </li>
@@ -112,8 +112,8 @@
                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                               <img src="{{ asset('front/img/Korean Won.png') }}" alt=""> <span>Korean Won</span> KRW</button>
                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                              <form class="form-inline">
-                                                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span>
+                                              {{-- <form class="form-inline"> --}}
+                                                 {{-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span> --}}
                                                  <a class="dropdown-item  myLink" href="usd">
                                                     <img src="{{ asset('front/img/USD Dollar.png') }}" alt="">United states Dollar <span>USD</span>
                                                  </a>
@@ -126,7 +126,7 @@
                                                  <a class="dropdown-item myLink" href="krw">
                                                     <img src="{{ asset('front/img/Japenese Yuan.png') }}" alt="">Japanese Yuan <span>JPY</span>
                                                  </a>
-                                              </form>
+                                              {{-- </form> --}}
                                            </div>
                                         </div>
                                      </li>

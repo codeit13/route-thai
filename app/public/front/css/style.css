@@ -29,7 +29,7 @@
     --dark_two_color: #252525;
     --wallet_bg_color: #FAFAFA;
     --menu_br_bottom: rgba(0, 0, 0, 0.1);
-
+    --gray_head:#FBFBFB;
     --sidebar_hover:#fafafa;
 }
 .dark-mode {
@@ -63,7 +63,7 @@
     --dark_two_color: #21242e;
     --wallet_bg_color: #17171a;
     --menu_br_bottom: rgba(255, 255, 255, 0.1);
-
+    --gray_head:#5d5d5f42;
     --sidebar_hover:rgba(255,255,255,0.04);
 }
 @font-face {
@@ -2741,6 +2741,7 @@ h3.wa_text {
 #dashboard {
     float: left;
     width: 100%;
+    overflow: hidden;
 }
 
 #dashboard .sidebar {
@@ -2795,6 +2796,13 @@ h3.wa_text {
     padding: 30px 0px;
 }
 
+.user_details h2 {
+    margin-bottom: 10px;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--white-black-text);
+}
+
 .user_details .user_data {
 
 }
@@ -2804,6 +2812,23 @@ h3.wa_text {
     font-weight: normal;
     margin-bottom: 5px;
     color: var(--white-black-text);
+}
+.user_data h5 {
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 35px;
+    color: var(--white-black-text);    
+}
+
+.user_details h6 {
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white-black-text);  
+}
+
+.user_details h6 img {
+    margin-top: -8px;
 }
 
 .user_details .user_data h4 {
@@ -3317,7 +3342,7 @@ a#activity-tab,a#devices-tab {
 }
 
 .an_card h2 {
-    background-color: var(--new-card-bg);
+    background-color: var(--gray_head);
     border: 1px solid var(--border-color);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -3326,6 +3351,60 @@ a#activity-tab,a#devices-tab {
     padding: 12px 15px;
 }
 
+.an_card h2 img {
+    margin-top: -5px;
+    margin-right: 5px;
+}
+
+.an_card h2 span {
+    font-size: 12px;
+    color: #00B9FF;
+    margin-left: 10px;
+}
+
+.iverify {
+    display: inline-block;
+    width: 100%;
+    padding: 25px 25px;
+}
+
+.iverify h3 {
+    font-size: 16px;
+    color: var(--white-black-text);
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.iverify p {
+    font-size: 12px;
+    padding-bottom: 10px;
+}
+
+.iverify p i.fal {
+    color: #00C98E;
+    font-weight: 600;
+    margin-right: 3px;
+}
+
+.iverify ul {
+    padding-bottom: 10px;
+    position: relative;
+    width: 60%;
+    padding-left: 8px;
+}
+
+.iverify ul li {
+    display: block;
+    font-size: 12px;
+    color: var(--white-black-text);
+    font-weight: 500;
+}
+
+.iverify ul li span {
+    text-align: right;
+    position: absolute;
+    right: 0;
+}
 .an_card .coll_one {
     padding: 10px 15px;
 }
@@ -3348,6 +3427,9 @@ a#activity-tab,a#devices-tab {
 /* Landscape phones and portrait tablets */
 
 @media (max-width: 767px) {
+    .iverify ul {
+        width: 85%;
+    }
     #dashboard .sidebar {
         background: #333333;
         padding: 0px 0px;
