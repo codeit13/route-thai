@@ -18,7 +18,7 @@
              <br><button type="submit" class="btn btn-danger" id="bulk-delete" style="display:none"><i class="fa fa-trash" aria-hidden="true"></i> </button>
              <div class="table-responsive red-scrollbar">
                 <!-- Projects table -->
-                <table class="datatables table align-items-center table-flush table table-striped table-bordered" id="" style="width:100%; display: inline-table !important;">
+                <table class="datatables table text-left table-flush table table-striped table-bordered" id="" style="width:100%; display: inline-table !important;">
                    <thead class="thead-light">
                       <tr>
                          <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
@@ -26,6 +26,8 @@
                          <th scope="col">Name</th>
                          <th scope="col">Email</th>
                          <th scope="col">Mobile</th>
+                         <th scope="col">Currency</th>
+                         <th scope="col">Language</th>
                          <th scope="col">Create On</th>
                          <th scope="col">Action</th>
                       </tr>
@@ -33,12 +35,14 @@
                    <tbody class="no_bg">
                            @foreach ($users as $key => $item)
                             <tr>
-                               <td><input type="checkbox"  value="" class="check-all"></td>
+                            <td><input type="checkbox"  value="" class="check-all"></td>
                             <td> {{ $key+1 }}</td>
                             <td> {{ $item->name }}</td>
                             <td> {{ $item->email}}</td>
                             <td> {{ $item->mobile }}</td>
-                            <td> {{ $item->created_at }}</td>
+                            <td> {{ $item->currency->name ?? '' }}</td>
+                            <td> {{ $item->language->name ?? "" }}</td>
+                            <td> {{ date('d M Y, h:i:s A', strtotime($item->created_at)) }}</td>
                             <td> <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i> Edit Data</a>
                             </td>
                            </tr> 

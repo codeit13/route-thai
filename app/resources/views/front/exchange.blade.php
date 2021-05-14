@@ -4,9 +4,7 @@
     Route: P2P Trading Platform
 @endsection
 @section('content')
-
 @section('header-bar')
-
 <div class="container">
         <div class="row">
           <div class="col-lg-12 col-sm-12 col-xs-12 flush">

@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "laravelcollective/html": "^6.2",
-        "plank/laravel-mediable": "^5.1"
+        "plank/laravel-mediable": "^5.1",
+        "yadahan/laravel-authentication-log": "^1.4"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Yadahan\AuthenticationLog\AuthenticationLogable;
+
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, AuthenticationLogable;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','mobile'
+        'name', 'email', 'password','mobile','default_currency'
     ];
 
     /**
@@ -47,24 +49,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\Transaction','user_id','id');
     }
 
-    public function setNameAttribute($value)
-    {
-        $parts = explode("@",  strtolower($this->attributes['email']));
-        $email = $parts[0];
-        $username = $value;
-        do
-        { 
-            $username = $email.rand(00, 9999999);
-        }
-        while(User::whereName($email)->exists());
-        
-        $this->attributes['name'] = $username;
-    }
-
     public function buyer_request()
     {
         return $this->hasMany('App\Models\BuyerRequest','user_id','id');
     }
 
+
+    public function currency()
+    {
+        return $this->belongsTo('App\Models\Currency','default_currency', 'id');
+    }
+
+    public function language()
+    {
+        return $this->belongsTo('App\Models\Language','default_language', 'id');
+    }
     
 }
