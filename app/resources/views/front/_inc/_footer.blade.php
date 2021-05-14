@@ -1,5 +1,6 @@
 <section id="footer">
     <div class="container">
+       @if(!Auth::check())
        <div class="row visible-xs">
            <div class="col-lg-12 col-sm-12 col-12">
                <h3 class="text-center">Start trading now</h3>
@@ -14,6 +15,7 @@
                <div class="border"></div>
            </div>
        </div>
+       @endif
        <div class="row">
           <div class="col-lg-3 col-sm-3 col-xs-12">
              <ul class="Company-main">

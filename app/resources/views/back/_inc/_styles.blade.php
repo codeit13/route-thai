@@ -3,5 +3,6 @@
 <link rel="stylesheet" href="{{ asset('back/vendor/nucleo/css/nucleo.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('back/vendor/font-awesome/css/font-awesome.min.css') }}" type="text/css">
 <link href="{{ asset('back/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="{{ asset('back/css/responsive.dataTables.min.css') }}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="{{ asset('back/css/argon.css') }}" type="text/css">
