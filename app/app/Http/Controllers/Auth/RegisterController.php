@@ -104,12 +104,13 @@ class RegisterController extends Controller
     }
 
     public function showRegistrationForm(Request $request){
+        if(!Auth::check())
         return view('front.auth.register');
+        else return redirect()->route('home');
     }
 
     public function showOTPForm(Request $request){
         $validator = $this->validator($request->all());
-        // dd($validator->errors());
         if ($validator->errors()->count() > 0)
         return redirect()->back()->withInput($request->all())->withErrors($validator); 
         $data = $this->service->sendOtpSms($request->mobile);
