@@ -17,7 +17,7 @@
 
 
 								<h3>
-                          @if($request->type==2)
+                          @if($request->type=='withdraw')
 
 								{{__('Withdraw History')}}
 
@@ -274,9 +274,9 @@
 											</td>
 											<td>
 												<select name="type" class="filter-type">
-													<option value="1" @if($request->type==1) selected @endif >{{__('Deposit')}}</option>
+													<option value="deposit" @if($request->type=='deposit') selected @endif >{{__('Deposit')}}</option>
 
-													<option value="2" @if($request->type==2) selected @endif>{{__('Withdraw')}}</option>
+													<option value="withdraw" @if($request->type=='withdraw') selected @endif>{{__('Withdraw')}}</option>
 												</select>
 											</td>
 											<td>
@@ -327,7 +327,7 @@
 											<td class="text-center">{{$transaction->trans_amount}}</td>
 											<td class="text-center">
 
-												@if($transaction->type==2)
+												@if($transaction->type=='withdraw')
 
 												{{$transaction->address}}
 
@@ -394,7 +394,7 @@
 											<td>
 												<span>Quantity</span>{{$transaction->trans_amount}}
 											</td>
-											<td class="w-details">	@if($transaction->type==2)
+											<td class="w-details">	@if($transaction->type=='withdraw')
 
 												{{$transaction->address}}
 

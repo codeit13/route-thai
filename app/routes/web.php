@@ -51,13 +51,21 @@ Route::middleware('auth')->group(function(){
     Route::prefix('wallet')->group(function(){
         Route::get('withdraw/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'withdraw_history'])->name('wallet.withdraw.history');
         Route::get('withdraw/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create_withdraw'])->name('wallet.withdraw');
-        Route::post('create/withdraw/',[App\Http\Controllers\TransactionController::class, 'store_withdraw'])->name('wallet.create.withdraw');
-        Route::get('deposit/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.deposit.history');
+        Route::post('create/withdraw/',[App\Http\Controllers\TransactionController::class, 'store_withdraw'])->name('wallet.create.withdraw')
+        Route::get('history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.request.history');
         Route::get('deposit/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create'])->name('wallet.deposit');
         Route::get('{type}/{typename?}',[App\Http\Controllers\TransactionController::class, 'show'])->name('wallet.history');
         Route::post('create/deposit/',[App\Http\Controllers\TransactionController::class, 'store'])->name('wallet.create.deposit');
         Route::get('wallet/deposit/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.request.history');
     });
+
+
+Route::get('/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
+
+Route::get('/payment/order/cancel',[App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.order.cancel');
+
+
+
 });
 
 // Exchange
@@ -65,3 +73,6 @@ Route::get('p2p/exchange',function(){ return view('front.exchange'); })->name('p
 
 // Stocking
 Route::get('staking',function() { return view('front.staking'); })->name('staking');
+
+
+

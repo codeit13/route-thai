@@ -61,5 +61,10 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->attributes['name'] = $username;
     }
 
+    public function buyer_request()
+    {
+        return $this->hasMany('App\Models\BuyerRequest','user_id','id');
+    }
+
     
 }
