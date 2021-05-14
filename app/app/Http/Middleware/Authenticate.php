@@ -25,11 +25,11 @@ class Authenticate extends Middleware
             }
             else
             {
-                if($guard == 'admin')
-                {
-                    return redirect()->route('admin.auth');
-                }
-                return redirect()->route('login');
+            if($guard == 'admin')
+            {
+                return redirect()->route('admin.auth');
+            }
+            return redirect()->route('login');
             }
         }
         return $next($request);

@@ -1,6 +1,6 @@
 <?php
 
-Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest')->group(function () {
+Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:admin')->group(function () {
     Route::get('/', 'Auth\LoginController@showLoginForm')->name('loginpage');
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('auth');
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
@@ -8,9 +8,8 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest')-
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
     Route::post('register', 'Auth\RegisterController@register')->name('register');
 
-    // Route::middleware('auth:admin')->group(function () {
+    Route::middleware(['auth:admin'])->group(function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
-        
         //Wallet
         Route::get('trades','TransactionController@index')->name('trades.list');
         Route::get('deposit/requests/{type}/{name}','TransactionController@show')->name('deposit.requests.show');
@@ -19,5 +18,5 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest')-
 
         //Users
         Route::get('users', 'UserController@index')->name('users');
-    // });
+    });
 });
