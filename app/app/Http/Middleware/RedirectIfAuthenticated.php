@@ -28,8 +28,8 @@ class RedirectIfAuthenticated
                 return redirect('admin/login');
             }
         }
-            return redirect(RouteServiceProvider::HOME);
-        }
+        else   
+        return redirect(RouteServiceProvider::HOME);
 // dd($guard);
         // return $next($request);
     }
