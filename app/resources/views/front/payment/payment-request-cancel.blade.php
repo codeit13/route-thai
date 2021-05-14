@@ -1,4 +1,4 @@
-	@extends('layouts.front')
+@extends('layouts.front')
 @section('title')
     Route: P2P Trading Platform
 @endsection

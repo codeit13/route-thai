@@ -1,24 +1,22 @@
 @if ($paginator->hasPages())
+    <nav aria-label="Page navigation">
 
+        <ul class="pagination">
 
-<nav aria-label="Page navigation">
-
-                                <ul class="pagination">
-
-                                      {{-- Previous Page Link --}}
+            {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
-       
+
                 <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
                     <span aria-hidden="true">&lsaquo;</span>
                 </li>
             @else
 
-             <li>
-                                        <a href="{{ $paginator->previousPageUrl() }}" aria-label="Previous">
-                                            <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
-                                        </a>
-                                    </li>
-          
+                <li>
+                    <a href="{{ $paginator->previousPageUrl() }}" aria-label="Previous">
+                        <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
+                    </a>
+                </li>
+
             @endif
 
             {{-- Pagination Elements --}}
@@ -43,26 +41,22 @@
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
 
-            
 
-                  <li>
-                                        <a href="{{ $paginator->nextPageUrl() }}" aria-label="Next">
-                                            <span aria-hidden="true"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-                                        </a>
-                                    </li>
-              
-            @else
 
-            <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
-                    <span aria-hidden="true">&rsaquo;</span>
+                <li>
+                    <a href="{{ $paginator->nextPageUrl() }}" aria-label="Next">
+                        <span aria-hidden="true"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                    </a>
                 </li>
 
+            @else
 
-               
+                <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
+                    <span aria-hidden="true">&rsaquo;</span>
+                </li>
             @endif
-                               
-                              
-                                </ul>
-                            </nav>
-   
+
+        </ul>
+    </nav>
+
 @endif
