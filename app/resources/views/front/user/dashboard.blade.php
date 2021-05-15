@@ -17,7 +17,7 @@
                             <h3>@php $minFill = 4; echo preg_replace_callback('/^(.)(.*?)([^@]?)(?=@[^@]+$)/u',function ($m) use ($minFill) {return $m[1] . str_repeat("*", max($minFill, mb_strlen($m[1], 'UTF-8'))) . ($m[3] ?: $m[0]); }, Auth::user()->email ); @endphp </h3>
                             <h4>Mobile Number : <span>{{ substr(Auth::user()->mobile, 0, -6) . "****".substr(Auth::user()->mobile, -2)}}</span></h4>
                          </div>
-                         <p>Last login time: 2021-05-04 22:19:31 <span>IP: 103.103.162.223</span>
+                         <p>Last login time: {{ Auth::user()->lastLoginAt() ?? now() }} <span> IP Address: {{ Auth::user()->lastLoginIp() ?? \Request::ip() }}</span>
                          </p>
                       </div>
                    </div>
@@ -63,17 +63,25 @@
                             <h2>Profile Details</h2>
                             <hr/>
                             <label>Username:</label>
-                            <p>{{ Auth::user()->name }} <a href="#"><i class="fal fa-edit"></i></a></p>
+                            <p class="username"><span> {{ Auth::user()->name }} </span>
+                              @if(Auth::user()->is_username_updated == false)
+                              <a href="#" data-toggle="modal" data-target="#usernameUpdate"> <i class="fal fa-edit"></i></a>
+                              @endif
+                              </p>
+                            <p class="alert currency-msg pl-0 pb-0 m-0 small" style="display: none"></p>   
                             <label>Currency</label>
                             <div class="dropdown currency_two three_coins crypto">
-                              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ asset('front/img/Indian Rupee.png') }}" alt="">INR
-                              </button>
-                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="dropdown-item" href="#"><img src="{{ asset('front/img/Korean Won.png') }}" alt=""> KRW</a>
-                                <a class="dropdown-item" href="#"><img src="{{ asset('front/img/USD Dollar.png') }}" alt=""> USD</a>
-                                <a class="dropdown-item" href="#"><img src="{{ asset('front/img/Thai Baht.png') }}" alt=""> THB</a>
-                                <a class="dropdown-item" href="#"><img src="{{ asset('front/img/Japenese Yuan.png') }}" alt=""> JPY</a>
+                              @php 
+                                 $currencies = \App\Models\Currency::where('type_id',1)->get();
+                                 $default_currency = !empty(Auth::user()->default_currency) ? \App\Models\Currency::find(Auth::user()->default_currency) : \App\Models\Currency::first();
+                               @endphp
+                               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 <img src="{{ $default_currency->firstMedia('icon')->getUrl() }}" alt="{{__($default_currency->name)}}">{{__($default_currency->short_name)}}
+                               </button>
+                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @foreach($currencies as $cIndex=> $currency)
+                                    <a class="dropdown-item currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}><img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}"> {{ $currency->short_name }}</a>
+                                @endforeach                                
                               </div>
                             </div>
                             <label>Language</label>
@@ -91,17 +99,18 @@
                             <div class="sn_notificatio">
                                <i class="fal fa-comment-alt-lines"></i>
                                SMS Notification
-                               <button type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+                               <button type="button" class="btn btn-sm btn-toggle" data-mode="sms_notification" data-toggle="button" aria-pressed="{{ Auth::user()->sms_notification ? 'true' : 'false' }}" autocomplete="off">
                                  <div class="handle"></div>
                                </button>
                             </div>  
                             <div class="sn_notificatio">
                                <i class="fal fa-bell"></i>
                                Line Notification
-                               <button type="button" class="btn btn-sm btn-toggle active" data-toggle="button" aria-pressed="false" autocomplete="off">
+                               <button type="button" class="btn btn-sm btn-toggle" data-mode="line_notification" data-toggle="button" aria-pressed="{{ Auth::user()->line_notification ? 'true' : 'false' }}" autocomplete="off">
                                  <div class="handle"></div>
                                </button>
-                            </div>               
+                            </div> 
+                            <p class="alert toggle-msg small" style="display: none"></p>             
                          </div>
                       </div>
                    </div>
@@ -109,53 +118,26 @@
                       <div class="col-lg-4 col-xs-12 flush-left  xs-flush">
                          <div class="card">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                               <li class="nav-item"> <a class="nav-link active" id="activity-tab" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="true">Activity</a>
+                               <li class="nav-item"> <a class="nav-link active" id="activity-tab" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="true">{{__("Activity")}}</a>
                                </li>
-                               <li class="nav-item"> <a class="nav-link" id="devices-tab" data-toggle="tab" href="#devices" role="tab" aria-controls="devices" aria-selected="false">Devices</a>
+                               <li class="nav-item"> <a class="nav-link" id="devices-tab" data-toggle="tab" href="#devices" role="tab" aria-controls="devices" aria-selected="false">{{__("Devices")}}</a>
                                </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                <div class="tab-pane fade show active" id="activity" role="tabpanel" aria-labelledby="activity-tab">
-                                  <div class="coll_one">
+                                 @foreach (auth()->user()->authentications as $item)
+                                 <div class="coll_one">
                                      <div class="left_call">
                                         <h6>Web</h6>
-                                        <p>2021-05-04 22:19:31</p>
+                                        <p>{{ $item->login_at}}</p>
                                      </div>
                                      <div class="right_call">
                                         <h6>Delhi India</h6>
-                                        <p>IP: 103.103.162.223</p>
+                                        <p>IP: {{ $item->ip_address}}</p>
                                      </div>
                                   </div>
-                                  <div class="coll_one">
-                                     <div class="left_call">
-                                        <h6>Web</h6>
-                                        <p>2021-05-04 22:19:31</p>
-                                     </div>
-                                     <div class="right_call">
-                                        <h6>Delhi India</h6>
-                                        <p>IP: 103.103.162.223</p>
-                                     </div>
-                                  </div>
-                                  <div class="coll_one">
-                                     <div class="left_call">
-                                        <h6>Web</h6>
-                                        <p>2021-05-04 22:19:31</p>
-                                     </div>
-                                     <div class="right_call">
-                                        <h6>Delhi India</h6>
-                                        <p>IP: 103.103.162.223</p>
-                                     </div>
-                                  </div>
-                                  <div class="coll_one last">
-                                     <div class="left_call">
-                                        <h6>Web</h6>
-                                        <p>2021-05-04 22:19:31</p>
-                                     </div>
-                                     <div class="right_call">
-                                        <h6>Delhi India</h6>
-                                        <p>IP: 103.103.162.223</p>
-                                     </div>
-                                  </div>
+                                  @endforeach 
+                               
                                </div>
                                <div class="tab-pane fade" id="devices" role="tabpanel" aria-labelledby="devices-tab">...</div>
                             </div>
@@ -200,6 +182,9 @@
        </div>
     </div>
  </section>
+ @if(Auth::user()->is_username_updated == false)
+   @include('front.user._updateUsername')
+ @endif 
  @section('page_scripts')
  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>
    <script>
@@ -273,6 +258,38 @@
       var legend = doughnutChart.generateLegend();
       var legendHolder = document.getElementById("legend");
       legendHolder.innerHTML = legend + '';
-   </script>
+
+    $('.btn-toggle').on('click',function(e){
+        e.preventDefault();
+        var mode= $(this).data('mode');
+         $.ajax({
+            type:'POST',
+            dataType:'JSON',
+            url:"{{ route('user.update.notification') }}",
+            data:{ mode : mode, _token: "{{ csrf_token() }}" },
+            success:function(data) {
+               $('.usr-msg').html(data.message).show();
+               setTimeout(function() { $(".usr-msg").hide() }, 2000);               
+            }
+         });
+    });
+
+    $('.currency-item').on('click',function(e){
+        e.preventDefault();
+        var currency= $(this).data('currency');
+         $.ajax({
+            type:'POST',
+            dataType:'JSON',
+            url:"{{ route('user.update.currency') }}",
+            data:{ currency : currency, _token: "{{ csrf_token() }}" },
+            success:function(data) {
+               $('.currency-msg').html(data.message).show();
+               setTimeout(function() { $(".currency-msg").hide() }, 2000);
+               location.reload();
+            }
+         });
+    });
+
+ </script>
  @endsection
  @endsection

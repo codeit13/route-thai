@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title')
-    Route: P2P Trading Platform
+Basic Info - Route: P2P Trading Platform
 @endsection
 @section('content')
 <section id="dashboard">
@@ -14,8 +14,10 @@
                       <div class="col user_details"> 
                          <h2>Basic Info</h2>
                          <i class="fal fa-user-circle"></i>
-                         <div class="user_data">
-                            <h5>{{ Auth::user()->name }} <a href="#"><i class="fal fa-edit"></i></a></h5> 
+                         <div class="user_data username">
+                            <h5> <span>{{ Auth::user()->name }} </span> @if(Auth::user()->is_username_updated == false)
+                              <a href="#" data-toggle="modal" data-target="#usernameUpdate"><i class="fal fa-edit"></i></a></h5> 
+                              @endif
                          </div>
                          <h6>@php $minFill = 4; echo preg_replace_callback('/^(.)(.*?)([^@]?)(?=@[^@]+$)/u',function ($m) use ($minFill) {return $m[1] . str_repeat("*", max($minFill, mb_strlen($m[1], 'UTF-8'))) . ($m[3] ?: $m[0]); }, Auth::user()->email ); @endphp | {{ substr(Auth::user()->mobile, 0, -6) . "****".substr(Auth::user()->mobile, -2)}} <img src=" {{ asset('front/img/verified.svg') }}"></h6>
                          <p>Last login time: 2021-05-04 22:19:31 <span>IP: 103.103.162.223</span>
@@ -58,4 +60,7 @@
        </div>
     </div>
  </section>
+ @if(Auth::user()->is_username_updated == false)
+      @include('front.user._updateUsername')
+ @endif
  @endsection

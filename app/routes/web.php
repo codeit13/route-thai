@@ -45,6 +45,10 @@ Route::middleware('auth')->group(function(){
     Route::prefix('user')->name('user.')->group(function(){ 
         Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
         Route::get('profile',[App\Http\Controllers\UserController::class, 'profile'])->name('profile');
+        Route::post('check-username',[App\Http\Controllers\UserController::class, 'isUsernameExist'])->name('check.username');
+        Route::post('update-username',[App\Http\Controllers\UserController::class, 'updateUsername'])->name('update.username');
+        Route::post('update-notification',[App\Http\Controllers\UserController::class, 'updateNotificationSettings'])->name('update.notification');
+        Route::post('update-currency',[App\Http\Controllers\UserController::class, 'updateCurrencySettings'])->name('update.currency');
     });
     
     //Wallet

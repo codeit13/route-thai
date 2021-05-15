@@ -72,9 +72,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+
+        $parts = explode("@",  strtolower($data['email']));
+        $email = $parts[0];
+        $username = $value;
+        do
+        { 
+            $username = $email.rand(00, 9999999);
+        }
+        while(User::whereName($email)->exists());
+        
         return User::create([
             'email' => $data['email'],
-            'name' => null,
+            'name' => $username,
             'mobile' => $data['mobile'],
             'password' => Hash::make($data['password']),
         ]);
@@ -104,12 +115,13 @@ class RegisterController extends Controller
     }
 
     public function showRegistrationForm(Request $request){
+        if(!Auth::check())
         return view('front.auth.register');
+        else return redirect()->route('home');
     }
 
     public function showOTPForm(Request $request){
         $validator = $this->validator($request->all());
-        // dd($validator->errors());
         if ($validator->errors()->count() > 0)
         return redirect()->back()->withInput($request->all())->withErrors($validator); 
         $data = $this->service->sendOtpSms($request->mobile);
