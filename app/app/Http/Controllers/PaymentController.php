@@ -45,17 +45,31 @@ class PaymentController extends Controller
      */
     public function show(\App\Models\Transaction $transaction)
     {
-        if($transaction->hasBuyerRequest())
+        $buyer_request=$transaction->checkBuyerRequest();
+
+        if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
         {
             return redirect()->route('payment.order.cancel');
         }
-        //die;
+        elseif(!$buyer_request)
+        {
 
-        $user=\Auth::user();
+            $user=\Auth::user();
 
-        $user->buyer_request()->create(['transaction_id'=>$transaction->id]);
+            $user->buyer_request()->create(['transaction_id'=>$transaction->id]);
+
+            $buyer_request=$transaction->checkBuyerRequest();
+
+
+        }
+        elseif($buyer_request=='exists')
+        {
+            redirect()->back();
+        }
+
+         // echo '<pre>';print_r($buyer_request->toArray());die;
        
-       return view('front.payment.payment-request',compact($transaction));
+       return view('front.payment.payment-request',compact('transaction','buyer_request'));
     }
 
     /**
