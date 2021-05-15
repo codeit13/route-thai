@@ -3430,6 +3430,9 @@ a#activity-tab,a#devices-tab {
     .iverify ul {
         width: 85%;
     }
+    #topbar .dropdown-menu.show, #header .dropdown-menu.show {
+        width: 260px;
+    }
     #dashboard .sidebar {
         background: #333333;
         padding: 0px 0px;
@@ -4241,11 +4244,12 @@ a#activity-tab,a#devices-tab {
         margin-top: 35px !important;
     }
     .side_image {
-        display: block !important;
+        display: none;
         height: auto;
         background: none;
         padding-bottom: 50px;
     }
+    .flu
     .side_image .tableCell,
     .side_image .tableRow {
         height: auto !important;

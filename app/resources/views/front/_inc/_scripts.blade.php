@@ -31,6 +31,13 @@
         @if(session('success'))
             $('#successModal101').modal('show');
         @endif
+        // $(".dropdown.onhover").on('click', function(){
+        //     var dropdownMenu = $(this).children(".dropdown-menu");
+        //     if(dropdownMenu.is(":visible")){
+        //         dropdownMenu.toggleClass("show");
+        //         dropdownMenu.parent().toggleClass("show");
+        //     }
+        // });
 
         $(".dropdown.onhover").hover(function(){
             var dropdownMenu = $(this).children(".dropdown-menu");
@@ -39,5 +46,6 @@
                 dropdownMenu.parent().toggleClass("show");
             }
         });
+        
     });
 </script>
