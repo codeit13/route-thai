@@ -22,6 +22,10 @@ class Transaction extends Model
     {
     	return $this->belongsTo('App\Models\User','user_id','id');
     }
+    public function receiver()
+    {
+    	return $this->belongsTo('App\Models\User','receiver_id','id');
+    }
 
     public function available_balance()
     {

@@ -11,10 +11,12 @@
 <link rel="stylesheet" type="text/css" href=" {{ asset('front/css/chart.css') }}">
 <link href=" {{ asset('front/css/style.css') }}" rel="stylesheet" />
 <style>
+@media (min-width: 769px) {
     .dropdown.onhover:hover .dropdown-menu{
         display: block;
     }
     .dropdown-menu{
         margin-top: 0;
     }
+}
 </style>

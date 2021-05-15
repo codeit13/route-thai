@@ -84,4 +84,13 @@ class UserController extends Controller
     {
         //
     }
+
+    public function updateStatus(Request $request){
+        if($request->has('status') && !empty($request->status)) {
+            $user = User::find($request->id);
+            $user->status = trim($request->status);
+            $user->save();
+            return response()->json(['status'=>'OK','message'=> __('The statuas has been updated.') ]);
+        }
+    }
 }

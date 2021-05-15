@@ -15,7 +15,10 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return view('back.trades');
+
+        $sell = Transaction::where('status','sell')->orderBy('created_at','DESC')->get();
+        $buy = Transaction::where('status','buy')->orderBy('created_at','DESC')->get();
+        return view('back.trades',compact(['sell','buy']));
     }
 
     /**
