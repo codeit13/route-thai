@@ -69,9 +69,11 @@ Route::middleware('auth')->group(function(){
 
 });
 
-Route::get('/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
+Route::get('buyer/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
 
-Route::get('/payment/order/cancel',[App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.order.cancel');
+Route::get('buyer/payment/{transaction}/cancel',[App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.order.cancel');
+
+Route::get('buyer/payment/{transaction}/confirm',[App\Http\Controllers\PaymentController::class, 'confirm'])->name('payment.order.confirm');
 
 
 // Exchange

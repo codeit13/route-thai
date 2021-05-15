@@ -39,23 +39,23 @@ class Transaction extends Model
 
      $request=$this->buyer_requests()->where('user_id',$user->id)->first();
 
-     $this->timer=$this->timer*60;
+     //$this->timer=$this->timer*60;
 
      //echo '<pre>';print_r($this->timer);die;
 
-     if($request && $this->timer < $this->getRequestTime($request->created_at))
+     if($request && $this->timer*60 < $this->getRequestTime($request->created_at))
      {
              $request->is_expired=true;
 
              return $request;
      }
-     else if($request && $this->timer > $this->getRequestTime($request->created_at))
+     else if($request && $this->timer*60 > $this->getRequestTime($request->created_at))
      {
              $request->is_expired=false;
 
 
 
-             $request->expiry_in=floor(($this->timer/60)-($this->getRequestTime($request->created_at)/60));
+             $request->expiry_in=floor(($this->timer)-($this->getRequestTime($request->created_at)/60));
 
             
 
@@ -78,6 +78,33 @@ public function getRequestTime($date)
     $diff_in_seconds=strtotime(\Carbon\Carbon::now())-strtotime($date);    
    
     return $diff_in_seconds;
+}
+
+public function createBuyerTransaction()
+{
+    $user=\Auth::user();
+
+    $buyer_request=$this->buyer_requests->where('user_id',$user->id)->first();
+
+    $this->user_id=$user->id;
+
+    $this->type='buy';
+
+
+
+    if($trans=$user->transactions()->create($this->toArray()))
+    {
+        $trans->trans_id=generate_unique_id();
+        $trans->save();
+        $buyer_request->status='paid';
+        $buyer_request->save();
+    }
+
+
+
+    //echo '<pre>';print_r($this->toArray());die;
+
+    //$user->transaction()->create([]);
 }
 
 

@@ -4,15 +4,15 @@
 @endsection
 @section('header-bar')
 <div class="progress-section visible-xs">
-				<h2>Order Cancel</h2>
+				<h2>{{__('Order Cancel')}}</h2>
 			</div>
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 col-sm-12 col-xs-12 flush">
 						<ul class="mini_links">
-							<li class="active"><a href="#">P2P</a>
+							<li class="active"><a href="#">{{__('P2P')}}</a>
 							</li>
-							<li><a href="#">Express</a>
+							<li><a href="#">{{__('Express')}}</a>
 							</li>
 						</ul>
 					</div>
@@ -24,7 +24,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 col-sm-12 col-xs-12 text-left">
-						<h1>Order Cancelled</h1>
+						<h1>{{__('Order Cancelled')}}</h1>
 					</div>
 				</div>
 			</div>
@@ -33,18 +33,18 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-6 xs-flush col-sm-6 col-xs-12">
-						<h2 class="suborder">Order cancelled</h2>
+						<h2 class="suborder">{{__('Order cancelled')}}</h2>
 						<h4 class="suborder">If you have any questions, please contact customer service.</h4>
 						<div class="card padding-0">
 							<div class="created-time">
 								<div class="row">
 									<div class="col-lg-6 text-left col-sm-6 col-6">
-										<h6>Created time</h6>
-										<h5>2021-03-29 11:56:29</h5>
+										<h6>{{__('Created time')}}</h6>
+										<h5>{{$transaction->created_at}}</h5>
 									</div>
 									<div class="col-lg-6 text-left  col-sm-6 col-6">
-										<h6>Order number</h6>
-										<h5>20209736948558385152</h5>
+										<h6>{{__('Order number')}}</h6>
+										<h5>{{$transaction->trans_id}}</h5>
 									</div>
 								</div>
 							</div>
@@ -53,11 +53,21 @@
 									<div class="col-lg-4 col-sm-4 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<div id="Price">	<span>Amount</span>
+												<div id="Price">	<span>{{__('Types of Currency')}}</span>
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5268172_USD__10_s">	<span>$ 250.00</span>
+												<div id="ID5268172_USD__10_s">
+
+													@if($transaction->currency->hasMedia('icon'))
+    
+                                      
+
+											<img src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 
+
+											@endif
+
+													<span class="hidden-xs">{{__($transaction->currency->name)}}</span><span class="visible-xs red-c">{{__($transaction->currency->short_name)}}</span>
 												</div>
 											</div>
 										</div>
@@ -65,11 +75,11 @@
 									<div class="col-lg-4 col-sm-4 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<div id="Available">	<span>Price</span>
+												<div id="Available">	<span>{{__('Price')}}</span>
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">1 USD</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->quantity}}</span>
 												</div>
 											</div>
 										</div>
@@ -77,11 +87,11 @@
 									<div class="col-lg-4 col-sm-4 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<div id="Available">	<span>Quantity</span>
+												<div id="Available">	<span>{{__('Quantity')}}</span>
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">250 USDT</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}}&nbsp;&nbsp; {{$transaction->currency->short_name}}</span>
 												</div>
 											</div>
 										</div>

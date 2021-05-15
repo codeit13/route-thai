@@ -49,7 +49,7 @@ class PaymentController extends Controller
 
         if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
         {
-            return redirect()->route('payment.order.cancel');
+            return redirect()->route('payment.order.cancel',$transaction->id);
         }
         elseif(!$buyer_request)
         {
@@ -60,6 +60,7 @@ class PaymentController extends Controller
 
             $buyer_request=$transaction->checkBuyerRequest();
 
+           
 
         }
         elseif($buyer_request=='exists')
@@ -67,7 +68,7 @@ class PaymentController extends Controller
             redirect()->back();
         }
 
-         // echo '<pre>';print_r($buyer_request->toArray());die;
+         //echo '<pre>';print_r($transaction->toArray());die;
        
        return view('front.payment.payment-request',compact('transaction','buyer_request'));
     }
@@ -106,8 +107,50 @@ class PaymentController extends Controller
         //
     }
 
-    public function cancel()
+    public function cancel(\App\Models\Transaction $transaction)
     {
-        return view('front.payment.payment-request-cancel');
+       // $user_id=\Auth::user()->id;
+
+        $buyer_request =$transaction->checkBuyerRequest(); 
+        if(isset($buyer_request->is_expired))
+        {
+            unset($buyer_request->is_expired,$buyer_request->expiry_in);
+
+            $buyer_request->status='cancel';
+
+            $buyer_request->save();
+        }
+
+           return view('front.payment.payment-request-cancel',compact('transaction'));
     }
+
+    public function confirm(\App\Models\Transaction $transaction)
+    {
+        $buyer_request=$transaction->checkBuyerRequest();
+
+        if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
+        {
+            return redirect()->route('payment.order.cancel',$transaction->id);
+        }
+        elseif(!$buyer_request || $buyer_request=='exists')
+        {
+
+            redirect()->back();
+            
+        }
+        elseif(!$buyer_request->is_expired)
+        {
+
+            $transaction->createBuyerTransaction();
+           // unset($buyer_request->is_expired,$buyer_request->expiry_in);
+
+            //$buyer_request->status='paid';
+
+           // $buyer_request->save();
+
+           return view('front.payment.payment-request-success',compact('transaction'));
+        }
+    }
+
+
 }

@@ -17,6 +17,7 @@ class CreateBuyerRequestsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('transaction_id');
             $table->unsignedBigInteger('user_id');
+            $table->enum('status', ['open','pending','paid','cancel'])->default('open');
 
              $table->foreign('transaction_id')->references('id')->on('transactions')
             ->onDelete('cascade')

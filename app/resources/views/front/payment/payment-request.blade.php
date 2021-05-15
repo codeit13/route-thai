@@ -62,11 +62,21 @@
 									<div class="col-lg-4 col-sm-4 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<div id="Price">	<span>Amount</span>
+												<div id="Price">	<span>{{__('Types of Currency')}}</span>
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5268172_USD__10_s">	<span>$ 250.00</span>
+												<div id="ID5268172_USD__10_s">
+
+													@if($transaction->currency->hasMedia('icon'))
+    
+                                      
+
+											<img src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 
+
+											@endif
+
+													<span class="hidden-xs">{{__($transaction->currency->name)}}</span><span class="visible-xs red-c">{{__($transaction->currency->short_name)}}</span>
 												</div>
 											</div>
 										</div>
@@ -74,11 +84,11 @@
 									<div class="col-lg-4 col-sm-4 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<div id="Available">	<span>Price</span>
+												<div id="Available">	<span>{{__('Price')}}</span>
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">1 USD</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->quantity}}</span>
 												</div>
 											</div>
 										</div>
@@ -86,11 +96,11 @@
 									<div class="col-lg-4 col-sm-4 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<div id="Available">	<span>Quantity</span>
+												<div id="Available">	<span>{{__('Quantity')}}</span>
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}} {{$transaction->currency->short_name}}</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}}&nbsp;&nbsp; {{$transaction->currency->short_name}}</span>
 												</div>
 											</div>
 										</div>
@@ -123,7 +133,7 @@
 									<div class="col-lg-6 col-sm-6 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<h6>Email or Username</h6>
+												<h6>{{__('Email or Username')}}</h6>
 											</div>
 											<div class="col-lg-12 top-xs text-left col-sm-12 col-6">	<a href="mailto:{{$transaction->user->email}}">{{$transaction->user->email}}</a>
 											</div>
@@ -137,14 +147,14 @@
 						</div>
 						<div class="col-lg-12 flush  space-xs col-sm-12 col-12">
 							<div class="row">
-								<div class="col-lg-9 col-sm-9 col-8">	<a href="#" class="btn-success">Transferred, Next</a>
+								<div class="col-lg-9 col-sm-9 col-8">	<a href="{{route('payment.order.confirm',$transaction->id)}}" class="btn-success">{{__('Transferred, Next')}}</a>
 								</div>
-								<div class="col-lg-3 col-sm-3 col-4">	<a href="#" class="btn-success cancel">Cancel</a>
+								<div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',['transaction'=>$transaction->id])}}" class="btn-success cancel">Cancel</a>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-12 hidden-xs col-sm-12 col-12">
-									<p class="untext-2">Please make a payment within 15:00 mins, otherwise, the order will be cancelled.</p>
+									<p class="untext-2">Please make a payment within {{$transaction->timer}}:00 mins, otherwise, the order will be cancelled.</p>
 								</div>
 							</div>
 						</div>
@@ -285,9 +295,9 @@
 						</div>
 						<div class="col-lg-8 offset-lg-2 top-space col-sm-8 offset-sm-2 col-12">
 							<div class="row">
-								<div class="col-lg-9 col-sm-9 col-8">	<a href="#" class="btn-success">Transferred, Next</a>
+								<div class="col-lg-9 col-sm-9 col-8">	<a href="{{route('payment.order.confirm',$transaction->id)}}" class="btn-success">{{__('Transferred, Next')}}</a>
 								</div>
-								<div class="col-lg-3 col-sm-3 col-4">	<a href="#" class="btn-success cancel">Cancel</a>
+								<div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',$transaction->id)}}" class="btn-success cancel">{{__('Cancel')}}</a>
 								</div>
 							</div>
 						</div>
@@ -322,7 +332,7 @@
 					{
 						radius: 40,
 						min:0,
-						max: {{($buyer_request->expiry_in >0)?$buyer_request->expiry_in:1}},
+						max: {{$transaction->timer}},
 						step: 10,
 						initialValue:{{($buyer_request->expiry_in >0)?$buyer_request->expiry_in:0}},
 
