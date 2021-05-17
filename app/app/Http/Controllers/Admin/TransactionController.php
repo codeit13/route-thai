@@ -16,8 +16,8 @@ class TransactionController extends Controller
     public function index()
     {
 
-        $sell = Transaction::where('status','sell')->orderBy('created_at','DESC')->get();
-        $buy = Transaction::where('status','buy')->orderBy('created_at','DESC')->get();
+        $sell = Transaction::where('type','sell')->orderBy('created_at','DESC')->get();
+        $buy = Transaction::where('type','buy')->orderBy('created_at','DESC')->get();
         return view('back.trades',compact(['sell','buy']));
     }
 
@@ -106,9 +106,19 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function view($id)
     {
-        //
+        $trans = Transaction::where('trans_id',$id)->first();
+        return view('back.trade_details',compact('trans'));
+    }
+
+    public function updateStatus(Request $request){
+        if($request->has('status') && !empty($request->status)) {
+            $user = Transaction::find($request->id);
+            $user->status = trim($request->status);
+            $user->save();
+            return response()->json(['status'=>'OK','message'=> __('The statuas has been updated.') ]);
+        }
     }
 
     /**
