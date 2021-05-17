@@ -32,6 +32,6 @@ class Authenticate extends Middleware
             return redirect()->route('login');
             }
         }
-        return $next($request);
+        // return $next($request);
     }
 }

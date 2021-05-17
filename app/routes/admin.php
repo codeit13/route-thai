@@ -12,6 +12,8 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
         //Wallet
         Route::get('trades','TransactionController@index')->name('trades.list');
+        Route::get('trade/{id}/details','TransactionController@view')->name('trade.show');
+        Route::post('trade/update/status','TransactionController@updateStatus')->name('trade.update.status');
         Route::get('deposit/requests/{type}/{name}','TransactionController@show')->name('deposit.requests.show');
         Route::get('withdraw/requests/{type?}/{name?}','TransactionController@show_withdraw')->name('withdraw.requests.show');
         Route::get('wallet/{type}/{transaction}/change/status/{status}','TransactionController@changeStatus')->name('wallet.change.status');

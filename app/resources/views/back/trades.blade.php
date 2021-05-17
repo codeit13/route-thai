@@ -2,6 +2,9 @@
 @section('title')
     Trades |
 @endsection
+<style>
+
+</style>
 @section('content')
 <div class="container-fluid mt-6 team-members">
     <div class="row">
@@ -35,26 +38,17 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($sell as $item)
-                                            <tr>
+                                            <tr onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">
                                                 <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
-                                                <td>{{ $item->trand_id }}</td>
-                                                <td>{{ $item->user->name }}</td>
-                                                <td>{{ $item->receiver->name}}</td>
-                                                <td>{{ $item->status }}</td>
+                                                <td>{{ $item->trans_id }}</td>
+                                                <td>{{ ucfirst($item->user->name) }}</td>
+                                                <td>{{ ucfirst($item->receiver->name) }}</td>
+                                                <td>{{ ucfirst($item->status) }}</td>
                                                 <td>{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
-                                                <th>TRANS. ID</th>
-                                                <th>Seller</th>
-                                                <th>Buyer</th>
-                                                <th>Status</th>
-                                                <th>Date</th>
-                                            </tr>
-                                        </tfoot>
+                                       
                                     </table>
                                 </div>
                             </div>

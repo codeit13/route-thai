@@ -48,7 +48,6 @@ class LoginController extends Controller
     }
     
     protected function guard(){
-        if(!Auth::guard('admin')->check())
         return Auth::guard('admin');
     }
 
@@ -56,6 +55,6 @@ class LoginController extends Controller
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         // dd(Auth::guard('admin')->check());
-        return redirect('login');
+        return redirect('admin/login');
       }
 }
