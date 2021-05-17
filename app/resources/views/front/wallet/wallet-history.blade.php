@@ -7,12 +7,23 @@
 
 @endsection
 @section('content')
+<div class="progress-section visible-xs">
+	<h2>@if($request->type=='withdraw')
+
+								{{__('Withdraw History')}}
+
+
+                          @else
+								{{__('Deposit History')}}
+
+								@endif</h2>
+</div>
 <section id="wallet-content" class="request crypto order-history">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12  col-sm-12 col-12">
 					<div class="white-box" style="background:none; box-shadow:none;">
-						<div class="row">
+						<div class="row hidden-xs">
 							<div class="col-lg-12 col-sm-12 col-12">
 
 

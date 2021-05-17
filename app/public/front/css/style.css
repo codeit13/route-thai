@@ -1443,6 +1443,7 @@ button#dropdownMenuButton img {
 .dropdown.currency_two .dropdown-menu.show {
     width: auto !important;
     font-size: 13px;
+    top: 22px !important;
     left: -35px !important;
     display: inline-block !important;
     padding: 0px 0px !important;
@@ -4056,6 +4057,7 @@ span.rt_span i.fa-trash-alt {
     }
     .dropdown.currency_two .dropdown-menu.show {
         left: 20px !important;
+        top: 0px !important;
     }
     .container-fluid {
         padding-left: 0px;
@@ -4072,6 +4074,7 @@ span.rt_span i.fa-trash-alt {
     }
     #wallet-content.request ul.janral-head {
         background: var(--dark_two_color) !important;
+            top: 0;
     }
     img.black-logo.onlymobile.sidemenu.visible-xs {
         width: 32%;

@@ -3,7 +3,9 @@
     Route: P2P Trading Platform
 @endsection
 @section('content')
-
+<div class="progress-section visible-xs">
+  <h2>{{__('Withdraw Assest')}}</h2>
+</div>
 <section id="wallet-content" class="request withdraw-asset">
     <div class="container">
       <div class="row">
@@ -26,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div class="row visible-xs">
+      <div class="row hidden-xs hidden-lg">
         <div class="col-lg-12 col-sm-12 col-12">
           <h3 class="wa_text">{{__('Withdraw Assest')}}</h3>
         </div>

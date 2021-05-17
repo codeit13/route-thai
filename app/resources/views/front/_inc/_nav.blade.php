@@ -41,21 +41,24 @@
                                 <li class="onsubmenu">
                                     <div class="dropdown currency_two">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="{{ asset('front/img/GBP.svg') }}" alt="">English</button>
+                                            </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <form class="form-inline">
-                                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span> -->
+                                                <a class="dropdown-item myLink" href="">
+                                                <img src="{{ asset('front/img/GBP.svg') }}" alt="">English
+                                                </a>
                                                 <a class="dropdown-item  myLink" href="">
-                                                <img src="{{ asset('front/img/kr.svg')}}" alt="">Korean</span>
+                                                <img src="{{ asset('front/img/kr.svg')}}" alt="">Korean
                                                 </a>
                                                 <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/th.svg')}}" alt="">Thailand</span>
+                                                <img src="{{ asset('front/img/th.svg')}}" alt="">Thailand
                                                 </a>
                                                 <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/cn.svg')}}" alt="">Chineese</span>
+                                                <img src="{{ asset('front/img/cn.svg')}}" alt="">Chineese
                                                 </a>
                                                 <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/jp.svg')}}" alt="">Japanese</span>
+                                                <img src="{{ asset('front/img/jp.svg')}}" alt="">Japanese
                                                 </a>
                                             </form>
                                         </div>
@@ -91,17 +94,20 @@
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             {{-- <form class="form-inline"> --}}
                                                 {{-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span> --}}
+                                                <a class="dropdown-item myLink" href="">
+                                                <img src="{{ asset('front/img/GBP.svg') }}" alt="">English
+                                                </a>
                                                 <a class="dropdown-item  myLink" href="">
-                                                <img src="{{ asset('front/img/kr.svg')}}" alt="">Korean</span>
+                                                <img src="{{ asset('front/img/kr.svg')}}" alt="">Korean
                                                 </a>
                                                 <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/th.svg')}}" alt="">Thailand</span>
+                                                <img src="{{ asset('front/img/th.svg')}}" alt="">Thailand
                                                 </a>
                                                 <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/cn.svg')}}" alt="">Chineese</span>
+                                                <img src="{{ asset('front/img/cn.svg')}}" alt="">Chineese
                                                 </a>
                                                 <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/jp.svg')}}" alt="">Japanese</span>
+                                                <img src="{{ asset('front/img/jp.svg')}}" alt="">Japanese
                                                 </a>
                                             {{-- </form> --}}
                                         </div>
@@ -114,6 +120,9 @@
                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                               {{-- <form class="form-inline"> --}}
                                                  {{-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span> --}}
+                                                 <a class="dropdown-item  myLink" href="usd">
+                                                    <img src="{{ asset('front/img/Korean Won.png') }}" alt=""> Korean Won <span>KRW</span>
+                                                 </a>
                                                  <a class="dropdown-item  myLink" href="usd">
                                                     <img src="{{ asset('front/img/USD Dollar.png') }}" alt="">United states Dollar <span>USD</span>
                                                  </a>
