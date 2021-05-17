@@ -20,17 +20,17 @@
                     </div>
                     @endif
                     <ul class="nav-menu">
-                        <li class="nav-item {{\Route::is("p2p.exchange")?'active':''}}" > <a class="nav-link" href="{{route('p2p.exchange')}}">P2P Exchange</a>
+                        <li class="nav-item {{\Route::is("p2p.exchange")?'active':''}}" > <a class="nav-link" href="{{route('p2p.exchange')}}"><span class="visible-xs"><i class="far fa-exchange-alt"></i></span>P2P Exchange</a>
                         </li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Mortgage Loan</a>
+                        <li class="nav-item"> <a class="nav-link" href="#"><span class="visible-xs"><i class="fas fa-landmark"></i></span>Mortgage Loan</a>
                         </li>
-                        <li class="nav-item {{\Route::is("staking")?'active':''}}"> <a class="nav-link" href="{{route('staking')}}">Staking</a>
+                        <li class="nav-item {{\Route::is("staking")?'active':''}}"> <a class="nav-link" href="{{route('staking')}}"><span class="visible-xs"><i class="far fa-plane-departure"></i></span>Staking</a>
                         </li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Auto Trading</a>
+                        <li class="nav-item"> <a class="nav-link" href="#"><span class="visible-xs"><i class="fas fa-magic"></i></span>Auto Trading</a>
                         </li>
-                        <li class="nav-item"> <a class="nav-link" href="#">ICO Information</a>
+                        <li class="nav-item"> <a class="nav-link" href="#"><span class="visible-xs"><i class="fal fa-info-circle"></i></span>ICO Information</a>
                         </li>
-                        <li class="nav-item"> <a target="_blank" class="nav-link" href="//arbitrage.route-thai.com">Arbitrage</a>
+                        <li class="nav-item"> <a target="_blank" class="nav-link" href="//arbitrage.route-thai.com"><span class="visible-xs"><i class="fab fa-bitcoin"></i></span>Arbitrage</a>
                         </li>
                     </ul>
                     <div class="right_side  my-2 my-lg-0">
@@ -70,7 +70,7 @@
                                 <li class="nav-item dropdown onhover">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Wallet
+                                        <span class="visible-xs"><i class="fal fa-wallet"></i></span>Wallet
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <ul>
@@ -156,7 +156,8 @@
                                 </li>
                                 <li class="onsubmenu hidden-xs"><a class="bell" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i> <span>05</span></a></li>
                                 <li class="onsubmenu">
-                                    <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i></div>
+                                    <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i>
+                                        <span class="visible-xs">Dark Mode</span>
                                 </li>
                             @endif
                         </ul>
