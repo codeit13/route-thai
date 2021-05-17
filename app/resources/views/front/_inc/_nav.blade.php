@@ -121,7 +121,7 @@
                                               {{-- <form class="form-inline"> --}}
                                                  {{-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span> --}}
                                                  <a class="dropdown-item  myLink" href="usd">
-                                                    <img src="{{ asset('front/img/Korean Won.png') }}" alt=""> Korean Won <span>KRW</span>
+                                                    <img src="{{ asset('front/img/Korean Won.png') }}" alt="">Korean Won <span>KRW</span>
                                                  </a>
                                                  <a class="dropdown-item  myLink" href="usd">
                                                     <img src="{{ asset('front/img/USD Dollar.png') }}" alt="">United states Dollar <span>USD</span>
