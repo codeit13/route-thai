@@ -4,7 +4,9 @@
 @endsection
 @section('content')
 
-
+<div class="progress-section visible-xs">
+	<h2>{{__($walletType->type)}} {{__('Wallet')}}</h2>
+</div>
 <section id="wallet-content">
 	<div class="container">
 		<div class="row">
