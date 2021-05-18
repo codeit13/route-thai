@@ -19,7 +19,7 @@ class ChangeColumnTypeQuantity extends Migration
         });
 
         Schema::table('transactions', function (Blueprint $table) {
-            $table->unsignedDecimal('quantity', $precision = 10, $scale = 5);
+            $table->unsignedDecimal('quantity', $precision = 10, $scale = 2);
         });
     }
 

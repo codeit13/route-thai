@@ -18,6 +18,11 @@ class Transaction extends Model
          return $this->belongsTo('App\Models\Currency','currency_id','id');
     }
 
+    public function fiat_currency()
+    {
+        return $this->belongsTo('App\Models\Currency','fiat_currency_id','id');
+    }
+
     public function user()
     {
     	return $this->belongsTo('App\Models\User','user_id','id');
@@ -43,19 +48,19 @@ class Transaction extends Model
 
      //echo '<pre>';print_r($this->timer);die;
 
-     if($request && $this->timer*60 < $this->getRequestTime($request->created_at))
+     if(isset($request->updated_at) && ($this->timer*60 < $this->getRequestTime($request->updated_at) || $request->status=='cancel'))
      {
              $request->is_expired=true;
 
              return $request;
      }
-     else if($request && $this->timer*60 > $this->getRequestTime($request->created_at))
+     else if(isset($request->updated_at) && $this->timer*60 > $this->getRequestTime($request->updated_at))
      {
              $request->is_expired=false;
 
 
 
-             $request->expiry_in=floor(($this->timer)-($this->getRequestTime($request->created_at)/60));
+             $request->expiry_in=floor(($this->timer)-($this->getRequestTime($request->updated_at)/60));
 
             
 
@@ -96,15 +101,15 @@ public function createBuyerTransaction()
     {
         $trans->trans_id=generate_unique_id();
         $trans->save();
-        $buyer_request->status='paid';
+        $buyer_request->status='pending';
         $buyer_request->save();
     }
 
+    return $this->checkBuyerRequest();
 
 
-    //echo '<pre>';print_r($this->toArray());die;
 
-    //$user->transaction()->create([]);
+    
 }
 
 

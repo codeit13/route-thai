@@ -19,4 +19,14 @@ class UserPaymentMethod extends Model
     	'code',
     	'code_label'
    	];
+
+    public function payment_method()
+    {
+        return $this->belongsTo('App\Models\PaymentMethod','payment_method_id','id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User','user_id','id');
+    }
 }

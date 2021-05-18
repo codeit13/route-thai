@@ -29,7 +29,7 @@
 				</div>
 			</div>
 		</section>
-		<section id="content" class="banktransfer padning-payment">
+		<section id="content" class="banktransfer padning-payment confirm-receipt">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-6 xs-flush col-sm-6 col-xs-12">
@@ -53,13 +53,11 @@
 									<div class="col-lg-4 col-sm-4 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<div id="Price">	<span>{{__('Types of Currency')}}</span>
+												<div id="Price"><span>{{__('Types of Currency')}}</span>
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5268172_USD__10_s">
-
-													@if($transaction->currency->hasMedia('icon'))
+												<div id="ID5268172_USD__10_s">@if($transaction->currency->hasMedia('icon'))
     
                                       
 
@@ -75,11 +73,11 @@
 									<div class="col-lg-4 col-sm-4 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<div id="Available">	<span>{{__('Price')}}</span>
+												<div id="Available">	<span>{{__("Quantity")}}</span>
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->quantity}}</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}}&nbsp; {{$transaction->currency->short_name}}</span>
 												</div>
 											</div>
 										</div>
@@ -87,11 +85,11 @@
 									<div class="col-lg-4 col-sm-4 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<div id="Available">	<span>{{__('Quantity')}}</span>
+												<div id="Available">	<span>{{__("Price")}}</span>
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}}&nbsp;&nbsp; {{$transaction->currency->short_name}}</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{number_format($transaction->quantity,2)}} &nbsp;{{$transaction->fiat_currency->short_name}}</span>
 												</div>
 											</div>
 										</div>

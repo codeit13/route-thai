@@ -4,15 +4,17 @@
 @endsection
 @section('header-bar')
 <div class="progress-section visible-xs">
-				<h2><img src="{{asset('front/img/check.png')}}" alt=""/> {{__('Order Completed')}} </h2>
+				<label><span class="one">{{__("Releasing")}}&nbsp;{{$transaction->currency->short_name}}</span>
+					<div id="app"></div>
+				</label>
 			</div>
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 col-sm-12 col-xs-12 flush">
 						<ul class="mini_links">
-							<li class="active"><a href="#">{{__('P2P')}}</a>
+							<li class="active"><a href="#">P2P</a>
 							</li>
-							<li><a href="#">{{__('Express')}}</a>
+							<li><a href="#">Express</a>
 							</li>
 						</ul>
 					</div>
@@ -24,7 +26,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 col-sm-12 col-xs-12 text-left">
-						<h1><img src="{{asset('front/img/check.png')}}" alt=""/> Order Completed</h1>
+						<h1>{{__("Releasing")}}&nbsp;{{$transaction->currency->short_name}}</h1>
 					</div>
 				</div>
 			</div>
@@ -32,8 +34,11 @@
 		<section id="payment-mode">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12 col-sm-12 col-xs-12">
-						<h4>{{__('You successfully Purchased')}}&nbsp; {{$transaction->trans_amount}}&nbsp; {{$transaction->currency->short_name}}<a class="visible-xs" href="#" data-toggle="modal" data-target="#exampleModal2"><img src="img/icon-26.png" alt=""></a></h4>
+					<div class="col-lg-12 hidden-xs col-sm-12 col-xs-12">
+						<h4>{{__("Expect to receive payment in")}} <span id="timer">00:00:31</span> <a class="visible-xs" href="#"  data-toggle="modal" data-target="#exampleModal2"><img src="{{asset('front/img/icon-26.png')}}" alt=""/></a></h4>
+					</div>
+					<div class="col-lg-12 visible-xs col-sm-12 col-xs-12">
+						{{--<h4 class="i-weil-sell">{{__("I will sell  ")}}<span class="red-c">{{$transaction->trans_amount}} {{$transaction->currency->short_name}}</span> <a  href="#" data-toggle="modal" data-target="#exampleModal2"><img src="{{asset('front/img/icon-26.png')}}" alt=""></a></h4> --}}
 					</div>
 				</div>
 			</div>
@@ -46,11 +51,11 @@
 							<div class="created-time">
 								<div class="row">
 									<div class="col-lg-6 text-left col-sm-6 col-6">
-										<h6>{{__('Created time')}}</h6>
+											<h6>{{__('Created time')}}</h6>
 										<h5>{{$transaction->created_at}}</h5>
 									</div>
 									<div class="col-lg-6 text-left  col-sm-6 col-6">
-										<h6>{{__('Order number')}}</h6>
+											<h6>{{__('Order number')}}</h6>
 										<h5>{{$transaction->trans_id}}</h5>
 									</div>
 								</div>
@@ -104,7 +109,7 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-12 col-sm-12 col-12">
-										<!-- <p class="yellow-bg">ATTEBTION! Successfully transferred your 1BTC to the buyer's wallet</p> -->
+										<p class="yellow-bg">ATTEBTION! Do not release crypto before confirming the money (availble balance) has arrived in your payment account. DO NOT trust anyone claims to be customer support in this chat</p>
 									</div>
 								</div>
 								<div class="row seller-payment">
@@ -132,11 +137,12 @@
 
 
 												@endforeach
+											
 											</div>
 										</div>
 									</div>
 									<div id="PaymentImps">
-										
+
 										@foreach($transaction->user->user_payment_method as $pindex => $payment_method)
 
 
@@ -182,6 +188,8 @@
 										</div>
                               @endforeach
 
+
+									
 										<!--
 										<div class="payment-line b-last-none">
 											<div class="row">
@@ -213,14 +221,11 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-12 flush experience  space-xs col-sm-12 col-12">
-							<div class="col-lg-12 text-center col-sm-12 col-12">
-								<p>How was your trading experience?</p>
-							</div>
+						<div class="col-lg-12 flush  space-xs col-sm-12 col-12">
 							<div class="row">
-								<div class="col-lg-6 xs-center col-sm-6  col-6">	<a href="#" class="btn-success cancel"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Positive</a>
+								<div class="col-lg-9 col-sm-9 col-8">	<a href="#" class="btn-success Appeal">Appeal</a>
 								</div>
-								<div class="col-lg-6 xs-center col-sm-6  col-6">	<a href="#" class="btn-success cancel"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Negative</a>
+								<div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',$transaction->trans_id)}}" class="btn-success cancel">Cancel</a>
 								</div>
 							</div>
 						</div>
@@ -274,7 +279,65 @@
 		</section>
 		@endsection
 		@section('page_scripts')
-		<script type="text/javascript">
+		<script type="text/javascript" src="{{asset('front/js/time_slider.js')}}"></script>
+<script type="text/javascript">
+
+	        var minutes='00';
+			var hours='00';
+			var seconds='00';
+
+			@if(isset($buyer_request->expiry_time))
+
+			hours='{{$buyer_request->expiry_time->hours}}';
+			minutes='{{$buyer_request->expiry_time->minutes}}';
+			seconds='{{$buyer_request->expiry_time->seconds}}';
+
+
+
+
+			@endif
+
+		const opts = {
+				DOMselector: '#app',
+				sliders: [
+					{
+						radius: 40,
+						min:0,
+						max: {{$transaction->timer*60}},
+						step: 10,
+						initialValue:{{($buyer_request->expiry_in*60 >0)?$buyer_request->expiry_in*60:0}},
+
+						timer:(minutes<10?"0"+minutes:minutes)+':'+(seconds<10?"0"+seconds:seconds),
+
+						color: '#00c98e',
+						displayName: 'Value 3'
+					}
+				]
+			};
+
+
+			
+			// instantiate the slider
+			const slider = new Slider(opts);
+			slider.draw();
+
+			function updateSliderRange(m,s)
+			{
+
+
+				if(opts.sliders[0].initialValue>0){
+              $('#app').html('');
+
+			opts.sliders[0].timer=m+':'+s;
+
+			var rr=new Slider(opts);
+			rr.draw();
+		   }
+		}
+			
+
+
+			
 			$(document).ready(function(){
 				$('.bxslider').bxSlider({
 					auto:false,
@@ -307,5 +370,130 @@
 					$(".MethodPayment h6").toggleClass('intro-new');
 				});
 			 });
+
+
+		
+
+			
+			document.getElementById('timer').innerHTML =hours+":"+
+  minutes + ":" + seconds;
+
+startTimer();
+
+
+
+function startTimer() {
+  var presentTime = document.getElementById('timer').innerHTML;
+  var timeArray = presentTime.split(/[:]+/);
+  var h=timeArray[0];
+  var m = timeArray[1];
+  var s = checkSecond((timeArray[2] - 1));
+  var regex = /\d/;
+
+
+
+  
+  if(s==59){
+    
+
+   
+
+  	if(m==0 && h >0)
+  	{
+  		m=59;
+  	}
+  	else
+  	{
+  	m=m-1;
+
+
+  	}
+
+
+
+
+ //console.log(m);
+
+  }
+
+
+  	if(m<10 && m!=0)
+  	{
+  				
+  		m=m.toString().replace("0",''); 
+  		m="0"+m;
+  		
+  	}
+
+  	if(m==0)
+  	{
+  		m="00";
+  	}
+
+  	
+
+  	if(m==59 && s==59 && h>=1){
+
+  		h=h-1;
+  		//m=59;
+  	}
+
+  	if(h<10 && h!=0)
+  	{
+  				
+  		h=h.toString().replace("0",''); 
+  		h="0"+h;
+  		
+  	}
+
+  	if(h==0)
+  	{
+  		h="00";
+  	}
+  //if(m<0){alert('timer completed')}
+
+  updateSliderRange(m,s);
+  
+  document.getElementById('timer').innerHTML =h+ ":"+
+    m + ":" + s;
+  if(s==0 && h==0 && m==0)
+{
+	setTimeout(function()
+	{
+	window.location.reload();
+
+},1000);
+
+	return false;
+}
+  setTimeout(startTimer, 1000);
+}
+
+function checkSecond(sec) {
+  if (sec < 10 && sec >= 0) {sec = "0" + sec}; // add zero in front of numbers < 10
+  if (sec < 0) {sec = "59"};
+  return sec;
+}
+
+check_payment_status()
+
+function check_payment_status()
+{
+	$.get('{{route("payment.order.status",$transaction->trans_id)}}',function(response)
+	{
+		if(response.status)
+		{
+			if(response.action=='reload')
+			{
+				window.location.reload();
+			}
+			else if(response.action!='stay')
+			{
+				window.location.href=response.action;
+			}
+		}
+	})
+}
+setInterval(check_payment_status,10000);
 		</script>
 @endsection    

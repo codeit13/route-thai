@@ -16,7 +16,7 @@ class BuyerRequest extends Model
 {
 	        $expiry= new \stdclass();
 
-	        $init= ($this->transaction->timer*60)-$this->transaction->getRequestTime($this->created_at);
+	        $init= ($this->transaction->timer*60)-$this->transaction->getRequestTime($this->updated_at);
 
 
             $expiry->hours = floor($init / 3600);

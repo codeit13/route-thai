@@ -40,7 +40,7 @@
 				</div>
 			</div>
 		</section>
-		<section id="content" class="banktransfer padning-payment">
+		<section id="content" class="banktransfer padning-payment confirm-receipt">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-6 xs-flush col-sm-6 col-xs-12">
@@ -62,13 +62,11 @@
 									<div class="col-lg-4 col-sm-4 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<div id="Price">	<span>{{__('Types of Currency')}}</span>
+												<div id="Price"><span>{{__('Types of Currency')}}</span>
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5268172_USD__10_s">
-
-													@if($transaction->currency->hasMedia('icon'))
+												<div id="ID5268172_USD__10_s">@if($transaction->currency->hasMedia('icon'))
     
                                       
 
@@ -84,11 +82,11 @@
 									<div class="col-lg-4 col-sm-4 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<div id="Available">	<span>{{__('Price')}}</span>
+												<div id="Available">	<span>{{__("Quantity")}}</span>
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->quantity}}</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}}&nbsp; {{$transaction->currency->short_name}}</span>
 												</div>
 											</div>
 										</div>
@@ -96,11 +94,11 @@
 									<div class="col-lg-4 col-sm-4 col-12">
 										<div class="row">
 											<div class="col-lg-12 col-sm-12 col-6">
-												<div id="Available">	<span>{{__('Quantity')}}</span>
+												<div id="Available">	<span>{{__("Price")}}</span>
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}}&nbsp;&nbsp; {{$transaction->currency->short_name}}</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{number_format($transaction->quantity,2)}} &nbsp;{{$transaction->fiat_currency->short_name}}</span>
 												</div>
 											</div>
 										</div>
@@ -118,15 +116,26 @@
 												<h6 style="cursor:pointer;" data-toggle="modal" data-target="#exampleModal3">Seller’s payment method</h6>
 											</div>
 											<div class="col-lg-12 text-left xs-right col-sm-12 col-5">
-												<a href="#">
-													<img src="{{asset('front/img/icon-25.png')}}" alt="" />
-												</a>
-												<a href="#">
-													<img src="{{asset('front/img/icon-24.png')}}" alt="" />
-												</a>
-												<a href="#">
-													<img src="{{asset('front/img/icon-23.png')}}" alt="" />
-												</a>
+
+												@foreach($transaction->user->user_payment_method as $payment_method)
+
+
+													@if($payment_method->hasMedia('icon'))
+    
+                                           <a href="#">
+
+											<img src="{{$payment_method->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_method->name)}}"/>
+
+											</a> 
+
+											@endif
+
+												
+												
+
+
+												@endforeach
+											
 											</div>
 										</div>
 									</div>
@@ -147,9 +156,9 @@
 						</div>
 						<div class="col-lg-12 flush  space-xs col-sm-12 col-12">
 							<div class="row">
-								<div class="col-lg-9 col-sm-9 col-8">	<a href="{{route('payment.order.confirm',$transaction->id)}}" class="btn-success">{{__('Transferred, Next')}}</a>
+								<div class="col-lg-9 col-sm-9 col-8">	<a href="#" data-toggle="modal" data-target="#exampleModal3" class="btn-success">{{__('Transferred, Next')}}</a>
 								</div>
-								<div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',['transaction'=>$transaction->id])}}" class="btn-success cancel">Cancel</a>
+								<div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',['transaction'=>$transaction->trans_id])}}" class="btn-success cancel">Cancel</a>
 								</div>
 							</div>
 							<div class="row">
@@ -216,88 +225,67 @@
 					</div>
 					<div class="modal-body">
 						<div class="col-lg-12 col-sm-12 text-center col-12">
-							<h3>Select Payment Method</h3>
+							<h3>{{__('Select Payment Method')}}</h3>
 						</div>
 						<div class="row">
+
+								@foreach($transaction->user->user_payment_method as $payment_method)
+
+
+													
+
+												
+												
+
+
+												
 							<div class="col-lg-4 border-right-one col-sm-4 col-12">
-								<h4 class="xs-left text-center"><img src="{{asset('front/img/icon-24.png')}}"><br>IMPS</h4>
+								<h4 class="xs-left text-center">
+							@if($payment_method->hasMedia('icon'))
+    
+                                          
+
+											<img src="{{$payment_method->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_method->name)}}"/>
+
+									
+											@endif
+
+
+									<br>{{__($payment_method->payment_method->name)}}</h4>
 								<div class="row">
 									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label class="gray-c">Full Name</label>
+										<label class="gray-c">{{__('Full Name')}}</label>
 									</div>
 									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label>Shavez Mirza</label>
+										<label>{{__($payment_method->full_name??$payment_method->user->name)}}</label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label class="gray-c">Bank Account Number</label>
+										<label class="gray-c">{{__($payment_method->account_label)}}</label>
 									</div>
 									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label>5027101002482</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label class="gray-c">IFSC CODE</label>
-									</div>
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label>CNRB0005027</label>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-4 border-right-one col-sm-4 col-12">
-								<h4 class="xs-left text-center"><img src="{{asset('front/img/icon-25.png')}}"><br>Bank Transfer (India)</h4>
-								<div class="row">
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label class="gray-c">Full Name</label>
-									</div>
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label>Shavez Mirza</label>
+										<label>{{$payment_method->account_number}}</label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label class="gray-c">Bank Account Number</label>
+										<label class="gray-c">{{__($payment_method->code_label)}}</label>
 									</div>
 									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label>5027101002482</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label class="gray-c">IFSC CODE</label>
-									</div>
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label>CNRB0005027</label>
+										<label>{{$payment_method->code}}</label>
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-4  col-sm-4 col-12">
-								<h4 class="xs-left text-center"><img src="{{asset('front/img/icon-23.png')}}"><br>UPI</h4>
-								<div class="row">
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label class="gray-c">Full Name</label>
-									</div>
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label>Shavez Mirza</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label class="gray-c">UPI ID</label>
-									</div>
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label>9027022303@paytm</label>
-									</div>
-								</div>
-							</div>
+
+							@endforeach
+						
 						</div>
 						<div class="col-lg-8 offset-lg-2 top-space col-sm-8 offset-sm-2 col-12">
 							<div class="row">
-								<div class="col-lg-9 col-sm-9 col-8">	<a href="{{route('payment.order.confirm',$transaction->id)}}" class="btn-success">{{__('Transferred, Next')}}</a>
+								<div class="col-lg-9 col-sm-9 col-8">	<a href="{{route('payment.order.release',$transaction->trans_id)}}" class="btn-success">{{__('Transferred, Next')}}</a>
 								</div>
-								<div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',$transaction->id)}}" class="btn-success cancel">{{__('Cancel')}}</a>
+								<div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',$transaction->trans_id)}}" class="btn-success cancel">{{__('Cancel')}}</a>
 								</div>
 							</div>
 						</div>
@@ -308,10 +296,12 @@
 
 		@endsection
 		@section('page_scripts')
-		<script type="text/javascript" src="{{asset('front/js/app.js')}}"></script>
+		<script type="text/javascript" src="{{asset('front/js/time_slider.js')}}"></script>
+
+		
 <script type="text/javascript">
 
-	var minutes='00';
+	        var minutes='00';
 			var hours='00';
 			var seconds='00';
 
@@ -332,9 +322,11 @@
 					{
 						radius: 40,
 						min:0,
-						max: {{$transaction->timer}},
+						max: {{$transaction->timer*60}},
 						step: 10,
-						initialValue:{{($buyer_request->expiry_in >0)?$buyer_request->expiry_in:0}},
+						initialValue:{{($buyer_request->expiry_in*60 >0)?$buyer_request->expiry_in*60:0}},
+
+						timer:(minutes<10?"0"+minutes:minutes)+':'+(seconds<10?"0"+seconds:seconds),
 
 						color: '#00c98e',
 						displayName: 'Value 3'
@@ -348,14 +340,14 @@
 			const slider = new Slider(opts);
 			slider.draw();
 
-			function updateSliderRange()
+			function updateSliderRange(m,s)
 			{
 
 
 				if(opts.sliders[0].initialValue>0){
               $('#app').html('');
 
-			opts.sliders[0].initialValue=opts.sliders[0].initialValue-1;
+			opts.sliders[0].timer=m+':'+s;
 
 			var rr=new Slider(opts);
 			rr.draw();
@@ -427,7 +419,7 @@ function startTimer() {
   if(s==59){
     
 
-   updateSliderRange();
+   
 
   	if(m==0 && h >0)
   	{
@@ -482,9 +474,12 @@ function startTimer() {
   		h="00";
   	}
   //if(m<0){alert('timer completed')}
+
+  updateSliderRange(m,s);
   
   document.getElementById('timer').innerHTML =h+ ":"+
     m + ":" + s;
+
   console.log(m)
   if(s==0 && h==0 && m==0)
 {
