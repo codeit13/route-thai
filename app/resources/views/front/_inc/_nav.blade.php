@@ -71,27 +71,17 @@
                                 <li class="hd_small"><a class="btn btn-primary" href="{{ route('register') }}">Register</a></li>
                                 <li class="onsubmenu">
                                     <div class="dropdown currency_two">
+                                        @php 
+                                        $languages = \App\Models\Language::all();
+                                        $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
+                                        @endphp
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            </button>
+                                            <img src="{{ $default_language->firstMedia('icon')->getUrl() }}" alt="">{{ $default_language->name }}
+                                        </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <form class="form-inline">
-                                                <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span> -->
-                                                <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/GBP.svg') }}" alt="">English
-                                                </a>
-                                                <a class="dropdown-item  myLink" href="">
-                                                <img src="{{ asset('front/img/kr.svg')}}" alt="">Korean
-                                                </a>
-                                                <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/th.svg')}}" alt="">Thailand
-                                                </a>
-                                                <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/cn.svg')}}" alt="">Chineese
-                                                </a>
-                                                <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/jp.svg')}}" alt="">Japanese
-                                                </a>
-                                            </form>
+                                            @foreach ($languages as $item)
+                                                <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">{{ $item->name}}</a>
+                                            @endforeach
                                         </div>
                                     </div>
                                     </li>
@@ -101,7 +91,7 @@
                             @else
 
                             @php $wallet_types = \App\Models\CurrencyType::all(); @endphp
-                                <li class="nav-item dropdown onhover">
+                                <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="visible-xs"><i class="fal fa-wallet"></i></span>Wallet
@@ -120,61 +110,40 @@
                                 
                                 <li class="onsubmenu">
                                     <div class="dropdown currency_two">
+                                        @php 
+                                        $languages = \App\Models\Language::all();
+                                        $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
+                                        @endphp
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="{{ asset('front/img/GBP.svg') }}" alt="">English</button>
+                                            <img src="{{ $default_language->firstMedia('icon')->getUrl() }}" alt="">{{ $default_language->name }}
+                                        </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            {{-- <form class="form-inline"> --}}
-                                                {{-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span> --}}
-                                                <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/GBP.svg') }}" alt="">English
-                                                </a>
-                                                <a class="dropdown-item  myLink" href="">
-                                                <img src="{{ asset('front/img/kr.svg')}}" alt="">Korean
-                                                </a>
-                                                <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/th.svg')}}" alt="">Thailand
-                                                </a>
-                                                <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/cn.svg')}}" alt="">Chineese
-                                                </a>
-                                                <a class="dropdown-item myLink" href="">
-                                                <img src="{{ asset('front/img/jp.svg')}}" alt="">Japanese
-                                                </a>
-                                            {{-- </form> --}}
+                                            @foreach ($languages as $item)
+                                                <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">{{ $item->name}}</a>
+                                            @endforeach
                                         </div>
                                     </div>
                                     </li>
                                     <li class="onsubmenu">
                                         <div class="dropdown currency_two">
-                                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                              <img src="{{ asset('front/img/Korean Won.png') }}" alt=""> <span>Korean Won</span> KRW</button>
-                                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                              {{-- <form class="form-inline"> --}}
-                                                 {{-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span><i class="fa fa-search" aria-hidden="true"></i></span> --}}
-                                                 <a class="dropdown-item  myLink" href="usd">
-                                                    <img src="{{ asset('front/img/Korean Won.png') }}" alt="">Korean Won <span>KRW</span>
-                                                 </a>
-                                                 <a class="dropdown-item  myLink" href="usd">
-                                                    <img src="{{ asset('front/img/USD Dollar.png') }}" alt="">United states Dollar <span>USD</span>
-                                                 </a>
-                                                 <a class="dropdown-item myLink" href="inr">
-                                                    <img src="{{ asset('front/img/Indian Rupee.png') }}" alt="">Indian Rupee <span>INR</span>
-                                                 </a>
-                                                 <a class="dropdown-item myLink" href="thb">
-                                                    <img src="{{ asset('front/img/Thai Baht.png') }}" alt="">Thai Baht <span>THB</span>
-                                                 </a>
-                                                 <a class="dropdown-item myLink" href="krw">
-                                                    <img src="{{ asset('front/img/Japenese Yuan.png') }}" alt="">Japanese Yuan <span>JPY</span>
-                                                 </a>
-                                              {{-- </form> --}}
-                                           </div>
+                                            @php 
+                                            $currencies = \App\Models\Currency::where('type_id',1)->get();
+                                            $default_currency = !empty(Auth::user()->default_currency) ? \App\Models\Currency::find(Auth::user()->default_currency) : \App\Models\Currency::first();
+                                            @endphp
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img src="{{ $default_currency->firstMedia('icon')->getUrl() }}" alt="{{__($default_currency->name)}}">{{__($default_currency->short_name)}}
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            @foreach($currencies as $cIndex=> $currency)
+                                                <a class="dropdown-item currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}><img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}"> {{ $currency->short_name }}</a>
+                                            @endforeach 
                                         </div>
                                      </li>
-                                <li class="nav-item dropdown hidden-xs">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                                    </a>
+                                    <li class="nav-item dropdown hidden-xs">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                        </a>
                                     <div class="dropdown-menu max-w" aria-labelledby="navbarDropdown">
                                         <ul>
                                             <li>
@@ -202,9 +171,10 @@
                             @endif
                         </ul>
                     </div>
+                    
                 </div>
             </nav>
-
+            
         </div>
     </div>
     @yield('header-bar')

@@ -427,7 +427,7 @@ img {
     background-color: var(--header-bg-color);
     color: var(--text-color);
     border: none;
-    margin-top: 5px;
+    margin-top: 0px;
     margin-left: -30px;
 }
 li.hd_small a {
@@ -3617,13 +3617,17 @@ span.rt_span i.fa-trash-alt {
     color: var(--white-black-text);
 }
 
-.iverify.baccount .form input {
+.iverify.baccount .form input, .iverify.baccount .form select {
     width: 100%;
     border:none;
     box-shadow: none;
     background-color: transparent;
     color: var(--white-black-text);
     border-bottom: 1px solid #D9D9D9;
+    padding: 5px 0;
+}
+.iverify.baccount .form label.error {
+    color: red;
 }
 
 .card.pd_card.an_card.auto_card {
@@ -3642,6 +3646,7 @@ span.rt_span i.fa-trash-alt {
     text-decoration: none;
     margin-top: 25px;
     margin-bottom: 30px;
+    cursor:pointer;
 }
 
 .long_btn:hover {
@@ -3888,10 +3893,10 @@ span.rt_span i.fa-trash-alt {
 #header .right_side a.bell {
     top: -3px;
 }
+
 .dark-light {
     margin-top: -4px;
 }
-
 .card_scroll {
     height: 251px;
     overflow-y: scroll;
@@ -7067,7 +7072,7 @@ p.untext-2 {
 }
 ul.slider__legend {
     position: absolute;
-    left: 50%;
+    left: 40%;
     top: 50%;
     margin-left: -8px;
     margin-top: -10px;

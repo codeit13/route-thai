@@ -8,8 +8,8 @@
       font-weight: 500 !important;
       text-transform: capitalize
     }
-    .btn-sm.btn-outline-default:hover{
-      color:white;
+    .btn:hover{
+      color:white !important;
     }
 </style>
 
@@ -63,8 +63,10 @@
                               <br><small class="msg{{$item->id}}"></small>
                             </td>
                             <td> {{ date('d M Y', strtotime($item->created_at)) }}</td>
-                            <td> <a href="#" class="btn-outline-default btn-sm btn"><i class="fa fa-eye"></i> View</a>
+                            <td> <a href="#" class="btn-outline-default btn-sm btn" title="View"><i class="fa fa-eye"></i></a>
+                              <a href="{{ route('admin.user.delete',$item->id)}}" title="Delete" class="btn-outline-primary btn-sm btn"><i class="fa fa-trash"></i></a>
                             </td>
+                            
                            </tr> 
                            @endforeach 
                    </tbody>

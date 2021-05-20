@@ -27,7 +27,11 @@ Route::get('/createstoragelink', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes(['verify'=>true,'request'=>true]);
-
+Route::group(['middleware' => ['web']], function () {
+    Route::get('language',function($request){
+        Session::put('site-language', $request->language);
+    });
+});
 // User Auth
 Route::post('register/mobile-check',[App\Http\Controllers\Auth\RegisterController::class,'isMobileNoExist'])->name('mobile-check');
 Route::post('register/email-check',[App\Http\Controllers\Auth\RegisterController::class,'isEmailExist'])->name('email-check');
@@ -45,10 +49,17 @@ Route::middleware('auth')->group(function(){
     Route::prefix('user')->name('user.')->group(function(){ 
         Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
         Route::get('profile',[App\Http\Controllers\UserController::class, 'profile'])->name('profile');
+        Route::get('payments',[App\Http\Controllers\UserPaymentMethodsController::class, 'index'])->name('payments');
+        Route::get('payment/mode/edit/{id}',[App\Http\Controllers\UserPaymentMethodsController::class, 'edit'])->name('payment.edit');
+        Route::get('payment/mode/add/{mode}',[App\Http\Controllers\UserPaymentMethodsController::class, 'create'])->name('payment.add');
+        Route::post('payment/mode/save',[App\Http\Controllers\UserPaymentMethodsController::class, 'store'])->name('payment.save');
+        Route::post('payment/mode/update/{id}',[App\Http\Controllers\UserPaymentMethodsController::class, 'update'])->name('payment.update');
+        Route::get('payment/mode/delete/{id}',[App\Http\Controllers\UserPaymentMethodsController::class, 'destroy'])->name('payment.delete');
         Route::post('check-username',[App\Http\Controllers\UserController::class, 'isUsernameExist'])->name('check.username');
         Route::post('update-username',[App\Http\Controllers\UserController::class, 'updateUsername'])->name('update.username');
         Route::post('update-notification',[App\Http\Controllers\UserController::class, 'updateNotificationSettings'])->name('update.notification');
         Route::post('update-currency',[App\Http\Controllers\UserController::class, 'updateCurrencySettings'])->name('update.currency');
+        Route::post('update-language',[App\Http\Controllers\UserController::class, 'updateLanguageSettings'])->name('update.language');
     });
     
     //Wallet
@@ -69,9 +80,15 @@ Route::middleware('auth')->group(function(){
 
 });
 
-Route::get('/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
+Route::get('buyer/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
 
-Route::get('/payment/order/cancel',[App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.order.cancel');
+Route::get('buyer/payment/{transaction}/cancel',[App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.order.cancel');
+
+Route::get('buyer/payment/{transaction}/release',[App\Http\Controllers\PaymentController::class, 'release'])->name('payment.order.release');
+
+Route::get('buyer/payment/{transaction}/confirm',[App\Http\Controllers\PaymentController::class, 'confirm'])->name('payment.order.confirm');
+
+Route::get('buyer/payment/{transaction}/status',[App\Http\Controllers\PaymentController::class, 'status'])->name('payment.order.status');
 
 
 // Exchange

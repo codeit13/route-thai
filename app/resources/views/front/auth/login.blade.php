@@ -70,7 +70,7 @@
                                         <a href="{{ route('password.request') }}">{{__("Forgot Password?")}}</a>
                                     </div>
                                     <button type="button" id="send-otp" class="btn btn-primary">{{__("Send OTP")}}</button>
-                                    <button type="submit" id="login" class="btn btn-primary">{{__("Sign In")}}</button>
+                                    <button type="submit" disabled style="display: none"  id="login" class="btn btn-primary">{{__("Sign In")}}</button>
                                     <p class="not_m">{{__("New on our platform?")}} <a href="{{ route('register') }}">{{__("Create an account")}}</a></p>
                                     <ul>
                                         <li>
