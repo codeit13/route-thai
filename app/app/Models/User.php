@@ -47,6 +47,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\Transaction','user_id','id');
     }
 
+    public function user_payment_methods()
+    {
+        return $this->hasMany('App\Models\UserPaymentMethod','user_id','id');
+    }
+
     public function setNameAttribute($value)
     {
         $parts = explode("@",  strtolower($this->attributes['email']));
