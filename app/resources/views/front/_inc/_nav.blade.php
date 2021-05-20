@@ -73,6 +73,8 @@
                                             <li><a href="{{route('wallet.deposit')}}">{{__('Deposit')}}</a></li>
                                             <li><a href="{{route('wallet.withdraw')}}">{{__('Withdraw')}}</a></li>
                                             <li><a href="{{route('wallet.request.history')}}">{{__('History ( Deposit & Withdraw ) ')}}</a></li>
+
+                                            <li><a href="{{route('trade.history')}}">{{__('Trade History')}}</a></li>
                                         </ul>
                                     </div>
                                 </li>
