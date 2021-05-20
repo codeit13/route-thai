@@ -17,18 +17,12 @@ class CurrencyTypeSeeder extends Seeder
         
     	if(!$CurrencyType->where('type','Crypto')->exists())
     	{
-
               $CurrencyType::create(['type'=>'Crypto']);
-             
-
         }
 
         if(!$CurrencyType->where('type','Fiat')->exists())
     	{
-
-             
-              $CurrencyType::create(['type'=>'Fiat']);
-
+            $CurrencyType::create(['type'=>'Fiat']);
         }
     }
 }
