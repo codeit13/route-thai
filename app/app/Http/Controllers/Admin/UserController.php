@@ -81,8 +81,13 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+
+        $user = User::with('user_payment_methods')->find($id);
+        $user->user_payment_methods->delete();
+        $user->transactions->delete();
+        $user->delete();
+        return redirect()->route('admin.users')->with('message','The user has been deleted.');
     }
 
     public function updateStatus(Request $request){

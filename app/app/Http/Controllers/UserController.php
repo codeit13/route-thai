@@ -15,7 +15,7 @@ class UserController extends Controller
     public function profile(){
         return view('front.user.profile');
     }
-
+ 
     public function isUsernameExist(Request $request){
         $status = User::where('name',$request->name)->count() == 0 ? 'OK': 'NOT OK';
         $message = $status == 'OK' ? 'Congrats! Username: '.$request->name.' is available' :'Sorry ! This Username is not available.';
@@ -39,13 +39,21 @@ class UserController extends Controller
             return response()->json(['status'=>'OK','message'=> __('The username has been updated.') ]);
         }
     }
-    public function updateCurrencySettings(Request $request){
-        
+    public function updateCurrencySettings(Request $request){    
         if($request->has('currency') && !empty($request->currency)) {
             $user = Auth::user();
             $user->default_currency = (int)$request->currency;
             $user->save();
             return response()->json(['status'=>'OK','message'=> __('The currency settings has been updated.') ]);
+        }
+    }
+
+    public function updateLanguageSettings(Request $request){    
+        if($request->has('language') && !empty($request->language)) {
+            $user = Auth::user();
+            $user->default_language = (int)$request->language;
+            $user->save();
+            return response()->json(['status'=>'OK','message'=> __('The language settings has been updated.') ]);
         }
     }
 }

@@ -71,7 +71,7 @@
                             <p class="alert currency-msg pl-0 pb-0 m-0 small" style="display: none"></p>   
                             <label>Currency</label>
                             <div class="dropdown currency_two three_coins crypto">
-                              @php 
+                               @php 
                                  $currencies = \App\Models\Currency::where('type_id',1)->get();
                                  $default_currency = !empty(Auth::user()->default_currency) ? \App\Models\Currency::find(Auth::user()->default_currency) : \App\Models\Currency::first();
                                @endphp
@@ -86,14 +86,17 @@
                             </div>
                             <label>Language</label>
                             <div class="dropdown currency_two three_coins crypto">
+                              @php 
+                              $languages = \App\Models\Language::all();
+                              $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
+                              @endphp
                               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ asset('front/img/GBP.svg')}}" alt="">English
+                                <img src="{{ $default_language->firstMedia('icon')->getUrl() }}" alt="">{{ $default_language->name }}
                               </button>
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="dropdown-item" href="#"><img src="{{ asset('front/img/kr.svg')}}" alt="">Korean</a>
-                                <a class="dropdown-item" href="#"><img src="{{ asset('front/img/th.svg')}}" alt="">Thailand</a>
-                                <a class="dropdown-item" href="#"><img src="{{ asset('front/img/cn.svg')}}" alt="">Chineese</a>
-                                <a class="dropdown-item" href="#"><img src="{{ asset('front/img/jp.svg')}}" alt=""> Japanese</a>
+                                @foreach ($languages as $item)
+                                    <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">{{ $item->name}}</a>
+                                @endforeach
                               </div>
                             </div>
                             <div class="sn_notificatio">
@@ -123,7 +126,7 @@
                                <li class="nav-item"> <a class="nav-link" id="devices-tab" data-toggle="tab" href="#devices" role="tab" aria-controls="devices" aria-selected="false">{{__("Devices")}}</a>
                                </li>
                             </ul>
-                            <div class="tab-content" id="myTabContent">
+                            <div class="tab-content card_scroll" id="myTabContent">
                                <div class="tab-pane fade show active" id="activity" role="tabpanel" aria-labelledby="activity-tab">
                                  @foreach (auth()->user()->authentications as $item)
                                  <div class="coll_one">
@@ -137,7 +140,6 @@
                                      </div>
                                   </div>
                                   @endforeach 
-                               
                                </div>
                                <div class="tab-pane fade" id="devices" role="tabpanel" aria-labelledby="devices-tab">...</div>
                             </div>
@@ -273,23 +275,36 @@
             }
          });
     });
-
     $('.currency-item').on('click',function(e){
-        e.preventDefault();
-        var currency= $(this).data('currency');
-         $.ajax({
-            type:'POST',
-            dataType:'JSON',
-            url:"{{ route('user.update.currency') }}",
-            data:{ currency : currency, _token: "{{ csrf_token() }}" },
-            success:function(data) {
-               $('.currency-msg').html(data.message).show();
-               setTimeout(function() { $(".currency-msg").hide() }, 2000);
-               location.reload();
-            }
-         });
-    });
-
+      e.preventDefault();
+      var currency= $(this).data('currency');
+      $.ajax({
+         type:'POST',
+         dataType:'JSON',
+         url:"{{ route('user.update.currency') }}",
+         data:{ currency : currency, _token: "{{ csrf_token() }}" },
+         success:function(data) {
+            $('.currency-msg').html(data.message).show();
+            setTimeout(function() { $(".currency-msg").hide() }, 2000);
+            location.reload();
+         }
+      });
+   });
+   $('.language-item').on('click',function(e){
+      e.preventDefault();
+      var language= $(this).data('language');
+      $.ajax({
+         type:'POST',
+         dataType:'JSON',
+         url:"{{ route('user.update.language') }}",
+         data:{ language : language, _token: "{{ csrf_token() }}" },
+         success:function(data) {
+            $('.currency-msg').html(data.message).show();
+            setTimeout(function() { $(".currency-msg").hide() }, 2000);
+            location.reload();
+         }
+      });
+   });
  </script>
  @endsection
  @endsection
