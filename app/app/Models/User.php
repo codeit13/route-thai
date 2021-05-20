@@ -64,8 +64,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo('App\Models\Language','default_language', 'id');
     }
-
-    public function user_payment_methods()
+    public function user_payment_method()
+    {
+        return $this->hasMany('App\Models\UserPaymentMethod','user_id','id');
+    }
+    public function payment_methods()
     {
         return $this->hasMany('App\Models\UserPaymentMehods','user_id','id')->with('payment_methods');
     }

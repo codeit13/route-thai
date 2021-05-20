@@ -43,13 +43,21 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(\App\Models\Transaction $transaction)
+    public function show($transaction)
     {
+        $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
+
         $buyer_request=$transaction->checkBuyerRequest();
+
+
 
         if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
         {
-            return redirect()->route('payment.order.cancel');
+            return redirect()->route('payment.order.cancel',$transaction->trans_id);
+        }
+       else if(isset($buyer_request->is_expired) && !$buyer_request->is_expired && $buyer_request->status=='pending')
+        {
+            return redirect()->route('payment.order.release',$transaction->trans_id);
         }
         elseif(!$buyer_request)
         {
@@ -60,14 +68,17 @@ class PaymentController extends Controller
 
             $buyer_request=$transaction->checkBuyerRequest();
 
+           
 
         }
         elseif($buyer_request=='exists')
         {
-            redirect()->back();
+            return redirect()->back();
         }
 
-         // echo '<pre>';print_r($buyer_request->toArray());die;
+
+
+         
        
        return view('front.payment.payment-request',compact('transaction','buyer_request'));
     }
@@ -106,8 +117,110 @@ class PaymentController extends Controller
         //
     }
 
-    public function cancel()
+    public function cancel($transaction)
     {
-        return view('front.payment.payment-request-cancel');
+       
+
+        $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
+
+        $buyer_request =$transaction->checkBuyerRequest(); 
+        if(isset($buyer_request->is_expired))
+        {
+            unset($buyer_request->is_expired,$buyer_request->expiry_in);
+
+            $buyer_request->status='cancel';
+
+            $buyer_request->save();
+        }
+
+           return view('front.payment.payment-request-cancel',compact('transaction'));
     }
+
+    public function release($transaction)
+    {
+        $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
+
+        $buyer_request=$transaction->checkBuyerRequest();
+
+        if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
+        {
+            return redirect()->route('payment.order.cancel',$transaction->trans_id);
+        }
+        elseif(!$buyer_request || $buyer_request=='exists')
+        {
+
+             return redirect()->back();
+            
+        }
+        elseif(!$buyer_request->is_expired && $buyer_request->status=='open')
+        {
+
+            $buyer_request=$transaction->createBuyerTransaction();
+      
+
+           return view('front.payment.payment-request-release',compact('transaction','buyer_request'));
+        }
+
+         return view('front.payment.payment-request-release',compact('transaction','buyer_request'));
+    }
+
+
+    public function confirm($transaction)
+    {
+        $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
+
+        $buyer_request=$transaction->checkBuyerRequest();
+
+        if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
+        {
+            return redirect()->route('payment.order.cancel',$transaction->trans_id);
+        }
+        elseif(!$buyer_request || $buyer_request=='exists')
+        {
+
+            return redirect()->back();
+            
+        }
+        elseif(!$buyer_request->is_expired && $buyer_request->status=='paid')
+        {
+
+           $buyer_request->delete();
+
+           return view('front.payment.payment-request-success',compact('transaction'));
+        }
+        else
+        {
+            return redirect()->back();
+        }
+    }
+
+    public function status($transaction)
+    {
+        $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
+
+        $buyer_request=$transaction->checkBuyerRequest();
+
+        if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
+        {
+            return array('status'=>1,'action'=>'reload','message'=>'order is expired');
+        }
+        elseif(!$buyer_request || $buyer_request=='exists')
+        {
+
+            return array('status'=>1,'action'=>'reload','message'=>'order is invalid');
+            
+        }
+        elseif(!$buyer_request->is_expired && $buyer_request->status=='paid')
+        {
+
+           return array('status'=>1,'action'=>route("payment.order.confirm",$transaction->trans_id),'message'=>'order is completed');
+        }
+
+        else
+        {
+            return array('status'=>1,'action'=>'stay','message'=>'wait for approve');
+        }
+    }
+
+
 }

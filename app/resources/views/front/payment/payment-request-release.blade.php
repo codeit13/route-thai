@@ -4,7 +4,7 @@
 @endsection
 @section('header-bar')
 <div class="progress-section visible-xs">
-				<label><span class="one">Pending Payment</span>
+				<label><span class="one">{{__("Releasing")}}&nbsp;{{$transaction->currency->short_name}}</span>
 					<div id="app"></div>
 				</label>
 			</div>
@@ -26,7 +26,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 col-sm-12 col-xs-12 text-left">
-						<h1>{{__('Pending Payment')}}</h1>
+						<h1>{{__("Releasing")}}&nbsp;{{$transaction->currency->short_name}}</h1>
 					</div>
 				</div>
 			</div>
@@ -34,8 +34,11 @@
 		<section id="payment-mode">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12 col-sm-12 col-xs-12">
-						<h4>Payment to be made <span id="timer">00:00:31</span> <a class="visible-xs" href="#"  data-toggle="modal" data-target="#exampleModal2"><img src="{{asset('front/img/icon-26.png')}}" alt=""/></a></h4>
+					<div class="col-lg-12 hidden-xs col-sm-12 col-xs-12">
+						<h4>{{__("Expect to receive payment in")}} <span id="timer">00:00:31</span> <a class="visible-xs" href="#"  data-toggle="modal" data-target="#exampleModal2"><img src="{{asset('front/img/icon-26.png')}}" alt=""/></a></h4>
+					</div>
+					<div class="col-lg-12 visible-xs col-sm-12 col-xs-12">
+						{{--<h4 class="i-weil-sell">{{__("I will sell  ")}}<span class="red-c">{{$transaction->trans_amount}} {{$transaction->currency->short_name}}</span> <a  href="#" data-toggle="modal" data-target="#exampleModal2"><img src="{{asset('front/img/icon-26.png')}}" alt=""></a></h4> --}}
 					</div>
 				</div>
 			</div>
@@ -48,11 +51,11 @@
 							<div class="created-time">
 								<div class="row">
 									<div class="col-lg-6 text-left col-sm-6 col-6">
-										<h6>{{__('Created time')}}</h6>
+											<h6>{{__('Created time')}}</h6>
 										<h5>{{$transaction->created_at}}</h5>
 									</div>
 									<div class="col-lg-6 text-left  col-sm-6 col-6">
-										<h6>{{__('Order number')}}</h6>
+											<h6>{{__('Order number')}}</h6>
 										<h5>{{$transaction->trans_id}}</h5>
 									</div>
 								</div>
@@ -106,17 +109,16 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-12 col-sm-12 col-12">
-										<p class="yellow-bg">The following is the sellers' payment info. Please make sure the money is transferred from an account you own, matching your verified name. Money will NOT be transferred automatically by the platform.</p>
+										<p class="yellow-bg">ATTEBTION! Do not release crypto before confirming the money (availble balance) has arrived in your payment account. DO NOT trust anyone claims to be customer support in this chat</p>
 									</div>
 								</div>
 								<div class="row seller-payment">
-									<div class="col-lg-6 col-sm-6 col-12">
+									<div class="col-lg-12 col-sm-12 col-12">
 										<div class="row">
-											<div class="col-lg-12 col-sm-12 col-7">
-												<h6 style="cursor:pointer;" data-toggle="modal" data-target="#exampleModal3">Seller’s payment method</h6>
+											<div class="col-lg-12 MethodPayment col-sm-12 col-12">
+												<h6>Seller’s payment method <i class="fa fa-angle-down" aria-hidden="true"></i></h6>
 											</div>
-											<div class="col-lg-12 text-left xs-right col-sm-12 col-5">
-
+											<div class="col-lg-12 text-left intro  col-sm-12 col-12">
 												@foreach($transaction->user->user_payment_method as $payment_method)
 
 
@@ -139,31 +141,91 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-lg-6 col-sm-6 col-12">
-										<div class="row">
-											<div class="col-lg-12 col-sm-12 col-6">
-												<h6>{{__('Email or Username')}}</h6>
-											</div>
-											<div class="col-lg-12 top-xs text-left col-sm-12 col-6">	<a href="mailto:{{$transaction->user->email}}">{{$transaction->user->email}}</a>
+									<div id="PaymentImps">
+
+										@foreach($transaction->user->user_payment_method as $pindex => $payment_method)
+
+
+										<div class="payment-line @if(count($transaction->user->user_payment_method)-1==$pindex) b-last-none @endif ">
+											<div class="row">
+												<div class="col-lg-12 col-sm-12 col-12">
+													<h3> <a href="#">@if($payment_method->hasMedia('icon'))
+    
+                                          
+
+											<img src="{{$payment_method->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_method->name)}}"/>
+
+									
+											@endif</a>{{__($payment_method->payment_method->name)}}</h3>
+												</div>
+												<div class="field">
+													<div class="row">
+														<div class="col-lg-6 col-sm-6 col-6">
+															<label class="gray-c">{{__('Full Name')}}</label>
+														</div>
+														<div class="col-lg-6 text-right col-sm-6 col-6">
+															<label>{{__($payment_method->full_name??$payment_method->user->name)}}</label>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-6 col-sm-6 col-6">
+															<label class="gray-c">{{__($payment_method->account_label)}}</label>
+														</div>
+														<div class="col-lg-6 text-right col-sm-6 col-6">
+															<label>{{$payment_method->account_number}}</label>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-6 col-sm-6 col-6">
+															<label class="gray-c">{{__($payment_method->code_label)}}</label>
+														</div>
+														<div class="col-lg-6 text-right col-sm-6 col-6">
+															<label>{{$payment_method->code}}</label>
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
+                              @endforeach
+
+
+									
+										<!--
+										<div class="payment-line b-last-none">
+											<div class="row">
+												<div class="col-lg-12 col-sm-12 col-12">
+													<h3> <a href="#"><img src="{{asset('front/img/icon-23.png')}}" alt=""/></a>UPI</h3>
+												</div>
+												<div class="field">
+													<div class="row">
+														<div class="col-lg-6 col-sm-6 col-6">
+															<label class="gray-c">Full Name</label>
+														</div>
+														<div class="col-lg-6 text-right col-sm-6 col-6">
+															<label>UPI ID</label>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-6 col-sm-6 col-6">
+															<label class="gray-c">Shavez Mirza</label>
+														</div>
+														<div class="col-lg-6 text-right col-sm-6 col-6">
+															<label>9027022303@paytm</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										-->
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-12 flush space-xs col-sm-12 col-12">
-							<p class="untext">Please confirm that you have successfully transferred the money to the seller through the following payment method.</p>
-						</div>
 						<div class="col-lg-12 flush  space-xs col-sm-12 col-12">
 							<div class="row">
-								<div class="col-lg-9 col-sm-9 col-8">	<a href="#" data-toggle="modal" data-target="#exampleModal3" class="btn-success">{{__('Transferred, Next')}}</a>
+								<div class="col-lg-9 col-sm-9 col-8">	<a href="#" class="btn-success Appeal">Appeal</a>
 								</div>
-								<div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',['transaction'=>$transaction->trans_id])}}" class="btn-success cancel">Cancel</a>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12 hidden-xs col-sm-12 col-12">
-									<p class="untext-2">Please make a payment within {{$transaction->timer}}:00 mins, otherwise, the order will be cancelled.</p>
+								<div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',$transaction->trans_id)}}" class="btn-success cancel">Cancel</a>
 								</div>
 							</div>
 						</div>
@@ -215,90 +277,9 @@
 				</div>
 			</div>
 		</section>
-
-		<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="col-lg-12 col-sm-12 text-center col-12">
-							<h3>{{__('Select Payment Method')}}</h3>
-						</div>
-						<div class="row">
-
-								@foreach($transaction->user->user_payment_method as $payment_method)
-
-
-													
-
-												
-												
-
-
-												
-							<div class="col-lg-4 border-right-one col-sm-4 col-12">
-								<h4 class="xs-left text-center">
-							@if($payment_method->hasMedia('icon'))
-    
-                                          
-
-											<img src="{{$payment_method->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_method->name)}}"/>
-
-									
-											@endif
-
-
-									<br>{{__($payment_method->payment_method->name)}}</h4>
-								<div class="row">
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label class="gray-c">{{__('Full Name')}}</label>
-									</div>
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label>{{__($payment_method->full_name??$payment_method->user->name)}}</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label class="gray-c">{{__($payment_method->account_label)}}</label>
-									</div>
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label>{{$payment_method->account_number}}</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label class="gray-c">{{__($payment_method->code_label)}}</label>
-									</div>
-									<div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-										<label>{{$payment_method->code}}</label>
-									</div>
-								</div>
-							</div>
-
-							@endforeach
-						
-						</div>
-						<div class="col-lg-8 offset-lg-2 top-space col-sm-8 offset-sm-2 col-12">
-							<div class="row">
-								<div class="col-lg-9 col-sm-9 col-8">	<a href="{{route('payment.order.release',$transaction->trans_id)}}" class="btn-success">{{__('Transferred, Next')}}</a>
-								</div>
-								<div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',$transaction->trans_id)}}" class="btn-success cancel">{{__('Cancel')}}</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
 		@endsection
 		@section('page_scripts')
 		<script type="text/javascript" src="{{asset('front/js/time_slider.js')}}"></script>
-
-		
 <script type="text/javascript">
 
 	        var minutes='00';
@@ -382,22 +363,18 @@
 				$("#footer ul li.Support:first-child").click(function(){
 					$("ul.Support-main li").toggle();
 				});
+
+				$(".MethodPayment").click(function(){
+					$("#PaymentImps").toggle();
+					$(".intro").toggle();
+					$(".MethodPayment h6").toggleClass('intro-new');
+				});
 			 });
-
-
-			
-
-
-
-
-
-
 
 
 		
 
-			console.log(minutes);
-
+			
 			document.getElementById('timer').innerHTML =hours+":"+
   minutes + ":" + seconds;
 
@@ -435,7 +412,7 @@ function startTimer() {
 
 
 
- console.log(m);
+ //console.log(m);
 
   }
 
@@ -479,8 +456,6 @@ function startTimer() {
   
   document.getElementById('timer').innerHTML =h+ ":"+
     m + ":" + s;
-
-  console.log(m)
   if(s==0 && h==0 && m==0)
 {
 	setTimeout(function()
@@ -499,5 +474,26 @@ function checkSecond(sec) {
   if (sec < 0) {sec = "59"};
   return sec;
 }
+
+check_payment_status()
+
+function check_payment_status()
+{
+	$.get('{{route("payment.order.status",$transaction->trans_id)}}',function(response)
+	{
+		if(response.status)
+		{
+			if(response.action=='reload')
+			{
+				window.location.reload();
+			}
+			else if(response.action!='stay')
+			{
+				window.location.href=response.action;
+			}
+		}
+	})
+}
+setInterval(check_payment_status,10000);
 		</script>
 @endsection    
