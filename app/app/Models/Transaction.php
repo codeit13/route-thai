@@ -5,13 +5,36 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Plank\Mediable\Mediable;
-
+use App\Http\Traits\GenerateTransIDTrait;
 
 class Transaction extends Model
 {
     use HasFactory,Mediable;
+    use GenerateTransIDTrait;
 
     protected $fillable=['trans_id','user_id','receiver_id','balance_before_trans','status','timer','user_payment_method_id','type','quantity','fiat_currency_id','currency_id','type','trans_amount','address'];
+
+    /**
+     * Get the quantity in 00.0000 format.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getQuantityAttribute($value)
+    {
+        return number_format((float)$value, 5, '.', '');
+    }
+
+    /**
+     * Get the trans_amount in 00.0000 format.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getTransAmountAttribute($value)
+    {
+        return number_format((float)$value, 5, '.', '');
+    }
 
     public function currency()
     {
@@ -40,6 +63,10 @@ class Transaction extends Model
     public function buyer_requests()
     {
         return $this->hasMany('App\Models\BuyerRequest','transaction_id','id');
+    }
+    public function buyer_trans()
+    {
+        return $this->hasOne('App\Models\Transaction','id','receiver_id');
     }
 
     public function checkBuyerRequest()
@@ -71,6 +98,11 @@ class Transaction extends Model
         }
     }
 
+    public function getTime(){
+        $buyer = $this->buyer_requests->first();
+        return floor(($this->timer)-($this->getRequestTime($buyer->updated_at)/60));
+    }
+
     public function getRequestTime($date)
     {
         $diff_in_seconds=strtotime(\Carbon\Carbon::now())-strtotime($date);       
@@ -87,10 +119,12 @@ class Transaction extends Model
 
         if($trans=$user->transactions()->create($this->toArray()))
         {
-            $trans->trans_id=generate_unique_id();
+            $trans->trans_id= $this->generateID();
             $trans->save();
             $buyer_request->status='pending';
             $buyer_request->save();
+
+            $this->update(['receiver_id'=>$trans->id]);
         }
         return $this->checkBuyerRequest();   
     }
