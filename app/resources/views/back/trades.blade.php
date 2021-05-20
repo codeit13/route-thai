@@ -2,6 +2,9 @@
 @section('title')
     Trades |
 @endsection
+<style>
+
+</style>
 @section('content')
 <div class="container-fluid mt-6 team-members">
     <div class="row">
@@ -9,7 +12,7 @@
             <div class="card text-center trade two">
                 <ul>
                     <li style="float: left;">
-                        <h2 class="text-left">Buyer list</h2>
+                        <h2 class="text-left">Transactions </h2>
                     </li>
                     <!-- <li class="last text-right" style="float: right; padding-right: 20px;"><a href="#" class="text-red text-right"><b><i class="fa fa-trash-o" aria-hidden="true"></i> Delete All</b></a></li> -->
                 </ul>
@@ -26,36 +29,26 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
+                                                <th>TRANS. ID</th>
+                                                <th>Seller</th>
+                                                <th>Buyer</th>
+                                                <th>Status</th>
+                                                <th>Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            @foreach ($sell as $item)
+                                            <tr onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">
                                                 <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
+                                                <td>{{ $item->trans_id }}</td>
+                                                <td>{{ ucfirst($item->user->name) }}</td>
+                                                <td>{{ ucfirst($item->receiver->name) }}</td>
+                                                <td>{{ ucfirst($item->status) }}</td>
+                                                <td>{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
-                                            </tr>
-                                        </tfoot>
+                                       
                                     </table>
                                 </div>
                             </div>
@@ -65,7 +58,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row d-none">
         <div class="col-xl-12">
             <div class="card inner-tabs">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -88,24 +81,25 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
+                                                <th>TRANS. ID</th>
+                                                <th>Seller</th>
+                                                <th>Buyer</th>
+                                                <th>Status</th>
+                                                <th>Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach ($buy as $item)
                                             <tr>
                                                 <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
+                                                <td>{{ $item->trand_id }}</td>
+                                                <td>{{ $item->user->name}}</td>
                                                 <td>Edinburgh</td>
                                                 <td>61</td>
                                                 <td>2011/04/25</td>
                                                 <td>$320,800</td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                         <tfoot>
                                             <tr>

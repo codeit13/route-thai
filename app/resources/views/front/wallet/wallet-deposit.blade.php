@@ -3,7 +3,9 @@
     Route: P2P Trading Platform
 @endsection
 @section('content')
-
+<div class="progress-section visible-xs">
+	<h2>{{__('Request Asset')}}</h2>
+</div>
 <section id="wallet-content" class="request">
 	<div class="container">
 		<div class="row">

@@ -132,8 +132,8 @@
                                         <p>{{ $item->login_at}}</p>
                                      </div>
                                      <div class="right_call">
-                                        <h6>Delhi India</h6>
-                                        <p>IP: {{ $item->ip_address}}</p>
+                                        <h6>{{ $item->region_name }}, {{ $item->country_name }}</h6>
+                                        <p>IP: {{ $item->ip_address }}</p>
                                      </div>
                                   </div>
                                   @endforeach 

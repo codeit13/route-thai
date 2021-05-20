@@ -33,5 +33,9 @@ return [
         'base_uri'  => "https://2factor.in/API/V1/3d23caae-474d-11eb-8153-0200cd936042",
         'secret'  =>  '3d23caae-474d-11eb-8153-0200cd936042',
     ],
+    'ipstack' =>  [
+        'base_uri'  => "http://api.ipstack.com/",
+        'secret'  =>  '0e6ab3c38a43c6460820a2992cda5454',
+    ],
 
 ];

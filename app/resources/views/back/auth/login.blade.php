@@ -1,9 +1,11 @@
 @extends('layouts.back_auth')
-
+@section('title')
+   Login | Admin | Route P2P2 Exchange Network 
+@endsection
 @section('content')
 <style>
 body {
-    background:royalblue
+    background:#161625;
 }
 </style>
 <div class="container-fluid">
@@ -30,7 +32,8 @@ body {
                 @enderror
                 <div class="form-group">
                     <label for="example-password-input" class="form-control-label text-white">Password</label>
-                    <input id="password-field" class="form-control form-control-alternative @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" type="password" placeholder="Enter your password" id="example-password-input"> <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    <input id="password-field" class="form-control form-control-alternative @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" type="password" placeholder="Enter your password" id="example-password-input">
+                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                 </div>
                 @error('password')
                     <span class="invalid-feedback" role="alert">
@@ -126,5 +129,19 @@ body {
         </div>
     </div>
 </div> --}}
-
+@section('page_scripts')
+<script>
+    $(".toggle-password").click(function() {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+        input.attr("type", "text");
+        } else {
+        input.attr("type", "password");
+        }
+    });
+</script>
+    
 @endsection
+@endsection
+

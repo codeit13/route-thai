@@ -18,7 +18,7 @@ class UserController extends Controller
 
     public function isUsernameExist(Request $request){
         $status = User::where('name',$request->name)->count() == 0 ? 'OK': 'NOT OK';
-        $message = $status == 'OK' ? 'Congrats! Username: '.$request->name.'is available' :'Sorry ! This Username is not available.';
+        $message = $status == 'OK' ? 'Congrats! Username: '.$request->name.' is available' :'Sorry ! This Username is not available.';
         return response()->json(['status'=>$status,'message'=>$message]);
     }
     public function updateNotificationSettings(Request $request){

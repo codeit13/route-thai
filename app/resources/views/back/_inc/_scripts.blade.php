@@ -53,5 +53,9 @@
     $(function(){
         $('.selectpicker').selectpicker();
     });
+
+    function redirect(url, target){
+      window.open(url, target);
+    }
   </script>
   
