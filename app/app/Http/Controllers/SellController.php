@@ -58,7 +58,7 @@ class SellController extends Controller
     	// $save_sell = Transaction::firstOrNew(['trans_id'=>$trans_id]);
     	// $save_sell->fill($data);
     	// $save_sell->user_id = auth()->user()->id;
-    	// $save_sell->user_payment_method_id = auth()->user()->user_payment_methods()->value('id');
+    	// $save_sell->user_payment_method_id = auth()->user()->payment_methods()->value('id');
     	// $save_sell->type = 'sell';
     	// $save_sell->save();
 

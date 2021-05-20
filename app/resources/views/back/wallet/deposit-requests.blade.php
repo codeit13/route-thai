@@ -1,4 +1,4 @@
- @extends('layouts.back')
+@extends('layouts.back')
 @section('content')
  <div class="header filter bg-primary pb-6">
          <div class="container-fluid">

@@ -1,5 +1,3 @@
-  
-  if($('li .dark-light').length > 0) {
   const toggleButton = document.querySelector('li .dark-light');
   let theme = localStorage.getItem('theme');
   if (theme == null) {
@@ -27,4 +25,3 @@
       $('a.navbar-brand').removeClass('dark-logo');
     }
   });
-}

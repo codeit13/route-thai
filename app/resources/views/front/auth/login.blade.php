@@ -18,7 +18,7 @@
                         </div>
                     </div> 
                 </div>
-                <div class="col-lg-5 col-sm-5 col-xs-12 flush">
+                <div class="col-lg-5 col-sm-5 col-xs-12">
                     <div class="tableRow">
                         <div class="tableCell">
                             <div class="login_forms">
@@ -52,24 +52,25 @@
                                     <p></p>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">{{__("Password")}}</label>
-                                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required id="exampleInputPassword1" autocomplete="cc-additional-name">
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required id="password-field" autocomplete="cc-additional-name">
+                                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </div>
                                     <div class="form-group otp" style="display: none">
                                         <label for="exampleInputEmail1">OTP</label>
                                         <input type="text" class="form-control" id="otp"
                                             aria-describedby="emailHelp" placeholder="Enter OTP" name="otp">
                                         <input type="hidden" id="session_id" value="">    
-                                        <p class="not_m mb-0 resend-btn text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<span id="timer"></span>
+                                        <p class="not_m mb-0 resend-btn text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<label id="timer"></label>
                                         </b></p>
                                         <p class="otp-msg mb-0 text-left"></p>
                                     </div>
                                     <div class="form-check">
-                                        <input type="checkbox" name="remember_me" class="form-check-input" id="exampleCheck1" required>
+                                        <input type="checkbox" name="remember_me" class="form-check-input" id="exampleCheck1">
                                         <label class="form-check-label" for="exampleCheck1">{{__("Remember me")}}</label>
                                         <a href="{{ route('password.request') }}">{{__("Forgot Password?")}}</a>
                                     </div>
                                     <button type="button" id="send-otp" class="btn btn-primary">{{__("Send OTP")}}</button>
-                                    <button type="submit" disabled  id="login" style="display: none" class="btn btn-primary">{{__("Sign In")}}</button>
+                                    <button type="submit" id="login" class="btn btn-primary">{{__("Sign In")}}</button>
                                     <p class="not_m">{{__("New on our platform?")}} <a href="{{ route('register') }}">{{__("Create an account")}}</a></p>
                                     <ul>
                                         <li>
@@ -116,7 +117,6 @@ var counter = null;
                         counter = setInterval(timer, 1000);
                     },
                     error: function (data) {
-                        console.log(data); 
                         response = JSON.parse(data.responseText);
                         $(response.errors).each(function(index,value){
                             $('p.msg').html(value.email);
@@ -126,9 +126,8 @@ var counter = null;
                 });
         }); 
         
-        $(document).find('#otp').on('change',function(){
+        $(document).find('#otp').on('change keyup',function(){
             var dis = $(this);
-            console.log('started');
             if(dis.val().length == 6){
                 $.ajax({
                     url: "{{ route('verify.otp')}}",
@@ -210,6 +209,18 @@ function sendOTP(){
 		},
 	}); 
 }
+
+$(".toggle-password").click(function() {
+
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+        input.attr("type", "text");
+        } else {
+        input.attr("type", "password");
+        }
+});
+
 </script>
 @endsection
 @endsection

@@ -75,7 +75,10 @@ class RegisterController extends Controller
     }
 
     public function showRegistrationForm(Request $request){
-        return view('back.auth.register');
+        // dd(Auth::guard('admin')->check());
+        // if(!Auth::guard('admin')->check())
+            return view('back.auth.register');
+        // else return redirect()->route('admin.dashboard');
     }
     protected function guard(){
         return Auth::guard('admin');

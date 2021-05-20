@@ -14,12 +14,18 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($type='',$typename='')
+    public function index(Request $request,$type='',$typename='')
     {
+
+   // echo '<pre>';print_r($request->all());die;
       $currency_types=\App\Models\CurrencyType::all();
+
+      $currentCurrency='';
        
 
       $walletType=new \App\Models\CurrencyType;
+
+      $transaction_type=$request->type??'deposit';
 
 
       if($type)
@@ -35,14 +41,56 @@ class TransactionController extends Controller
              $type=$currency_types[0]->id;
         }
 
-        $transactions= \App\Models\Transaction::where('type',1)
-                                  ->whereHas('currency', function ($query)use ($type) {
+        $transactions= \App\Models\Transaction::where('type',$transaction_type);
+
+        if($request->status)
+        {
+          $transactions=$transactions->where('status',$request->status);
+        }
+
+        if($request->start_date)
+        {
+            $start_date = date('Y-m-d',strtotime($request->start_date));
+
+          //echo '<pre>';print_r($start_date);die;
+            $transactions=$transactions->whereDate('created_at', '>=', $start_date);
+        }
+
+        if($request->end_date)
+        {
+            $end_date = date('Y-m-d',strtotime($request->end_date));
+
+          //echo '<pre>';print_r($start_date);die;
+            $transactions=$transactions->whereDate('created_at', '<=', $end_date);
+        }
+
+        if($request->currency && !$request->search)
+        {
+          $transactions=$transactions->where('currency_id',$request->currency);
+
+          $currentCurrency=$request->currency;
+        }
+
+        if($request->search)
+        {
+          $transactions=$transactions->whereHas('currency', function ($query)use ($request) {
+                                          $query->where('name','like',$request->search.'%')->orWhere('short_name','like',$request->search.'%');
+
+                                        });
+
+        }
+
+
+         $transactions= $transactions->whereHas('currency', function ($query)use ($type,$request) {
                                           $query->where('type_id',$type);
+      
 
-                                        })->paginate(10);
+                                        })->paginate(10)->withQueryString();
+
+          
 
 
-      return view('front.wallet.wallet-deposit-history',compact('transactions','currencies','currency_types','walletType'));
+      return view('front.wallet.wallet-history',compact('transactions','currencies','currency_types','walletType','currentCurrency','request'));
     }
 
     /**
@@ -54,6 +102,8 @@ class TransactionController extends Controller
     {
 
         $currency_types=\App\Models\CurrencyType::all();
+
+        $wallets=\Auth::user()->wallet;
 
         
         $currentCurrency=$currency;
@@ -74,7 +124,7 @@ class TransactionController extends Controller
         }
 
 
-        return view('front.wallet.wallet-deposit',compact('currency_types','walletType','currencies','currentCurrency'));
+        return view('front.wallet.wallet-deposit',compact('currency_types','walletType','currencies','currentCurrency','wallets'));
 
        
 
@@ -100,7 +150,7 @@ class TransactionController extends Controller
                               ->toDirectory('transactions')
                                ->upload();
 
-       $type=1;  //for deposit
+       $type='deposit'; 
 
 
         if($this->makeTransaction($request,$type,$media))
@@ -200,6 +250,9 @@ class TransactionController extends Controller
         
         $currentCurrency=$currency;
 
+        $wallets=\Auth::user()->wallet;
+
+
 
         $walletType=new \App\Models\CurrencyType;
 
@@ -216,7 +269,7 @@ class TransactionController extends Controller
         }
 
 
-        return view('front.wallet.wallet-withdraw',compact('currency_types','walletType','currencies','currentCurrency'));
+        return view('front.wallet.wallet-withdraw',compact('currency_types','walletType','currencies','currentCurrency','wallets'));
 
        
 
@@ -235,7 +288,7 @@ class TransactionController extends Controller
     
         $request->validate(['quantity' =>'required|numeric','currency_id'=>'required|numeric','address'=>'required']);
 
-        $type=2;  //for withdraw
+        $type='withdraw';  //for withdraw
  
         if($this->makeTransaction($request,$type))
         {

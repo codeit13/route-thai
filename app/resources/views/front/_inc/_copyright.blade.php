@@ -2,7 +2,7 @@
     <div class="container">
        <div class="row">
           <div class="col-lg-12 text-center">
-             <p>© Copyright 2021 Route Company</p>
+             <p>© Copyright {{ date('Y') }} Route Company</p>
           </div>
        </div>
     </div>

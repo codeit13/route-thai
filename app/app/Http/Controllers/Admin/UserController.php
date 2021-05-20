@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
+        $users = User::with('currency')->orderBy('created_at','DESC')->paginate(10);
         return view('back.users.index',compact('users'));
     }
 
@@ -83,5 +83,14 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateStatus(Request $request){
+        if($request->has('status') && !empty($request->status)) {
+            $user = User::find($request->id);
+            $user->status = trim($request->status);
+            $user->save();
+            return response()->json(['status'=>'OK','message'=> __('The statuas has been updated.') ]);
+        }
     }
 }

@@ -42,15 +42,19 @@ class LoginController extends Controller
     }
 
     public function showLoginForm(Request $request){
+        if(!Auth::guard('admin')->check())
         return view('back.auth.login');
+        else return redirect()->route('admin.dashboard');
     }
     
     protected function guard(){
+        if(!Auth::guard('admin')->check())
         return Auth::guard('admin');
     }
 
     public function logout(Request $request) {
         Auth::guard('admin')->logout();
-        return redirect('/login');
+        $request->session()->invalidate();
+        return redirect('admin/login');
       }
 }

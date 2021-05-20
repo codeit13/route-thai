@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\SMSService;
+
 use App\Http\Requests\SendOTPRequest;
 use App\Http\Requests\VerifyOTPRequest;
 use App\Http\Requests\SendOTPonLogin;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -22,6 +24,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->service = new SMSService();
+        
     }
 
     /**
@@ -30,7 +33,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
+    {        
         return view('front.home');
     }
 
@@ -54,7 +57,6 @@ class HomeController extends Controller
     }
 
     public function resetPassword(Request $request){
-        
         $user = User::where('mobile',$request->mobile)->first();
         $user->password = Hash::make($request->password);
         $user->update();

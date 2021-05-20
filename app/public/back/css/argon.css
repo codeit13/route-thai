@@ -6965,7 +6965,7 @@ button.btn.btn-link::after {
     text-align: center;
 }
 .red-scrollbar td input[type="checkbox"] {
-    width: 49px !important;
+    /* width: 49px !important; */
     height: 16px;
     cursor: pointer;
 }
@@ -7850,7 +7850,7 @@ li.last form.search button {
 .card.trade a {
     display: inline-block;
     margin-bottom: 0px;
-    color: #fff;
+    color: #393f50;
     margin-top: 0px;
 }
 li.last.text-right {

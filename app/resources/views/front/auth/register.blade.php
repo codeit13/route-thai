@@ -1,13 +1,11 @@
 @extends('layouts.front_auth')
 <link href="{{ asset('front/css/flags.css')}}" rel="stylesheet" />
 <link href="{{ asset('front/css/intlTelInput.css')}}" rel="stylesheet" />
-<style>
-    .iti.iti--allow-dropdown {
-        width: 100%;
-    }
-
-    
-    </style>
+<style>    
+.iti.iti--allow-dropdown {
+    width: 100%;
+}
+</style>
 @section('content')
     <section id="main-content" class="login_page">
         <div class="container-fluid">
@@ -43,7 +41,7 @@
                                     <div class="alert alert-danger">
                                         <ul>
                                             @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
+                                                <li class="mb-0">{{ $error }}</li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -62,17 +60,13 @@
                                                     aria-describedby="emailHelp" placeholder="" name="email">
                                                     <label id="email-err"></label>
                                             </div>
-                                            @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Password</label>
                                                 <input type="password"
                                                     class="form-control @error('password') is-invalid @enderror"
-                                                    name="password" required id="exampleInputPassword1" placeholder=""
+                                                    name="password" required id="password" placeholder=""
                                             name="password">
+                                            <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Phone Number</label>
@@ -222,7 +216,7 @@ $(document).ready(function() {
                     $('#phone').removeClass('is-invalid');
                     $('#phone').addClass('is-valid');
                   }
-                  $('#mobile-no-err').html("<span class='"+ cls +"'>"+res.message+"</span>");
+                  $('#mobile-no-err').html("<label class='"+ cls +"'>"+res.message+"</label>");
 
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -259,7 +253,7 @@ $(document).ready(function() {
                 $('#email').removeClass('is-invalid');
                 $('#email').addClass('is-valid');
                 }
-                $('#email-err').html("<span class='"+ cls +"'>"+res.message+"</span>");
+                $('#email-err').html("<label class='"+ cls +"'>"+res.message+"</label>");
 
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -271,5 +265,17 @@ $(document).ready(function() {
         }
     });
 });
+
+$(".toggle-password").click(function() {
+
+$(this).toggleClass("fa-eye fa-eye-slash");
+var input = $($(this).attr("toggle"));
+if (input.attr("type") == "password") {
+  input.attr("type", "text");
+} else {
+  input.attr("type", "password");
+}
+});
+
 </script>
 @endsection

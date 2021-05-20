@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Wallet;
 use App\Services\SMSService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -71,9 +72,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+
+        $parts = explode("@",  strtolower($data['email']));
+        $email = $parts[0];
+        $username = $value;
+        do
+        { 
+            $username = $email.rand(00, 9999999);
+        }
+        while(User::whereName($email)->exists());
+        
         return User::create([
             'email' => $data['email'],
-            'name' => null,
+            'name' => $username,
             'mobile' => $data['mobile'],
             'password' => Hash::make($data['password']),
         ]);
@@ -83,10 +95,11 @@ class RegisterController extends Controller
 
         if($this->verifyOTP($request)) {
             $validator = $this->validator($request->all());
-            if ($validator->errors()->count() == 0)
+            if ($validator->errors()->count() > 0)
                 return redirect()->intended('register')->withInput($request->all())->withErrors($validator); 
                 
-            $this->create($request->all());
+            $user = $this->create($request->all());
+            $wallet = Wallet::create(['user_id'=>$user->id,'coin'=>0,'currency_id'=>1]);
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
                 return redirect()->intended('/home');
             } 
@@ -102,12 +115,13 @@ class RegisterController extends Controller
     }
 
     public function showRegistrationForm(Request $request){
+        if(!Auth::check())
         return view('front.auth.register');
+        else return redirect()->route('home');
     }
 
     public function showOTPForm(Request $request){
         $validator = $this->validator($request->all());
-        // dd($validator->errors());
         if ($validator->errors()->count() > 0)
         return redirect()->back()->withInput($request->all())->withErrors($validator); 
         $data = $this->service->sendOtpSms($request->mobile);
