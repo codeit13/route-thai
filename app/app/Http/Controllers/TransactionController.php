@@ -21,6 +21,8 @@ class TransactionController extends Controller
       $currency_types=\App\Models\CurrencyType::all();
 
       $currentCurrency='';
+
+      $user=\Auth::user();
        
 
       $walletType=new \App\Models\CurrencyType;
@@ -41,7 +43,7 @@ class TransactionController extends Controller
              $type=$currency_types[0]->id;
         }
 
-        $transactions= \App\Models\Transaction::where('type',$transaction_type);
+        $transactions= $user->transactions()->where('type',$transaction_type);
 
         if($request->status)
         {

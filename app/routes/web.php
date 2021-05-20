@@ -75,10 +75,11 @@ Route::middleware('auth')->group(function(){
     });
 
 
+// Trade routes
+
+    Route::prefix('trade')->group(function(){
 
 
-
-});
 
 Route::get('buyer/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
 
@@ -89,6 +90,19 @@ Route::get('buyer/payment/{transaction}/release',[App\Http\Controllers\PaymentCo
 Route::get('buyer/payment/{transaction}/confirm',[App\Http\Controllers\PaymentController::class, 'confirm'])->name('payment.order.confirm');
 
 Route::get('buyer/payment/{transaction}/status',[App\Http\Controllers\PaymentController::class, 'status'])->name('payment.order.status');
+
+Route::get('history',[App\Http\Controllers\TradeController::class, 'index'])->name('trade.history');
+
+
+});
+
+
+//end
+
+
+});
+
+
 
 
 // Exchange
