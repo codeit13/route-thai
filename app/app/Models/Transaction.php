@@ -9,7 +9,7 @@ use Plank\Mediable\Mediable;
 
 class Transaction extends Model
 {
-    use HasFactory,Mediable;
+    use HasFactory, Mediable;
 
     protected $fillable=['currency_id','type','trans_amount','address'];
 

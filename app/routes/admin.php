@@ -20,7 +20,11 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
 
         //Users
         Route::get('users', 'UserController@index')->name('users');
+        Route::get('user/delete/{id}', 'UserController@destroy')->name('user.delete');
         Route::post('user/update/status', 'UserController@updateStatus')->name('user.update.status');
         
+
+        Route::get('settings', 'SettingsController@index')->name('settings');
+        Route::post('settings/update', 'SettingsController@update')->name('settings.update');
     });
 });
