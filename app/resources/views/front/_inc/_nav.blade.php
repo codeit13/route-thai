@@ -8,6 +8,37 @@
                        <img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
                     </a>
                     <div class="nav-toggle"></div>
+                    <header class="site-header visible-xs">
+                      <nav class="site-nav">
+                        <input id="site-menu-trigger" type="checkbox">
+                        <label for="site-menu-trigger">
+                          <span class="line"></span>
+                          <span class="line"></span>
+                          <span class="line"></span>
+                          <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                        </label>
+                        
+                        <div class="site-menu">
+                          <ul>
+                            <li>
+                                <a class="not-c" href="{{ route('user.dashboard') }}">{{ ucfirst(Auth::user()->name) }}<br>
+                                    <label><i class="fa fa-diamond" aria-hidden="true"></i> VIP
+                                        <span>Verified</span></label></a>
+                            </li>
+                            <li><a href="#">Security</a></li>
+                            <li><a href="#">Identification</a></li>
+                            <li><a href="#">API Management</a></li>
+                            <li><a href="#">Reward Center</a></li>
+                            <li><a href="#">Task Center</a></li>
+                            <li><a href="#">Referral <mark>Earn bonus</mark></a></li>
+                            <li><a href="#"
+                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+                            </li>
+                        </ul>
+                        </div>
+                      </nav>
+                    </header>
+                    <li class="onsubmenu visible-xs"><a class="bell" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i> <span>05</span></a></li>
                     <a class="mobile_logo visible-xs" href="{{ route('home') }}">
                        <img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
                     </a>
