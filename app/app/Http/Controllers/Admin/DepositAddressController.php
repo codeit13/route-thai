@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class WalletController extends Controller
+class DepositAddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,51 +14,10 @@ class WalletController extends Controller
      */
     public function index(Request $request)
     {
-
-        $currencyTypes=\App\Models\CurrencyType::all();
-
-        $type=$request->type;
-
-
-
-
-
-        $currencies=new \App\Models\Currency;
-
-
-        if($type)
-            {
-                $currencies=$currencies->where('type_id',$type);
-            }
-          
-                $currencies=$currencies->get();
-            
-
-
-        $balances=new \App\Models\Wallet;
-
-        if($type)
-            {
-           
-            $balances=$balances->whereHas('currency', function ($query)use ($type) {
-                                          $query->where('type_id',$type);
-
-                                        });
-
-             }
-
-             if($request->currency)
-             {
-                $balances=$balances->where('currency_id',$request->currency);
-             }
-            
-
-
-            $balances=$balances->paginate(10)->withQueryString();
-
-            
-
-        return view('back.wallet.wallet-balance',compact("balances",'currencyTypes','request','currencies'));
+        $currencies=\App\Models\Currency::all();
+        $addresses=\App\Models\DepositAddress::paginate(10);
+       
+        return view('back.deposit-address',compact("addresses","currencies","request"));
     }
 
     /**

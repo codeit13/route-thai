@@ -52,7 +52,22 @@
 		<div class="row">
 			<div class="col-lg-12 hidden-xs col-sm-12 col-12" id="balanceDiv">
 				<div class="white-box">
-					<div class="row">
+
+					<div class="row" id="balanceHide" style="display: none;">
+						<div class="col-lg-4 col-sm-4 col-6">
+							<h6>P2P balance</h6>
+							<h2>******** <span>********</span></h2>
+							<h5> ********</h5>
+						</div>
+						<div class="col-lg-4 col-sm-4 col-6">
+							<h6>Fiat balance</h6>
+							<h2>******** <span>********</span></h2>
+							<h5> ********</h5>
+						</div>
+					</div>
+
+
+					<div class="row" id="balanceShow">
 						<div class="col-lg-4 col-sm-4 col-6">
 							<h6>P2P balance</h6>
 							<h2>0.00000000 <span>BTC</span></h2>
@@ -64,6 +79,8 @@
 							<h5>≈ $0.000000</h5>
 						</div>
 					</div>
+
+
 				</div>
 			</div>
 		</div>
@@ -178,12 +195,17 @@
     });
 
     function toggleBalance(selector) {
-  var x = document.getElementById("balanceDiv");
-  if (x.style.display === "none") {
-    x.style.display = "block";
+
+
+  var x = document.getElementById("balanceHide");
+  var y=document.getElementById('balanceShow');
+  if (x.style.display == "none") {
+    x.style.display = "flex";
+    y.style.display="none";
     selector.innerHTML='<i class="fa fa-eye-slash"  aria-hidden="true"></i> {{__("Hide Balance")}}</a>';
   } else {
     x.style.display = "none";
+      y.style.display="flex";
     selector.innerHTML='<i class="fa fa-eye"  aria-hidden="true"></i> {{__("Show Balance")}}</a>';
   }
 }
