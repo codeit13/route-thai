@@ -427,7 +427,7 @@ img {
     background-color: var(--header-bg-color);
     color: var(--text-color);
     border: none;
-    margin-top: 0;
+    margin-top: 0px;
     margin-left: -30px;
 }
 li.hd_small a {
@@ -3733,6 +3733,170 @@ span.rt_span i.fa-trash-alt {
   margin-bottom: 0;
     display: none;
 }
+
+#header.p2p-wallet nav#navigation a.btn.btn-primary {
+    margin-right: 45px;
+}
+
+.site-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.site-nav {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.site-menu {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    top: 0;
+    right: 0;
+    width: 240px;
+    height: 100vh;
+    padding: 0px 0px;
+    background-color: var(--body-bg);
+    transition: all 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(100%);
+    will-change: transform;
+    z-index: 99999;
+}
+.site-menu ul {
+  padding: 0;
+  list-style-type: none;
+}
+.site-menu ul li {
+  padding: 10px 30px;
+}
+
+#site-menu-trigger {
+  z-index: 10;
+  display: none;
+  height: 30px;
+}
+#site-menu-trigger:checked ~ .site-menu {
+  transform: translateX(0%);
+}
+#site-menu-trigger:checked ~ label[for=site-menu-trigger] {
+  transform: translateX(-8px) scale(1.05);
+    right: 15px;
+}
+#site-menu-trigger:checked ~ label[for=site-menu-trigger] .line:nth-child(1) {
+  transform: rotate(45deg) translateX(10px);
+  background-color: #70798b;
+}
+#site-menu-trigger:checked ~ label[for=site-menu-trigger] .line:nth-child(2) {
+  width: 0;
+  background-color: #70798b;
+}
+#site-menu-trigger:checked ~ label[for=site-menu-trigger] .line:nth-child(3) {
+  transform: rotate(-45deg) translateX(10px);
+  background-color: #70798b;
+}
+#site-menu-trigger ~ label[for=site-menu-trigger] {
+    display: block;
+    right: 55px;
+    top: 20px;
+    z-index: 999999;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+}
+#site-menu-trigger ~ label[for=site-menu-trigger] .line {
+  display: block;
+  content: "‍";
+  position: absolute;
+  width: 25px;
+  height: 3px;
+  background-color: transparent;
+  transition: all 200ms linear;
+}
+#site-menu-trigger:checked ~ label[for=site-menu-trigger] i.fa {
+    display: none;
+}
+#site-menu-trigger ~ label[for=site-menu-trigger] i.fa {
+    color: #fff;
+}
+#site-menu-trigger ~ label[for=site-menu-trigger] .line:nth-child(1) {
+  top: 0;
+}
+#site-menu-trigger ~ label[for=site-menu-trigger] .line:nth-child(2) {
+  top: 7px;
+}
+#site-menu-trigger ~ label[for=site-menu-trigger] .line:nth-child(3) {
+  top: 14px;
+}
+
+.site-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 50px);
+}
+
+.site-menu ul li a {
+    color: var(--white-black-text);
+}
+
+.site-header.visible-xs a {
+    width: 100%;
+    background: transparent;
+    color: var(--white-black-text);
+    line-height: 20px;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: left;
+    border-radius: 0;
+}
+
+.site-menu ul li label {
+    color: #00c98e;
+    font-weight: normal;
+    margin-top: 5px;
+}
+
+.site-menu ul li a mark {
+    background: #00c98e;
+    color: #fff;
+    font-weight: normal;
+    font-size: 12px;
+    padding: 1px 4px;
+    margin-left: 14px;
+    position: relative;
+}
+
+.site-menu ul li a mark:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    margin-top: -6px;
+    left: -6px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid #00c98e;
+}
+
+*:focus {
+  outline: 0;
+}
+
+.nav-menus-wrapper.nav-menus-wrapper-right.nav-menus-wrapper-open {
+    right: 0;
+    z-index: 99999999;
+}
+#header .right_side a.bell {
+    top: -3px;
+}
+
+.dark-light {
+    margin-top: -4px;
+}
 .card_scroll {
     height: 251px;
     overflow-y: scroll;
@@ -3763,6 +3927,12 @@ span.rt_span i.fa-trash-alt {
 /* Landscape phones and portrait tablets */
 
 @media (max-width: 767px) {
+    #header.p2p-wallet nav#navigation a.bell {
+    margin-right: 45px;
+}
+body {
+    overflow-x: hidden;
+}
     .iverify ul {
         width: 85%;
     }
