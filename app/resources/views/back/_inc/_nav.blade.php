@@ -42,6 +42,12 @@
                         </a>
                      </li>
                   @endforeach
+
+                  <li class="nav-item">
+                     <a class="nav-link" href="{{ route('admin.user.wallets') }}"> <i class="fa fa-money text-green" aria-hidden="true"></i>
+                     <span class="nav-link-text">User Wallet</span>
+                     </a>
+                  </li>
                   
                   <li class="nav-item">
                      <a class="nav-link" href="{{ route('admin.trades.list') }}"> <i class="fa fa-line-chart text-green" aria-hidden="true"></i>

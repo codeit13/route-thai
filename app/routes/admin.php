@@ -18,6 +18,10 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
         Route::get('withdraw/requests/{type?}/{name?}','TransactionController@show_withdraw')->name('withdraw.requests.show');
         Route::get('wallet/{type}/{transaction}/change/status/{status}','TransactionController@changeStatus')->name('wallet.change.status');
 
+        Route::get('user/wallets','WalletController@index')->name('user.wallets');
+
+        Route::get('deposit/address','DepositAddressController@index')->name('deposit.address');
+
         //Users
         Route::get('users', 'UserController@index')->name('users');
         Route::get('user/delete/{id}', 'UserController@destroy')->name('user.delete');
