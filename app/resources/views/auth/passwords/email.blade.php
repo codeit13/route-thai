@@ -31,11 +31,11 @@
                 <div class="col-lg-5 col-sm-5 col-xs-12 flush">
                     <div class="tableRow">
                         <div class="tableCell">
-                            <div class="login_forms">
+                            <div class="login_forms recet">
                                 <a class="navbar-brand  dark-mode-img dark-logo" href={{ route('home') }}>
-									<img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
-									<img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
-                                </a>                               
+                                    <img src="{{ asset('front/img/dark-logo.png') }}" class="black-logo" alt="">
+                                    <img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
+                                </a>                      
                                 <h2>{{ __('Reset Password') }}</h2>
                                   <form method="POST"  id="loginform" action="{{ route('passwords.reset') }}">
                                     @csrf

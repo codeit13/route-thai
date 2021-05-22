@@ -18,7 +18,7 @@
 			<div class="col-lg-5 col-sm-5 col-xs-12 flush">
 				<div class="tableRow">
 					<div class="tableCell">
-						<div class="login_forms">
+						<div class="login_forms recet">
 							<h2>Account Verification</h2>
 							<p>Please enter the 6 digit verification code that was 
 							send to <b>{{ $request->mobile }}</b>.  The code is valid for 10 minutes.</p>

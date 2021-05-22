@@ -4990,7 +4990,47 @@ body {
         background: url(../img/plus-white.svg) 95% 50% no-repeat;
     }
     .login_forms {
-        padding: 15% 5%;
+        padding: 0px 35px;
+    }
+    .login_forms form label {
+        color: var(--white-black-text);
+        font-size: 14px;
+        font-weight: 400;
+    }
+    .login_forms .form-check a {
+        float: right;
+        color: #00C98E;
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0px 0px;
+        margin-right: -16px;
+    }
+    #main-content p {
+        font-size: 14px !important;
+        font-weight: 400;
+        margin-bottom: 0px;
+    }
+    #copy p {
+        color: #fff;
+        margin-bottom: 0px;
+        font-size: 14px;
+        font-weight: 300;
+    }
+    .flot_btn {
+        float: right;
+        position: fixed;
+        right: -4px;
+        bottom: 50px;
+    }
+    .login_forms.recet {
+        padding: 24% 35px !important;
+    }
+    .login_forms h2 {
+        font-size: 21px;
+        font-weight: bold;
+        margin-bottom: 0px;
+        text-align: center;
+        margin-top: 24px;
     }
     #news h2 {
         text-align: left;
@@ -5015,12 +5055,12 @@ body {
     #news-add .side-text h3 {
         margin-top: 35px !important;
     }
-    .side_image {
+    /*.side_image {
         display: block !important;
         height: auto;
         background: none;
         padding-bottom: 50px;
-    }
+    }*/
     .side_image .tableCell,
     .side_image .tableRow {
         height: auto !important;

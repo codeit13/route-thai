@@ -33,9 +33,9 @@
                         <div class="tableCell">
                             <div class="login_forms">
                                 <a class="navbar-brand  dark-mode-img dark-logo" href={{ route('home') }}>
-									<img src="{{ asset('front/img/logo.png') }}" class="black-logo" alt="">
-									<img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
-                                </a>                               
+                                    <img src="{{ asset('front/img/dark-logo.png') }}" class="black-logo" alt="">
+                                    <img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
+                                </a>                     
                                 <h2>{{ __('Change Password') }}</h2>
                                   <form method="POST"  id="passwordForm" action="{{ route('passwords.update') }}">
                                     @csrf
