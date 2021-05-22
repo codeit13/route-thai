@@ -100,12 +100,18 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <ul>
-                                            @foreach($wallet_types as $wallet)
+                                        {{--    @foreach($wallet_types as $wallet)
                                             <li><a href="{{route('wallet.history',['type'=>$wallet->id,'typename'=>strtolower($wallet->type)])}}">{{__($wallet->type)}} {{__('Wallet')}}</a></li>
-                                            @endforeach                                            
+                                            @endforeach     --}} 
+
+                                            <li><a href="{{route('wallet.history')}}">{{__('Fiat and Spot')}}</a></li>   
+
+                                             <li><a href="{{route('wallet.p2p')}}">{{__('P2P')}}</a></li>                                     
                                             <li><a href="{{route('wallet.deposit')}}">{{__('Deposit')}}</a></li>
                                             <li><a href="{{route('wallet.withdraw')}}">{{__('Withdraw')}}</a></li>
                                             <li><a href="{{route('wallet.request.history')}}">{{__('History ( Deposit & Withdraw ) ')}}</a></li>
+
+                                            <li><a href="{{route('trade.history')}}">{{__('Trade History')}}</a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -119,7 +125,7 @@
                                         dd($default_language);
                                         @endphp
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="{{ $default_language->firstMedia('icon')->getUrl() }}" alt="">{{ $default_language->name }}
+                                            <img src="{{ $default_language->firstMedia('icon')->getUrl()??'' }}" alt="">{{ $default_language->name }}
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             @foreach ($languages as $item)
