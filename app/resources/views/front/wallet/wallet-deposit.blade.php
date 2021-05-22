@@ -131,7 +131,18 @@
 									<span class="total">{{__('Total balance')}}: <b id="totalBalance">0.00000000 {{__('BTC')}}</b></span>
 								</div>
 
-							
+								<div class="field">
+									<div class="dropdown currency_two three_coins crypto">
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}" alt=""> BTC <span>Bitcoin</span>
+										</button>
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" href="#"><img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}" alt=""> BTC <span>Bitcoin</a>
+											<a class="dropdown-item" href="#"><img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}" alt=""> ETH <span>Ethereum</a>
+											<a class="dropdown-item" href="#"><img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}" alt=""> BNB <span>BNB</span></a>
+										</div>
+									</div>
+								</div>
 
 						
 								<div class="field qq">
