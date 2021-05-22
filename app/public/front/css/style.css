@@ -427,8 +427,10 @@ img {
     background-color: var(--header-bg-color);
     color: var(--text-color);
     border: none;
-    margin-top: 0px;
-    margin-left: -30px;
+    margin-top: 5px;
+    margin-left: 0;
+    right: -20px !important;
+    left: auto !important;
 }
 li.hd_small a {
     padding: 6px 12px !important;
@@ -1568,7 +1570,7 @@ span#thb_eth_volume {
     border-bottom: 2px solid transparent;*/
 }
 #gs-div .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    background-color: var(--portfolio-bg);
+    background-color: transparent;
     border:none;
     font-weight: 600;
     border-bottom: 3px solid #00C98E !important;
@@ -1584,7 +1586,7 @@ span#thb_eth_volume {
     border:none;
     font-weight: 600;
     color: var(--white-black-text);
-    border-bottom: 3px solid var(--portfolio-bg) !important;
+    border-bottom: 3px solid transparent !important;
 }
 #gs-div .nav-tabs .nav-link:hover,
 #gs-div .nav-tabs .nav-link:focus {/*
@@ -3371,8 +3373,8 @@ a#activity-tab,a#devices-tab {
 }
 
 .an_card h2 {
-    background-color: var(--gray_head);
-    border: 1px solid var(--border-color);
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-color);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     display: inline-block;
@@ -3922,11 +3924,167 @@ span.rt_span i.fa-trash-alt {
 .card_scroll::-webkit-scrollbar-thumb:hover {
   background: #00C98E; 
 }
+
+lottie-player {
+    width: 100% !important;
+}
+
+.modal-body.text-center h6{
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+#successModal101 {
+}
+
+.dropdown-menu.max-w.notification_menu.show {
+    right: 0 !important;
+    width: 350px !important;
+    float: right !important;
+    margin-right: -70px;
+    margin-top: 8px !important;
+}
+
+.dropdown-toggle.non::after{
+    display: none;
+}
+
+.dropdown-menu.max-w.notification_menu.show {
+    transform: translate3d(-50px, 40px, 0px) !important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
+  background-color: #17A2B8;
+}
+
+li.head.text-light.bg-dark {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+li.head.text-light.bg-dark span {
+    background: transparent !important;
+    font-size: 14px;
+    margin: 0px 10px !important;
+    line-height: 3 !important;
+}
+
+a.float-right.text-light {
+    float: right !important;
+    display: inline-block !important;
+    width: auto !important;
+    margin: 5px 15px !important;
+    padding: 5px 5px !important;
+    font-size: 13px !important;
+    line-height: 0 !important;
+    border-radius: 5px;
+}
+
+.notification-box {
+    background-color: var(--body-bg);  
+    padding: 10px 10px !important;  
+    display: inline-block;
+}
+
+.notification-box img {
+    width: 50px !important;
+    height: 50px !important;
+    margin: 0px !important;
+    margin-top: 17% !important;
+    text-align: center;
+    margin-left: 24px !important;
+}
+
+.bg-gray {
+    background-color: var(--body-bg-2);
+}
+
+.bg-dark {
+    background-color: var(--header-bg-color) !important;
+}
+
+.notification-box h2 {
+    color: var(--white-black-text);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.notification-box p {
+    color: var(--white-black-text);
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 17px;
+    margin-bottom: 8px;
+    margin-top: 2px;
+}
+
+.notification-box small {
+    display: inline-block;
+    margin-top: 5px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: #2ff2b9 !important;
+    line-height: 0px !important;
+}
+
+.dropdown-menu.max-w.notification_menu ul li {
+    padding: 0px 0px !important;
+}
+
+.dropdown-menu.max-w.notification_menu ul li.notification-box {
+    padding: 10px 0px !important;
+}
+
+li.footer.bg-dark.text-center {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.notifi_body {
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* width */
+.notifi_body::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.notifi_body::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.notifi_body::-webkit-scrollbar-thumb {
+  background: #00C98E; 
+}
+
+/* Handle on hover */
+.notifi_body::-webkit-scrollbar-thumb:hover {
+  background: #00C98E; 
+}
 /*****======= Responsive Style Css ======***********/
 
 /* Landscape phones and portrait tablets */
 
 @media (max-width: 767px) {
+
+lottie-player {
+    width: 100% !important;
+    height: 200px !important;
+}
+#successModal101 {
+    width: 100%;
+    position: absolute;
+    top: 16%;
+    z-index: 999999;
+}
+.modal-body.text-center h6, .modal-body.text-center h4 {
+    font-size: 13px;
+}
     #header.p2p-wallet nav#navigation a.bell {
     margin-right: 45px;
 }
@@ -4747,7 +4905,7 @@ body {
     .main_data_dable table thead tr th:last-child,
     .main_data_dable table tr td:last-child,
     .main_data_dable table tr td:nth-child(4n) {
-        display: none;
+        /*display: none;*/
     }
     .main_data_dable table thead tr th {
         background-color: rgb(66 66 66 / 5%) !important;
@@ -4996,6 +5154,7 @@ body {
     }
     #wallet-content.request .white-box {
         box-shadow: none;
+        padding: 0px 20px;
     }
     #wallet-content.request ul.janral-head li a {
         color: #fff !important;
@@ -5007,9 +5166,10 @@ body {
     background:#fff;
 }*/
     #wallet-content.request .nav-tabs .nav-link {
-        font-size: 11px !important;
-        line-height: 28px!important;
-        padding: 0px 5px!important;
+        font-size: 12px !important;
+        line-height: 25px!important;
+        padding: 0px 13px!important;
+        margin-bottom: 10px !important;
     }
     #wallet-content.request .tab-content .gray-c {
         padding: 5px;
@@ -6652,8 +6812,13 @@ a.bell span {
     margin-top: -5px;
 }
 #wallet-content.request ul.janral-head {
-    border-bottom: 1px solid #adadad;
     margin-bottom: 35px;
+}
+#wallet-content.request ul.janral-head::after {
+    content: '';
+    border-bottom: 1px solid #adadad;
+    display: block;
+    margin-top: -1.5px;
 }
 #wallet-content.request ul.janral-head li {
     list-style: none;
@@ -6708,6 +6873,7 @@ a.bell span {
 #wallet-content.request .field label {
     font-weight: normal;
     font-size: 15px;
+    margin-top: 0px;
     color: var(--white-black-text);
 }
 #wallet-content.request .field {
@@ -6797,7 +6963,7 @@ a.bell span {
     background: var(--body-bg);
     padding: 20px 10px;
     margin-bottom: 15px;
-    z-index: 9999;
+    z-index: 999;
     position: relative;
 }
 #wallet-content.request .tab-content .gray-c ul li {
