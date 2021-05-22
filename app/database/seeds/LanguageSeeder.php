@@ -14,6 +14,35 @@ class LanguageSeeder extends Seeder
     public function run()
     {
         $language = new \App\Models\Language;
-        $language->create(['name'=>'English','short_name'=>'en']);
+        if(!$language->where('name','English')->exists())
+        { $language->create(['name'=>'English','short_name'=>'en', 'is_default'=>1]); 
+            $media = \MediaUploader::fromSource(public_path('front/img/GBP.svg'))
+                               ->toDirectory('language-icons')
+                               ->upload();
+            $language->attachMedia($media,'icon');
+        }
+        if(!$language->where('name','Korean')->exists())
+        { $language->create(['name'=>'Korean','short_name'=>'kr']); 
+            $media = \MediaUploader::fromSource(public_path('front/img/kr.svg'))
+                               ->toDirectory('language-icons')
+                               ->upload();
+            $language->attachMedia($media,'icon');
+        }
+        if(!$language->where('name','Thailand')->exists())
+        { $language->create(['name'=>'Thailand','short_name'=>'th']); 
+            $media = \MediaUploader::fromSource(public_path('front/img/th.svg'))
+                               ->toDirectory('language-icons')
+                               ->upload();
+            $language->attachMedia($media,'icon');
+        }
+        if(!$language->where('name','Chinese')->exists())
+        { $language->create(['name'=>'Chinese','short_name'=>'zh']); 
+            $media = \MediaUploader::fromSource(public_path('front/img/cn.svg'))
+                               ->toDirectory('language-icons')
+                               ->upload();
+            $language->attachMedia($media,'icon');
+        }
+        
+        
     }
 }

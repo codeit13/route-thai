@@ -66,11 +66,10 @@ class LoginController extends Controller
         $remember_me  = ( !empty( $request->remember_me ) )? TRUE : FALSE;
         
         
-        if(Auth::attempt($credential) || Auth::viaRemember()){
+        if(Auth::attempt($credential, $request->get('remember')) || Auth::viaRemember()){
             $user = User::where(["email" => $credential['email']])->first();
             Auth::login($user, $remember_me);
-            $this->auth_locationlog();
-
+            $this->auth_locationlog($request);
             return redirect('/home')->withCookie(Cookie::make('logged_in', $user->remember_token, 43200));
         }
         // if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
@@ -78,14 +77,10 @@ class LoginController extends Controller
         // }
         return back()->withInput($request->only('email', 'remember'));
     }
-    public function auth_locationlog(){
-        $location = '{ "ip":"49.34.96.230", "type":"ipv4", "continent_code":"AS", "continent_name":"Asia", "country_code":"IN", "country_name":"India", "region_code":"GJ", "region_name":"Gujarat", "city":"Dholera", "zip":"382455", "latitude":22.249860763549805, "longitude":72.19344329833984, "location":{ "geoname_id":null, "capital":"New Delhi", "languages":[ { "code":"hi", "name":"Hindi", "native":"\u0939\u093f\u0928\u094d\u0926\u0940" }, { "code":"en", "name":"English", "native":"English" } ], "country_flag":"http:\/\/assets.ipstack.com\/flags\/in.svg", "country_flag_emoji":"\ud83c\uddee\ud83c\uddf3", "country_flag_emoji_unicode":"U+1F1EE U+1F1F3", "calling_code":"91", "is_eu":false } }';
+    public function auth_locationlog(Request $request){
+        $location = $this->locationService->getLocation($request->ip()); 
         $location = json_decode($location);
-
-
         $newlocation = (array)$location;
-        
-        // dd($location->location);
         $newlocation['ip_address'] = $location->ip;
         $newlocation['country_flag'] = $location->location->country_flag;
         $newlocation['calling_code'] = $location->location->calling_code;
@@ -94,8 +89,7 @@ class LoginController extends Controller
         unset($newlocation['location']);
         unset($newlocation['ip']);
         unset($newlocation['type']);
-        $authlog =  Authentication_log::where('id',Auth::user()->authentications->first()->id)->update($newlocation);
+        $authlog = Authentication_log::where('id',Auth::user()->authentications->first()->id)->update($newlocation);
         return true;
-
     }
 }

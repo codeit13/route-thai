@@ -6,7 +6,7 @@
           </li>
           <li class="{{ $route == 'user.profile' ? 'active': ''}}"> <a href="{{ route('user.profile') }}"><i class="fal fa-user"></i> Basic Info</a>
           </li>
-          <li> <a href="#"><i class="fal fa-credit-card"></i> Payment</a>
+          <li class="{{ $route == 'user.payments' ? 'active': ''}}"> <a href="{{ route('user.payments') }}"><i class="fal fa-credit-card"></i> Payment</a>
           </li>
           <li> <a href="#"><i class="fal fa-lock"></i> Securtiy</a>
           </li>
