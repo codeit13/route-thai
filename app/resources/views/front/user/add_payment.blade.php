@@ -83,7 +83,7 @@ Payment Methods - Route: P2P Trading Platform
                                       <input type="file"  name="qr-code" id="logo" onchange="fileValue(this)" accept=".jpg, .jpeg, .png, .bmp" alt="QR Code" >
                                       <label for="logo" class="upload-field" id="file-label">
                                           <div class="file-thumbnail">
-                                              <img id="image-preview" src="img/upload.png">
+                                              <img id="image-preview" src="{{ asset('front/img/upload.png') }}">
                                               <h3 id="filename">
                                               </h3>
                                               <p ></p>
@@ -136,7 +136,7 @@ Payment Methods - Route: P2P Trading Platform
             ignore:'hidden',
             rules: {
                "account_label":  { 'required':true},
-               "account_number":  { 'required':true,'number':true,'minlength':9 ,'maxlength':18 },
+               "account_number":  { 'required':true, @if($payment_method->name !== 'UPI') 'number':true,'minlength':9 ,'maxlength':18 @else regex: '/^[\w.-]+@[\w.-]+$/' @endif},
                "bank_name":  { 'required':$('input[name=bank_name]').length > 0  },
                "ifs_code":  { 'required':$('input[name=ifs_code]').length > 0 },
                "type":  { 'required':$('input[name=type]').length > 0 },
