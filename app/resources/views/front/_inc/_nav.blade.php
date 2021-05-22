@@ -8,6 +8,39 @@
                        <img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
                     </a>
                     <div class="nav-toggle"></div>
+                    <header class="site-header visible-xs">
+                      <nav class="site-nav">
+                        <input id="site-menu-trigger" type="checkbox">
+                        <label for="site-menu-trigger">
+                          <span class="line"></span>
+                          <span class="line"></span>
+                          <span class="line"></span>
+                          <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                        </label>
+                        
+                        <div class="site-menu">
+                          <ul>
+                           @if(Auth::check())   
+                            <li>
+                                <a class="not-c" href="{{ route('user.dashboard') }}">{{ ucfirst(Auth::user()->name) }}<br>
+                                    <label><i class="fa fa-diamond" aria-hidden="true"></i> VIP
+                                        <span>Verified</span></label></a>
+                            </li>
+                            @endif
+                            <li><a href="#">Security</a></li>
+                            <li><a href="#">Identification</a></li>
+                            <li><a href="#">API Management</a></li>
+                            <li><a href="#">Reward Center</a></li>
+                            <li><a href="#">Task Center</a></li>
+                            <li><a href="#">Referral <mark>Earn bonus</mark></a></li>
+                            <li><a href="#"
+                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+                            </li>
+                        </ul>
+                        </div>
+                      </nav>
+                    </header>
+                    <li class="onsubmenu visible-xs"><a class="bell" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i> <span>05</span></a></li>
                     <a class="mobile_logo visible-xs" href="{{ route('home') }}">
                        <img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
                     </a>
@@ -67,9 +100,13 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <ul>
-                                            @foreach($wallet_types as $wallet)
+                                        {{--    @foreach($wallet_types as $wallet)
                                             <li><a href="{{route('wallet.history',['type'=>$wallet->id,'typename'=>strtolower($wallet->type)])}}">{{__($wallet->type)}} {{__('Wallet')}}</a></li>
-                                            @endforeach                                            
+                                            @endforeach     --}} 
+
+                                            <li><a href="{{route('wallet.history')}}">{{__('Fiat and Spot')}}</a></li>   
+
+                                             <li><a href="{{route('wallet.p2p')}}">{{__('P2P')}}</a></li>                                     
                                             <li><a href="{{route('wallet.deposit')}}">{{__('Deposit')}}</a></li>
                                             <li><a href="{{route('wallet.withdraw')}}">{{__('Withdraw')}}</a></li>
                                             <li><a href="{{route('wallet.request.history')}}">{{__('History ( Deposit & Withdraw ) ')}}</a></li>
@@ -98,15 +135,15 @@
                                     <li class="onsubmenu">
                                         <div class="dropdown currency_two">
                                             @php 
-                                            $currencies = \App\Models\Currency::where('type_id',1)->get();
-                                            $default_currency = !empty(Auth::user()->default_currency) ? \App\Models\Currency::find(Auth::user()->default_currency) : \App\Models\Currency::first();
+                                            $currencies = \App\Models\Currency::where('type_id',2)->get();
+                                            $default_currency = !empty(Auth::user()->default_currency) ? \App\Models\Currency::find(Auth::user()->default_currency) : \App\Models\Currency::where('type_id',2)->first();
                                             @endphp
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <img src="{{ $default_currency->firstMedia('icon')->getUrl() }}" alt="{{__($default_currency->name)}}">{{__($default_currency->short_name)}}
                                             </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
                                             @foreach($currencies as $cIndex=> $currency)
-                                                <a class="dropdown-item currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}><img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}"> {{ $currency->short_name }}</a>
+                                                <a class="dropdown-item myLink currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}><img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}">{{ $currency->name }} <span> {{ $currency->short_name }}</span></a>
                                             @endforeach 
                                         </div>
                                      </li>

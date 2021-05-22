@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Traits\ConsumeExternalService;
+use DateTime;
+
 
 class SMSService
 {
@@ -32,6 +34,21 @@ class SMSService
         return $this->performRequest('GET', $this->secret.'/SMS'.'/'.$mobile.'/AUTOGEN');
     }
     public function verifyOtpSms($mobile, $code, $session){ 
-        return $this->performRequest('GET', $this->secret.'/SMS/VERIFY/'.$session.'/'.trim($code));
-    }   
+        return $this->performRequest('GET',$this->secret.'/SMS/VERIFY/'.$session.'/'.trim($code));
+    }  
+    
+    
+    public function send(Array $to, String $message , DateTime $schedule = NULL ){
+        $from = 'TFCTOR';
+        $to = trim(str_replace(['+',' '],'',implode(',',$to)));
+        $message = $message;
+        $param = array(
+            "To" => $to,
+            "Msg" =>$message,
+        );      
+        if($schedule != null) {
+            $param['sendAt'] = $schedule;
+        }       
+        return $this->performRequest('POST', $this->secret.'/ADDON_SERVICES/SEND/PSMS',$param, ['Content-type'=>'application/json']);
+    }
 }   

@@ -9,7 +9,7 @@ class BuyerRequest extends Model
 {
     use HasFactory;
 
-    protected $fillable=['transaction_id'];
+    protected $fillable=['transaction_id','status'];
 
 
     public function getExpiryTimeAttribute()

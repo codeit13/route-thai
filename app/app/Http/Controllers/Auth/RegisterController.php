@@ -76,7 +76,7 @@ class RegisterController extends Controller
 
         $parts = explode("@",  strtolower($data['email']));
         $email = $parts[0];
-        $username = $value;
+        $username = $email;
         do
         { 
             $username = $email.rand(00, 9999999);
@@ -99,7 +99,6 @@ class RegisterController extends Controller
                 return redirect()->intended('register')->withInput($request->all())->withErrors($validator); 
                 
             $user = $this->create($request->all());
-            $wallet = Wallet::create(['user_id'=>$user->id,'coin'=>0,'currency_id'=>1]);
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
                 return redirect()->intended('/home');
             } 

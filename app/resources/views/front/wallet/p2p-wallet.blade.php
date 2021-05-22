@@ -3,23 +3,6 @@
     Route: P2P Trading Platform | {{__($walletType->type)}} Wallet
 @endsection
 
-@section('header-bar')
-
-<div class="container hidden-xs">
-    <div class="row">
-        <div class="col-lg-12 col-sm-12 col-xs-12 flush">
-            <ul class="mini_links">
-            	@foreach($walletTypes as $wallet)
-                
-                <li class="@if($wallet->id==$walletType->id)active @endif"><a href="{{route('wallet.history',['type'=>$wallet->id,'typename'=>$wallet->type])}}" >{{__($wallet->type)}}</a>
-                </li>
-
-                @endforeach
-            </ul>
-        </div>
-    </div>
-</div>
-@endsection
 
 
 @section('content')
@@ -31,15 +14,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 xs-content visible-xs col-sm-12 col-12">
-				<ul>
-						@foreach($walletTypes as $wallet)
-                
-                <li class="@if($wallet->id==$walletType->id)active @endif"><a href="{{route('wallet.history',['type'=>$wallet->id,'typename'=>$wallet->type])}}" >{{__($wallet->type)}}</a>
-                </li>
-
-                @endforeach
-					<li><a href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a></li>
-				</ul>
+				
 				<div class="col-12">
 					<div class="row">
 						<div class="col-6">
@@ -65,7 +40,7 @@
 						</div>
 						<div class="col-lg-6 text-right col-sm-6 col-6">
 							<a href="#" class="btn-primary">Buy</a>
-							<a href="{{route('wallet.deposit',['type'=>$walletType->id,'typename'=>strtolower($walletType->type)])}}" class="btn-success">{{ __('Deposit')}}
+							<a href="#" class="btn-success">{{ __('Deposit')}}
 							</a>
 							<a class="mobile-tag" href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a>
 						</div>
@@ -99,7 +74,7 @@
 						</div>
 						<div class="col-lg-4 col-sm-4 col-6">
 							<h6>Fiat balance</h6>
-							<h2>0.00000 <span>BTC</span></h2>
+							<h2>0.00000<span>BTC</span></h2>
 							<h5>≈ $0.00000</h5>
 						</div>
 					</div>
@@ -146,10 +121,10 @@
 										</td>
 										<td>{{$currency->user_total}}</td>
 
-										<td>{{$currency->user_balance}}</td>
+										<td>{{$currency->user_p2p_balance}}</td>
 										<td>
-											<a href="{{route('wallet.deposit',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-success">Deposit</a>
-											<a href="{{route('wallet.withdraw',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-primary">P2P Trading</a>
+											<a href="#" class="btn-success">Deposit</a>
+											<a href="#" class="btn-primary">P2P Trading</a>
 										</td>
 									</tr>
 									@endforeach
