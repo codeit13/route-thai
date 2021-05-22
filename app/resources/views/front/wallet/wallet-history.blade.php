@@ -18,22 +18,22 @@
 
 								@endif</h2>
 </div>
-<section id="wallet-content" class="request crypto order-history">
+<section id="wallet-content" class="request crypto order-history hht">
 		<div class="container">
-			<div class="row">
+			<div class="row  hidden-xs">
 				<div class="col-lg-12  col-sm-12 col-12">
-					<div class="white-box" style="background:none; box-shadow:none;">
-						<div class="row hidden-xs">
+					<div class="white-box" style="">
+						<div class="row">
 							<div class="col-lg-12 col-sm-12 col-12">
 
 
 								<h3>
-                          @if($request->type=='withdraw')
+		                  @if($request->type=='withdraw')
 
 								{{__('Withdraw History')}}
 
 
-                          @else
+		                  @else
 								{{__('Deposit History')}}
 
 								@endif
@@ -41,9 +41,14 @@
 							</h3>
 							</div>
 						</div>
-
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12  col-sm-12 col-12">
+					<div class="white-box" style="">
 						<div class="row">
-							<div class="white-box" style="background:none; box-shadow:none;">
+							<div class="white-box" style="background:none; box-shadow:none; margin: 0px 0px; padding: 0px 15px;">
                               <ul class="janral-head">
 
 
@@ -82,10 +87,10 @@
 									<div class="row">
 
 										<div class="col-6 sp-right">
-											<input class="date filter-type" name="start_date" id="datepicker" value="{{$request->start_date??''}}" autocomplete="off" type="text" placeholder=""/>
+											<input type="date" id="reportdate" name="reportdate" value="{{$request->start_date??''}}">
 										</div>
 										<div class="col-6 sp-left">
-											<input class="date filter-type" autocomplete="off" name="end_date" value="{{$request->end_date??''}}" id="datepickertwo" type="text" placeholder=""/>
+											<input type="date" id="reportdate" name="reportdate" value="{{$request->end_date??''}}">
 										</div>
 									</div>
 								</div>
@@ -174,7 +179,6 @@
 							<div class="row">
 								<div class="col-4">
 								<select name="status" class="filter-type">
-													<option value=""> select </option>
 													<option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
 													<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
 													<option value="rejected" @if($request->status=='rejected') selected @endif>{{__('Rejected')}}</option>
@@ -207,9 +211,8 @@
 
 											<td>
 
-
-												<input class="date filter-type" name="start_date" autocomplete="off" id="datepickerthree" value="{{$request->start_date??''}}" type="text" placeholder=""/></td>
-											<td><input class="date filter-type" autocomplete="off" name="end_date" value="{{$request->end_date??''}}" id="datepickerfour" type="text" placeholder=""/></td>
+												<input type="date" id="reportdate" name="reportdate" value="{{$request->start_date??''}}">
+											<td><input type="date" id="reportdate" name="reportdate" value="{{$request->end_date??''}}"></td>
 											<td style="width:180px; display:inline-block;">
 												<div class="dropdown currency_two three_coins crypto currencyDropdown">
 
@@ -292,7 +295,7 @@
 											</td>
 											<td>
 												<select name="status" class="filter-type">
-													<option value=""> select </option>
+													
 													<option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
 													<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
 													<option value="rejected" @if($request->status=='rejected') selected @endif>{{__('Rejected')}}</option>

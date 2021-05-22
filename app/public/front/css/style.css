@@ -32,6 +32,8 @@
 
     --sidebar_hover:#fafafa;
     --gray_head:#FBFBFB;
+
+    --mobile-white:#ffffff;
 }
 .dark-mode {
     --body-bg-2: #161625;
@@ -67,6 +69,8 @@
 
     --sidebar_hover:rgba(255,255,255,0.04);
     --gray_head:#5d5d5f42;
+
+    --mobile-white:#17171a;
 }
 @font-face {
     font-family: 'Poppins';
@@ -4066,12 +4070,103 @@ li.footer.bg-dark.text-center {
 .notifi_body::-webkit-scrollbar-thumb:hover {
   background: #00C98E; 
 }
+
+#wallet-content.request.crypto ul.janral-head {
+    margin-bottom: 0px !important;
+}
+
+#wallet-content.order-history h3 {
+    margin-bottom: 0px !important;
+}
+
+.s-hidden {
+    visibility:hidden;
+    padding-right:10px;
+}
+.select {
+    cursor:pointer;
+    display:inline-block;
+    position:relative;
+    border: 1px solid #b7b7b7;
+    height: 36px;
+    border-radius: 5px;
+    width: 110px;
+    -webkit-appearance: none;
+    background: url(../img/arrow-d.png) 95% 50% no-repeat;
+    outline: 0;
+    padding-left: 15px;
+    color: var(--white-black-text);
+}
+.styledSelect {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: var(--card-bg);
+    padding: 0 10px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 35px;
+    border-radius: 5px;
+}
+.styledSelect:after {
+    content: "";
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-color: var(--white-black-text) transparent transparent transparent;
+    position: absolute;
+    top: 14px;
+    right: 6px;
+}
+.styledSelect:active, .styledSelect.active {
+    background-color: var(--card-bg);
+}
+.options {
+    display:none;
+    position:absolute;
+    top:100%;
+    right:0;
+    left:0;
+    z-index:999;
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+        border-radius: 5px; 
+        border: 1px solid rgba(0,0,0,.15);
+    background-color: var(--new-card-bg);
+    -webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);
+    margin-top: 3px;
+}
+.options li {
+    padding: 0 6px;
+    margin: 0 0;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+.options li:hover {
+    background-color: #0000000f;
+    color: var(--hover);
+}
 /*****======= Responsive Style Css ======***********/
 
 /* Landscape phones and portrait tablets */
 
 @media (max-width: 767px) {
-
+.select {
+    height: 29px;
+    width: 100px;
+}
+.styledSelect {
+    font-size: 13px;
+    line-height: 30px;
+}
+.options li {
+    font-size: 13px;
+}
 lottie-player {
     width: 100% !important;
     height: 200px !important;
@@ -5188,10 +5283,13 @@ body {
         margin-bottom: 10px;
         padding: 0px 15px;
         background: #000;
-        position: absolute;
+        position: relative;
         left: 0px;
         width: 100%;
     }
+    form#filterForm1 {
+    padding: 15px 0px;
+}
     #wallet-content.request .white-box {
         box-shadow: none;
         padding: 0px 20px;
@@ -5200,6 +5298,9 @@ body {
         color: #fff !important;
         text-transform: uppercase !important;
         text-decoration: none;
+    }
+    #wallet-content.hht {
+        background-color: var(--mobile-white) !important;
     }
     /*
 #wallet-content.request {
@@ -5232,6 +5333,7 @@ body {
         box-shadow: none;
         padding: 0px !important;
         padding-top: 0px;
+        margin-top: 0px;
     }
     #wallet-content.request.crypto .white-box table {
         margin-top: 0px !important;
@@ -7796,6 +7898,8 @@ a.method {
     line-height: 32px;
     padding-left: 10px;
     padding-right: 10px;
+    display: inline-block;
+    padding-top: 1px;
 }
 
 #wallet-content .white-box button#dropdownMenuButton {
@@ -7828,9 +7932,10 @@ a.method {
 }
 
 #wallet-content.order-history table.order-history-table input {
-    height:30px;
-    width:130px;
-    font-size:14px!important;
+    height: 36px;
+    width: 140px;
+    font-size: 13px !important;
+    padding: 0px 0px 0px 10px;
 }
 
 #wallet-content.order-history table.order-history-table input.date {
