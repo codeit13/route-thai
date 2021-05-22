@@ -24,7 +24,7 @@ Route::get('/createstoragelink', function () {
 });
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes(['verify'=>true,'request'=>true]);
 Route::group(['middleware' => ['web']], function () {

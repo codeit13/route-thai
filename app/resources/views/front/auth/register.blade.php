@@ -240,10 +240,10 @@ $(document).ready(function() {
             success: function(res) {
                 cls = '';
                 if (res.status == 'OK') {
-                email_Validity = false;
+                email_Validity = true;
                 cls  = 'text-success';
                 } else if (res.status == 'NOT OK') {
-                email_Validity = true;
+                email_Validity = false;
                 cls  = 'text-danger';
                 }
                 if (!email_Validity) {
@@ -261,7 +261,7 @@ $(document).ready(function() {
             }
         });
         } else {
-            ('#email-err').html("");
+            $('#email-err').html("");
         }
     });
 });

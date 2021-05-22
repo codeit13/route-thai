@@ -48,8 +48,8 @@
                                         <label for="exampleInputEmail1">{{__('Email address')}}</label>
                                         <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required id="email"
                                             aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus>
+                                            <label id="email-err"></label>
                                     </div>
-                                    <p></p>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">{{__("Password")}}</label>
                                         <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required id="password-field" autocomplete="cc-additional-name">
@@ -61,7 +61,6 @@
                                             aria-describedby="emailHelp" placeholder="Enter OTP" name="otp">
                                         <input type="hidden" id="session_id" value="">    
                                         <p class="not_m mb-0 resend-btn text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<label id="timer"></label>
-                                        </b></p>
                                         <p class="otp-msg mb-0 text-left"></p>
                                     </div>
                                     <div class="form-check">
@@ -69,8 +68,8 @@
                                         <label class="form-check-label" for="exampleCheck1">{{__("Remember me")}}</label>
                                         <a href="{{ route('password.request') }}">{{__("Forgot Password?")}}</a>
                                     </div>
-                                    <button type="button" id="send-otp" class="btn btn-primary">{{__("Send OTP")}}</button>
-                                    <button type="submit" disabled style="display: none"  id="login" class="btn btn-primary">{{__("Sign In")}}</button>
+                                    <button type="submit" id="send-otp" class="btn btn-primary">{{__("Send OTP")}}</button>
+                                    <button type="submit" disabled style="display: none" id="login" class="btn btn-primary">{{__("Sign In")}}</button>
                                     <p class="not_m">{{__("New on our platform?")}} <a href="{{ route('register') }}">{{__("Create an account")}}</a></p>
                                     <ul>
                                         <li>
@@ -99,67 +98,69 @@ var counter = null;
     $('#send-otp').click(function(e) {
         e.preventDefault();
         var dis = $('#email');
-                $.ajax({
-                    url: "{{ route('send.otp.login')}}",
-                    headers: {
-                       'X-CSRF-Token': "{{ csrf_token() }}"
-                    },
-                    method: "POST",
-                    async: true,
-                    cache: false,
-                    data: { _token: "{{ csrf_token() }}", email: dis.val() },
-                    dataType: "json",
-                    success: function (data) {    
-                        $('#session_id').val(data.Details);
-                        $('#send-otp').hide();
-                        $('.otp').show();
-                        $('#login').show();
-                        counter = setInterval(timer, 1000);
-                    },
-                    error: function (data) {
-                        response = JSON.parse(data.responseText);
-                        $(response.errors).each(function(index,value){
-                            $('p.msg').html(value.email);
-                            $('p.msg').fadeOut(3000)
-                        })
-                    },
-                });
-        }); 
+        if($('#password-field').val() != '') {
+            $.ajax({
+                url: "{{ route('send.otp.login')}}",
+                headers: {
+                    'X-CSRF-Token': "{{ csrf_token() }}"
+                },
+                method: "POST",
+                async: true,
+                cache: false,
+                data: { _token: "{{ csrf_token() }}", email: dis.val() },
+                dataType: "json",
+                success: function (data) {    
+                    $('#session_id').val(data.Details);
+                    $('#send-otp').hide().attr('type','button');
+                    $('.otp').show();
+                    $('#login').show();
+                    counter = setInterval(timer, 1000);
+                },
+                error: function (data) {
+                    response = JSON.parse(data.responseText);
+                    $(response.errors).each(function(index,value){
+                        $('p.msg').html(value.email);
+                        $('p.msg').fadeOut(3000)
+                    })
+                },
+            }); 
+        }
+    }); 
         
-        $(document).find('#otp').on('change keyup',function(){
-            var dis = $(this);
-            if(dis.val().length == 6){
-                $.ajax({
-                    url: "{{ route('verify.otp')}}",
-                    method: "POST",
-                    headers: {
-                       'X-CSRF-Token': "{{ csrf_token() }}"
-                    },
-                    data: { _token: "{{ csrf_token() }}", code: dis.val(), sessionid:$('#session_id').val(), mobile: $('#mobile_no').val() },
-                    dataType: "json",
-                    async: true,
-                    cache: false,
-                    beforeSend:function(){
-                        $('.otp-msg').html("Checking...");
-                    },
-                    success: function (data) {
-                    if(data.Status == 'Success') {
-                        $('#send-otp').hide();
-                        $('.otp-msg').html("The OTP is verified successfully.").addClass('text-green');
-                        $('.resend-btn').hide();
-                        $('#login').attr('disabled',false).trigger('click');
-                    } else {
-                        $('.otp-msg').html("The OTP is Invalid.").addClass('text-danger').removeClass('text-green');
-                    }
-                    },
-                    error: function (event) { 
-                        
-                    },
-                });
-            }
-            else {
-                console.log('errors');
-                return false; 
+    $(document).find('#otp').on('change keyup',function(){
+        var dis = $(this);
+        if(dis.val().length == 6){
+            $.ajax({
+                url: "{{ route('verify.otp')}}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-Token': "{{ csrf_token() }}"
+                },
+                data: { _token: "{{ csrf_token() }}", code: dis.val(), sessionid:$('#session_id').val(), mobile: $('#mobile_no').val() },
+                dataType: "json",
+                async: true,
+                cache: false,
+                beforeSend:function(){
+                    $('.otp-msg').html("Checking...");
+                },
+                success: function (data) {
+                if(data.Status == 'Success') {
+                    $('#send-otp').hide();
+                    $('.otp-msg').html("The OTP is verified successfully.").addClass('text-green');
+                    $('.resend-btn').hide();
+                    $('#login').attr('disabled',false).trigger('click');
+                } else {
+                    $('.otp-msg').html("The OTP is Invalid.").addClass('text-danger').removeClass('text-green');
+                }
+                },
+                error: function (event) { 
+                    
+                },
+            });
+        }
+        else {
+            console.log('errors');
+            return false; 
         }
     });
  
@@ -221,6 +222,47 @@ $(".toggle-password").click(function() {
         }
 });
 
+$('#email').on("keyup", function() {
+        var dis = $(this);
+            let email_Validity;
+        if(dis.val().length > 10){
+            jQuery.ajax({
+            type: 'POST',
+            url: "{{ route('email-check') }}",
+            data: {
+                action: "email-check",
+                email: dis.val(),
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(res) {
+                cls = '';
+                if (res.status == 'OK') {
+                email_Validity = false;
+                msg = 'The entered email id is invalid. Please check once.'
+                cls  = 'text-danger';
+                } else if (res.status == 'NOT OK') {
+                email_Validity = true;
+                msg = ''
+                cls  = 'text-success';
+                }
+                if (!email_Validity) {
+                $('#email').removeClass('is-valid');
+                $('#email').addClass('is-invalid');                    
+                } else {
+                $('#email').removeClass('is-invalid');
+                $('#email').addClass('is-valid');
+                }
+                $('#email-err').html("<label class='"+ cls +"'>"+msg+"</label>");
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+        } else {
+            $('#email-err').html("");
+        }
+    });
 </script>
 @endsection
 @endsection

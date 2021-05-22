@@ -20,11 +20,13 @@
                         
                         <div class="site-menu">
                           <ul>
+                           @if(Auth::check())   
                             <li>
                                 <a class="not-c" href="{{ route('user.dashboard') }}">{{ ucfirst(Auth::user()->name) }}<br>
                                     <label><i class="fa fa-diamond" aria-hidden="true"></i> VIP
                                         <span>Verified</span></label></a>
                             </li>
+                            @endif
                             <li><a href="#">Security</a></li>
                             <li><a href="#">Identification</a></li>
                             <li><a href="#">API Management</a></li>
@@ -127,15 +129,15 @@
                                     <li class="onsubmenu">
                                         <div class="dropdown currency_two">
                                             @php 
-                                            $currencies = \App\Models\Currency::where('type_id',1)->get();
-                                            $default_currency = !empty(Auth::user()->default_currency) ? \App\Models\Currency::find(Auth::user()->default_currency) : \App\Models\Currency::first();
+                                            $currencies = \App\Models\Currency::where('type_id',2)->get();
+                                            $default_currency = !empty(Auth::user()->default_currency) ? \App\Models\Currency::find(Auth::user()->default_currency) : \App\Models\Currency::where('type_id',2)->first();
                                             @endphp
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <img src="{{ $default_currency->firstMedia('icon')->getUrl() }}" alt="{{__($default_currency->name)}}">{{__($default_currency->short_name)}}
                                             </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
                                             @foreach($currencies as $cIndex=> $currency)
-                                                <a class="dropdown-item currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}><img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}"> {{ $currency->short_name }}</a>
+                                                <a class="dropdown-item myLink currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}><img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}">{{ $currency->name }} <span> {{ $currency->short_name }}</span></a>
                                             @endforeach 
                                         </div>
                                      </li>
