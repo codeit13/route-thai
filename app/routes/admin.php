@@ -22,6 +22,14 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
 
         Route::get('deposit/address','DepositAddressController@index')->name('deposit.address');
 
+        Route::post('deposit/address/create','DepositAddressController@store')->name('deposit.address.create');
+
+        Route::get('deposit/address/{deposit_address}/edit','DepositAddressController@edit')->name('deposit.address.edit');
+
+        Route::get('deposit/address/{deposit_address}/delete','DepositAddressController@destroy')->name('deposit.address.delete');
+
+        Route::put('deposit/address/{deposit_address}/update','DepositAddressController@update')->name('deposit.address.update');
+
         //Users
         Route::get('users', 'UserController@index')->name('users');
         Route::get('user/delete/{id}', 'UserController@destroy')->name('user.delete');
