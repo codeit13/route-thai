@@ -82,7 +82,7 @@ Route: P2P Trading Platform
                                         </div>
                                     </div>
                                     <div class="col-lg-12 xs-right col-sm-12 col-6">
-                                        <div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}}&nbsp; {{$transaction->currency->short_name}}</span>
+                                        <div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->quantity}}&nbsp; {{$transaction->currency->short_name}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@ Route: P2P Trading Platform
                                         </div>
                                     </div>
                                     <div class="col-lg-12 xs-right col-sm-12 col-6">
-                                        <div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{number_format($transaction->quantity,2)}} &nbsp;{{$transaction->fiat_currency->short_name}}</span>
+                                        <div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{ $transaction->trans_amount }} &nbsp;{{$transaction->fiat_currency->short_name}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -278,7 +278,7 @@ Route: P2P Trading Platform
 	        min: 0,
 	        max: {{$transaction->timer * 60}},
 	        step: 10,
-	        initialValue: {{($buyer_request->expiry_in * 60 > 0) ? $buyer_request->expiry_in * 60: 0}},
+	        initialValue: {{($transaction->getTime() * 60 > 0) ? $transaction->getTime() * 60: 0}},
 	        timer: (minutes < 10 ? "0" + minutes : minutes) + ':' + (seconds < 10 ? "0" + seconds : seconds),
 	        color: '#00c98e',
 	        displayName: 'Value 3'

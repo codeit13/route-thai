@@ -20,6 +20,8 @@ class SellController extends Controller
     	$step = $request->get('step');
     	$crypto_currencies = Currency::where('type_id',1)->get();
     	$fiat_currencies = Currency::where('type_id',2)->get();
+
+        $default_fiat_currency = (auth()->user()->default_currency != '')?Currency::find(auth()->user()->default_currency):Currency::where('type_id',2)->first();
     	
     	if ($step == 2) {
             $sell_data = $request->session()->get('sell_data');
@@ -40,6 +42,7 @@ class SellController extends Controller
     	}else{
 	    	return view('front.sell.index',compact(
 	    		'crypto_currencies',
+                'default_fiat_currency',
 	    		'fiat_currencies'
 	    	));
     	}
@@ -88,6 +91,7 @@ class SellController extends Controller
         $save_sell->user_id = auth()->user()->id;
         $save_sell->user_payment_method_id = auth()->user()->user_payment_method()->value('id');
         $save_sell->type = 'sell';
+        $save_sell->timer = 30;
         $save_sell->save();
         
         $response_data = [
@@ -113,7 +117,7 @@ class SellController extends Controller
                                         ->with('fiat_currency')
                                         ->withCount('buyer_requests')
                                         ->where('trans_id',$trans_id)->first();
-
+        
         if ($transcation->buyer_requests_count >0) {
             $user_payment_methods = UserPaymentMethod::with('payment_method')
                                                         ->with('user')
@@ -138,7 +142,6 @@ class SellController extends Controller
      */
     public function buyRequestConfrim($trans_id){
         $transcation = Transaction::where('trans_id',$trans_id)->first();
-        
         $buyer_trans = $transcation->receiver_id;                                        
         
         if ($buyer_trans != '') {
@@ -187,10 +190,10 @@ class SellController extends Controller
                                         ->withCount('buyer_requests')
                                         ->where('trans_id',$trans_id)->first();
 
-        // if ($transcation->buyer_requests_count > 0) {
-            // $transcation->update(['status'=>'approved']);
-            // $transcation->buyer_trans->update(['status'=>'approved']);
-            // $transcation->buyer_requests->first()->update(['status'=>'paid']);
+        if ($transcation->buyer_requests_count > 0) {
+            $transcation->update(['status'=>'approved']);
+            $transcation->buyer_trans->update(['status'=>'approved']);
+            $transcation->buyer_requests->first()->update(['status'=>'paid']);
 
             $user_payment_methods = UserPaymentMethod::with('payment_method')
                                                         ->with('user')
@@ -202,7 +205,7 @@ class SellController extends Controller
                 'transcation',
                 'user_payment_methods'
             ));
-        // }
+        }
 
         return redirect()->route('home');
     }
