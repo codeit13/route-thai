@@ -73,7 +73,7 @@
                                 <li class="hd_small"><a class="btn btn-primary" href="{{ route('register') }}">Register</a></li>
                                 <li class="onsubmenu">
                                     <div class="dropdown currency_two">
-                                        @php 
+                                      {{--  @php 
                                         $languages = \App\Models\Language::all();
                                         $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
                                         @endphp
@@ -84,7 +84,7 @@
                                             @foreach ($languages as $item)
                                                 <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">{{ $item->name}}</a>
                                             @endforeach
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     </li>
                                 <li>
