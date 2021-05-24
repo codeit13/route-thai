@@ -104,7 +104,7 @@
                                             <li><a href="{{route('wallet.history',['type'=>$wallet->id,'typename'=>strtolower($wallet->type)])}}">{{__($wallet->type)}} {{__('Wallet')}}</a></li>
                                             @endforeach     --}} 
 
-                                            <li><a href="{{route('wallet.history')}}">{{__('Fiat and Spot')}}</a></li>   
+                                            <li><a href="{{route('wallet.history')}}">{{__('Crypto and Fiat')}}</a></li>   
 
                                              <li><a href="{{route('wallet.p2p')}}">{{__('P2P')}}</a></li>                                     
                                             <li><a href="{{route('wallet.deposit')}}">{{__('Deposit')}}</a></li>

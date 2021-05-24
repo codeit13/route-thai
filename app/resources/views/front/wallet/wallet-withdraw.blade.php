@@ -65,7 +65,7 @@
                   @csrf
                   <div class="field">
                     <label>{{__('Coin')}}</label>
-                    <div class="dropdown currency_two three_coins crypto">
+                    <div class="dropdown currency_two three_coins crypto currencyDropdown">
 
                         @foreach($currencies as $cIndex=> $currency)
 
@@ -289,7 +289,7 @@
         allOptions.toggle();
     });
 
-    $(".currency_two .dropdown-menu .dropdown-item").on("click", function(e) { e.preventDefault();
+    $(".currencyDropdown .dropdown-menu .dropdown-item").on("click", function(e) { e.preventDefault();
 
       var currency_id=$(this).attr('data-id');
 
@@ -297,7 +297,7 @@
 
 
       $('#coin_id').val(currency_id);
-    $('.currency_two .dropdown-toggle').html($(this).html());
+    $('.currencyDropdown .dropdown-toggle').html($(this).html());
 });
 
     function changeShowBalance(coin_id)

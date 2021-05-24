@@ -174,7 +174,19 @@
 						<div class="col-lg-6 xs-flush col-sm-6 col-12">
 								<div class="white-box">
 									<ul class="nav nav-tabs" id="myTab" role="tablist">
-										<li class="nav-item">	<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">BTC</a>
+
+										@foreach($currencies as $currency)
+
+
+
+										<li class="nav-item">	<a class="nav-link" id="home-tab" data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a>
+
+										</li>
+
+										@endforeach
+
+
+									<!-- 	<li class="nav-item">	<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">BTC</a>
 										</li>
 										<li class="nav-item">	<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">BEP2</a>
 										</li>
@@ -183,24 +195,32 @@
 										<li class="nav-item">	<a class="nav-link" id="contact-tab" data-toggle="tab" href="#erc" role="tab" aria-controls="erc" aria-selected="false">ERC20</a>
 										</li>
 										<li class="nav-item">	<a class="nav-link" id="contact-tab" data-toggle="tab" href="#btc" role="tab" aria-controls="btc" aria-selected="false">BTC(SegWit)</a>
-										</li>
+										</li> -->
 									</ul>
-									<div class="col-lg-12 xs-flush heading-p text-center col-sm-12 col-12">
+								<!-- 	<div class="col-lg-12 xs-flush heading-p text-center col-sm-12 col-12">
 										<p>Network Name: Bitcoin(BTC)&nbsp;&nbsp;Average arrival time: 1 minutes</p>
-									</div>
+									</div> -->
 									<div class="tab-content" id="myTabContent">
-										<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+										@foreach($currencies as $currency)
+
+										<div class="tab-pane fade show" id="currency_tab_{{$currency->id}}" role="tabpanel" aria-labelledby="home-tab">
+
+												<div class="col-lg-12 xs-flush heading-p text-center col-sm-12 col-12">
+										<p>Network Name: {{__($currency->name)}}({{__($currency->short_name)}})&nbsp;&nbsp;Average arrival time: 1 minutes</p>
+									</div>
+
 											<div class="gray-c">
 												<div class="col-12">
-													<h6>Address</h6>
+													<h6>{{__("Address")}}</h6>
 												</div>
 												<div class="col-12">
 													<div class="row">
 														<div class="col-6 col-sm-6 col-lg-6">
-															<h3>1JFAe8qq9wshJRLkdia3zZ94Nk9VLc4W3y</h3>
+															<h3>{{$currency->deposit_address->address??''}}</h3>
 														</div>
 														<div class="col-6 text-right col-sm-6 col-lg-6">
-															<img class="small_mobiledd" src="img/icon-14.png" alt="">
+															<img class="small_mobiledd" src="{{asset('front/img/icon-14.png')}}" alt="">
 														</div>
 													</div>
 												</div>
@@ -208,8 +228,8 @@
 											<div class="col-12 btc-c">
 												<div class="row">
 													<div class="col-lg-9 col-sm-8 col-8">
-														<h5>Send only BTC to this deposit address.</h5>
-														<p>Sending coin or token other than BTC to this address may result in the loss of your deposit.</p>
+														<h5>Send only {{__($currency->short_name)}} to this deposit address.</h5>
+														<p>Sending coin or token other than {{__($currency->short_name)}} to this address may result in the loss of your deposit.</p>
 													</div>
 													<div class="col-lg-3 text-center col-sm-4 col-4">
 														<img class="small_mobile" src="{{asset('front/img/icon-15.png')}}" alt="">
@@ -217,7 +237,10 @@
 												</div>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+										@endforeach
+
+									<!-- 	<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 											<div class="gray-c">
 												<div class="col-12">
 													<h6>Address</h6>
@@ -247,7 +270,7 @@
 										</div>
 										<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
 										<div class="tab-pane fade" id="erc" role="tabpanel" aria-labelledby="contact-tab">...</div>
-										<div class="tab-pane fade" id="btc" role="tabpanel" aria-labelledby="contact-tab">...</div>
+										<div class="tab-pane fade" id="btc" role="tabpanel" aria-labelledby="contact-tab">...</div> -->
 									</div>
 								</div>
 							</div>
