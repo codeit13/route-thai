@@ -38,7 +38,19 @@ class DepositAddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['address'=>'required','currency'=>'required']);
+
+        $row=['address'=>$request->address,'admin_id'=>auth()->id()];
+
+        if(\App\Models\DepositAddress::updateOrCreate(['currency_id'=>$request->currency],$row))
+        {
+            return redirect()->back()->with('success','The address is attaced to the currency');
+        }
+
+        else
+        {
+            return redirect()->back()->with('warning','Unable to perform this action. Please try again later.');
+        }
     }
 
     /**
@@ -58,9 +70,13 @@ class DepositAddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(\App\Models\DepositAddress $deposit_address)
     {
-        //
+        $currencies=\App\Models\Currency::all();
+        $addresses=\App\Models\DepositAddress::paginate(10);
+
+       
+        return view('back.deposit-address',compact("addresses","deposit_address","currencies"));
     }
 
     /**
@@ -70,9 +86,21 @@ class DepositAddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, \App\Models\DepositAddress $deposit_address)
     {
-        //
+
+        $deposit_address->address=$request->address;
+        $deposit_address->currency_id=$request->currency;
+
+        if($deposit_address->save())
+        {
+             return redirect()->route('admin.deposit.address')->with('success','The address is attaced to the currency');
+        }
+        else
+        {
+            return redirect()->back()->with('warning','Unable to perform this action. Please try again later.');
+        }
+        
     }
 
     /**
@@ -81,8 +109,16 @@ class DepositAddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(\App\Models\DepositAddress $deposit_address)
     {
-        //
+         if($deposit_address->delete())
+        {
+            return redirect()->back()->with('success','The address is detached from the currency');
+        }
+
+        else
+        {
+            return redirect()->back()->with('warning','Unable to perform this action. Please try again later.');
+        }
     }
 }

@@ -25,7 +25,7 @@
                         <span class="nav-link-text">User Management</span>
                      </a>
                   </li>
-                  @php   $requestsTypes = \App\Models\CurrencyType::all();@endphp
+                  @php   $requestsTypes = \App\Models\CurrencyType::where('id','!=',3)->get();@endphp
 
                   @foreach($requestsTypes as $rqType)
                      <li class="nav-item">
@@ -43,9 +43,17 @@
                      </li>
                   @endforeach
 
+
+
                   <li class="nav-item">
                      <a class="nav-link" href="{{ route('admin.user.wallets') }}"> <i class="fa fa-money text-green" aria-hidden="true"></i>
                      <span class="nav-link-text">User Wallet</span>
+                     </a>
+                  </li>
+
+                   <li class="nav-item">
+                     <a class="nav-link" href="{{ route('admin.deposit.address') }}"> <i class="fa fa-bitcoin text-green" aria-hidden="true"></i>
+                     <span class="nav-link-text">Deposit Address</span>
                      </a>
                   </li>
                   
