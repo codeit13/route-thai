@@ -40,7 +40,7 @@
                                   <div class="row under_tabs">
                                      <div class="col-lg-6">
                                         <h4>Account Balance: <a href="#">Hide Balance <i class="fal fa-eye-slash"></i></a></h4>
-                                     <h1>{{ Auth::user()->wallet()->get(['coin','currency_id'])->sum('coin') }}<span>{{ Auth::user()->wallet()->get(['coin','currency_id'])->first()->currency->name }}</span></h1>
+                                    {{-- <h1>{{ Auth::user()->wallet()->get(['coin','currency_id'])->sum('coin') }}<span>{{ Auth::user()->wallet()->get(['coin','currency_id'])->first()->currency->name }}</span></h1> --}}
                                         <h3>Estimated Value:</h3>
                                         <h6 style="font-family: 'Open Sans', sans-serif;">₹108.6</h6>
                                      </div>
@@ -85,7 +85,7 @@
                               </div>
                             </div>
                             <label>Language</label>
-                            <div class="dropdown currency_two three_coins crypto">
+                         {{--   <div class="dropdown currency_two three_coins crypto">
                               @php 
                               $languages = \App\Models\Language::all();
                               $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
@@ -98,7 +98,7 @@
                                     <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">{{ $item->name}}</a>
                                 @endforeach
                               </div>
-                            </div>
+                            </div> --}}
                             <div class="sn_notificatio">
                                <i class="fal fa-comment-alt-lines"></i>
                                SMS Notification
@@ -158,8 +158,9 @@
                          </div>
                       </div>
                       <div class="col-lg-4 col-xs-12  xs-flush">
-                         <div class="card pd_card an_card">
+                         <div class="card pd_card">
                             <h2>Annoucement</h2>
+                            <hr/>
                             <div class="coll_one">
                                <h6>Date-12/05/2021</h6>
                                <p>Notice Regarding Coin-Margined ETCUSD 

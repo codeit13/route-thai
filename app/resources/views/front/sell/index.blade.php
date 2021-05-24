@@ -17,15 +17,23 @@ Route: P2P Trading Platform - sell crypto
 </div>
 @endsection
 @section('content')
-<section id="main-heading" class="panding-payment hidden-xs csss">
+<section id="toolbar">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 col-sm-12 col-xs-12 text-left">
-                <h1>Sell Crypto</h1>
+            <div class="col">
+                <ul class="main_tool">
+                    <li>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-secondary" onclick="location.href = '{{ route('p2p.exchange') }}';">Buy</button>
+                            <button type="button" class="btn btn-secondary active" onclick="location.href = '{{ route('sell.create') }}';">Sell</button>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </section>
+<br><br><br><br>
 <section id="content" class="banktransfer padning-payment sellers">
     <div class="container">
         <div class="row">
@@ -58,13 +66,13 @@ Route: P2P Trading Platform - sell crypto
 	                        <span class="text-danger" id="currency_id_error"></span>
 	                    </div>
 	                    <div class="field">
-						    <label>Choose Currency to Sell</label>
+						    <label>Choose Fiat Currency</label>
 						    <div class="dropdown currency_two three_coins crypto">
 						        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						            <img src="{{ $fiat_currencies->first()->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_2"> 
-						            <span style="color: black" id="text_2">{{ $fiat_currencies->first()->short_name }} <span>{{ $fiat_currencies->first()->name }}</span></span>
+						            <img src="{{ $default_fiat_currency->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_2"> 
+						            <span style="color: black" id="text_2">{{ $default_fiat_currency->short_name }} <span>{{ $default_fiat_currency->name }}</span></span>
 						        </button>
-						        <input type="hidden" name="fiat_currency_id" id="fiat_currency_id" value="{{ $fiat_currencies->first()->id }}">
+						        <input type="hidden" name="fiat_currency_id" id="fiat_currency_id" value="{{ $default_fiat_currency->id }}">
 						        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						            @foreach($fiat_currencies as $single_fiat_currency_id)
 						                <a class="dropdown-item" href="javascript:void(0)" 

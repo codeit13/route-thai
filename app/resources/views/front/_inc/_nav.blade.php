@@ -73,7 +73,7 @@
                                 <li class="hd_small"><a class="btn btn-primary" href="{{ route('register') }}">Register</a></li>
                                 <li class="onsubmenu">
                                     <div class="dropdown currency_two">
-                                        @php 
+                                      {{--  @php 
                                         $languages = \App\Models\Language::all();
                                         $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
                                         @endphp
@@ -84,7 +84,7 @@
                                             @foreach ($languages as $item)
                                                 <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">{{ $item->name}}</a>
                                             @endforeach
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     </li>
                                 <li>
@@ -116,11 +116,13 @@
                                     </div>
                                 </li>
                                 
-                                <li class="onsubmenu">
+                              {{--  <li class="onsubmenu">
                                     <div class="dropdown currency_two">
                                         @php 
                                         $languages = \App\Models\Language::all();
                                         $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
+
+                                        dd($default_language);
                                         @endphp
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <img src="{{ $default_language->firstMedia('icon')->getUrl()??'' }}" alt="">{{ $default_language->name }}
@@ -131,7 +133,7 @@
                                             @endforeach
                                         </div>
                                     </div>
-                                    </li>
+                                    </li> --}}
                                     <li class="onsubmenu">
                                         <div class="dropdown currency_two">
                                             @php 
@@ -171,7 +173,85 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="onsubmenu hidden-xs"><a class="bell" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i> <span>05</span></a></li>
+                                <li class="nav-item dropdown ntf hidden-xs">
+                                        <a class="nav-link dropdown-toggle bell non" href="#" id="navbarDropdown" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-bell-o" aria-hidden="true"></i> <span>04</span>
+                                        </a>
+                                    <div class="dropdown-menu max-w notification_menu" aria-labelledby="navbarDropdown">
+                                        <ul>
+                                            <li class="head text-light bg-dark">
+                                                    <span>Notifications (4)</span>
+                                                    <a href="" class="float-right text-light">Mark all as read</a>
+                                              </li>
+                                              <li>
+                                                  <div class="notifi_body">
+                                                      <ul>
+                                                          <li class="notification-box">
+                                                            <div class="row">
+                                                              <div class="col-lg-3 col-sm-3 col-3 text-center">
+                                                                <img src="{{ asset('front/img/coin_23.png') }}" class="w-50 rounded-circle">
+                                                              </div>    
+                                                              <div class="col-lg-8 col-sm-8 col-8">
+                                                                <h2>David John</h2>
+                                                                <p>
+                                                                  Lorem ipsum dolor sit amet, consectetur
+                                                                </p>
+                                                                <small class="text-warning">27.11.2015, 15:00</small>
+                                                              </div>    
+                                                            </div>
+                                                          </li>
+                                                          <li class="notification-box bg-gray">
+                                                            <div class="row">
+                                                              <div class="col-lg-3 col-sm-3 col-3 text-center">
+                                                                <img src="{{ asset('front/img/coin_23.png') }}" class="w-50 rounded-circle">
+                                                              </div>    
+                                                              <div class="col-lg-8 col-sm-8 col-8">
+                                                                <h2>David John</h2>
+                                                                <p>
+                                                                  Lorem ipsum dolor sit amet, consectetur
+                                                                </p>
+                                                                <small class="text-warning">27.11.2015, 15:00</small>
+                                                              </div>   
+                                                            </div>
+                                                          </li>
+                                                          <li class="notification-box">
+                                                            <div class="row">
+                                                              <div class="col-lg-3 col-sm-3 col-3 text-center">
+                                                                <img src="{{ asset('front/img/coin_23.png') }}" class="w-50 rounded-circle">
+                                                              </div>    
+                                                              <div class="col-lg-8 col-sm-8 col-8">
+                                                                <h2>David John</h2>
+                                                                <p>
+                                                                  Lorem ipsum dolor sit amet, consectetur
+                                                                </p>
+                                                                <small class="text-warning">27.11.2015, 15:00</small>
+                                                              </div>    
+                                                            </div>
+                                                          </li>
+                                                          <li class="notification-box bg-gray">
+                                                            <div class="row">
+                                                              <div class="col-lg-3 col-sm-3 col-3 text-center">
+                                                                <img src="{{ asset('front/img/coin_23.png') }}" class="w-50 rounded-circle">
+                                                              </div>    
+                                                              <div class="col-lg-8 col-sm-8 col-8">
+                                                                <h2>David John</h2>
+                                                                <p>
+                                                                  Lorem ipsum dolor sit amet, consectetur
+                                                                </p>
+                                                                <small class="text-warning">27.11.2015, 15:00</small>
+                                                              </div>   
+                                                            </div>
+                                                          </li>
+                                                      </ul>
+                                                  </div>                    
+                                              </li>
+                                              <li class="footer bg-dark text-center">
+                                                <a href="" class="text-light">View All</a>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </li>
                                 <li class="onsubmenu">
                                     <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i>
                                         <span class="visible-xs">Dark Mode</span>

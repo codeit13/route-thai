@@ -32,6 +32,8 @@
 
     --sidebar_hover:#fafafa;
     --gray_head:#FBFBFB;
+
+    --mobile-white:#ffffff;
 }
 .dark-mode {
     --body-bg-2: #161625;
@@ -67,6 +69,8 @@
 
     --sidebar_hover:rgba(255,255,255,0.04);
     --gray_head:#5d5d5f42;
+
+    --mobile-white:#17171a;
 }
 @font-face {
     font-family: 'Poppins';
@@ -427,8 +431,10 @@ img {
     background-color: var(--header-bg-color);
     color: var(--text-color);
     border: none;
-    margin-top: 0px;
-    margin-left: -30px;
+    margin-top: 5px;
+    margin-left: 0;
+    right: -20px !important;
+    left: auto !important;
 }
 li.hd_small a {
     padding: 6px 12px !important;
@@ -1568,7 +1574,7 @@ span#thb_eth_volume {
     border-bottom: 2px solid transparent;*/
 }
 #gs-div .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    background-color: var(--portfolio-bg);
+    background-color: transparent;
     border:none;
     font-weight: 600;
     border-bottom: 3px solid #00C98E !important;
@@ -1584,7 +1590,7 @@ span#thb_eth_volume {
     border:none;
     font-weight: 600;
     color: var(--white-black-text);
-    border-bottom: 3px solid var(--portfolio-bg) !important;
+    border-bottom: 3px solid transparent !important;
 }
 #gs-div .nav-tabs .nav-link:hover,
 #gs-div .nav-tabs .nav-link:focus {/*
@@ -3371,8 +3377,8 @@ a#activity-tab,a#devices-tab {
 }
 
 .an_card h2 {
-    background-color: var(--gray_head);
-    border: 1px solid var(--border-color);
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-color);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     display: inline-block;
@@ -3922,11 +3928,266 @@ span.rt_span i.fa-trash-alt {
 .card_scroll::-webkit-scrollbar-thumb:hover {
   background: #00C98E; 
 }
+
+lottie-player {
+    width: 100% !important;
+}
+
+.modal-body.text-center h6{
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+#successModal101 {
+}
+
+.dropdown-menu.max-w.notification_menu.show {
+    right: 0 !important;
+    width: 350px !important;
+    float: right !important;
+    margin-right: -70px;
+    margin-top: 8px !important;
+}
+
+.dropdown-toggle.non::after{
+    display: none;
+}
+
+.dropdown-menu.max-w.notification_menu.show {
+    transform: translate3d(-50px, 40px, 0px) !important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
+  background-color: #17A2B8;
+}
+
+li.head.text-light.bg-dark {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+li.head.text-light.bg-dark span {
+    background: transparent !important;
+    font-size: 14px;
+    margin: 0px 10px !important;
+    line-height: 3 !important;
+}
+
+a.float-right.text-light {
+    float: right !important;
+    display: inline-block !important;
+    width: auto !important;
+    margin: 5px 15px !important;
+    padding: 5px 5px !important;
+    font-size: 13px !important;
+    line-height: 0 !important;
+    border-radius: 5px;
+}
+
+.notification-box {
+    background-color: var(--body-bg);  
+    padding: 10px 10px !important;  
+    display: inline-block;
+}
+
+.notification-box img {
+    width: 50px !important;
+    height: 50px !important;
+    margin: 0px !important;
+    margin-top: 17% !important;
+    text-align: center;
+    margin-left: 24px !important;
+}
+
+.bg-gray {
+    background-color: var(--body-bg-2);
+}
+
+.bg-dark {
+    background-color: var(--header-bg-color) !important;
+}
+
+.notification-box h2 {
+    color: var(--white-black-text);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.notification-box p {
+    color: var(--white-black-text);
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 17px;
+    margin-bottom: 8px;
+    margin-top: 2px;
+}
+
+.notification-box small {
+    display: inline-block;
+    margin-top: 5px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: #2ff2b9 !important;
+    line-height: 0px !important;
+}
+
+.dropdown-menu.max-w.notification_menu ul li {
+    padding: 0px 0px !important;
+}
+
+.dropdown-menu.max-w.notification_menu ul li.notification-box {
+    padding: 10px 0px !important;
+}
+
+li.footer.bg-dark.text-center {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.notifi_body {
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* width */
+.notifi_body::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.notifi_body::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.notifi_body::-webkit-scrollbar-thumb {
+  background: #00C98E; 
+}
+
+/* Handle on hover */
+.notifi_body::-webkit-scrollbar-thumb:hover {
+  background: #00C98E; 
+}
+
+#wallet-content.request.crypto ul.janral-head {
+    margin-bottom: 0px !important;
+}
+
+#wallet-content.order-history h3 {
+    margin-bottom: 0px !important;
+}
+
+.s-hidden {
+    visibility:hidden;
+    padding-right:10px;
+}
+.select {
+    cursor:pointer;
+    display:inline-block;
+    position:relative;
+    border: 1px solid #b7b7b7;
+    height: 36px;
+    border-radius: 5px;
+    width: 110px;
+    -webkit-appearance: none;
+    background: url(../img/arrow-d.png) 95% 50% no-repeat;
+    outline: 0;
+    padding-left: 15px;
+    color: var(--white-black-text);
+}
+.styledSelect {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: var(--card-bg);
+    padding: 0 10px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 35px;
+    border-radius: 5px;
+}
+.styledSelect:after {
+    content: "";
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-color: var(--white-black-text) transparent transparent transparent;
+    position: absolute;
+    top: 14px;
+    right: 6px;
+}
+.styledSelect:active, .styledSelect.active {
+    background-color: var(--card-bg);
+}
+.options {
+    display:none;
+    position:absolute;
+    top:100%;
+    right:0;
+    left:0;
+    z-index:999;
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+        border-radius: 5px; 
+        border: 1px solid rgba(0,0,0,.15);
+    background-color: var(--new-card-bg);
+    -webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);
+    margin-top: 3px;
+}
+.options li {
+    padding: 0 6px;
+    margin: 0 0;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+.options li:hover {
+    background-color: #0000000f;
+    color: var(--hover);
+}
 /*****======= Responsive Style Css ======***********/
 
 /* Landscape phones and portrait tablets */
 
 @media (max-width: 767px) {
+#wallet-content.request .field .dropdown-menu.show {
+    top: 85% !important;
+    left: 0 !important;
+}
+.dropdown.currency_two.three_coins .dropdown-menu.show a {
+    padding: 9px 16px !important;
+    color: var(--text-color);
+}
+.select {
+    height: 29px;
+    width: 100px;
+}
+.styledSelect {
+    font-size: 13px;
+    line-height: 30px;
+}
+.options li {
+    font-size: 13px;
+}
+lottie-player {
+    width: 100% !important;
+    height: 200px !important;
+}
+#successModal101 {
+    width: 100%;
+    position: absolute;
+    top: 16%;
+    z-index: 999999;
+}
+.modal-body.text-center h6, .modal-body.text-center h4 {
+    font-size: 13px;
+}
     #header.p2p-wallet nav#navigation a.bell {
     margin-right: 45px;
 }
@@ -4272,10 +4533,13 @@ body {
         padding: 15px 0px;
         background: var(--dark_two_color);
     }
-    #wallet-content.request ul.janral-head {
-        background: var(--dark_two_color) !important;
-            top: 0;
-    }
+#wallet-content.request ul.janral-head {
+    background: var(--dark_two_color) !important;
+    top: 0;
+    right: 0;
+    left: 0;
+    position: absolute !important;
+}
     img.black-logo.onlymobile.sidemenu.visible-xs {
         width: 32%;
         float: left;
@@ -4747,7 +5011,7 @@ body {
     .main_data_dable table thead tr th:last-child,
     .main_data_dable table tr td:last-child,
     .main_data_dable table tr td:nth-child(4n) {
-        display: none;
+        /*display: none;*/
     }
     .main_data_dable table thead tr th {
         background-color: rgb(66 66 66 / 5%) !important;
@@ -4832,7 +5096,47 @@ body {
         background: url(../img/plus-white.svg) 95% 50% no-repeat;
     }
     .login_forms {
-        padding: 15% 5%;
+        padding: 0px 35px;
+    }
+    .login_forms form label {
+        color: var(--white-black-text);
+        font-size: 14px;
+        font-weight: 400;
+    }
+    .login_forms .form-check a {
+        float: right;
+        color: #00C98E;
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0px 0px;
+        margin-right: -16px;
+    }
+    #main-content p {
+        font-size: 14px !important;
+        font-weight: 400;
+        margin-bottom: 0px;
+    }
+    #copy p {
+        color: #fff;
+        margin-bottom: 0px;
+        font-size: 14px;
+        font-weight: 300;
+    }
+    .flot_btn {
+        float: right;
+        position: fixed;
+        right: -4px;
+        bottom: 50px;
+    }
+    .login_forms.recet {
+        padding: 24% 35px !important;
+    }
+    .login_forms h2 {
+        font-size: 21px;
+        font-weight: bold;
+        margin-bottom: 0px;
+        text-align: center;
+        margin-top: 24px;
     }
     #news h2 {
         text-align: left;
@@ -4857,12 +5161,12 @@ body {
     #news-add .side-text h3 {
         margin-top: 35px !important;
     }
-    .side_image {
+    /*.side_image {
         display: block !important;
         height: auto;
         background: none;
         padding-bottom: 50px;
-    }
+    }*/
     .side_image .tableCell,
     .side_image .tableRow {
         height: auto !important;
@@ -4990,26 +5294,34 @@ body {
         margin-bottom: 10px;
         padding: 0px 15px;
         background: #000;
-        position: absolute;
+        position: relative;
         left: 0px;
         width: 100%;
     }
+    form#filterForm1 {
+    padding: 15px 0px;
+}
     #wallet-content.request .white-box {
         box-shadow: none;
+        padding: 0px 20px;
     }
     #wallet-content.request ul.janral-head li a {
         color: #fff !important;
         text-transform: uppercase !important;
         text-decoration: none;
     }
+    #wallet-content.hht {
+        background-color: var(--mobile-white) !important;
+    }
     /*
 #wallet-content.request {
     background:#fff;
 }*/
     #wallet-content.request .nav-tabs .nav-link {
-        font-size: 11px !important;
-        line-height: 28px!important;
-        padding: 0px 5px!important;
+        font-size: 12px !important;
+        line-height: 25px!important;
+        padding: 0px 13px!important;
+        margin-bottom: 10px !important;
     }
     #wallet-content.request .tab-content .gray-c {
         padding: 5px;
@@ -5032,6 +5344,7 @@ body {
         box-shadow: none;
         padding: 0px !important;
         padding-top: 0px;
+        margin-top: 0px;
     }
     #wallet-content.request.crypto .white-box table {
         margin-top: 0px !important;
@@ -6652,8 +6965,13 @@ a.bell span {
     margin-top: -5px;
 }
 #wallet-content.request ul.janral-head {
-    border-bottom: 1px solid #adadad;
     margin-bottom: 35px;
+}
+#wallet-content.request ul.janral-head::after {
+    content: '';
+    border-bottom: 1px solid #adadad;
+    display: block;
+    margin-top: -1.5px;
 }
 #wallet-content.request ul.janral-head li {
     list-style: none;
@@ -6708,6 +7026,7 @@ a.bell span {
 #wallet-content.request .field label {
     font-weight: normal;
     font-size: 15px;
+    margin-top: 0px;
     color: var(--white-black-text);
 }
 #wallet-content.request .field {
@@ -6797,7 +7116,7 @@ a.bell span {
     background: var(--body-bg);
     padding: 20px 10px;
     margin-bottom: 15px;
-    z-index: 9999;
+    z-index: 999;
     position: relative;
 }
 #wallet-content.request .tab-content .gray-c ul li {
@@ -7590,6 +7909,8 @@ a.method {
     line-height: 32px;
     padding-left: 10px;
     padding-right: 10px;
+    display: inline-block;
+    padding-top: 1px;
 }
 
 #wallet-content .white-box button#dropdownMenuButton {
@@ -7622,9 +7943,10 @@ a.method {
 }
 
 #wallet-content.order-history table.order-history-table input {
-    height:30px;
-    width:130px;
-    font-size:14px!important;
+    height: 36px;
+    width: 140px;
+    font-size: 13px !important;
+    padding: 0px 0px 0px 10px;
 }
 
 #wallet-content.order-history table.order-history-table input.date {

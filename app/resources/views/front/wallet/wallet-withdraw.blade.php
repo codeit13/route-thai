@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-12 bg-white-xs col-sm-12 col-12">
+        <div class="col-lg-12 bg-white-xs col-sm-12 col-12 xs-flush">
           <div class="white-box m-top-0">
             <ul class="janral-head hidden-xs">
            @foreach($currency_types as $index => $currency_type)
