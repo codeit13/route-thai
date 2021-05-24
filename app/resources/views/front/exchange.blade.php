@@ -2,6 +2,13 @@
 @section('title')
 Route: P2P Trading Platform
 @endsection
+@section('page_styles')
+    <style type="text/css" media="screen">
+        #content.p2p .right_ssd{
+            width: 81%;
+        }
+    </style>
+@stop
 @section('content')
 @section('header-bar')
 <div class="container">
@@ -36,68 +43,73 @@ Route: P2P Trading Platform
 <section id="filter">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
-                <ul class="search_bar">
-                    <li>
-                        <label>Amount</label>
-                        <br/>
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Enter amount" aria-label="Search"><span>USD</span>
-                            <button type="submit" class="btn btn-primary mb-2">Search</button>
-                        </form>
-                    </li>
-                    <li>
-                        <label>Fiat</label>
-                        <br/>
-                        <div class="dropdown currency_two three_coins">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{asset('front/img/bitcoin.png')}}" alt="">
-                                <p>USD</p>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <form class="form-inline">
-                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span class="icon_ss"><i class="fa fa-search" aria-hidden="true"></i></span>
-                                </form>
-                                <a class="dropdown-item" href="#">
-                                <img src="{{asset('front/img/bitcoin.png')}}" alt="">USD</a>
-                                <a class="dropdown-item" href="#">
-                                <img src="{{asset('front/img/bitcoin.png')}}" alt="">USD</a>
-                                <a class="dropdown-item" href="#">
-                                <img src="{{asset('front/img/bitcoin.png')}}" alt="">USD</a>
-                                <a class="dropdown-item" href="#">
-                                <img src="{{asset('front/img/bitcoin.png')}}" alt="">USD</a>
+            <form id="search_form" action="{{ route('p2p.exchange') }}" method="get" accept-charset="utf-8">
+                <div class="col-lg-8">
+                    <ul class="search_bar">
+                        <li>
+                            <label>Amount</label>
+                            <br/>
+                            <form class="form-inline">
+                                <input class="form-control mr-sm-2" name="search" placeholder="Enter amount" aria-label="Search">
+                            </form>
+                        </li>
+                        <li>
+                            <label>Fiat</label>
+                            <br/>
+                            <div class="dropdown currency_two three_coins">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ $crypto_currencies->first()->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_1"> 
+                                        <span id="text_1" style="color: black">{{ $crypto_currencies->first()->short_name }} <span>{{ $crypto_currencies->first()->name }}</span></span>
+                                </button>
+                                <input type="hidden" name="currency_id" id="currency_id" value="{{ $crypto_currencies->first()->id }}">
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @foreach($crypto_currencies as $single_currency_id)
+                                        <a class="dropdown-item" href="javascript:void(0)" 
+                                            data-img="{{ $single_currency_id->getMedia('icon')->first()->getUrl() }}"
+                                            data-name="{{ $single_currency_id->name }}"
+                                            data-short_name="{{ $single_currency_id->short_name }}"
+                                            data-currency="{{ $single_currency_id->id }}"
+                                            onclick="selectCurrency(this,'currency_id','img_main_1','text_1')">
+                                            <img src="{{ $single_currency_id->getMedia('icon')->first()->getUrl() }}" alt="">
+                                            {{ $single_currency_id->short_name }} 
+                                            <span>{{ $single_currency_id->name }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <li>
-                        <label>Payment</label>
-                        <br/>
-                        <div class="dropdown currency_two three_coins">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{asset('front/img/tether.png')}}" alt="">
-                                <p>All Payment</p>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <form class="form-inline">
-                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <span class="icon_ss"><i class="fa fa-search" aria-hidden="true"></i></span>
-                                </form>
-                                <a class="dropdown-item" href="#">
-                                <img src="{{asset('front/img/tether.png')}}" alt="">All Payment</a>
-                                <a class="dropdown-item" href="#">
-                                <img src="{{asset('front/img/tether.png')}}" alt="">All Payment</a>
-                                <a class="dropdown-item" href="#">
-                                <img src="{{asset('front/img/tether.png')}}" alt="">All Payment</a>
-                                <a class="dropdown-item" href="#">
-                                <img src="{{asset('front/img/tether.png')}}" alt="">All Payment</a>
+                        </li>
+                        <li>
+                            <label>Fiat Currency</label>
+                            <br/>
+                            <div class="dropdown currency_two three_coins">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ $fiat_currencies->first()->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_2"> 
+                                    <span style="color: black" id="text_2">{{ $fiat_currencies->first()->short_name }} <span>{{ $fiat_currencies->first()->name }}</span></span>
+                                </button>
+                                <input type="hidden" name="fiat_currency_id" id="fiat_currency_id" value="{{ $fiat_currencies->first()->id }}">
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @foreach($fiat_currencies as $single_fiat_currency_id)
+                                        <a class="dropdown-item" href="javascript:void(0)" 
+                                            data-img="{{ $single_fiat_currency_id->getMedia('icon')->first()->getUrl() }}"
+                                            data-name="{{ $single_fiat_currency_id->name }}"
+                                            data-short_name="{{ $single_fiat_currency_id->short_name }}"
+                                            data-currency="{{ $single_fiat_currency_id->id }}"
+                                            onclick="selectCurrency(this,'fiat_currency_id','img_main_2','text_2')">
+                                            <img src="{{ $single_fiat_currency_id->getMedia('icon')->first()->getUrl() }}" alt="">
+                                            {{ $single_fiat_currency_id->short_name }} 
+                                            <span>{{ $single_fiat_currency_id->name }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-4 text-right">
-                <a href="#" class="refresh">
-                <img src="{{asset('front/img/refresh.png')}}">Refresh</a>
-            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 text-right">
+                    <a href="javascript::void(0)" onclick="searchForm()" class="refresh">
+                    <img src="{{asset('front/img/refresh.png')}}">Refresh</a>
+                </div>
+            </form>
         </div>
     </div>
 </section>
@@ -113,138 +125,37 @@ Route: P2P Trading Platform
                                     <th scope="col" class="res_po">Advertisers</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Limit/Available</th>
-                                    <th scope="col">Payment</th>
                                     <th scope="col">Trade <span>0 Fee</span>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row" class="ft_first">
-                                        <img src="{{asset('front/img/bitcoin.png')}}" alt="">
-                                        <div class="right_ssd">⚡ OrianyellaB ⚡
-                                            <br/> <span class="gray">53 orders  - 84.13% completion</span>
-                                        </div>
-                                    </th>
-                                    <td><span id="bb_btc_p">1.005</span><span>USD</span>
-                                        <br/><span class="gray">Get on dollar: $0.93</span>
-                                    </td>
-                                    <td><span id="bm_btc">Available <span>166.80 USDT</span>
-                                        <br/>Limit <span>$100.00 - $167.63</span></span>
-                                    </td>
-                                    <td>
-                                        <img src="{{asset('front/img/artm.png')}}">AirTM
-                                        <br/><span class="tag">receipt requ...</span><span class="tag">online pay...</span><span class="tag">no third par...</span>
-                                    </td>
-                                    <td><a href="#" class="table_btn">Buy USDT</a>
-                                        <br/><span class="gray">Limits: 50,000–250,000 INR</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="ft_first">
-                                        <img src="{{asset('front/img/bitcoin.png')}}" alt="">
-                                        <div class="right_ssd">⚡ OrianyellaB ⚡
-                                            <br/> <span class="gray">53 orders  - 84.13% completion</span>
-                                        </div>
-                                    </th>
-                                    <td><span id="bb_btc_p">1.005</span><span>USD</span>
-                                        <br/><span class="gray">Get on dollar: $0.93</span>
-                                    </td>
-                                    <td><span id="bm_btc">Available <span>166.80 USDT</span>
-                                        <br/>Limit <span>$100.00 - $167.63</span></span>
-                                    </td>
-                                    <td>
-                                        <img src="{{asset('front/img/artm.png')}}">AirTM
-                                        <br/><span class="tag">receipt requ...</span><span class="tag">online pay...</span><span class="tag">no third par...</span>
-                                    </td>
-                                    <td><a href="#" class="table_btn">Buy USDT</a>
-                                        <br/><span class="gray">Limits: 50,000–250,000 INR</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="ft_first">
-                                        <img src="{{asset('front/img/bitcoin.png')}}" alt="">
-                                        <div class="right_ssd">⚡ OrianyellaB ⚡
-                                            <br/> <span class="gray">53 orders  - 84.13% completion</span>
-                                        </div>
-                                    </th>
-                                    <td><span id="bb_btc_p">1.005</span><span>USD</span>
-                                        <br/><span class="gray">Get on dollar: $0.93</span>
-                                    </td>
-                                    <td><span id="bm_btc">Available <span>166.80 USDT</span>
-                                        <br/>Limit <span>$100.00 - $167.63</span></span>
-                                    </td>
-                                    <td>
-                                        <img src="{{asset('front/img/artm.png')}}">AirTM
-                                        <br/><span class="tag">receipt requ...</span><span class="tag">online pay...</span><span class="tag">no third par...</span>
-                                    </td>
-                                    <td><a href="#" class="table_btn">Buy USDT</a>
-                                        <br/><span class="gray">Limits: 50,000–250,000 INR</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="ft_first">
-                                        <img src="{{asset('front/img/bitcoin.png')}}" alt="">
-                                        <div class="right_ssd">⚡ OrianyellaB ⚡
-                                            <br/> <span class="gray">53 orders  - 84.13% completion</span>
-                                        </div>
-                                    </th>
-                                    <td><span id="bb_btc_p">1.005</span><span>USD</span>
-                                        <br/><span class="gray">Get on dollar: $0.93</span>
-                                    </td>
-                                    <td><span id="bm_btc">Available <span>166.80 USDT</span>
-                                        <br/>Limit <span>$100.00 - $167.63</span></span>
-                                    </td>
-                                    <td>
-                                        <img src="{{asset('front/img/artm.png')}}">AirTM
-                                        <br/><span class="tag">receipt requ...</span><span class="tag">online pay...</span><span class="tag">no third par...</span>
-                                    </td>
-                                    <td><a href="#" class="table_btn">Buy USDT</a>
-                                        <br/><span class="gray">Limits: 50,000–250,000 INR</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="ft_first">
-                                        <img src="{{asset('front/img/bitcoin.png')}}" alt="">
-                                        <div class="right_ssd">⚡ OrianyellaB ⚡
-                                            <br/> <span class="gray">53 orders  - 84.13% completion</span>
-                                        </div>
-                                    </th>
-                                    <td><span id="bb_btc_p">1.005</span><span>USD</span>
-                                        <br/><span class="gray">Get on dollar: $0.93</span>
-                                    </td>
-                                    <td><span id="bm_btc">Available <span>166.80 USDT</span>
-                                        <br/>Limit <span>$100.00 - $167.63</span></span>
-                                    </td>
-                                    <td>
-                                        <img src="{{asset('front/img/artm.png')}}">AirTM
-                                        <br/><span class="tag">receipt requ...</span><span class="tag">online pay...</span><span class="tag">no third par...</span>
-                                    </td>
-                                    <td><a href="#" class="table_btn">Buy USDT</a>
-                                        <br/><span class="gray">Limits: 50,000–250,000 INR</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="ft_first">
-                                        <img src="{{asset('front/img/bitcoin.png')}}" alt="">
-                                        <div class="right_ssd">⚡ OrianyellaB ⚡
-                                            <br/> <span class="gray">53 orders  - 84.13% completion</span>
-                                        </div>
-                                    </th>
-                                    <td><span id="bb_btc_p">1.005</span><span>USD</span>
-                                        <br/><span class="gray">Get on dollar: $0.93</span>
-                                    </td>
-                                    <td><span id="bm_btc">Available <span>166.80 USDT</span>
-                                        <br/>Limit <span>$100.00 - $167.63</span></span>
-                                    </td>
-                                    <td>
-                                        <img src="{{asset('front/img/artm.png')}}">AirTM
-                                        <br/><span class="tag">receipt requ...</span><span class="tag">online pay...</span><span class="tag">no third par...</span>
-                                    </td>
-                                    <td><a href="#" class="table_btn">Buy USDT</a>
-                                        <br/><span class="gray">Limits: 50,000–250,000 INR</span>
-                                    </td>
-                                </tr>
+                                @if($transactions->count() > 0)
+                                    @foreach($transactions as $single_transaction)
+                                        @if($single_transaction->buyer_requests_count == 0)
+                                            <tr>
+                                                <th scope="row" class="ft_first">
+                                                    <img src="{{ $single_transaction->currency->getMedia('icon')->first()->getUrl() }}" alt="">
+                                                    <div class="right_ssd">⚡ {{ $single_transaction->user->name }} ⚡
+                                                    </div>
+                                                </th>
+                                                <td class="text-center">
+                                                    <span id="bb_btc_p">{{ $single_transaction->trans_amount }} </span><span>{{ $single_transaction->fiat_currency->short_name }}</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span id="bm_btc">Available <span>{{ $single_transaction->quantity }} {{ $single_transaction->currency->short_name }}</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="{{ route('payment.show',['transaction'=>$single_transaction->trans_id]) }}" class="table_btn">Buy {{ $single_transaction->currency->short_name }}</a>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="5">No Data</td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -333,6 +244,23 @@ Route: P2P Trading Platform
 @endsection
 @section('page_scripts')
 <script type="text/javascript">
+    function searchForm(){
+        $('#search_form').submit();
+    }
+    function selectCurrency(current_obj,input_id,image_id,text_id){
+        var current_obj = $(current_obj);
+        var current_image = current_obj.attr('data-img');
+        var current_name = current_obj.attr('data-name');
+        var current_short_name = current_obj.attr('data-short_name');
+        var current_currency = current_obj.attr('data-currency');
+
+        $('#'+input_id).val(current_currency);
+        $('#'+image_id).attr('src',current_image);
+        $('#'+text_id).html(current_short_name+'<span> '+current_name+'</span>');
+
+        console.log(current_image,current_name,current_short_name,current_currency)
+    }
+
     $(document).ready(function(){
               $('.bxslider').bxSlider({
                 auto:false,
