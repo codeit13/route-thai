@@ -94,7 +94,7 @@ Route: P2P Trading Platform
                                         </div>
                                     </div>
                                     <div class="col-lg-12 xs-right col-sm-12 col-6">
-                                        <div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{ $transaction->trans_amount }} &nbsp;{{$transaction->fiat_currency->short_name}}</span>
+                                        <div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{number_format($transaction->quantity,2)}} &nbsp;{{$transaction->fiat_currency->short_name??''}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -214,16 +214,16 @@ Route: P2P Trading Platform
                     <div class="col-lg-4 border-right-one col-sm-4 col-12">
                         <h4 class="xs-left text-center">
                             @if($payment_method->hasMedia('icon'))
-                            <img src="{{$payment_method->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_method->name)}}"/>
+                            <img src="{{$payment_method->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_method->name??'')}}"/>
                             @endif
-                            <br>{{__($payment_method->payment_method->name)}}
+                            <br>{{__($payment_method->payment_method->name??"")}}
                         </h4>
                         <div class="row">
                             <div class="col-lg-12 xs-left text-center col-sm-12 col-6">
                                 <label class="gray-c">{{__('Full Name')}}</label>
                             </div>
                             <div class="col-lg-12 xs-left text-center col-sm-12 col-6">
-                                <label>{{__($payment_method->full_name??$payment_method->user->name)}}</label>
+                                <label>{{__($payment_method->full_name??$payment_method->user->name??"")}}</label>
                             </div>
                         </div>
                         <div class="row">

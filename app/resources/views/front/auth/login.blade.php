@@ -18,7 +18,7 @@
                         </div>
                     </div> 
                 </div>
-                <div class="col-lg-5 col-sm-5 col-xs-12">
+                <div class="col-lg-5 col-sm-5 col-xs-12 flush">
                     <div class="tableRow">
                         <div class="tableCell">
                             <div class="login_forms">

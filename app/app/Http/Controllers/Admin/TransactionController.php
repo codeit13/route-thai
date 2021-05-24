@@ -55,7 +55,7 @@ class TransactionController extends Controller
                                   ->whereHas('currency', function ($query)use ($type) {
                                           $query->where('type_id',$type);
 
-                                        })->get();
+                                        })->paginate(10);
 
         return view('back.wallet.deposit-requests',compact('transactions'));
     }
@@ -94,7 +94,7 @@ class TransactionController extends Controller
                                   ->whereHas('currency', function ($query)use ($type) {
                                           $query->where('type_id',$type);
 
-                                        })->get();
+                                        })->paginate(10);
 
         return view('back.wallet.withdraw-requests',compact('transactions','currency_types','walletType'));
     }

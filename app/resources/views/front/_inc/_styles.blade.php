@@ -10,6 +10,8 @@
 <link rel="stylesheet" type="text/css" href=" {{ asset('front/css/offcanvas.css') }}">
 <link rel="stylesheet" type="text/css" href=" {{ asset('front/css/chart.css') }}">
 <link href=" {{ asset('front/css/style.css') }}" rel="stylesheet" />
+
+
 <style>
 /* @media (min-width: 769px) {
     .dropdown.onhover:hover .dropdown-menu{

@@ -18,9 +18,11 @@ class TransactionController extends Controller
     {
 
    // echo '<pre>';print_r($request->all());die;
-      $currency_types=\App\Models\CurrencyType::all();
+      $currency_types=\App\Models\CurrencyType::where('id','!=',3)->get();
 
       $currentCurrency='';
+
+      $user=\Auth::user();
        
 
       $walletType=new \App\Models\CurrencyType;
@@ -41,7 +43,7 @@ class TransactionController extends Controller
              $type=$currency_types[0]->id;
         }
 
-        $transactions= \App\Models\Transaction::where('type',$transaction_type);
+        $transactions= $user->transactions()->where('type',$transaction_type);
 
         if($request->status)
         {
@@ -101,7 +103,7 @@ class TransactionController extends Controller
     public function create($type='',$typename='',$currency='',$currencyname='')
     {
 
-        $currency_types=\App\Models\CurrencyType::all();
+        $currency_types=\App\Models\CurrencyType::where('id','!=',3)->get();
 
         $wallets=\Auth::user()->wallet;
 
@@ -178,14 +180,13 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($type)
+    public function show($type=1)
     {
           $user = Auth::user();
 
 
-    //     $transactions=$user->transactions()->select('*')->selectRaw('sum(trans_amount) as total')->where('status','approved')->whereHas('currency', function ($query)use ($type) {
-    //     $query->where('type_id',$type);
-    // })->groupBy('currency_id')->paginate(10);
+
+         $walletTypes=\App\Models\CurrencyType::where('id','!=',3)->get();
 
           $currencies=\App\Models\Currency::where('type_id',$type)->paginate(10);
 
@@ -196,7 +197,7 @@ class TransactionController extends Controller
 
 
  
-        return view('front.wallet.wallet-transactions',compact('walletType','currencies'));
+        return view('front.wallet.wallet-transactions',compact('walletType','currencies','walletTypes'));
     }
 
 
@@ -207,7 +208,7 @@ class TransactionController extends Controller
      */
     public function withdraw_history($type='',$typename='')
     {
-      $currency_types=\App\Models\CurrencyType::all();
+      $currency_types=\App\Models\CurrencyType::where('id','!=',3)->get();
        
 
       $walletType=new \App\Models\CurrencyType;
@@ -245,7 +246,7 @@ class TransactionController extends Controller
     public function create_withdraw($type='',$typename='',$currency='',$currencyname='')
     {
 
-        $currency_types=\App\Models\CurrencyType::all();
+        $currency_types=\App\Models\CurrencyType::where('id','!=',3)->get();
 
         
         $currentCurrency=$currency;
@@ -328,5 +329,25 @@ class TransactionController extends Controller
        $transaction->balance_before_trans = $balance_before_trans;
 
        return $transaction->save();
+    }
+
+     public function p2p()
+    {
+          $user = Auth::user();
+
+
+
+         //$walletTypes=\App\Models\CurrencyType::where('id','!=',3)->get();
+
+          $currencies=\App\Models\Currency::where('type_id',1)->paginate(10);
+
+
+     
+
+        $walletType = \App\Models\CurrencyType::find(3);
+
+
+ 
+        return view('front.wallet.p2p-wallet',compact('walletType','currencies'));
     }
 }

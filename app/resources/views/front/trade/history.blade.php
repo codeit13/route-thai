@@ -2,95 +2,34 @@
 @section('title')
     Route: P2P Trading Platform
 @endsection
-@section('page_styles')
-	<link type="text/css" rel="stylesheet" href="{{asset('front/css/datepicker.css')}}" />
-
-@endsection
 @section('content')
-<div class="progress-section visible-xs">
-	<h2>@if($request->type=='withdraw')
-
-								{{__('Withdraw History')}}
-
-
-                          @else
-								{{__('Deposit History')}}
-
-								@endif</h2>
-</div>
-<section id="wallet-content" class="request crypto order-history hht">
+<section id="wallet-content" class="request crypto order-history">
 		<div class="container">
-			<div class="row  hidden-xs">
-				<div class="col-lg-12  col-sm-12 col-12">
-					<div class="white-box" style="">
-						<div class="row">
-							<div class="col-lg-12 col-sm-12 col-12">
-
-
-								<h3>
-		                  @if($request->type=='withdraw')
-
-								{{__('Withdraw History')}}
-
-
-		                  @else
-								{{__('Deposit History')}}
-
-								@endif
-
-							</h3>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="row">
 				<div class="col-lg-12  col-sm-12 col-12">
-					<div class="white-box" style="">
+					<div class="white-box" style="background:none; box-shadow:none;">
 						<div class="row">
-							<div class="white-box" style="background:none; box-shadow:none; margin: 0px 0px; padding: 0px 15px;">
-                              <ul class="janral-head">
-
-
-						@foreach($currency_types as $index => $currency_type)
-
-
-						@if(isset($walletType->id) && $walletType->id==$currency_type->id)
-
-						<li class="active"><a href="#">{{__($currency_type->type)}}</a></li>
-						@elseif(!isset($walletType->id) && $index==0)
-						<li class="active"><a href="#">{{__($currency_type->type)}}</a></li>
-						@else
-						<li class=""><a href="{{route('wallet.request.history',['type'=>$currency_type->id,'typename'=>strtolower($currency_type->type)]).'?type='.$request->type??''}}">{{__($currency_type->type)}}</a></li>
-						@endif
-
-
-						
-
-						@endforeach
-					
-						<li class="last"><a href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a></li>
-					</ul>
-
+							<div class="col-lg-12 col-sm-12 col-12">
+								<h3>{{__("Order History")}}</h3>
+							</div>
 						</div>
-					</div>
-
 						<div class="head-xs visible-xs">
-							<form id="filterForm1" action="{{route('wallet.request.history',array('type'=>$walletType->id??'','typename'=>$walletType->type??''))}}" method="GET" >
+
+							<form id="filterForm1" action="{{route('trade.history')}}" method="GET" >
+
 							<div class="row">
 								<div class="col-7">
 									<div class="row">
 										<div class="col-12">
-											<label>{{__('Date')}}</label>
+											<label>{{__("Date")}}</label>
 										</div>
 									</div>
 									<div class="row">
-
 										<div class="col-6 sp-right">
-											<input type="date" id="reportdate" name="reportdate" value="{{$request->start_date??''}}">
+											<input class="date filter-type" name="start_date" id="datepicker" value="{{$request->start_date??''}}" autocomplete="off" type="text" placeholder=""/>
 										</div>
 										<div class="col-6 sp-left">
-											<input type="date" id="reportdate" name="reportdate" value="{{$request->end_date??''}}">
+											<input class="date filter-type" autocomplete="off" name="end_date" value="{{$request->end_date??''}}" id="datepickertwo" type="text" placeholder=""/>
 										</div>
 									</div>
 								</div>
@@ -174,11 +113,12 @@
 								</div>
 							</div>
 							<div class="col-12 flush">
-								<label>Status</label>
+								<label>{{__("Status")}}</label>
 							</div>
 							<div class="row">
 								<div class="col-4">
 								<select name="status" class="filter-type">
+													<option value=""> select </option>
 													<option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
 													<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
 													<option value="rejected" @if($request->status=='rejected') selected @endif>{{__('Rejected')}}</option>
@@ -187,32 +127,34 @@
 								<div class="col-8">
 									<input class="coin" name="search" value="{{$request->search??''}}" type="search" placeholder="Search Coin Name" />
 								</div>
-							</div>	
-						</form>
+							</div>
+
+							</form>	
+
 						</div>	
+
+
+
 						<div class="row hidden-xs">
-							<form id="filterForm" action="{{route('wallet.request.history',array('type'=>$walletType->id??'','typename'=>$walletType->type??''))}}" method="GET" >
+							<form id="filterForm" action="{{route('trade.history')}}" method="GET" >
 							<div class="col-lg-12 col-sm-12 col-12">
-								
 								<table class="order-history-table">
 									<thead>
 										<tr>
-											<th colspan="2">{{__('Date')}}</th>
-											<th>{{__('Types of Currency')}}</th>
-											<th style="width:110px;">{{__('Order Type')}}</th>
-											<th>{{__('Status')}}</th>
+											<th colspan="2">Date</th>
+											<th>Types of Currency</th>
+											<th style="width:110px;">Order Type</th>
+											<th>Status</th>
 											<th></th>
 										</tr>
 									</thead>
 									<tbody>
-
-
 										<tr>
-
 											<td>
 
-												<input type="date" id="reportdate" name="reportdate" value="{{$request->start_date??''}}">
-											<td><input type="date" id="reportdate" name="reportdate" value="{{$request->end_date??''}}"></td>
+
+												<input class="date filter-type" name="start_date" autocomplete="off" id="datepickerthree" value="{{$request->start_date??''}}" type="text" placeholder=""/></td>
+											<td><input class="date filter-type" autocomplete="off" name="end_date" value="{{$request->end_date??''}}" id="datepickerfour" type="text" placeholder=""/></td>
 											<td style="width:180px; display:inline-block;">
 												<div class="dropdown currency_two three_coins crypto currencyDropdown">
 
@@ -285,17 +227,20 @@
 												</div>
 												     <input type="hidden" name="currency" class="coin_id_class" id="coin_id" value="{{($currentCurrency)}}"/>
 
+											
 											</td>
 											<td>
 												<select name="type" class="filter-type">
-													<option value="deposit" @if($request->type=='deposit') selected @endif >{{__('Deposit')}}</option>
 
-													<option value="withdraw" @if($request->type=='withdraw') selected @endif>{{__('Withdraw')}}</option>
+													<option value="">Select</option>
+													<option value="sell" @if($request->type=='sell') selected @endif >{{__('Sell')}}</option>
+
+													<option value="buy" @if($request->type=='buy') selected @endif>{{__('Buy')}}</option>
 												</select>
 											</td>
 											<td>
 												<select name="status" class="filter-type">
-													
+													<option value=""> select </option>
 													<option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
 													<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
 													<option value="rejected" @if($request->status=='rejected') selected @endif>{{__('Rejected')}}</option>
@@ -305,92 +250,32 @@
 										</tr>
 									</tbody>
 								</table>
-							
 							</div>
-							</form>
+						</form>
 						</div>
 						<div class="row">
-							<div class="col-lg-12 history-details with-history hidden-xs view-c  col-sm-12 col-12">
+							<div class="col-lg-12 history-details  col-sm-12 col-12">
 								<table>
 									<thead>
 										<tr>
-											<th>{{__('Currecny')}}</th>
-											<th>Date</th>
-											<th class="text-center">{{__('Quantity')}}</th>
-											<th class="text-center">{{__('Details')}}</th>
-											<th>{{__('Status')}}</th>
+											<th style="width:8%;">{{__("Asset Type")}}</th>
+											<th>{{__("Amount")}}</th>
+											<th>{{__("Price")}}</th>
+											<th>{{__("Quantity")}}</th>
+											<th>{{__("Counterparty")}}</th>
+											<th>{{__("Status")}}</th>
 										</tr>
 									</thead>
 									<tbody>
 
-										@foreach($transactions as $tindex => $transaction)
-										<tr class="top-radius">
-											<td class="top-left-radius">
-												@if($transaction->currency->hasMedia('icon'))
-    
-                                      
+										@foreach($transactions as $tIndex => $transaction)
 
-											<img src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 
-
-											@endif
-
-											<label>{{__($transaction->currency->short_name)}} <br><span>{{__($transaction->currency->name)}}</span>
-												</label>
-											</td>
-											<td>{{$transaction->created_at->format('d/m/Y')}}<span>&nbsp;&nbsp;{{$transaction->created_at->format('h:i:s')}}</span></td>
-											<td class="text-center">{{$transaction->trans_amount}}</td>
-											<td class="text-center">
-
-												@if($transaction->type=='withdraw')
-
-												{{$transaction->address}}
-
-												@else
-
-
-
-												<a class="btn-success" target="_blank" href="{{$transaction->firstMedia('file')->getUrl()}}">View File</a>
-
-												@endif
-
-											</td>
-
-											@switch($transaction->status)
-
-											@case('pending')
-
-											<td class="top-right-radius"><img src="{{asset('front/img/icon-27.png')}}" alt="">{{__('In progress')}}</td>
-
-											@break
-
-											@case('approved')
-
-											<td class="top-right-radius"><img src="{{asset('front/img/icon-28.png')}}" alt="">{{__('Approved')}}</td>
-
-											@break
-
-											@case('rejected')
-
-											<td class="top-right-radius"><img src="{{asset('front/img/icon-29.png')}}" alt="">{{__('Rejected')}}</td>
-
-											@break
-
-											@endswitch
-											
-										</tr>
-
-										@endforeach
 										
-									</tbody>
-								</table>
-							</div>
-							
-							<div class="col-lg-12 xs-flush only-xs visible-xs  col-sm-12 col-12">
-								<table>
-									<tbody>
-										@foreach($transactions as $tindex => $transaction)
-										<tr class="first text-left">
-											<td>{{$transaction->created_at->format('d/m/Y')}}&nbsp;&nbsp;{{$transaction->created_at->format('h:i:s')}}</td>
+										<tr class="xs-full">
+											<td class="@if($transaction->type=='buy')buy @else sell @endif hidden-xs"><h2>{{__(ucwords($transaction->type))}}</h2></td>
+											<td class="hidden-xs" colspan="2"><span>{{__("Order number")}}</span>{{$transaction->trans_id}}</td>
+											<td class="xs-full" colspan="2"><span>{{__("Created time")}}</span>{{$transaction->created_at}}</td>
+											<td class="hidden-xs"></td>
 										</tr>
 										<tr>
 											<td>
@@ -398,72 +283,94 @@
     
                                       
 
-											<img src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 
+											<img class="top-xs-m" src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 
 
 											@endif
+											
 
-											<label>{{__($transaction->currency->short_name)}} <br><span>{{__($transaction->currency->name)}}</span>
-												</label>
-											</td>
-											<td>
-												<span>Quantity</span>{{$transaction->trans_amount}}
-											</td>
-											<td class="w-details">	@if($transaction->type=='withdraw')
+												<label class="visible-xs">{{__($transaction->currency->short_name)}} <span>{{__($transaction->currency->name)}}</span></label></td>
+											<td class="size-t"><label class="hidden-xs">{{$transaction->quantity}} {{__($transaction->fiat_currency->short_name)}}</label> <label class="visible-xs">{{__("Quantity")}} <span>{{$transaction->trans_amount}}</span></label></td>
+											<td class="hidden-xs">{{$transaction->quantity/$transaction->trans_amount}}/{{$transaction->currency->short_name}}</td>
+											<td class="hidden-xs">{{$transaction->trans_amount}}&nbsp;{{__($transaction->currency->short_name)}}</td>
+											<td class="light"><label class="hidden-xs">{{$transaction->receiver->name??''}}</label> 
 
-												{{$transaction->address}}
-
-												@else
+												<a class="file visible-xs" href="#">View File</a></td>
 
 
 
-												<a class="btn-success" target="_blank" href="{{$transaction->firstMedia('file')->getUrl()}}">View File</a>
-
-												@endif</td>
-											@switch($transaction->status)
+												@switch($transaction->status)
 
 											@case('pending')
 
-											<td class="code"><img src="{{asset('front/img/icon-27.png')}}" alt="">{{__('In progress')}}</td>
+											<td>
+												<img src="{{asset('front/img/icon-27.png')}}" alt=""/>
+												{{__('In progress')}}
+												<a class="hidden-xs" href="#">{{__("Detail")}}</a>
+											</td>
 
 											@break
 
 											@case('approved')
 
-											<td class="code"><img src="{{asset('front/img/icon-28.png')}}" alt="">{{__('Approved')}}</td>
+											<td>
+												<img src="{{asset('front/img/icon-28.png')}}" alt=""/>
+												{{__('Approved')}}
+												<a class="hidden-xs" href="#">{{__("Detail")}}</a>
+											</td>
+
+											
 
 											@break
 
 											@case('rejected')
 
-											<td class="code"><img src="{{asset('front/img/icon-29.png')}}" alt="">{{__('Rejected')}}</td>
+											<td>
+												<img src="{{asset('front/img/icon-29.png')}}" alt=""/>
+												{{__('Rejected')}}
+												<a class="hidden-xs" href="#">{{__("Detail")}}</a>
+											</td>
+
 
 											@break
 
 											@endswitch
+
+
+
+
+											
 										</tr>
 
+
+
+
 										@endforeach
-										
+								
 									</tbody>
-								</table>	
+								</table>
 							</div>
 						</div>
-						<div class="row">
+                       
+                       <div class="row">
 						<div class="col-lg-12 text-center nav-pagi hidden-xs col-sm-12 col-12">
 
 							{{ $transactions->links('front._inc._paginator') }}
 						
 						</div>
 					</div>
+
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+
 	@endsection
 
-@section('page_scripts')
-<script src="{{asset('front/js/main.js')}}"></script> <!-- Gem jQuery -->
+			@section('page_scripts')
+
+	<script src="{{asset('front/js/main.js')}}"></script> <!-- Gem jQuery -->
 	<script src="{{asset('front/js/bootstrap-datepicker.js')}}"></script>
 		<script>
 		$('#datepicker').datepicker({autoclose:true});
@@ -585,6 +492,8 @@
   		submitform();
   	}
   })
-
 	</script>
-	@endsection
+
+
+
+			@endsection

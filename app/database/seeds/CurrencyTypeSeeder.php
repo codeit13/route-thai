@@ -24,5 +24,9 @@ class CurrencyTypeSeeder extends Seeder
     	{
             $CurrencyType::create(['type'=>'Fiat']);
         }
+        if(!$CurrencyType->where('type','P2P')->exists())
+        {
+            $CurrencyType::create(['type'=>'P2P']);
+        }
     }
 }

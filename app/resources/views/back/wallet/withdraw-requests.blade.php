@@ -89,6 +89,12 @@
                            </table>
                         </div>
                      </div>
+
+                      <div class="row">
+                  <div class="col-lg-12 text-center nav-pagi hidden-xs col-sm-12 col-12">
+  {{ $transactions->links('back._inc._paginator') }}
+
+</div></div>
                   </div>
                </div>
             </div>

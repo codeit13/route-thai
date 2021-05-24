@@ -1,0 +1,18 @@
+ .nav-pagi nav {
+       display: inline-block;
+       padding: 20px 0px;
+   }
+   .nav-pagi nav a {
+       padding: 0px 15px;
+      color: var(--white-black-text);
+ 
+     display: inline-block;
+  }
+  .nav-pagi nav li.active a {
+     background: #ebecf0;
+    border-radius: 5px;
+      color: #000;
+  }
+   .nav-pagi nav span {
+       position: relative;
+       top: 4px;
