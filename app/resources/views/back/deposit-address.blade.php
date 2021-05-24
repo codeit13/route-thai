@@ -8,12 +8,36 @@
                   <div class="col-xl-12">
 
                      <div class="card">
+@php 
 
+$action=route('admin.deposit.address.create');
+$method='post';
 
-         <form>
+if(isset($deposit_address->id))
+{
+  $action=route('admin.deposit.address.update',$deposit_address->id);
+
+}
+
+@endphp
+
+         <form action="{{$action}}" method="{{$method}}">
+
+          @if(isset($deposit_address->id))
+
+         {{ method_field('PUT') }}
+
+          @endif
+
+          @csrf
   <div class="form-row">
     <div class="col">
-      <textarea class="form-control" rows="4" placeholder="address"></textarea>
+      <textarea class="form-control" name="address" required="required" rows="4" placeholder="address">{{$deposit_address->address??''}}</textarea>
+        @error('address')
+                                <p class="invalid-value" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
 
 
 
@@ -30,7 +54,7 @@
 
                                @endphp
 
-                    @if($currency->id==$request->currency)
+                    @if(isset($deposit_address->currency_id) && $currency->id==$deposit_address->currency_id)
 
                       <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         
@@ -49,7 +73,7 @@
                       @endforeach
 
                       
-                    @if(!$request->currency)
+                    @if(!(isset($deposit_address->currency_id)) && isset($currencies[0]))
 
                       <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         
@@ -95,7 +119,12 @@
 
 
                         </div>
-                             <input type="hidden" name="currency" class="coin_id_class" id="coin_id" value="{{($request->currency)}}"/>
+                             <input type="hidden" name="currency" class="coin_id_class" id="coin_id" value="{{($deposit_address->currency_id??$currencies[0]->id??'')}}"/>
+                             @error('currency')
+                                <p class="invalid-value" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
                   </div>
                   <div class="col-md-12 ml-2 mt-3">
 
@@ -150,7 +179,12 @@
 
                                         <td class="sorting_1">{{__($address->address)}}</td>
 
-                                    <td>edit/delete</td>
+                                    <td>
+                                      <a href="{{route('admin.deposit.address.edit',$address->id)}}"><i class="fa fa-edit" style="font-size: x-large;"></i></a>
+
+                                      <a href="{{route('admin.deposit.address.delete',$address->id)}}"><i class="fa fa-trash" style="font-size: x-large;"></i></a>
+
+                                    </td>
                                    
                                  </tr>
                                  @endforeach
@@ -202,22 +236,22 @@
    
 
 
-    submitForm();
+    //submitForm();
 
    
 });
        
-    function submitForm(resetCurrency=false)
-    {
+    // function submitForm(resetCurrency=false)
+    // {
 
-      if(resetCurrency)
-      {
-        $('.coin_id_class').val("");
-      }
+    //   if(resetCurrency)
+    //   {
+    //     $('.coin_id_class').val("");
+    //   }
 
-      $('form').submit();
+    //   $('form').submit();
 
-    }
+    // }
 
     </script>
 

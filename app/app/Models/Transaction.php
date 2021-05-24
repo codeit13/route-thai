@@ -72,7 +72,7 @@ class Transaction extends Model
     public function checkBuyerRequest()
     {
         $user=\Auth::user();
-        $request=$this->buyer_requests()->where('user_id',$user->id)->first();
+        $request=$this->buyer_requests()->where('transaction_id',$this->id)->first();
         //$this->timer=$this->timer*60;
         //echo '<pre>';print_r($this->timer);die;
 
@@ -114,12 +114,11 @@ class Transaction extends Model
         $user=\Auth::user();
 
         $buyer_request=$this->buyer_requests->where('user_id',$user->id)->first();
-        $this->user_id=$user->id;
-        $this->type='buy';
 
         if($trans=$user->transactions()->create($this->toArray()))
         {
             $trans->trans_id= $this->generateID();
+            $trans->type= 'buy';
             $trans->save();
             $buyer_request->status='pending';
             $buyer_request->save();

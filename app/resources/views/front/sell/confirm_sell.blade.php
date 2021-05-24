@@ -218,7 +218,7 @@ Route: P2P Trading Platform - sell crypto
 						$('#exampleModal4').modal('show');
 
 						setTimeout(function(){ 
-							window.location = '{{ route("home") }}';
+							window.location = '{{ route("p2p.exchange") }}';
 						}, 2000);
 					}
 					$('body').find('button').prop('disabled', false);
