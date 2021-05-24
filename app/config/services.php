@@ -30,7 +30,7 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
     'sms' =>  [
-        'base_uri'  => "https://2factor.in/API/V1/3d23caae-474d-11eb-8153-0200cd936042",
+        'base_uri'  => "https://2factor.in/API/V1/",
         'secret'  =>  '3d23caae-474d-11eb-8153-0200cd936042',
     ],
     'ipstack' =>  [

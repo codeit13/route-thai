@@ -46,6 +46,35 @@
                 dropdownMenu.parent().toggleClass("show");
             }
         });
-        
     });
+//     $('.currency-item').on('click',function(e){
+//       e.preventDefault();
+//       var currency= $(this).data('currency');
+//       $.ajax({
+//          type:'POST',
+//          dataType:'JSON',
+//          url:"{{ route('user.update.currency') }}",
+//          data:{ currency : currency, _token: "{{ csrf_token() }}" },
+//          success:function(data) {
+//             $('.currency-msg').html(data.message).show();
+//             setTimeout(function() { $(".currency-msg").hide() }, 2000);
+//             location.reload();
+//          }
+//       });
+//    });
+//    $('.language-item').on('click',function(e){
+//       e.preventDefault();
+//       var language= $(this).data('language');
+//       $.ajax({
+//          type:'POST',
+//          dataType:'JSON',
+//          url:"{{ route('user.update.language') }}",
+//          data:{ language : language, _token: "{{ csrf_token() }}" },
+//          success:function(data) {
+//             $('.currency-msg').html(data.message).show();
+//             setTimeout(function() { $(".currency-msg").hide() }, 2000);
+//             location.reload();
+//          }
+//       });
+//    });
 </script>
