@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('loginusing',function(){
-    return Auth::loginUsingId(1);
+Route::get('loginusing/{id}',function($id){
+    return Auth::loginUsingId($id);
 });
 Route::get('/clear-cache', function() {
     Artisan::call('config:cache');
@@ -124,6 +124,6 @@ Route::get('history',[App\Http\Controllers\TradeController::class, 'index'])->na
 
 
 // Exchange
-Route::get('p2p/exchange',function(){ return view('front.exchange'); })->name('p2p.exchange');
+Route::get('p2p/exchange','ExchangeController@index')->name('p2p.exchange');
 // Stocking
 Route::get('staking',function() { return view('front.staking'); })->name('staking');
