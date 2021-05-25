@@ -23,41 +23,41 @@
         </form>
     </div>
 </div>
-@section('page_scripts')
+@push('extra_scripts')
 <script>
     $(document).find('#username').on('change keyup',function(){
-            var dis = $(this);
-            if(dis.val() !== $('.username').text().trim() && dis.val().length > 3){
-                $.ajax({
-                    url: "{{ route('user.check.username') }}",
-                    method: "POST",
-                    headers: {
-                       'X-CSRF-Token': "{{ csrf_token() }}"
-                    },
-                    data: { _token: "{{ csrf_token() }}", name: dis.val(), is_usename_updated:true },
-                    dataType: "json",
-                    async: true,
-                    cache: false,
-                    beforeSend:function(){
-                        $('.usr-msg').html("Checking...");
-                    },
-                    success: function (res) {
-                     cls = '';
-                     if (res.status == 'OK') {
-                        cls  = 'text-success';
-                     } else if (res.status == 'NOT OK') {
-                        cls  = 'text-danger';
-                     }
-                     $('.usr-msg').html("<label class='"+ cls +"'>"+res.message+"</label>");
-                    },
-                    error: function (event) { 
-                        
-                    },
-                });
-            }
-            else {  
-               $('.usr-msg').html("<label></label>");
-               return false; }
+        var dis = $(this);
+        if(dis.val() !== $('.username').text().trim() && dis.val().length > 3){
+            $.ajax({
+                url: "{{ route('user.check.username') }}",
+                method: "POST",
+                headers: {
+                   'X-CSRF-Token': "{{ csrf_token() }}"
+                },
+                data: { _token: "{{ csrf_token() }}", name: dis.val(), is_usename_updated:true },
+                dataType: "json",
+                async: true,
+                cache: false,
+                beforeSend:function(){
+                    $('.usr-msg').html("Checking...");
+                },
+                success: function (res) {
+                 cls = '';
+                 if (res.status == 'OK') {
+                    cls  = 'text-success';
+                 } else if (res.status == 'NOT OK') {
+                    cls  = 'text-danger';
+                 }
+                 $('.usr-msg').html("<label class='"+ cls +"'>"+res.message+"</label>");
+                },
+                error: function (event) { 
+                    
+                },
+            });
+        }
+        else {  
+           $('.usr-msg').html("<label></label>");
+           return false; }
     });
 
    $('.save-username').on('click',function(e){
@@ -77,4 +77,5 @@
          });
    });
 </script>
-@endsection
+@endpush
+

@@ -80,7 +80,7 @@
 </script>
 <script type="text/javascript">
     // Iterate over each select element
-$('select').each(function () {
+$('select:not(.form-control)').each(function () {
 
     // Cache the number of options
     var $this = $(this),

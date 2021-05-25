@@ -188,6 +188,7 @@
  @if(Auth::user()->is_username_updated == false)
    @include('front.user._updateUsername')
  @endif 
+@endsection
  @section('page_scripts')
  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>
    <script>
@@ -308,4 +309,4 @@
    });
  </script>
  @endsection
- @endsection
+
