@@ -32,7 +32,7 @@
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                <li class="nav-item"> <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Crypto</a>
                                </li>
-                               <li class="nav-item"> <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Fiat</a>
+                               <li class="nav-item"> <a onclick="newchart()" class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Fiat</a>
                                </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
@@ -54,7 +54,27 @@
                                      </div>               
                                   </div>
                                </div>
-                               <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                               <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                                   <div class="row under_tabs">
+                                     <div class="col-lg-6">
+                                        <h4>Account Balance: <a href="#">Hide Balance <i class="fal fa-eye-slash"></i></a></h4>
+                                    {{-- <h1>{{ Auth::user()->wallet()->get(['coin','currency_id'])->sum('coin') }}<span>{{ Auth::user()->wallet()->get(['coin','currency_id'])->first()->currency->name }}</span></h1> --}}
+                                        <h3>Estimated Value:</h3>
+                                        <h6 style="font-family: 'Open Sans', sans-serif;">₹108.6</h6>
+                                     </div>
+                                     <div class="col-lg-6 text-center">
+                                        <div class="doughnut">
+                                          <div class="doughnutChartContainer">
+                                            <canvas id="doughnutChart1" height="160"></canvas>
+                                          </div>
+                                          <div id="legend1" class="chart-legend"></div>
+                                        </div>
+                                     </div>               
+                                  </div>
+
+
+                               </div>
                             </div>
                          </div>
                       </div>
@@ -206,9 +226,37 @@
         'rgb(171, 121, 103)',
         'rgb(134, 175, 18)'*/
       ];
-      var labels = ["BNB 1.000", "DoT .5000", "ETH .4000", "Others .1000"];
-      var data = [794, 458, 169, 103];
+
+      @php
+          $labels=$coins=$fiatLabels=$fiatCoins=[];
+      foreach(auth()->user()->wallet()->where('wallet_type','!=',3)->get() as $balance)
+      {
+        if($balance->wallet_type==1)
+        {
+          $labels[]=$balance->currency->short_name.' '.$balance->coin;
+
+          $coins[]=(float)$balance->coin;
+        }
+        else
+        {
+          $fiatLabels[]=$balance->currency->short_name.' '.$balance->coin;
+
+          $fiatCoins[]=(float)$balance->coin;
+        }
+        
+
+      }
+
+      
+
+      @endphp
+      var labels = @json($labels);
+      var data = @json($coins);
+      var fiatLabels = @json($fiatLabels);
+      var fiatCoins = @json($fiatCoins);
       var bgColor = colors;
+
+
       var dataChart = {
         labels: labels,
         datasets: [{
@@ -262,6 +310,46 @@
       var legend = doughnutChart.generateLegend();
       var legendHolder = document.getElementById("legend");
       legendHolder.innerHTML = legend + '';
+
+
+      // second dounhnutchart
+
+      var config2=config;
+
+      var dataChart2 = {
+        labels: fiatLabels,
+        datasets: [{
+          data: fiatCoins,
+          backgroundColor: bgColor
+        }]
+      };
+
+     
+
+
+    var fiatChart=0;
+
+      function newchart()
+      {
+        if(!fiatChart)
+        {
+           config2.data=dataChart2;
+        setTimeout(function()
+        {
+            var ctx1 = document.getElementById("doughnutChart1").getContext("2d");
+         var doughnutChart = new Chart(ctx1, config);
+
+      var legend = doughnutChart.generateLegend();
+      var legendHolder = document.getElementById("legend1");
+      legendHolder.innerHTML = legend + '';
+
+        fiatChart=1;
+        },200);
+
+      }
+        
+      }
+      
 
     $('.btn-toggle').on('click',function(e){
         e.preventDefault();

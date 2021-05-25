@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+
+    
     /**
      * Display a listing of the resource.
      *
@@ -61,7 +63,11 @@ class PaymentController extends Controller
         {
             $user=\Auth::user();
             $user->buyer_request()->create(['transaction_id'=>$transaction->id]);
+
+            $transaction->sendMessage([$transaction->user->mobile],'Your ad has been matched and its pending payment');
+
             $buyer_request=$transaction->checkBuyerRequest();
+
         }
         elseif($buyer_request=='exists')
         {

@@ -127,4 +127,14 @@ class Transaction extends Model
         }
         return $this->checkBuyerRequest();   
     }
+
+    public function sendMessage($mobile,$message)
+    {
+
+      //  print_r($mobile);die;
+        $this->service = new \App\Services\SMSService();
+        echo '<pre>';print_r($this->service->send($mobile,$message));die; 
+    }
+
+
 }

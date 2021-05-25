@@ -54,7 +54,7 @@
                       @endforeach
 
                       
-                    @if(!$request->currency)
+                    @if(!$request->currency && isset($currencies[0]))
 
                       <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         

@@ -193,57 +193,84 @@
 						</div>
 						<div class="col-lg-6 xs-flush col-sm-6 col-12">
 								<div class="white-box">
-									<ul class="nav nav-tabs" id="myTab" role="tablist">
 
-										@foreach($currencies as $c_index => $currency)
-
-
-										@if(isset($currentCurrency) && $currentCurrency)
+									@foreach($currencies as $c_index => $currency)
 
 
+										@php 
 
-										<li class="nav-item">	<a class="nav-link @if($currentCurrency==$currency->id)active @endif" id="li_tab_{{$currency->id}}" data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a>
+										$ulDisplay='d-none';
+
+										if(isset($currentCurrency) && $currentCurrency==$currency->id)
+
+										{
+
+										   $ulDisplay='';
+                                           
+										}
+
+
+										elseif($c_index==0 && !$currentCurrency)
+										{
+											$ulDisplay='';
+										}
+
+										@endphp
+
+									<ul class="nav nav-tabs mainTabs {{$ulDisplay}}" id="MainTab__{{$currency->id}}" role="tablist">
+
+										
+
+
+
+										<li class="nav-item">	<a class="nav-link active" id="li_tab_{{$currency->id}}" data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a>
 
 										</li>
-										@elseif($c_index==0)
+										
 
-										<li class="nav-item">	<a class="nav-link active" id="li_tab_{{$currency->id}}"data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a>
+										{{--<li class="nav-item">	<a class="nav-link active" id="li_tab_{{$currency->id}}"data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a></li>
 
 										@else
 
-										<li class="nav-item">	<a class="nav-link" id="li_tab_{{$currency->id}}" data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a>
+										<li class="nav-item d-none">	<a class="nav-link" id="li_tab_{{$currency->id}}" data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a></li>
 
 
-										@endif
+										@endif --}}
 
 
-										@endforeach
+										
 
 
 								
 									</ul>
+									@endforeach
 								<!-- 	<div class="col-lg-12 xs-flush heading-p text-center col-sm-12 col-12">
 										<p>Network Name: Bitcoin(BTC)&nbsp;&nbsp;Average arrival time: 1 minutes</p>
 									</div> -->
-									<div class="tab-content" id="myTabContent">
+									
 
 										@foreach($currencies as $c_index => $currency)
 
 										@php 
 
-										$tab='';
+										      $tab='';
 
-										
+										      $container='d-none';
+
                                              if($currentCurrency && $currentCurrency==$currency->id)
                                              {
 
                                              $tab='show active';
+
+                                            $container='';
 
                                              }
                                              elseif($c_index==0 && !$currentCurrency)
                                              {
 
                                                $tab='show active';
+                                            $container='';
+
 
                                              }
 										
@@ -252,7 +279,9 @@
 
 										@endphp
 
-										<div class="tab-pane fade {{$tab}}" id="currency_tab_{{$currency->id}}" role="tabpanel" aria-labelledby="home-tab">
+										<div class="tab-content containerTabs {{$container}}" id="myTabContent__{{$currency->id}}">
+
+										<div class="tab-pane fade show active" id="currency_tab_{{$currency->id}}" role="tabpanel" aria-labelledby="home-tab">
 
 												<div class="col-lg-12 xs-flush heading-p text-center col-sm-12 col-12">
 										<p>Network Name: {{__($currency->name)}}({{__($currency->short_name)}})&nbsp;&nbsp;Average arrival time: 1 minutes</p>
@@ -293,6 +322,7 @@
 												</div>
 											</div>
 										</div>
+										</div>
 
 										@endforeach
 
@@ -327,7 +357,7 @@
 										<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
 										<div class="tab-pane fade" id="erc" role="tabpanel" aria-labelledby="contact-tab">...</div>
 										<div class="tab-pane fade" id="btc" role="tabpanel" aria-labelledby="contact-tab">...</div> -->
-									</div>
+									
 								</div>
 							</div>
 					</div>
@@ -417,11 +447,25 @@ $(".currencyDropdown .dropdown-menu .dropdown-item").on("click", function(e) { e
    changeShowBalance(currency_id);
 
 
-      $('#coin_id').val(currency_id);
+    $('#coin_id').val(currency_id);
 
     $('.currencyDropdown .dropdown-toggle').html($(this).html());
 
-    $('#li_tab_'+currency_id).trigger('click');
+    $('.mainTabs').siblings(':not(.d-none)').addClass('d-none');
+
+    //console.log($('#MainTab__'+currency_id));
+
+    
+
+    $('.containerTabs').siblings(':not(.d-none)').addClass('d-none');
+
+    $('#MainTab__'+currency_id).removeClass('d-none');
+
+
+    $('#myTabContent__'+currency_id).removeClass('d-none');
+
+
+   
 });
 
 function changeShowBalance(coin_id)
