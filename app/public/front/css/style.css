@@ -7014,10 +7014,11 @@ a.bell span {
     line-height: 44px;
     padding-left: 8px;
 }
-#wallet-content.request ul.btc li.init img {
+#wallet-content.request ul.btc li.init img , #wallet-content.request ul.btc img  {
     float: left;
     margin-top: 7px;
     margin-right: 10px;
+    max-width:  25px;
 }
 #wallet-content.request ul.btc li.init span {
     color: #b2b2b2;
