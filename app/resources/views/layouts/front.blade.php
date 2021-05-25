@@ -19,5 +19,6 @@
     @include('front._inc._scripts') 
     
     @yield('page_scripts')
+    @stack('extra_scripts')
  </body>
 </html>   
