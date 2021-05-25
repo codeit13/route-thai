@@ -7,9 +7,18 @@
     @include('front._inc._styles')
  </head>
  <body>
+   <div class="loader">
+      <div id="bars">
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+      </div>
+   </div>
     @yield('content')
     @include('front._inc._copyright')
     @include('front._inc._scripts') 
     @yield('page_scripts')
  </body>
-</html>   
+</html>

@@ -54,6 +54,7 @@
                                         <label for="exampleInputPassword1">{{__("Password")}}</label>
                                         <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required id="password-field" autocomplete="cc-additional-name">
                                         <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                        <label id="pswd-err"></label>
                                     </div>
                                     <div class="form-group otp" style="display: none">
                                         <label for="exampleInputEmail1">OTP</label>
@@ -223,46 +224,77 @@ $(".toggle-password").click(function() {
 });
 
 $('#email').on("keyup", function() {
-        var dis = $(this);
-            let email_Validity;
-        if(dis.val().length > 10){
-            jQuery.ajax({
-            type: 'POST',
-            url: "{{ route('email-check') }}",
-            data: {
-                action: "email-check",
-                email: dis.val(),
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(res) {
-                cls = '';
-                if (res.status == 'OK') {
-                email_Validity = false;
-                msg = 'The entered email id is invalid. Please check once.'
-                cls  = 'text-danger';
-                } else if (res.status == 'NOT OK') {
-                email_Validity = true;
-                msg = ''
-                cls  = 'text-success';
-                }
-                if (!email_Validity) {
-                $('#email').removeClass('is-valid');
-                $('#email').addClass('is-invalid');                    
-                } else {
-                $('#email').removeClass('is-invalid');
-                $('#email').addClass('is-valid');
-                }
-                $('#email-err').html("<label class='"+ cls +"'>"+msg+"</label>");
-
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    var dis = $(this);
+    let email_Validity;
+    if(dis.val().length > 10){
+        jQuery.ajax({
+        type: 'POST',
+        url: "{{ route('email-check') }}",
+        data: {
+            action: "email-check",
+            email: dis.val(),
+            _token: "{{ csrf_token() }}"
+        },
+        success: function(res) {
+            cls = '';
+            if (res.status == 'OK') {
+            email_Validity = false;
+            msg = 'The entered email id is invalid. Please check once.'
+            cls  = 'text-danger';
+            } else if (res.status == 'NOT OK') {
+            email_Validity = true;
+            msg = ''
+            cls  = 'text-success';
             }
-        });
-        } else {
-            $('#email-err').html("");
+            if (!email_Validity) {
+            $('#email').removeClass('is-valid');
+            $('#email').addClass('is-invalid');                    
+            } else {
+            $('#email').removeClass('is-invalid');
+            $('#email').addClass('is-valid');
+            }
+            $('#email-err').html("<label class='"+ cls +"'>"+msg+"</label>");
+
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
+    } else {
+        $('#email-err').html("");
+    }
+});
+
+
+
+$('#password-field').on("keyup change", function() {
+    var dis = $(this);
+    let email_Validity;
+        jQuery.ajax({
+        type: 'POST',
+        url: "{{ route('user-check') }}",
+        data: {
+            action: "user-check",
+            email:$('#email').val(),
+            password: dis.val(),
+            _token: "{{ csrf_token() }}"
+        },
+        success: function(res) {
+            cls = '';
+            if (res.status !== 'OK') {
+                $('#send-otp').attr('disabled', true);
+                $('#pswd-err').html("<label class='text-danger'>The entered password is wrong.</label>");
+            } 
+            else {
+                $('#send-otp').attr('disabled', false);
+                $('#pswd-err').html("");
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
 </script>
 @endsection
 @endsection

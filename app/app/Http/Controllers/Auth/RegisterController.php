@@ -138,6 +138,21 @@ class RegisterController extends Controller
         $message = $status == 'OK' ? 'Congrats! You can register with this email address.':'Sorry ! This email address is already registered.';
         return response()->json(['status'=>$status,'message'=>$message]);
     }
+
+    public function isUserExist(Request $request){
+        // $status = User::where('email',$request->email)->count() == 0 ? 'OK': 'NOT OK';
+        // $message = $status == 'OK' ? 'Congrats! You can register with this email address.':'Sorry ! This email address is already registered.';
+        // return response()->json(['status'=>$status,'message'=>$message]);
+        $user = User::where('email',$request->email);
+        $status = 'NOT OK';
+        if($user->count() > 0 ){
+            $hashedPassword = $user->first()->password;
+            if(Hash::check($request->password, $hashedPassword)){
+                $status = 'OK';
+            } 
+        }
+       return response()->json(['status'=>$status]); 
+    }
 }
 
 

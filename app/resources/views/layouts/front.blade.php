@@ -8,6 +8,16 @@
     @yield('page_styles')
  </head>
  <body>
+  <div class="loader">
+      <div id="bars">
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+      </div>
+   </div>
+        
     @include('front._inc._nav')
 
     @yield('content')
