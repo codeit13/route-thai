@@ -45,30 +45,36 @@ class PaymentController extends Controller
      */
     public function show($transaction)
     {
-        $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
-
-        $buyer_request=$transaction->checkBuyerRequest();
-
-        if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
-        {
-            return redirect()->route('payment.order.cancel',$transaction->trans_id);
-        }
-        else if(isset($buyer_request->is_expired) && !$buyer_request->is_expired && $buyer_request->status=='pending')
-        {
-            return redirect()->route('payment.order.release',$transaction->trans_id);
-        }
-        elseif(!$buyer_request)
-        {
-            $user=\Auth::user();
-            $user->buyer_request()->create(['transaction_id'=>$transaction->id]);
+        $transaction=\App\Models\Transaction::where('trans_id',$transaction)
+                                                ->where('user_id','!=',auth()->user()->id)
+                                                ->first();
+        
+        if ($transaction) {
             $buyer_request=$transaction->checkBuyerRequest();
-        }
-        elseif($buyer_request=='exists')
-        {
-            return redirect()->back();
-        }
 
-        return view('front.payment.payment-request',compact('transaction','buyer_request'));
+            if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
+            {
+                return redirect()->route('payment.order.cancel',$transaction->trans_id);
+            }
+            else if(isset($buyer_request->is_expired) && !$buyer_request->is_expired && $buyer_request->status=='pending')
+            {
+                return redirect()->route('payment.order.release',$transaction->trans_id);
+            }
+            elseif(!$buyer_request)
+            {
+                $user=\Auth::user();
+                $user->buyer_request()->create(['transaction_id'=>$transaction->id]);
+                $buyer_request=$transaction->checkBuyerRequest();
+            }
+            elseif($buyer_request=='exists')
+            {
+                return redirect()->back();
+            }
+
+            return view('front.payment.payment-request',compact('transaction','buyer_request'));
+        }    
+
+        return redirect()->back();                                            
     }
 
     /**

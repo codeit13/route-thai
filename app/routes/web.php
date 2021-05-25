@@ -86,35 +86,24 @@ Route::middleware('auth')->group(function(){
 // Trade routes
 
     Route::prefix('trade')->group(function(){
+        //sell crypt
+        Route::prefix('sell')->group(function(){
+            Route::get('create','SellController@create')->name('sell.create');
+            Route::post('create-sell','SellController@saveSell')->name('sell.save_sell');
+        	Route::post('create-sell/confirm','SellController@confirmSell')->name('sell.confirm_sell');
+            Route::get('{trans_id}/buy-request','SellController@buyRequest')->name('sell.buyer_request');
+            Route::post('{trans_id}/buy-request/confirm','SellController@buyRequestConfrim')->name('sell.buyer_request_confrim');
+            Route::get('{trans_id}/confirm-receipt','SellController@confirmReceipt')->name('sell.confirm_receipt');
+        	Route::get('{trans_id}/success','SellController@orderSuccess')->name('sell.order_success');
+        });
 
-
-
-    //sell crypt
-    Route::prefix('sell')->group(function(){
-        Route::get('create','SellController@create')->name('sell.create');
-        Route::post('create-sell','SellController@saveSell')->name('sell.save_sell');
-    	Route::post('create-sell/confirm','SellController@confirmSell')->name('sell.confirm_sell');
-        Route::get('{trans_id}/buy-request','SellController@buyRequest')->name('sell.buyer_request');
-        Route::post('{trans_id}/buy-request/confirm','SellController@buyRequestConfrim')->name('sell.buyer_request_confrim');
-        Route::get('{trans_id}/confirm-receipt','SellController@confirmReceipt')->name('sell.confirm_receipt');
-    	Route::get('{trans_id}/success','SellController@orderSuccess')->name('sell.order_success');
-
-
-       
-
+        Route::get('buyer/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
+        Route::get('buyer/payment/{transaction}/cancel',[App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.order.cancel');
+        Route::get('buyer/payment/{transaction}/release',[App\Http\Controllers\PaymentController::class, 'release'])->name('payment.order.release');
+        Route::get('buyer/payment/{transaction}/confirm',[App\Http\Controllers\PaymentController::class, 'confirm'])->name('payment.order.confirm');
+        Route::get('buyer/payment/{transaction}/status',[App\Http\Controllers\PaymentController::class, 'status'])->name('payment.order.status');
+        Route::get('history',[App\Http\Controllers\TradeController::class, 'index'])->name('trade.history');
     });
-
-     Route::get('buyer/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
-Route::get('buyer/payment/{transaction}/cancel',[App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.order.cancel');
-Route::get('buyer/payment/{transaction}/release',[App\Http\Controllers\PaymentController::class, 'release'])->name('payment.order.release');
-Route::get('buyer/payment/{transaction}/confirm',[App\Http\Controllers\PaymentController::class, 'confirm'])->name('payment.order.confirm');
-Route::get('buyer/payment/{transaction}/status',[App\Http\Controllers\PaymentController::class, 'status'])->name('payment.order.status');
-
-
-Route::get('history',[App\Http\Controllers\TradeController::class, 'index'])->name('trade.history');
-
-
-});
 
 
 //end

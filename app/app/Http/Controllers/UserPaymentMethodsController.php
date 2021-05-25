@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\PaymentMethods;
-use App\Models\UserPaymentMehods;
+use App\Models\PaymentMethod;
+use App\Models\UserPaymentMethod;
 use App\Http\Requests\AddPaymentMethodRequest;
 use Auth;
 use MediaUploader;
@@ -18,7 +18,7 @@ class UserPaymentMethodsController extends Controller
      */
     public function index()
     {
-        $payment_methods = PaymentMethods::all();
+        $payment_methods = PaymentMethod::all();
         return view('front.user.payments',compact('payment_methods'));
     }
 
@@ -29,7 +29,7 @@ class UserPaymentMethodsController extends Controller
      */
     public function create($mode)
     {
-        $payment_method = PaymentMethods::where('name',$mode)->first();
+        $payment_method = PaymentMethod::where('name',$mode)->first();
         return view('front.user.add_payment',compact('payment_method'));
     }
 
@@ -45,7 +45,7 @@ class UserPaymentMethodsController extends Controller
         $pm = $request->except('_token');
         $pm['payment_method_id'] = (int)$request->payment_method_id;
         $pm['user_id'] = Auth::user()->id;
-        $pMethod  = UserPaymentMehods::create($pm);
+        $pMethod  = UserPaymentMethod::create($pm);
         if($request->hasFile('qr-code')) {
             $media = MediaUploader::fromSource($request->file('qr-code'))
                 ->toDestination('uploads', 'payment/qrs')
@@ -74,8 +74,8 @@ class UserPaymentMethodsController extends Controller
      */
     public function edit($id)
     {
-        $user_payment_method = UserPaymentMehods::find($id);
-        $payment_method = PaymentMethods::find($user_payment_method->payment_method_id);
+        $user_payment_method = UserPaymentMethod::find($id);
+        $payment_method = PaymentMethod::find($user_payment_method->payment_method_id);
         
         return view('front.user.edit_payment',compact('payment_method','user_payment_method'));
     }
@@ -89,7 +89,7 @@ class UserPaymentMethodsController extends Controller
      */
     public function update(AddPaymentMethodRequest $request, $id)
     {   
-        $upm = UserPaymentMehods::find($id);
+        $upm = UserPaymentMethod::find($id);
         $upm->account_number = $request->account_number;
         $upm->account_label = $request->account_label;
         $upm->ifs_code = $request->has('ifs_code') ? $request->ifs_code : $upm->ifs_code; 
@@ -107,7 +107,7 @@ class UserPaymentMethodsController extends Controller
      */
     public function destroy($id)
     {
-        UserPaymentMehods::destroy($id);
+        UserPaymentMethod::destroy($id);
         return redirect()->route('user.payments')->with('message','The payment method has been deleted.');
     }
 }

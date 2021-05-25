@@ -156,7 +156,7 @@
 											<img src="{{$payment_method->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_method->name)}}"/>
 
 									
-											@endif</a>{{__($payment_method->payment_method->name)}}</h3>
+											@endif</a>{{__($payment_method->payment_methods->name)}}</h3>
 												</div>
 												<div class="field">
 													<div class="row">

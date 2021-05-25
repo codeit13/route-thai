@@ -125,7 +125,7 @@ Route: P2P Trading Platform
                                     <th scope="col" class="res_po">Advertisers</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Limit/Available</th>
-                                    <th scope="col">Trade <span>0 Fee</span>
+                                    <th scope="col" class="text-center">Trade <span>0 Fee</span>
                                     </th>
                                 </tr>
                             </thead>
