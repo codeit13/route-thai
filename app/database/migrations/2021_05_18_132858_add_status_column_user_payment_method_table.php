@@ -14,8 +14,6 @@ class AddStatusColumnUserPaymentMethodTable extends Migration
     public function up()
     {
         Schema::table('user_payment_methods', function (Blueprint $table) {
-            $table->string('qr-code')->nullable();
-            $table->enum('type',['current','saving'])->nullable();
         });
     }
 
