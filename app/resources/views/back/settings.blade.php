@@ -51,17 +51,16 @@ text-decoration: none !important; }
     $loanable = [];
     $f_currencies_list = $currencies_list = [];
     foreach($currencies as $currency) {
-        $list[$currency->short_name] = ['name'=> $currency->name, 'img'=>$currency->media()->first()->getUrl()];
-        $coins[] = $currency->short_name;
+        $list[trim($currency->short_name)] = ['name'=> trim($currency->name), 'img'=>$currency->media()->first()->getUrl()];
+        $coins[] = trim($currency->short_name);
         if($currency->is_tradable == 1)
-        $tradable[] = $currency->short_name;
-        // $tradable[$currency->short_name] = ['name'=> $currency->name, 'img'=>$currency->media()->first()->getUrl()];
+        $tradable[$currency->short_name] = ['name'=> trim($currency->name), 'img'=>$currency->media()->first()->getUrl()];
         if($currency->is_loanable == 1)
         $loanable[] = $currency->short_name;
     }   
     foreach($f_currencies as $currency) {
-        $f_currencies_list[] = $currency->short_name;
-        $currencies_list[$currency->short_name] = ['name'=> $currency->name, 'img'=>$currency->media()->first()->getUrl()];
+        $f_currencies_list[] = trim($currency->short_name);
+        $currencies_list[trim($currency->short_name)] = ['name'=> trim($currency->name), 'img'=>$currency->media()->first()->getUrl()];
     }
 @endphp
 <div class="container py-5">
@@ -114,10 +113,11 @@ text-decoration: none !important; }
 <script type="text/javascript" src="https://cdn.rawgit.com/prashantchaudhary/ddslick/master/jquery.ddslick.min.js" ></script>
 
 <script>
-var coinsList = JSON.parse('@php echo json_encode($coins); @endphp');
-var coinsAlertsList = JSON.parse('@php echo json_encode($list); @endphp');
-var currencyList = JSON.parse('@php echo json_encode($f_currencies_list); @endphp');
-var currencyDetails = JSON.parse('@php echo json_encode($currencies_list); @endphp');
+var coinsList = JSON.parse('@php echo json_encode($coins, TRUE) ; @endphp');
+var coinsAlertsList = JSON.parse('@php echo json_encode($list, TRUE); @endphp');
+var currencyList = JSON.parse('@php echo json_encode($f_currencies_list, TRUE); @endphp');
+var currencyDetails = JSON.parse('@php echo json_encode($currencies_list, TRUE); @endphp');
+var coinLoanInfo = JSON.parse('@php echo json_encode($loanable, TRUE); @endphp');
 
 // console.log(coinsList); 
   Object.keys(coinsAlertsList).forEach((coinInfo) => {
@@ -147,7 +147,7 @@ $(document).ready(function(){
         items: coinsList,
         choices: coinsList,
     });
-    multipleCancelButton.setValue(['@php echo implode("','",$tradable); @endphp']);
+    multipleCancelButton.setValue(['@php echo implode("','",array_keys($tradable)); @endphp']);
 
     var currencyListSelector = new Choices('#currency-list', {
         removeItemButton: true,
@@ -157,6 +157,7 @@ $(document).ready(function(){
         items: [],
         choices: [],
     });    
+    currencyListSelector.setValue(['@php echo implode("','",$f_currencies_list); @endphp']);
     var currencyLoanListSelector = new Choices('#coin-loan-list', {
         removeItemButton: true,
         maxItemCount:10,

@@ -72,7 +72,7 @@
                             <label>Currency</label>
                             <div class="dropdown currency_two three_coins crypto">
                                @php 
-                                 $currencies = \App\Models\Currency::where('type_id',1)->get();
+                                 $currencies = \App\Models\Currency::where('type_id',2)->get();
                                  $default_currency = !empty(Auth::user()->default_currency) ? \App\Models\Currency::find(Auth::user()->default_currency) : \App\Models\Currency::first();
                                @endphp
                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -85,7 +85,7 @@
                               </div>
                             </div>
                             <label>Language</label>
-                         {{--   <div class="dropdown currency_two three_coins crypto">
+                        <div class="dropdown currency_two three_coins crypto">
                               @php 
                               $languages = \App\Models\Language::all();
                               $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
@@ -98,7 +98,7 @@
                                     <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">{{ $item->name}}</a>
                                 @endforeach
                               </div>
-                            </div> --}}
+                            </div>
                             <div class="sn_notificatio">
                                <i class="fal fa-comment-alt-lines"></i>
                                SMS Notification

@@ -39,7 +39,8 @@ Payment Methods - Route: P2P Trading Platform
                         {{ session()->get('message') }}
                      </div>
                    @endif
-                   @if(Auth::user()->user_payment_method != null)
+
+                   @if(Auth::user()->user_payment_method->count() > 0 )
                      <div class="row row-eq-height">
                      @foreach (Auth::user()->user_payment_method as $item)
                      <div class="col-lg-6 col-xs-12 flush-left  xs-flush">
