@@ -48,7 +48,6 @@ class LoginController extends Controller
     }
     
     protected function guard(){
-        if(!Auth::guard('admin')->check())
         return Auth::guard('admin');
     }
 

@@ -7,6 +7,7 @@ use App\Models\PaymentMethods;
 use App\Models\UserPaymentMehods;
 use App\Http\Requests\AddPaymentMethodRequest;
 use Auth;
+use MediaUploader;
 
 class UserPaymentMethodsController extends Controller
 {
