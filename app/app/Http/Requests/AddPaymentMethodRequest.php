@@ -23,10 +23,9 @@ class AddPaymentMethodRequest extends FormRequest
      */
     public function rules()
     {
-        $rule = request()->payment_method_id == '1' ? 'required|string' : 'required|string|unique:user_payment_methods';
         $rule2 = request()->payment_method_id == '1' ? 'required|string' : 'required|string|digits_between:9,18';
         return [
-            "account_label" =>  $rule,
+            "account_label" =>  "required|string",
             "account_number" =>  $rule2,
             "bank_name" =>  'sometimes|string',
             "ifs_code" =>  'sometimes|string',

@@ -13,7 +13,10 @@
 <script src="{{asset('front/js/offcanvas.js') }}" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
+$(window).load(function() {
+    $(".loader").fadeOut(2000);
+});
+$(document).ready(function(){
         $("#footer ul li.Company:first-child").click(function(){
             $("ul.Company-main li").toggle();
         });
@@ -143,4 +146,6 @@ $('select:not(.form-control)').each(function () {
     });
 
 });
+
+
 </script>
