@@ -84,7 +84,7 @@
                                 </div>
                                 </li>
                             <li>
-                                <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i></div>
+                            <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i></div>
                             </li>
                             @else
                             @php $wallet_types = \App\Models\CurrencyType::all(); @endphp
@@ -107,7 +107,6 @@
                                         <li><a href="{{route('wallet.request.history')}}">{{__('History ( Deposit & Withdraw ) ')}}</a></li> --}}
                                             <li><a href="{{route('trade.history')}}">{{__('Trade History')}}</a></li>
                                         </ul>
-                                    </ul>
                                 </div>
                             </li>
                             <li class="onsubmenu">
