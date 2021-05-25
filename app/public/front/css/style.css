@@ -35,7 +35,7 @@
 
     --mobile-white:#ffffff;
     --loader-bar: #00c98e;
-    --loader-bg: #ffffff;    
+    --loader-bg: #171924;    
 }
 .dark-mode {
     --body-bg-2: #161625;
@@ -73,8 +73,8 @@
     --gray_head:#5d5d5f42;
 
     --mobile-white:#17171a;
-    --loader-bar: #ffffff;
-    --loader-bg: #00c98e;
+    --loader-bar: #00c98e;
+    --loader-bg: #171924;
     
 }
 @font-face {
