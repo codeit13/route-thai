@@ -17,7 +17,7 @@
               </div>
               <div class="col-lg-6 text-right col-sm-6 col-6">  
                 <a href="#" class="btn-success">{{__('Transfer')}}</a>
-                <a href="#" class="btn-primary">{{__('P2P Trading')}}</a>
+                <a href="{{route('p2p.exchange')}}" class="btn-primary">{{__('P2P Trading')}}</a>
                 <!--
                 <a class="mobile-tag" href="#">
                   <img src="img/icon-13.png" alt="" />
@@ -65,9 +65,20 @@
                   @csrf
                   <div class="field">
                     <label>{{__('Coin')}}</label>
-                    <div class="dropdown currency_two three_coins crypto">
+                    <div class="dropdown currency_two three_coins crypto currencyDropdown">
+
+                      @php
+
+                       if(!(isset($currenctCurrency)))
+                      {
+                          $currentCurrency=old("currency_id");
+                      }
+
+                        @endphp
 
                         @foreach($currencies as $cIndex=> $currency)
+
+
 
                     @if($currency->id==$currentCurrency)
 
@@ -88,7 +99,7 @@
                       @endforeach
 
                       
-                    @if(!$currentCurrency)
+                    @if(!$currentCurrency && isset($currencies[0]->id))
 
                       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         
@@ -136,7 +147,7 @@
                         <a class="dropdown-item" href="#"><img src="img/icon-6.png" alt=""> BNB <span>BNB</span></a> -->
                       </div>
                     </div>
-                    <input type="hidden" name="currency_id" id="coin_id" value="{{($currentCurrency)?$currentCurrency:$currencies[0]->id}}"/>
+                    <input type="hidden" name="currency_id" id="coin_id" value="{{($currentCurrency)?$currentCurrency:$currencies[0]->id??''}}"/>
                           @error('currency_id')
                                 <p class="invalid-value" role="alert">
                                     <strong>{{ __($message) }}</strong>
@@ -147,7 +158,7 @@
                     <label>{{__('Total Quantity')}}</label>
                    
                                   
-                                        <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"   required="" id="quantity" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus="">
+                                        <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"   required="" id="quantity" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus="" value="{{ old('quantity') }}">
                                     
                                      @error('quantity')
                                 <p class="invalid-value" role="alert">
@@ -160,7 +171,7 @@
                     <label>{{__('Address')}}</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <textarea name="address" placeholder="Wallet Details"></textarea>
+                        <textarea name="address" placeholder="Wallet Details">{{old('address')}}</textarea>
                       </div>
                    
                     </div>
@@ -289,7 +300,7 @@
         allOptions.toggle();
     });
 
-    $(".currency_two .dropdown-menu .dropdown-item").on("click", function(e) { e.preventDefault();
+    $(".currencyDropdown .dropdown-menu .dropdown-item").on("click", function(e) { e.preventDefault();
 
       var currency_id=$(this).attr('data-id');
 
@@ -297,13 +308,17 @@
 
 
       $('#coin_id').val(currency_id);
-    $('.currency_two .dropdown-toggle').html($(this).html());
+    $('.currencyDropdown .dropdown-toggle').html($(this).html());
 });
+
+    var selectedCurrencyBalance=0;
 
     function changeShowBalance(coin_id)
 {
 
-    var balance='0.00000000';
+    var balance='0.00000';
+
+    selectedCurrencyBalance=balance;
 
     var balanceRow=wallets.filter(function(wallet){
           return wallet.currency_id==coin_id;
@@ -323,15 +338,42 @@
     if( balanceRow && typeof balanceRow.coin !='undefined')
     {
          balance=balanceRow.coin + ' '+currencyRow.short_name;
+
+         selectedCurrencyBalance=balanceRow.coin;
+
     }
+
 
     $('#totalBalance').text(balance);
 }
 
-var currentCurrency='{{($currentCurrency)?$currentCurrency:$currencies[0]->id}}';
+var currentCurrency='{{($currentCurrency)?$currentCurrency:$currencies[0]->id??''}}';
 
 
 changeShowBalance(currentCurrency);
+
+$(document).on('keyup','#quantity',function()
+{
+
+    var quantity=parseFloat($(this).val());
+
+    $(this).next('.validateError').remove();
+  
+    selectedCurrencyBalance=parseFloat(selectedCurrencyBalance);
+
+    if(selectedCurrencyBalance < quantity)
+    {
+      $(this).addClass('is-invalid');
+
+      $(this).after('<p class="text-danger text-bold validateError">{{__("Withdraw quantity should be less than available balance.")}}</p>');
+    }
+    else
+    {
+      $(this).removeClass('is-invalid');
+
+    }
+
+})
 
   </script>
 

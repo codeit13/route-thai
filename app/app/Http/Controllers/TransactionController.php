@@ -105,7 +105,8 @@ class TransactionController extends Controller
 
         $currency_types=\App\Models\CurrencyType::where('id','!=',3)->get();
 
-        $wallets=\Auth::user()->wallet;
+        $wallets=\Auth::user()->wallet()->where('wallet_type','!=',3)->get();
+        
 
         
         $currentCurrency=$currency;
@@ -124,6 +125,8 @@ class TransactionController extends Controller
         {
             $currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
         }
+
+       
 
 
         return view('front.wallet.wallet-deposit',compact('currency_types','walletType','currencies','currentCurrency','wallets'));
@@ -251,7 +254,7 @@ class TransactionController extends Controller
         
         $currentCurrency=$currency;
 
-        $wallets=\Auth::user()->wallet;
+        $wallets=\Auth::user()->wallet()->where('wallet_type','!=',3)->get();
 
 
 
@@ -287,7 +290,7 @@ class TransactionController extends Controller
     {
 
     
-        $request->validate(['quantity' =>'required|numeric','currency_id'=>'required|numeric','address'=>'required']);
+        $request->validate(['quantity' =>['required','numeric',new \App\Rules\CheckWalletBalance($request)],'currency_id'=>'required|numeric','address'=>'required']);
 
         $type='withdraw';  //for withdraw
  
@@ -350,4 +353,7 @@ class TransactionController extends Controller
  
         return view('front.wallet.p2p-wallet',compact('walletType','currencies'));
     }
+
+
+     
 }
