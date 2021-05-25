@@ -100,8 +100,13 @@
                                         <li><a href="{{route('wallet.deposit')}}">{{__('Deposit')}}</a></li>
                                         <li><a href="{{route('wallet.withdraw')}}">{{__('Withdraw')}}</a></li>
                                         <li><a href="{{route('wallet.request.history')}}">{{__('History ( Deposit & Withdraw ) ')}}</a></li>
-
-                                        <li><a href="{{route('trade.history')}}">{{__('Trade History')}}</a></li>
+                                        {{-- <li><a href="{{route('wallet.history')}}">{{__('Crypto and Fiat')}}</a></li>   
+                                        <li><a href="{{route('wallet.p2p')}}">{{__('P2P')}}</a></li>                                     
+                                        <li><a href="{{route('wallet.deposit')}}">{{__('Deposit')}}</a></li>
+                                        <li><a href="{{route('wallet.withdraw')}}">{{__('Withdraw')}}</a></li>
+                                        <li><a href="{{route('wallet.request.history')}}">{{__('History ( Deposit & Withdraw ) ')}}</a></li> --}}
+                                            <li><a href="{{route('trade.history')}}">{{__('Trade History')}}</a></li>
+                                        </ul>
                                     </ul>
                                 </div>
                             </li>

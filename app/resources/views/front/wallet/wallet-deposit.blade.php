@@ -57,99 +57,108 @@
 
 
 
-								<div class="field">
-									<label>Coin</label>
+								  <div class="field">
+                    <label>{{__('Coin')}}</label>
+                    <div class="dropdown currency_two three_coins crypto currencyDropdown">
 
-									<ul class="btc">
-										@foreach($currencies as $cIndex=> $currency)
+                    	@php
 
-										@if($currency->id==$currentCurrency)
+                       if(!(isset($currenctCurrency)) && !$currentCurrency)
+                      {
+                          $currentCurrency=old("currency_id");
+                      }
 
+                        @endphp
 
+                        @foreach($currencies as $cIndex=> $currency)
 
-										<li data-value="{{$currency->id}}" class="init">
+                    @if($currency->id==$currentCurrency)
 
-
-
-											@if($currency->hasMedia('icon'))
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        
+                      @if($currency->hasMedia('icon'))
     
                                       
 
-											<img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
 
-											@endif
+                      @endif
 
-											{{__($currency->short_name)}} <span>{{__($currency->name)}}</span></li>
+                      {{__($currency->short_name)}} <span>{{__($currency->name)}}</span>
+                      </button>
+                      @endif
 
-											@elseif(!$currentCurrency && $cIndex==0)
+                      @endforeach
 
-												<li data-value="{{$currency->id}}" class="init">
+                      
+                    @if(!$currentCurrency && isset($currencies[0]->id))
 
 
 
-											@if($currency->hasMedia('icon'))
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        
+                      @if($currencies[0]->hasMedia('icon'))
     
                                       
 
-											<img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
 
-											@endif
+                      @endif
 
-											{{__($currency->short_name)}} <span>{{__($currency->name)}}</span></li>
-
-											@endif
-
-												<li data-value="{{$currency->id}}" class="">
+                      {{__($currencies[0]->short_name)}} <span>{{__($currencies[0]->name)}}</span>
+                      </button>
 
 
 
-											@if($currency->hasMedia('icon'))
+                    @endif
+
+
+
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                           @foreach($currencies as $cIndex=> $currency)
+
+                            <a class="dropdown-item" data-id="{{$currency->id}}" href="#">
+
+                                 @if($currency->hasMedia('icon'))
     
                                       
 
-											<img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
 
-											@endif
+                      @endif
 
-											{{__($currency->short_name)}} <span>{{__($currency->name)}}</span></li>
+                      {{__($currency->short_name)}} <span>{{__($currency->name)}}</span>
 
 
 
-											
+                            </a>
 
-									
 
-										@endforeach
-									</ul>
-									      @error('currency_id')
+                    @endforeach
+                           <!--    <a class="dropdown-item" href="#"><img src="img/bitcoin.png" alt=""> BTC <span>Bitcoin</a>
+                        <a class="dropdown-item" href="#"><img src="img/icon-5.png" alt=""> ETH <span>Ethereum</a>
+                        <a class="dropdown-item" href="#"><img src="img/icon-6.png" alt=""> BNB <span>BNB</span></a> -->
+                      </div>
+                    </div>
+                    <input type="hidden" name="currency_id" id="coin_id" value="{{($currentCurrency)?$currentCurrency:($currencies[0]->id??'')}}"/>
+                          @error('currency_id')
                                 <p class="invalid-value" role="alert">
                                     <strong>{{ __($message) }}</strong>
                                 </p>
                                 @enderror
-									<input type="hidden" name="currency_id" id="coin_id" value="{{($currentCurrency)?$currentCurrency:$currencies[0]->id}}"/>
 
-									<span class="total">{{__('Total balance')}}: <b id="totalBalance">0.00000000 {{__('BTC')}}</b></span>
-								</div>
+                                <span class="total">{{__('Total balance')}}: <b id="totalBalance">0.00000000 {{__('BTC')}}</b></span>
+                  </div>
 
-								<div class="field">
-									<div class="dropdown currency_two three_coins crypto">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											<img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}" alt=""> BTC <span>Bitcoin</span>
-										</button>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item" href="#"><img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}" alt=""> BTC <span>Bitcoin</a>
-											<a class="dropdown-item" href="#"><img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}" alt=""> ETH <span>Ethereum</a>
-											<a class="dropdown-item" href="#"><img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}" alt=""> BNB <span>BNB</span></a>
-										</div>
-									</div>
-								</div>
+						
 
 						
 								<div class="field qq">
 									<!-- <label>Quantity</label> -->
 									<div class="form-group">
                                         <label for="quantity">{{__('Quantity')}}</label>
-                                        <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"   required="" id="quantity" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus="">
+                                        <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"   required="" id="quantity" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus="" value="{{old('quantity')}}">
                                     </div>
                                      @error('quantity')
                                 <p class="invalid-value" role="alert">
@@ -185,33 +194,81 @@
 						<div class="col-lg-6 xs-flush col-sm-6 col-12">
 								<div class="white-box">
 									<ul class="nav nav-tabs" id="myTab" role="tablist">
-										<li class="nav-item">	<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">BTC</a>
+
+										@foreach($currencies as $c_index => $currency)
+
+
+										@if(isset($currentCurrency) && $currentCurrency)
+
+
+
+										<li class="nav-item">	<a class="nav-link @if($currentCurrency==$currency->id)active @endif" id="li_tab_{{$currency->id}}" data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a>
+
 										</li>
-										<li class="nav-item">	<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">BEP2</a>
-										</li>
-										<li class="nav-item">	<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">BEP20 (BSC)</a>
-										</li>
-										<li class="nav-item">	<a class="nav-link" id="contact-tab" data-toggle="tab" href="#erc" role="tab" aria-controls="erc" aria-selected="false">ERC20</a>
-										</li>
-										<li class="nav-item">	<a class="nav-link" id="contact-tab" data-toggle="tab" href="#btc" role="tab" aria-controls="btc" aria-selected="false">BTC(SegWit)</a>
-										</li>
+										@elseif($c_index==0)
+
+										<li class="nav-item">	<a class="nav-link active" id="li_tab_{{$currency->id}}"data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a>
+
+										@else
+
+										<li class="nav-item">	<a class="nav-link" id="li_tab_{{$currency->id}}" data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a>
+
+
+										@endif
+
+
+										@endforeach
+
+
+								
 									</ul>
-									<div class="col-lg-12 xs-flush heading-p text-center col-sm-12 col-12">
+								<!-- 	<div class="col-lg-12 xs-flush heading-p text-center col-sm-12 col-12">
 										<p>Network Name: Bitcoin(BTC)&nbsp;&nbsp;Average arrival time: 1 minutes</p>
-									</div>
+									</div> -->
 									<div class="tab-content" id="myTabContent">
-										<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+										@foreach($currencies as $c_index => $currency)
+
+										@php 
+
+										$tab='';
+
+										
+                                             if($currentCurrency && $currentCurrency==$currency->id)
+                                             {
+
+                                             $tab='show active';
+
+                                             }
+                                             elseif($c_index==0 && !$currentCurrency)
+                                             {
+
+                                               $tab='show active';
+
+                                             }
+										
+									
+
+
+										@endphp
+
+										<div class="tab-pane fade {{$tab}}" id="currency_tab_{{$currency->id}}" role="tabpanel" aria-labelledby="home-tab">
+
+												<div class="col-lg-12 xs-flush heading-p text-center col-sm-12 col-12">
+										<p>Network Name: {{__($currency->name)}}({{__($currency->short_name)}})&nbsp;&nbsp;Average arrival time: 1 minutes</p>
+									</div>
+
 											<div class="gray-c">
 												<div class="col-12">
-													<h6>Address</h6>
+													<h6>{{__("Address")}}</h6>
 												</div>
 												<div class="col-12">
 													<div class="row">
 														<div class="col-6 col-sm-6 col-lg-6">
-															<h3>1JFAe8qq9wshJRLkdia3zZ94Nk9VLc4W3y</h3>
+															<h3>{{$currency->deposit_address->address??''}}</h3>
 														</div>
 														<div class="col-6 text-right col-sm-6 col-lg-6">
-															<img class="small_mobiledd" src="img/icon-14.png" alt="">
+															<img class="small_mobiledd" src="{{asset('front/img/icon-14.png')}}" alt="">
 														</div>
 													</div>
 												</div>
@@ -219,16 +276,27 @@
 											<div class="col-12 btc-c">
 												<div class="row">
 													<div class="col-lg-9 col-sm-8 col-8">
-														<h5>Send only BTC to this deposit address.</h5>
-														<p>Sending coin or token other than BTC to this address may result in the loss of your deposit.</p>
+														<h5>Send only {{__($currency->short_name)}} to this deposit address.</h5>
+														<p>Sending coin or token other than {{__($currency->short_name)}} to this address may result in the loss of your deposit.</p>
 													</div>
 													<div class="col-lg-3 text-center col-sm-4 col-4">
-														<img class="small_mobile" src="{{asset('front/img/icon-15.png')}}" alt="">
+
+														   @if($currency->hasMedia('icon'))
+    
+                                      
+
+                      <img class="small_mobile" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+
+                      @endif
+													<!-- 	<img class="small_mobile" src="{{asset('front/img/icon-15.png')}}" alt=""> -->
 													</div>
 												</div>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+										@endforeach
+
+									<!-- 	<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 											<div class="gray-c">
 												<div class="col-12">
 													<h6>Address</h6>
@@ -258,7 +326,7 @@
 										</div>
 										<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
 										<div class="tab-pane fade" id="erc" role="tabpanel" aria-labelledby="contact-tab">...</div>
-										<div class="tab-pane fade" id="btc" role="tabpanel" aria-labelledby="contact-tab">...</div>
+										<div class="tab-pane fade" id="btc" role="tabpanel" aria-labelledby="contact-tab">...</div> -->
 									</div>
 								</div>
 							</div>
@@ -342,10 +410,24 @@ $("ul.btc").on("click", "li:not(.init)", function() {
     $('#coin_id').val(coin_id);
 });
 
+$(".currencyDropdown .dropdown-menu .dropdown-item").on("click", function(e) { e.preventDefault();
+
+      var currency_id=$(this).attr('data-id');
+
+   changeShowBalance(currency_id);
+
+
+      $('#coin_id').val(currency_id);
+
+    $('.currencyDropdown .dropdown-toggle').html($(this).html());
+
+    $('#li_tab_'+currency_id).trigger('click');
+});
+
 function changeShowBalance(coin_id)
 {
 
-    var balance='0.00000000';
+    var balance='0.00000';
 
 
     var balanceRow=wallets.filter(function(wallet){
@@ -371,7 +453,7 @@ function changeShowBalance(coin_id)
     $('#totalBalance').text(balance);
 }
 
-var currentCurrency='{{($currentCurrency)?$currentCurrency:$currencies[0]->id}}';
+var currentCurrency='{{($currentCurrency)?$currentCurrency:$currencies[0]->id??''}}';
 
 
 changeShowBalance(currentCurrency);

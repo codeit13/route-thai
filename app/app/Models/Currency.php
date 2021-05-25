@@ -17,6 +17,11 @@ class Currency extends Model
     	return $this->belongsTo('App\Models\CurrencyType','type_id','id');
     }
 
+    public function deposit_address()
+    {
+        return $this->hasOne('App\Models\DepositAddress','currency_id','id');
+    }
+
 
 
 
