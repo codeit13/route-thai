@@ -187,12 +187,18 @@ class TransactionController extends Controller
 
 
 
+           
+           $transaction->sendMessage([$transaction->user->mobile],' Your '.$type.' request of' .$transaction->trans_amount.' '.$transaction->currency->short_name.' has been approved');
+
+
         }
         else
         {
 
              $currency_type=\App\Models\Currency::find($transaction->currency_id)->type_id;
              $transaction->user->wallet()->create(['coin'=>$transaction->trans_amount,'currency_id'=>$transaction->currency_id,'wallet_type'=>$currency_type]);
+
+             $transaction->sendMessage([$transaction->user->mobile],' Your '.$type.' request of' .$transaction->trans_amount.' '.$transaction->currency->short_name.' has been approved');
         }
     }
 }

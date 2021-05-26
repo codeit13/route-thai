@@ -136,7 +136,15 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
                                         @foreach($currencies as $cIndex=> $currency)
-                                            <a class="dropdown-item myLink currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}><img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}">{{ $currency->name }} <span> {{ $currency->short_name }}</span></a>
+                                            <a class="dropdown-item myLink currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}>
+
+                                                  @if($currency->hasMedia('icon'))
+
+                                                <img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}">
+
+                                                @endif
+
+                                                {{ $currency->name }} <span> {{ $currency->short_name }}</span></a>
                                         @endforeach 
                                     </div>
                                  </li>

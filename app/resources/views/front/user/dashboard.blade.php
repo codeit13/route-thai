@@ -100,7 +100,13 @@
                                </button>
                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 @foreach($currencies as $cIndex=> $currency)
-                                    <a class="dropdown-item currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}><img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}"> {{ $currency->short_name }}</a>
+                                    <a class="dropdown-item currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}>
+                                   @if($currency->hasMedia('icon'))
+                                      <img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}">
+
+                                      @endif
+
+                                       {{ $currency->short_name }}</a>
                                 @endforeach                                
                               </div>
                             </div>
@@ -229,23 +235,80 @@
 
       @php
           $labels=$coins=$fiatLabels=$fiatCoins=[];
-      foreach(auth()->user()->wallet()->where('wallet_type','!=',3)->get() as $balance)
+          $totalCryptoSum=$totalFiatSum=0;
+      foreach(auth()->user()->wallet()->where('wallet_type','!=',3)->orderBy('coin','desc')->get() as $balance)
       {
         if($balance->wallet_type==1)
         {
-          $labels[]=$balance->currency->short_name.' '.$balance->coin;
+          $totalCryptoSum+=(float)$balance->coin;
 
-          $coins[]=(float)$balance->coin;
+          if(count($labels) >= 3)
+          {
+             if(count($labels)<4)
+             {
+               $labels[]='Others';
+               $coins[]=(float)$balance->coin;
+             }
+             else
+             {
+               $coins[3]=$coins[3]+(float)$balance->coin;
+             }
+
+             
+             
+          }
+          else
+          {
+             $labels[]=$balance->currency->short_name.' '.$balance->coin;
+
+             $coins[]=(float)$balance->coin;
+
+          }
+          
         }
         else
         {
-          $fiatLabels[]=$balance->currency->short_name.' '.$balance->coin;
+          $totalFiatSum+=(float)$balance->coin;
+          if(count($fiatLabels) >= 3)
+          {
+             if(count($fiatLabels)<4)
+             {
+               $fiatLabels[]='Others';
+               $fiatCoins[]=(float)$balance->coin;
+             }
+             else
+             {
+               $fiatCoins[3]=$fiatCoins[3]+(float)$balance->coin;
+             }
 
-          $fiatCoins[]=(float)$balance->coin;
+             
+             
+          }
+          else
+          {
+            $fiatLabels[]=$balance->currency->short_name.' '.$balance->coin;
+
+            $fiatCoins[]=(float)$balance->coin;
+          }
+          
         }
         
 
       }
+
+      if($totalCryptoSum <=0)
+      {
+         $labels[]=['Nil'];
+         $coins[]=[1];
+      }
+
+      if($totalFiatSum <=0)
+      {
+        $fiatLabels=['Nil'];
+         $fiatCoins=[1];
+      }
+
+
 
       
 
@@ -297,6 +360,11 @@
                   total += element;
                 });
                 var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+
+                if(data.labels[tooltipItem.index]=='Nil')
+                {
+                  return 'Nil';
+                }
                 var percentTxt = Math.round(value / total * 100);
                 return data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + ' (' + percentTxt + '%)';
               }
@@ -320,7 +388,7 @@
         labels: fiatLabels,
         datasets: [{
           data: fiatCoins,
-          backgroundColor: bgColor
+          backgroundColor: bgColor.reverse()
         }]
       };
 

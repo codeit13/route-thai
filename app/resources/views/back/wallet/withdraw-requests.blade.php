@@ -59,7 +59,7 @@
                                     <td class="dtr-control" tabindex="0">{{$transaction->id}}</td>
                                     <td class="sorting_1">{{__($transaction->user->name)}}</td>
                                     <td class="sorting_1">@if($transaction->currency->hasMedia('icon'))
-                                       <img src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 
+                                       <img style="max-width: 28px;" src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 
                                        @endif {{__($transaction->currency->short_name)}}</td>
                                     <td>{{$transaction->trans_amount}}</td>
                                     <td>

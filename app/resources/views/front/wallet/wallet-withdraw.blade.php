@@ -16,7 +16,7 @@
                 <h3>{{__('Withdraw Assest')}}</h3>
               </div>
               <div class="col-lg-6 text-right col-sm-6 col-6">  
-                <a href="#" class="btn-success">{{__('Transfer')}}</a>
+                <a data-toggle="modal" data-target="#exampleModalnew" class="btn-success">{{__('Transfer')}}</a>
                 <a href="{{route('p2p.exchange')}}" class="btn-primary">{{__('P2P Trading')}}</a>
                 <!--
                 <a class="mobile-tag" href="#">
@@ -88,7 +88,7 @@
     
                                       
 
-                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
 
                       @endif
 
@@ -107,7 +107,7 @@
     
                                       
 
-                      <img src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
 
                       @endif
 
@@ -130,7 +130,7 @@
     
                                       
 
-                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
 
                       @endif
 
@@ -247,6 +247,8 @@
       </div>
     </div>
   </section>
+
+  @include('front.components.transfer-modal')
 
   @endsection
 

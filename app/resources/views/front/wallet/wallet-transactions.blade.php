@@ -64,7 +64,7 @@
 							<h3>{{__($walletType->type)}} {{__('Wallet')}} <a onclick="toggleBalance(this)" href="#"><i class="fa fa-eye-slash"  aria-hidden="true"></i> {{__('Hide Balance')}}</a></h3>
 						</div>
 						<div class="col-lg-6 text-right col-sm-6 col-6">
-							<a href="#" class="btn-primary">Buy</a>
+							<a href="{{route('p2p.exchange')}}" class="btn-primary">Buy</a>
 							<a href="{{route('wallet.deposit',['type'=>$walletType->id,'typename'=>strtolower($walletType->type)])}}" class="btn-success">{{ __('Deposit')}}
 							</a>
 							<a class="mobile-tag" href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a>
@@ -141,15 +141,17 @@
 									@foreach($currencies as $currency)
 									<tr>
 										<td>
-											<img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{$currency->name}}"/>
+											 @if($currency->hasMedia('icon'))
+											<img style="max-width: 28px;" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{$currency->name}}"/>
+											@endif
 											<label>{{__($currency->short_name)}}<br><span>{{__($currency->name)}}</span></label>
 										</td>
 										<td>{{$currency->user_total}}</td>
 
 										<td>{{$currency->user_balance}}</td>
 										<td>
-											<a href="{{route('wallet.deposit',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-success">Deposit</a>
-											<a href="{{route('wallet.withdraw',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-primary">P2P Trading</a>
+											<a href="{{route('wallet.deposit',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-success">{{__('Deposit')}}</a>
+											<a href="{{route('wallet.withdraw',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-primary">{{__('Withdraw')}}</a>
 										</td>
 									</tr>
 									@endforeach

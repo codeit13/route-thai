@@ -174,6 +174,9 @@ class PaymentController extends Controller
         elseif(!$buyer_request->is_expired && $buyer_request->status=='open')
         {
             $buyer_request=$transaction->createBuyerTransaction();
+
+             $transaction->sendMessage([$transaction->user->mobile],'Payment for your ad has been completed.');
+
             return view('front.payment.payment-request-release',compact('transaction','buyer_request'));
         }
         return view('front.payment.payment-request-release',compact('transaction','buyer_request'));
