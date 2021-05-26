@@ -87,7 +87,7 @@ Route: P2P Trading Platform - sell crypto
 										@foreach($user_payment_methods as $single_user_payment_method)
 											<div class="payment-line">
 												<div class="col-lg-12 flush col-sm-12 col-12">
-													<h3> <a href="javascript:void(0)"><img src="{{ $single_user_payment_method->getMedia('icon')->first()->getUrl() }}" alt=""/></a>{{ $single_user_payment_method->payment_method->name }}</h3>
+													<h3> <a href="javascript:void(0)"><img src="{{ $single_user_payment_method->payment_methods->getMedia('icon')->first()->getUrl() }}" alt=""/></a>{{ $single_user_payment_method->payment_methods->name }}</h3>
 												</div>
 												<div class="field">
 													<div class="row">

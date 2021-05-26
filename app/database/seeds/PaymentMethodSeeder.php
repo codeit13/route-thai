@@ -13,7 +13,7 @@ class PaymentMethodSeeder extends Seeder
      */
     public function run()
     {
-        $pm= new \App\Models\PaymentMethods;
+        $pm= new \App\Models\PaymentMethod;
     	if(!$pm->where('name','UPI')->exists())
     	{
              $pm= $pm::create(['name'=>'UPI', 'status' => 'active' ]);
