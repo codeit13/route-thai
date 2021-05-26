@@ -382,15 +382,7 @@
 
       // second dounhnutchart
 
-      var config2=config;
-
-      var dataChart2 = {
-        labels: fiatLabels,
-        datasets: [{
-          data: fiatCoins,
-          backgroundColor: bgColor.reverse()
-        }]
-      };
+      
 
      
 
@@ -399,17 +391,29 @@
 
       function newchart()
       {
+
         if(!fiatChart)
         {
+          var config2 = Object.assign({}, config);
+
+          var bgColor2 = [...bgColor];
+
+      var dataChart2 = {
+        labels: fiatLabels,
+        datasets: [{
+          data: fiatCoins,
+          backgroundColor: bgColor2.reverse()
+        }]
+      };
            config2.data=dataChart2;
         setTimeout(function()
         {
             var ctx1 = document.getElementById("doughnutChart1").getContext("2d");
-         var doughnutChart = new Chart(ctx1, config);
+         var doughnutChart1 = new Chart(ctx1, config2);
 
-      var legend = doughnutChart.generateLegend();
-      var legendHolder = document.getElementById("legend1");
-      legendHolder.innerHTML = legend + '';
+      var legend1 = doughnutChart1.generateLegend();
+      var legendHolder1 = document.getElementById("legend1");
+      legendHolder1.innerHTML = legend1 + '';
 
         fiatChart=1;
         },200);
