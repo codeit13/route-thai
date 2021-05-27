@@ -66,6 +66,9 @@ Route::middleware('auth')->group(function(){
     //Wallet
     Route::prefix('wallet')->group(function(){
 
+
+        Route::post('transfer',[App\Http\Controllers\TransactionController::class, 'transfer'])->name('wallet.transfer');
+
         Route::get('p2p',[App\Http\Controllers\TransactionController::class, 'p2p'])->name('wallet.p2p');
 
         

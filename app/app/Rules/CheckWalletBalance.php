@@ -11,9 +11,11 @@ class CheckWalletBalance implements Rule
      *
      * @return void
      */
-    public function __construct($request)
+    public function __construct($request,$type='')
     {
         $this->input=$request;
+
+        $this->type=$type;
     }
 
     /**
@@ -26,7 +28,19 @@ class CheckWalletBalance implements Rule
     public function passes($attribute, $value)
     {
 
-          $wallet=\Auth::user()->wallet()->where('currency_id',$this->input->currency_id)->where('wallet_type','!=',3)->first();
+          $wallet=\Auth::user()->wallet()->where('currency_id',$this->input->currency_id);
+
+        
+          if($this->type)
+          {
+            $wallet=$wallet->where('wallet_type',$this->type);
+          }
+          else
+          {
+            $wallet=$wallet->where('wallet_type','!=',3);
+          }
+
+          $wallet=$wallet->first();
 
           return $value <=($wallet->coin??0);
     }

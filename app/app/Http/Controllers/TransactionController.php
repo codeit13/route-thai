@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\CurrencyType;
 use MediaUploader;
+use App\Http\Traits\GenerateTransIDTrait;
 
 class TransactionController extends Controller
 {
+  use GenerateTransIDTrait;
     /**
      * Display a listing of the resource.
      *
@@ -127,7 +129,10 @@ class TransactionController extends Controller
         }
 
        
-       $allCurrencies=\App\Models\Currency::all();
+       $allCurrencies=$this->sortedCurrencies();
+
+
+       //echo '<pre>';print_r($allCurrencies->toArray());die;
 
         return view('front.wallet.wallet-deposit',compact('currency_types','walletType','currencies','currentCurrency','wallets','allCurrencies'));
 
@@ -254,7 +259,8 @@ class TransactionController extends Controller
         
         $currentCurrency=$currency;
 
-        $wallets=\Auth::user()->wallet()->where('wallet_type','!=',3)->get();
+        $wallets=\Auth::user()->wallet()->get();
+        //$wallets=\Auth::user()->wallet()->where('wallet_type','!=',3)->get();
 
 
 
@@ -272,7 +278,9 @@ class TransactionController extends Controller
             $currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
         }
 
-           $allCurrencies=\App\Models\Currency::all();
+           $allCurrencies=$this->sortedCurrencies();
+
+
 
 
         return view('front.wallet.wallet-withdraw',compact('currency_types','walletType','currencies','currentCurrency','wallets','allCurrencies'));
@@ -310,10 +318,10 @@ class TransactionController extends Controller
          $user = Auth::user();
 
 
-        $wallet=$user->wallet()->where('currency_id',$request->currency_id)->first();
+        $wallet=$user->wallet()->where('currency_id',$request->currency_id)->where('wallet_type','!=',3)->first();
 
 
-        $balance_before_trans=$wallet?$wallet->sum('coin'):0;
+        $balance_before_trans=$wallet?$wallet->coin:0;
 
       
         $request->merge(['type'=>$type,
@@ -329,7 +337,7 @@ class TransactionController extends Controller
 
        }
 
-       $transaction->trans_id = generate_unique_id();
+       $transaction->trans_id = $this->generateID();
 
        $transaction->balance_before_trans = $balance_before_trans;
 
@@ -355,6 +363,125 @@ class TransactionController extends Controller
  
         return view('front.wallet.p2p-wallet',compact('walletType','currencies'));
     }
+
+
+    public function sortedCurrencies()
+    {
+      
+
+      $wallets=auth()->user()->wallet()->where('wallet_type','!=',2)->get();
+
+      $currencies=$existing_currencies=[];
+
+     
+
+      foreach ($wallets as $key => $wallet) {
+
+        if($wallet->coin > 0)
+        {
+            
+
+            if($wallet->currency->hasMedia('icon')){
+             $wallet->currency->img=$wallet->currency->firstMedia('icon')->getUrl();
+
+        }
+        else
+        {
+            $wallet->currency->img='';
+        }
+
+            // if(!in_array($wallet->currency_id,$existing_currencies))
+            // {
+              $wallet->currency->wallet_type=$wallet->wallet_type;
+              $currencies[]=$wallet->currency->toArray();
+
+            //   $existing_currencies[]=$wallet->currency_id;
+               
+            // }
+
+
+        }
+      }
+
+     //echo '<pre>';print_r($currencies);die;
+
+      return $currencies;
+    }
+
+
+    public function transfer(Request $request)
+    {
+         $type=1;
+
+         $wallet_to=3;
+
+         if($request->wallet_from=='p2p')
+         {
+             $type=3;
+
+             $wallet_to=1;
+         }
+
+        // echo '<pre>';print_r($wallet_to);die;
+
+         $request->merge(['currency_id'=>$request->transfer_currency_id]);
+       
+         $request->validate(['transfter_quantity' =>['required','numeric',new \App\Rules\CheckWalletBalance($request,$type)],'transfer_currency_id'=>'required|numeric','wallet_from'=>'required','wallet_to'=>'required']);
+          $user=auth()->user();
+
+         $wallet=$user->wallet()->where('currency_id',$request->currency_id)->where('wallet_type',$type)->first();
+
+
+        $balance_before_trans=$wallet?$wallet->coin:0;
+
+
+         $transaction=array('trans_amount'=>$request->transfter_quantity,'wallet_from'=>$type,'wallet_to'=>$wallet_to,'type'=>'transfer','currency_id'=>$request->currency_id,'balance_before_trans'=>$balance_before_trans,'trans_id'=>$this->generateID());
+
+
+         if($transaction=$user->transactions()->create($transaction))
+         {  
+            $this->updateUserWallet($transaction,$wallet);
+
+            $transaction->status='approved';
+
+            $transaction->save();
+
+           return redirect()->back()->with('success','The transfer request is created.');
+            
+             
+         }
+
+         else
+         {
+            return redirect()->back()->with('error','The transfer request is not created.');
+         }
+
+    }
+
+    public function updateUserWallet($transaction,$fromWallet)
+    {
+        $user=auth()->user();
+
+        $toWallet=$user->wallet()->where('currency_id',$transaction->currency_id)->where('wallet_type',$transaction->wallet_to)->first();
+
+        if($toWallet)
+        {
+            $toWallet->coin=$toWallet->coin+$transaction->trans_amount;
+            $toWallet->save();
+        }
+        else
+        {
+             $toWallet=array('coin'=>$transaction->trans_amount,'currency_id'=>$transaction->currency_id,'wallet_type'=>$transaction->wallet_to);
+
+             $user->wallet()->create($toWallet);
+        }
+
+           $fromWallet->coin=$fromWallet->coin-$transaction->trans_amount;
+
+           $fromWallet->save();
+    }
+
+   
 
 
      
