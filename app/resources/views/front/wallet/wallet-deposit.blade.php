@@ -16,8 +16,8 @@
 							<h3>{{__('Request Asset')}}</h3>
 						</div>
 						<div class="col-lg-6 text-right col-sm-6 col-6">
-							<a href="#" class="btn-success">{{__('Transfer')}}</a>
-							<a href="#" class="btn-primary">{{__('P2P Trading')}}</a>
+							<a data-toggle="modal" data-target="#exampleModalnew" class="btn-success">{{__('Transfer')}}</a>
+							<a href="{{route('p2p.exchange')}}" class="btn-primary">{{__('P2P Trading')}}</a>
 							<a class="mobile-tag" href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a>
 						</div>
 					</div>
@@ -80,7 +80,7 @@
     
                                       
 
-                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
 
                       @endif
 
@@ -101,7 +101,7 @@
     
                                       
 
-                      <img src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
 
                       @endif
 
@@ -124,7 +124,7 @@
     
                                       
 
-                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
 
                       @endif
 
@@ -193,57 +193,84 @@
 						</div>
 						<div class="col-lg-6 xs-flush col-sm-6 col-12">
 								<div class="white-box">
-									<ul class="nav nav-tabs" id="myTab" role="tablist">
 
-										@foreach($currencies as $c_index => $currency)
-
-
-										@if(isset($currentCurrency) && $currentCurrency)
+									@foreach($currencies as $c_index => $currency)
 
 
+										@php 
 
-										<li class="nav-item">	<a class="nav-link @if($currentCurrency==$currency->id)active @endif" id="li_tab_{{$currency->id}}" data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a>
+										$ulDisplay='d-none';
+
+										if(isset($currentCurrency) && $currentCurrency==$currency->id)
+
+										{
+
+										   $ulDisplay='';
+                                           
+										}
+
+
+										elseif($c_index==0 && !$currentCurrency)
+										{
+											$ulDisplay='';
+										}
+
+										@endphp
+
+									<ul class="nav nav-tabs mainTabs {{$ulDisplay}}" id="MainTab__{{$currency->id}}" role="tablist">
+
+										
+
+
+
+										<li class="nav-item">	<a class="nav-link active" id="li_tab_{{$currency->id}}" data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a>
 
 										</li>
-										@elseif($c_index==0)
+										
 
-										<li class="nav-item">	<a class="nav-link active" id="li_tab_{{$currency->id}}"data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a>
+										{{--<li class="nav-item">	<a class="nav-link active" id="li_tab_{{$currency->id}}"data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a></li>
 
 										@else
 
-										<li class="nav-item">	<a class="nav-link" id="li_tab_{{$currency->id}}" data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a>
+										<li class="nav-item d-none">	<a class="nav-link" id="li_tab_{{$currency->id}}" data-toggle="tab" href="#currency_tab_{{$currency->id}}" role="tab" aria-controls="home" aria-selected="true">{{__($currency->short_name)}}</a></li>
 
 
-										@endif
+										@endif --}}
 
 
-										@endforeach
+										
 
 
 								
 									</ul>
+									@endforeach
 								<!-- 	<div class="col-lg-12 xs-flush heading-p text-center col-sm-12 col-12">
 										<p>Network Name: Bitcoin(BTC)&nbsp;&nbsp;Average arrival time: 1 minutes</p>
 									</div> -->
-									<div class="tab-content" id="myTabContent">
+									
 
 										@foreach($currencies as $c_index => $currency)
 
 										@php 
 
-										$tab='';
+										      $tab='';
 
-										
+										      $container='d-none';
+
                                              if($currentCurrency && $currentCurrency==$currency->id)
                                              {
 
                                              $tab='show active';
+
+                                            $container='';
 
                                              }
                                              elseif($c_index==0 && !$currentCurrency)
                                              {
 
                                                $tab='show active';
+                                            $container='';
+
 
                                              }
 										
@@ -252,7 +279,9 @@
 
 										@endphp
 
-										<div class="tab-pane fade {{$tab}}" id="currency_tab_{{$currency->id}}" role="tabpanel" aria-labelledby="home-tab">
+										<div class="tab-content containerTabs {{$container}}" id="myTabContent__{{$currency->id}}">
+
+										<div class="tab-pane fade show active" id="currency_tab_{{$currency->id}}" role="tabpanel" aria-labelledby="home-tab">
 
 												<div class="col-lg-12 xs-flush heading-p text-center col-sm-12 col-12">
 										<p>Network Name: {{__($currency->name)}}({{__($currency->short_name)}})&nbsp;&nbsp;Average arrival time: 1 minutes</p>
@@ -285,13 +314,14 @@
     
                                       
 
-                      <img class="small_mobile" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img style="max-width: 48px;" class="small_mobile" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
 
                       @endif
 													<!-- 	<img class="small_mobile" src="{{asset('front/img/icon-15.png')}}" alt=""> -->
 													</div>
 												</div>
 											</div>
+										</div>
 										</div>
 
 										@endforeach
@@ -327,7 +357,7 @@
 										<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
 										<div class="tab-pane fade" id="erc" role="tabpanel" aria-labelledby="contact-tab">...</div>
 										<div class="tab-pane fade" id="btc" role="tabpanel" aria-labelledby="contact-tab">...</div> -->
-									</div>
+									
 								</div>
 							</div>
 					</div>
@@ -336,6 +366,8 @@
 		</div>
 	</div>
 </section>
+
+@include('front.components.transfer-modal')
 
 <!-- Modal -->
 <div class="modal alert_poup fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -417,11 +449,25 @@ $(".currencyDropdown .dropdown-menu .dropdown-item").on("click", function(e) { e
    changeShowBalance(currency_id);
 
 
-      $('#coin_id').val(currency_id);
+    $('#coin_id').val(currency_id);
 
     $('.currencyDropdown .dropdown-toggle').html($(this).html());
 
-    $('#li_tab_'+currency_id).trigger('click');
+    $('.mainTabs').siblings(':not(.d-none)').addClass('d-none');
+
+    //console.log($('#MainTab__'+currency_id));
+
+    
+
+    $('.containerTabs').siblings(':not(.d-none)').addClass('d-none');
+
+    $('#MainTab__'+currency_id).removeClass('d-none');
+
+
+    $('#myTabContent__'+currency_id).removeClass('d-none');
+
+
+   
 });
 
 function changeShowBalance(coin_id)
@@ -458,5 +504,119 @@ var currentCurrency='{{($currentCurrency)?$currentCurrency:$currencies[0]->id??'
 
 changeShowBalance(currentCurrency);
 
+</script>
+
+
+<script type="text/javascript">
+	
+	var allCurrencies=@json($allCurrencies);
+
+	var wallet_types=[{'type':'fiat_and_spot','text':'Fiat and Spot'},{'type':'p2p','text':'P2P'}];
+
+	
+
+	function changeCurrencyDropdown(selector)
+	{
+        var wallet=$(selector).val();
+
+        $('#to_wallet_server').html('');
+
+        wallet_types.forEach(function(v,k)
+        {
+        
+
+        	if(wallet!=v.type)
+        	{
+               $('#to_wallet_server').append('<option value="'+v.type+'">'+v.text+'</option>');
+        	}
+        })
+
+        var filteredCurrencies=allCurrencies.filter(function(v,k)
+        {
+        	return v.type_id==1;
+        })
+
+        //console.log(allCurrencies);
+
+       // console.log(newcure);
+
+        $('#transfer_coin_server').html('');
+
+        var button='';
+
+        var options='';
+
+        $('#transfer_coin_id').val('');
+
+        filteredCurrencies.forEach(function(v,k)
+        {
+        	console.log(k);
+        	if(k==0)
+        	{
+        		button='<button class="btn btn-secondary dropdown-toggle transfer-dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img src="img/bitcoin.png" alt="">'+v.short_name+' <span>'+v.name+'</span> </button>';
+        		$('#transfer_coin_id').val(v.id);
+        		showBalanceForTransfer(v.id);
+        	}
+
+        	options+='<a class="dropdown-item" data-id="'+v.id+'" href="javascript:void(0)"><img src="img/bitcoin.png" alt=""> '+v.short_name+' <span>'+v.name+'</span></a>';
+        })
+
+        var dropdown=button+'<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 47px, 0px); top: 0px; left: 0px; will-change: transform;">'+options+'</div>';
+
+        $('#transfer_coin_server').html(dropdown);
+	}
+
+
+	//second
+
+	$(document).on('click',"#transfer_coin_server .dropdown-menu .dropdown-item", function(e) { e.preventDefault();
+
+      var currency_id=$(this).attr('data-id');
+
+   showBalanceForTransfer(currency_id);
+
+
+    $('#transfer_coin_id').val(currency_id);
+
+    $('.transfer-dropdown').html($(this).html());
+    
+
+  
+
+
+   
+});
+
+function showBalanceForTransfer(coin_id)
+{
+	
+
+    var balance='0.00000';
+
+
+    var balanceRow=wallets.filter(function(wallet){
+          return wallet.currency_id==coin_id;
+    })
+
+    balanceRow=balanceRow[0];
+
+    var currencyRow=currencies.filter(function(currency)
+    {
+       return currency.id==coin_id;
+    })
+
+    currencyRow=currencyRow[0];
+
+    balance=balance+' '+currencyRow.short_name;
+
+    if( balanceRow && typeof balanceRow.coin !='undefined')
+    {
+         balance=balanceRow.coin + ' '+currencyRow.short_name;
+    }
+
+
+
+    $('#totalBalanceForTransfer').text(balance);
+}
 </script>
 @endsection    

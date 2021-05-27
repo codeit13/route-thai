@@ -27,12 +27,12 @@ class SellController extends Controller
             $sell_data = $request->session()->get('sell_data');
             $selected_currency = Currency::find($sell_data['currency_id']);
             $selected_fiat_currency = Currency::find($sell_data['fiat_currency_id']);
-            $user_payment_methods = UserPaymentMethod::with('payment_method')
+            $user_payment_methods = UserPaymentMethod::with('payment_methods')
                                                         ->with('user')
                                                         ->where('user_id',auth()->user()->id)
                                                         ->where('status','active')
                                                         ->get();
-         
+            
     		return view('front.sell.confirm_sell',compact(
                 'sell_data',
                 'selected_currency',
@@ -119,7 +119,7 @@ class SellController extends Controller
                                         ->where('trans_id',$trans_id)->first();
         
         if ($transcation->buyer_requests_count >0) {
-            $user_payment_methods = UserPaymentMethod::with('payment_method')
+            $user_payment_methods = UserPaymentMethod::with('payment_methods')
                                                         ->with('user')
                                                         ->where('user_id',auth()->user()->id)
                                                         ->where('status','active')
@@ -166,7 +166,7 @@ class SellController extends Controller
                                         ->withCount('buyer_requests')
                                         ->where('trans_id',$trans_id)->first();
 
-        $user_payment_methods = UserPaymentMethod::with('payment_method')
+        $user_payment_methods = UserPaymentMethod::with('payment_methods')
                                                         ->with('user')
                                                         ->where('user_id',auth()->user()->id)
                                                         ->where('status','active')
@@ -195,7 +195,7 @@ class SellController extends Controller
             $transcation->buyer_trans->update(['status'=>'approved']);
             $transcation->buyer_requests->first()->update(['status'=>'paid']);
 
-            $user_payment_methods = UserPaymentMethod::with('payment_method')
+            $user_payment_methods = UserPaymentMethod::with('payment_methods')
                                                         ->with('user')
                                                         ->where('user_id',auth()->user()->id)
                                                         ->where('status','active')

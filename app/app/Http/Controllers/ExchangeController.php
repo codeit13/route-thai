@@ -15,8 +15,11 @@ class ExchangeController extends Controller
 								 	->where('type','sell')
                                     ->withCount(['buyer_requests'=>function($query){
                                         $query->where('status','open');
-                                    }])
-								 	->where('user_id','!=',auth()->user()->id);
+                                    }]);
+
+        if (auth()->check()) {
+            $transactions = $transactions->where('user_id','!=',auth()->user()->id);
+        }
 
         if ($request->get('search') != '') {
             $transactions->where('trans_amount','>=',$request->get('search'));

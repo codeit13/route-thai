@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+
+    
     /**
      * Display a listing of the resource.
      *
@@ -45,30 +47,69 @@ class PaymentController extends Controller
      */
     public function show($transaction)
     {
-        $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
 
-        $buyer_request=$transaction->checkBuyerRequest();
+        // $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
 
-        if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
-        {
-            return redirect()->route('payment.order.cancel',$transaction->trans_id);
-        }
-        else if(isset($buyer_request->is_expired) && !$buyer_request->is_expired && $buyer_request->status=='pending')
-        {
-            return redirect()->route('payment.order.release',$transaction->trans_id);
-        }
-        elseif(!$buyer_request)
-        {
-            $user=\Auth::user();
-            $user->buyer_request()->create(['transaction_id'=>$transaction->id]);
+        // $buyer_request=$transaction->checkBuyerRequest();
+
+        // if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
+        // {
+        //     return redirect()->route('payment.order.cancel',$transaction->trans_id);
+        // }
+        // else if(isset($buyer_request->is_expired) && !$buyer_request->is_expired && $buyer_request->status=='pending')
+        // {
+        //     return redirect()->route('payment.order.release',$transaction->trans_id);
+        // }
+        // elseif(!$buyer_request)
+        // {
+        //     $user=\Auth::user();
+        //     $user->buyer_request()->create(['transaction_id'=>$transaction->id]);
+
+        //     $transaction->sendMessage([$transaction->user->mobile],'Your ad has been matched and its pending payment');
+
+        //     $buyer_request=$transaction->checkBuyerRequest();
+
+        // }
+        // elseif($buyer_request=='exists')
+        // {
+        //     return redirect()->back();
+        // }
+
+        $transaction=\App\Models\Transaction::where('trans_id',$transaction)
+                                                ->where('user_id','!=',auth()->user()->id)
+                                                ->first();
+        
+        if ($transaction) {
+
             $buyer_request=$transaction->checkBuyerRequest();
-        }
-        elseif($buyer_request=='exists')
-        {
-            return redirect()->back();
-        }
 
-        return view('front.payment.payment-request',compact('transaction','buyer_request'));
+
+            if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
+            {
+                return redirect()->route('payment.order.cancel',$transaction->trans_id);
+            }
+            else if(isset($buyer_request->is_expired) && !$buyer_request->is_expired && $buyer_request->status=='pending')
+            {
+                return redirect()->route('payment.order.release',$transaction->trans_id);
+            }
+            elseif(!$buyer_request)
+            {
+                
+                $user=\Auth::user();
+                $user->buyer_request()->create(['transaction_id'=>$transaction->id]);
+                $transaction->sendMessage([$transaction->user->mobile],'Your ad has been matched and its pending payment');
+                $buyer_request=$transaction->checkBuyerRequest();
+
+            }
+            elseif($buyer_request=='exists')
+            {
+                return redirect()->back();
+            }
+
+            return view('front.payment.payment-request',compact('transaction','buyer_request'));
+        }    
+
+        return redirect()->back();                                            
     }
 
     /**
@@ -133,6 +174,9 @@ class PaymentController extends Controller
         elseif(!$buyer_request->is_expired && $buyer_request->status=='open')
         {
             $buyer_request=$transaction->createBuyerTransaction();
+
+             $transaction->sendMessage([$transaction->user->mobile],'Payment for your ad has been completed.');
+
             return view('front.payment.payment-request-release',compact('transaction','buyer_request'));
         }
         return view('front.payment.payment-request-release',compact('transaction','buyer_request'));

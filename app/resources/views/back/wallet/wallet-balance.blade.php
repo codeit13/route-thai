@@ -43,7 +43,7 @@
     
                                       
 
-                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
 
                       @endif
 
@@ -54,7 +54,7 @@
                       @endforeach
 
                       
-                    @if(!$request->currency)
+                    @if(!$request->currency && isset($currencies[0]))
 
                       <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         
@@ -62,7 +62,7 @@
     
                                       
 
-                      <img src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
 
                       @endif
 
@@ -85,7 +85,7 @@
     
                                       
 
-                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
 
                       @endif
 
@@ -142,7 +142,7 @@
                                     <td class="dtr-control" tabindex="0">{{$balance->id}}</td>
                                     <td class="sorting_1">{{__($balance->user->name)}}</td>
                                     <td class="sorting_1">@if($balance->currency->hasMedia('icon'))
-                                       <img src="{{$balance->currency->firstMedia('icon')->getUrl()}}" alt="{{__($balance->currency->name)}}"/> 
+                                       <img  style="max-width: 28px;"src="{{$balance->currency->firstMedia('icon')->getUrl()}}" alt="{{__($balance->currency->name)}}"/> 
                                        @endif {{__($balance->currency->short_name)}}</td>
                                     <td>{{$balance->coin}}</td>
                                    

@@ -32,7 +32,7 @@
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                <li class="nav-item"> <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Crypto</a>
                                </li>
-                               <li class="nav-item"> <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Fiat</a>
+                               <li class="nav-item"> <a onclick="newchart()" class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Fiat</a>
                                </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
@@ -54,7 +54,27 @@
                                      </div>               
                                   </div>
                                </div>
-                               <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                               <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                                   <div class="row under_tabs">
+                                     <div class="col-lg-6">
+                                        <h4>Account Balance: <a href="#">Hide Balance <i class="fal fa-eye-slash"></i></a></h4>
+                                    {{-- <h1>{{ Auth::user()->wallet()->get(['coin','currency_id'])->sum('coin') }}<span>{{ Auth::user()->wallet()->get(['coin','currency_id'])->first()->currency->name }}</span></h1> --}}
+                                        <h3>Estimated Value:</h3>
+                                        <h6 style="font-family: 'Open Sans', sans-serif;">₹108.6</h6>
+                                     </div>
+                                     <div class="col-lg-6 text-center">
+                                        <div class="doughnut">
+                                          <div class="doughnutChartContainer">
+                                            <canvas id="doughnutChart1" height="160"></canvas>
+                                          </div>
+                                          <div id="legend1" class="chart-legend"></div>
+                                        </div>
+                                     </div>               
+                                  </div>
+
+
+                               </div>
                             </div>
                          </div>
                       </div>
@@ -80,7 +100,13 @@
                                </button>
                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 @foreach($currencies as $cIndex=> $currency)
-                                    <a class="dropdown-item currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}><img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}"> {{ $currency->short_name }}</a>
+                                    <a class="dropdown-item currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}>
+                                   @if($currency->hasMedia('icon'))
+                                      <img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}">
+
+                                      @endif
+
+                                       {{ $currency->short_name }}</a>
                                 @endforeach                                
                               </div>
                             </div>
@@ -206,9 +232,94 @@
         'rgb(171, 121, 103)',
         'rgb(134, 175, 18)'*/
       ];
-      var labels = ["BNB 1.000", "DoT .5000", "ETH .4000", "Others .1000"];
-      var data = [794, 458, 169, 103];
+
+      @php
+          $labels=$coins=$fiatLabels=$fiatCoins=[];
+          $totalCryptoSum=$totalFiatSum=0;
+      foreach(auth()->user()->wallet()->where('wallet_type','!=',3)->orderBy('coin','desc')->get() as $balance)
+      {
+        if($balance->wallet_type==1)
+        {
+          $totalCryptoSum+=(float)$balance->coin;
+
+          if(count($labels) >= 3)
+          {
+             if(count($labels)<4)
+             {
+               $labels[]='Others';
+               $coins[]=(float)$balance->coin;
+             }
+             else
+             {
+               $coins[3]=$coins[3]+(float)$balance->coin;
+             }
+
+             
+             
+          }
+          else
+          {
+             $labels[]=$balance->currency->short_name.' '.$balance->coin;
+
+             $coins[]=(float)$balance->coin;
+
+          }
+          
+        }
+        else
+        {
+          $totalFiatSum+=(float)$balance->coin;
+          if(count($fiatLabels) >= 3)
+          {
+             if(count($fiatLabels)<4)
+             {
+               $fiatLabels[]='Others';
+               $fiatCoins[]=(float)$balance->coin;
+             }
+             else
+             {
+               $fiatCoins[3]=$fiatCoins[3]+(float)$balance->coin;
+             }
+
+             
+             
+          }
+          else
+          {
+            $fiatLabels[]=$balance->currency->short_name.' '.$balance->coin;
+
+            $fiatCoins[]=(float)$balance->coin;
+          }
+          
+        }
+        
+
+      }
+
+      if($totalCryptoSum <=0)
+      {
+         $labels[]=['Nil'];
+         $coins[]=[1];
+      }
+
+      if($totalFiatSum <=0)
+      {
+        $fiatLabels=['Nil'];
+         $fiatCoins=[1];
+      }
+
+
+
+      
+
+      @endphp
+      var labels = @json($labels);
+      var data = @json($coins);
+      var fiatLabels = @json($fiatLabels);
+      var fiatCoins = @json($fiatCoins);
       var bgColor = colors;
+
+
       var dataChart = {
         labels: labels,
         datasets: [{
@@ -249,6 +360,11 @@
                   total += element;
                 });
                 var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+
+                if(data.labels[tooltipItem.index]=='Nil')
+                {
+                  return 'Nil';
+                }
                 var percentTxt = Math.round(value / total * 100);
                 return data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + ' (' + percentTxt + '%)';
               }
@@ -262,6 +378,50 @@
       var legend = doughnutChart.generateLegend();
       var legendHolder = document.getElementById("legend");
       legendHolder.innerHTML = legend + '';
+
+
+      // second dounhnutchart
+
+      
+
+     
+
+
+    var fiatChart=0;
+
+      function newchart()
+      {
+
+        if(!fiatChart)
+        {
+          var config2 = Object.assign({}, config);
+
+          var bgColor2 = [...bgColor];
+
+      var dataChart2 = {
+        labels: fiatLabels,
+        datasets: [{
+          data: fiatCoins,
+          backgroundColor: bgColor2.reverse()
+        }]
+      };
+           config2.data=dataChart2;
+        setTimeout(function()
+        {
+            var ctx1 = document.getElementById("doughnutChart1").getContext("2d");
+         var doughnutChart1 = new Chart(ctx1, config2);
+
+      var legend1 = doughnutChart1.generateLegend();
+      var legendHolder1 = document.getElementById("legend1");
+      legendHolder1.innerHTML = legend1 + '';
+
+        fiatChart=1;
+        },200);
+
+      }
+        
+      }
+      
 
     $('.btn-toggle').on('click',function(e){
         e.preventDefault();

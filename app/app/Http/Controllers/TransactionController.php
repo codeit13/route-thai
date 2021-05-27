@@ -105,7 +105,7 @@ class TransactionController extends Controller
 
         $currency_types=\App\Models\CurrencyType::where('id','!=',3)->get();
 
-        $wallets=\Auth::user()->wallet()->where('wallet_type','!=',3)->get();
+        $wallets=\Auth::user()->wallet()->get();
         
 
         
@@ -127,9 +127,9 @@ class TransactionController extends Controller
         }
 
        
+       $allCurrencies=\App\Models\Currency::all();
 
-
-        return view('front.wallet.wallet-deposit',compact('currency_types','walletType','currencies','currentCurrency','wallets'));
+        return view('front.wallet.wallet-deposit',compact('currency_types','walletType','currencies','currentCurrency','wallets','allCurrencies'));
 
        
 
@@ -272,8 +272,10 @@ class TransactionController extends Controller
             $currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
         }
 
+           $allCurrencies=\App\Models\Currency::all();
 
-        return view('front.wallet.wallet-withdraw',compact('currency_types','walletType','currencies','currentCurrency','wallets'));
+
+        return view('front.wallet.wallet-withdraw',compact('currency_types','walletType','currencies','currentCurrency','wallets','allCurrencies'));
 
        
 

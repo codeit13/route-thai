@@ -9,7 +9,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href=" {{ asset('front/css/offcanvas.css') }}">
 <link rel="stylesheet" type="text/css" href=" {{ asset('front/css/chart.css') }}">
+
 <link href=" {{ asset('front/css/style.css') }}" rel="stylesheet" />
+
+
+
 
 
 <style>
