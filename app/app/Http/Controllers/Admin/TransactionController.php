@@ -50,8 +50,8 @@ class TransactionController extends Controller
      */
     public function show($type,$name)
     {
-
-        $transactions= Transaction::where('type',1)
+         
+        $transactions= Transaction::where('type','deposit')
                                   ->whereHas('currency', function ($query)use ($type) {
                                           $query->where('type_id',$type);
 
@@ -90,7 +90,7 @@ class TransactionController extends Controller
         }
 
 
-        $transactions= Transaction::where('type',2)
+        $transactions= Transaction::where('type','withdraw')
                                   ->whereHas('currency', function ($query)use ($type) {
                                           $query->where('type_id',$type);
 
@@ -166,9 +166,9 @@ class TransactionController extends Controller
 
     public function updateUserWallet($transaction,$type)
     {
-        if($transaction->user->wallet()->where('currency_id',$transaction->currency_id)->exists())
+        if($transaction->user->wallet()->where('currency_id',$transaction->currency_id)->where('wallet_type','!=',3)->exists())
         {
-            $wallet=$transaction->user->wallet()->where('currency_id',$transaction->currency_id)->first();
+            $wallet=$transaction->user->wallet()->where('currency_id',$transaction->currency_id)->where('wallet_type','!=',3)->first();
 
             if($type=='withdraw')
             {
@@ -176,7 +176,7 @@ class TransactionController extends Controller
                   
             }
             else
-            {
+            { 
 
             $wallet->coin=$wallet->coin+$transaction->trans_amount;
 
@@ -187,10 +187,18 @@ class TransactionController extends Controller
 
 
 
+           
+           $transaction->sendMessage([$transaction->user->mobile],' Your '.$type.' request of' .$transaction->trans_amount.' '.$transaction->currency->short_name.' has been approved');
+
+
         }
         else
         {
-             $transaction->user->wallet()->create(['coin'=>$transaction->trans_amount,'currency_id'=>$transaction->currency_id]);
+
+             $currency_type=\App\Models\Currency::find($transaction->currency_id)->type_id;
+             $transaction->user->wallet()->create(['coin'=>$transaction->trans_amount,'currency_id'=>$transaction->currency_id,'wallet_type'=>$currency_type]);
+
+             $transaction->sendMessage([$transaction->user->mobile],' Your '.$type.' request of' .$transaction->trans_amount.' '.$transaction->currency->short_name.' has been approved');
         }
     }
 }

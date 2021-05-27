@@ -62,7 +62,7 @@ if(isset($deposit_address->id))
     
                                       
 
-                      <img style="max-width:25px;" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img style="max-width:28px;" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
 
                       @endif
 
@@ -81,7 +81,7 @@ if(isset($deposit_address->id))
     
                                       
 
-                      <img style="max-width:25px;" src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
+                      <img style="max-width:28px;" src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
 
                       @endif
 
@@ -104,7 +104,7 @@ if(isset($deposit_address->id))
     
                                       
 
-                      <img style="max-width:25px;" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+                      <img style="max-width:28px;" src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
 
                       @endif
 
@@ -174,7 +174,7 @@ if(isset($deposit_address->id))
                                    
 
                                     <td class="sorting_1">@if($address->currency->hasMedia('icon'))
-                                       <img style="max-width:25px;" src="{{$address->currency->firstMedia('icon')->getUrl()}}" alt="{{__($address->currency->name)}}"/> 
+                                       <img style="max-width:28px;" src="{{$address->currency->firstMedia('icon')->getUrl()}}" alt="{{__($address->currency->name)}}"/> 
                                        @endif {{__($address->currency->short_name)}}</td>
 
                                         <td class="sorting_1">{{__($address->address)}}</td>
