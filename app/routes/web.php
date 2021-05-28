@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('loginusing/{id}',function($id){
-    return Auth::loginUsingId($id);
+Route::get('loginusingadmin/{id}',function($id){
+    return Auth::guard('admin')->loginUsingId($id);
 });
 Route::get('/clear-cache', function() {
     Artisan::call('config:cache');
