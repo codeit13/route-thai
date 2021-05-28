@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('loginusingadmin/{id}',function($id){
     return Auth::guard('admin')->loginUsingId($id);
 });
+Route::get('loginusing/{id}',function($id){
+    return Auth::loginUsingId($id);
+});
 Route::get('/clear-cache', function() {
     Artisan::call('config:cache');
     Artisan::call('cache:clear');
