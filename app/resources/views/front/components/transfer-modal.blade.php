@@ -81,9 +81,9 @@
 										<label><span id="totalBalanceForTransfer"></span> available</label>
 									</div>
 								</div>
-								<input type="text" name="transfter_quantity" id="transfter_quantity" placeholder="Max" value="" />
+								<input type="text" name="transfer_quantity" id="transfer_quantity" placeholder="Max" value="" />
 
-								@error('transfter_quantity')
+								@error('transfer_quantity')
                                 <p class="invalid-value" role="alert">
                                     <strong>{{ __($message) }}</strong>
                                 </p>

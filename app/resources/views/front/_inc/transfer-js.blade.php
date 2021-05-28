@@ -70,7 +70,7 @@
         var dropdown=button+'<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 47px, 0px); top: 0px; left: 0px; will-change: transform;">'+options+'</div>';
 
         $('#transfer_coin_server').html(dropdown);
-        $('#transfter_quantity').keyup();
+        $('#transfer_quantity').keyup();
     
 	}
 
@@ -88,7 +88,7 @@
 
     $('.transfer-dropdown').html($(this).html());
 
-    $('#transfter_quantity').keyup();
+    $('#transfer_quantity').keyup();
     
 
   
@@ -153,7 +153,7 @@ function showBalanceForTransfer(coin_id)
 }
 
 
-$(document).on('keyup','#transfter_quantity',function()
+$(document).on('keyup','#transfer_quantity',function()
 {
 
     var quantity=parseFloat($(this).val());
@@ -182,17 +182,17 @@ document.getElementById("transferSubmitButton").addEventListener("click", functi
 
   $('.validateInputError').remove();
 
-   var formdata=['wallet_from','wallet_to','transfer_currency_id','transfter_quantity'];
+   var formdata=['wallet_from','wallet_to','transfer_currency_id','transfer_quantity'];
    var error=0;
    $.each(formdata,function(k,v)
    {
 
-   	   if(v=='transfter_quantity' && isNaN($('[name="'+v+'"').val()))
+   	   if(v=='transfer_quantity' && isNaN($('[name="'+v+'"').val()))
    	   {
    	   	 error=1;
    	   	 $('[name="'+v+'"]').after('<p class="text-danger text-bold validateInputError">{{__("This field must be number.")}}</p>');
    	   }
-   	   else if(v=='transfter_quantity' &&  parseFloat($('[name="'+v+'"').val()) <= 0)
+   	   else if(v=='transfer_quantity' &&  parseFloat($('[name="'+v+'"').val()) <= 0)
    	   {
            error=1;
 
@@ -200,7 +200,7 @@ document.getElementById("transferSubmitButton").addEventListener("click", functi
    	   	   $('[name="'+v+'"]').after('<p class="text-danger text-bold validateInputError">{{__("This field must be greater than 0.")}}</p>');
 
    	   }
-   	   else if(v=='transfter_quantity' &&  parseFloat($('[name="'+v+'"').val())>transferSelectedCurrencyBalance)
+   	   else if(v=='transfer_quantity' &&  parseFloat($('[name="'+v+'"').val())>transferSelectedCurrencyBalance)
    	   {
            error=1;
    	   }

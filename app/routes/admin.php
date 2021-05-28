@@ -1,6 +1,7 @@
 <?php
 
 Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:admin')->group(function () {
+
     Route::get('/', 'Auth\LoginController@showLoginForm')->name('loginpage');
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('auth');
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
@@ -39,4 +40,12 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
         Route::get('settings', 'SettingsController@index')->name('settings');
         Route::post('settings/update', 'SettingsController@update')->name('settings.update');
     });
+
+    Route::get('test',function()
+{
+    $crypto = (array)json_decode('{"USD":{"name":"UnitedStatesDollar","img":"USD.svg","sname":"USD"},"KRW":{"name":"KoreanWon","img":"KRW.svg","sname":"KRW"},"INR":{"name":"IndianRupee","img":"inr.svg","sname":"INR"},"THB":{"name":"ThaiBaht","img":"thb.svg","sname":"THB"},"JPY":{"name":"JapaneseYen","img":"jp.svg","sname":"JPY"},"TRY":{"name":"TurkishLira","img":"tr.svg","sname":"TRY"} }'
+     );
+
+    print_r($crypto);die;
+});
 });

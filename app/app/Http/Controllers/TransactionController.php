@@ -426,7 +426,7 @@ class TransactionController extends Controller
 
          $request->merge(['currency_id'=>$request->transfer_currency_id]);
        
-         $request->validate(['transfter_quantity' =>['required','numeric',new \App\Rules\CheckWalletBalance($request,$type)],'transfer_currency_id'=>'required|numeric','wallet_from'=>'required','wallet_to'=>'required']);
+         $request->validate(['transfer_quantity' =>['required','numeric',new \App\Rules\CheckWalletBalance($request,$type)],'transfer_currency_id'=>'required|numeric','wallet_from'=>'required','wallet_to'=>'required']);
           $user=auth()->user();
 
          $wallet=$user->wallet()->where('currency_id',$request->currency_id)->where('wallet_type',$type)->first();
@@ -435,7 +435,7 @@ class TransactionController extends Controller
         $balance_before_trans=$wallet?$wallet->coin:0;
 
 
-         $transaction=array('trans_amount'=>$request->transfter_quantity,'wallet_from'=>$type,'wallet_to'=>$wallet_to,'type'=>'transfer','currency_id'=>$request->currency_id,'balance_before_trans'=>$balance_before_trans,'trans_id'=>$this->generateID());
+         $transaction=array('trans_amount'=>$request->transfer_quantity,'wallet_from'=>$type,'wallet_to'=>$wallet_to,'type'=>'transfer','currency_id'=>$request->currency_id,'balance_before_trans'=>$balance_before_trans,'trans_id'=>$this->generateID());
 
 
          if($transaction=$user->transactions()->create($transaction))
