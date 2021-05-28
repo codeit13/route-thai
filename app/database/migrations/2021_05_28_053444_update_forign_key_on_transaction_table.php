@@ -15,7 +15,7 @@ class UpdateForignKeyOnTransactionTable extends Migration
     {
 
          Schema::table('transactions', function (Blueprint $table) { 
-           //  $table->dropForeign(['fiat_currency_id']);
+             $table->dropForeign(['fiat_currency_id']);
             $table->dropColumn('fiat_currency_id');
         });
 
