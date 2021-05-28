@@ -9,7 +9,7 @@ trait GenerateTransIDTrait {
 	public function generateID(){
 		$refrence_id = '';
 		do {
-		   $refrence_id = mt_rand( 1000000000000000, 9999999999000000 );
+		   $refrence_id = generate_unique_id();
 		} while ( Transaction::where('trans_id', $refrence_id )->exists() );
 
 		return $refrence_id;
