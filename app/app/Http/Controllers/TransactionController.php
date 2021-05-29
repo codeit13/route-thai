@@ -24,6 +24,8 @@ class TransactionController extends Controller
 
       $currentCurrency='';
 
+      $currencies=[];
+
       $user=\Auth::user();
        
 
@@ -36,13 +38,13 @@ class TransactionController extends Controller
         {
 
           $walletType=$walletType->find($type);
-          $currencies=\App\Models\Currency::where('type_id',$type)->get();
+         // $currencies=\App\Models\Currency::whereIn('id',)->get();
 
         }
         else
         {
-            $currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
-             $type=$currency_types[0]->id;
+            //$currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
+             $type=1;
         }
 
         $transactions= $user->transactions()->where('type',$transaction_type);
@@ -103,7 +105,14 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create($type='',$typename='',$currency='',$currencyname='')
-    {
+    {   
+
+      $currency_type='is_crypto';
+
+         if($type==2)
+         {
+            $currency_type='is_fiat';
+         }
 
         $currency_types=\App\Models\CurrencyType::where('id','!=',3)->get();
 
@@ -120,12 +129,12 @@ class TransactionController extends Controller
         {
 
           $walletType=$walletType->find($type);
-          $currencies=\App\Models\Currency::where('type_id',$type)->get();
+          $currencies=\App\Models\Currency::where($currency_type,1)->get();
 
         }
         else
         {
-            $currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
+            $currencies=\App\Models\Currency::where($currency_type,1)->get();
         }
 
        
@@ -162,7 +171,7 @@ class TransactionController extends Controller
 
        $type='deposit'; 
 
-
+       
         if($this->makeTransaction($request,$type,$media))
         {
 
@@ -190,22 +199,33 @@ class TransactionController extends Controller
      */
     public function show($type=1)
     {
+        $currency_type='is_crypto';
+
+         if($type==2)
+         {
+            $currency_type='is_fiat';
+         }
+
           $user = Auth::user();
 
 
 
          $walletTypes=\App\Models\CurrencyType::where('id','!=',3)->get();
 
-          $currencies=\App\Models\Currency::where('type_id',$type)->paginate(10);
+          $currencies=\App\Models\Currency::where($currency_type,1)->paginate(10);
 
 
      
 
         $walletType = \App\Models\CurrencyType::find($type);
 
+          $wallets=\Auth::user()->wallet()->get();
+
+        $allCurrencies=$this->sortedCurrencies();
+
 
  
-        return view('front.wallet.wallet-transactions',compact('walletType','currencies','walletTypes'));
+        return view('front.wallet.wallet-transactions',compact('walletType','currencies','walletTypes','wallets','allCurrencies'));
     }
 
 
@@ -216,6 +236,13 @@ class TransactionController extends Controller
      */
     public function withdraw_history($type='',$typename='')
     {
+        $currency_type='is_crypto';
+
+         if($type==2)
+         {
+            $currency_type='is_fiat';
+         }
+
       $currency_types=\App\Models\CurrencyType::where('id','!=',3)->get();
        
 
@@ -226,18 +253,19 @@ class TransactionController extends Controller
         {
 
           $walletType=$walletType->find($type);
-          $currencies=\App\Models\Currency::where('type_id',$type)->get();
+          $currencies=\App\Models\Currency::where($currency_type,1)->get();
 
         }
         else
         {
-            $currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
+            $currencies=\App\Models\Currency::where('type_id',1)->where($currency_type,1)->get();
+
              $type=$currency_types[0]->id;
         }
 
         $transactions= \App\Models\Transaction::where('type',2)
                                   ->whereHas('currency', function ($query)use ($type) {
-                                          $query->where('type_id',$type);
+                                          $query->where($currency_type,1);
 
                                         })->paginate(10);
 
@@ -253,6 +281,12 @@ class TransactionController extends Controller
      */
     public function create_withdraw($type='',$typename='',$currency='',$currencyname='')
     {
+      $currency_type='is_crypto';
+
+         if($type==2)
+         {
+            $currency_type='is_fiat';
+         }
 
         $currency_types=\App\Models\CurrencyType::where('id','!=',3)->get();
 
@@ -270,12 +304,12 @@ class TransactionController extends Controller
         {
 
           $walletType=$walletType->find($type);
-          $currencies=\App\Models\Currency::where('type_id',$type)->get();
+          $currencies=\App\Models\Currency::where($currency_type,1)->get();
 
         }
         else
         {
-            $currencies=\App\Models\Currency::where('type_id',$currency_types[0]->id)->get();
+            $currencies=\App\Models\Currency::where($currency_type,1)->get();
         }
 
            $allCurrencies=$this->sortedCurrencies();
@@ -317,15 +351,19 @@ class TransactionController extends Controller
     {
          $user = Auth::user();
 
+         $wallet_type=\App\Models\Currency::find($request->currency_id)->type_id;
 
-        $wallet=$user->wallet()->where('currency_id',$request->currency_id)->where('wallet_type','!=',3)->first();
+
+        $wallet=$user->wallet()->where('currency_id',$request->currency_id)->whereIn('wallet_type',[1,2])->first();
 
 
         $balance_before_trans=$wallet?$wallet->coin:0;
 
+         $wallet_column=$type=='deposit'?'wallet_to':'wallet_from';
       
         $request->merge(['type'=>$type,
                          'trans_amount'=>$request->quantity,
+                          $wallet_column=>$wallet_type,
                          ]);
 
        $transaction = $user->transactions()->create($request->all());
@@ -352,16 +390,20 @@ class TransactionController extends Controller
 
          //$walletTypes=\App\Models\CurrencyType::where('id','!=',3)->get();
 
-          $currencies=\App\Models\Currency::where('type_id',1)->paginate(10);
+          $currencies=\App\Models\Currency::where('is_tradable',1)->paginate(10);
 
 
      
 
         $walletType = \App\Models\CurrencyType::find(3);
 
+        $wallets=\Auth::user()->wallet()->get();
+
+        $allCurrencies=$this->sortedCurrencies();
+
 
  
-        return view('front.wallet.p2p-wallet',compact('walletType','currencies'));
+        return view('front.wallet.p2p-wallet',compact('walletType','currencies','wallets','allCurrencies'));
     }
 
 
@@ -369,35 +411,23 @@ class TransactionController extends Controller
     {
       
 
-      $wallets=auth()->user()->wallet()->where('wallet_type','!=',2)->get();
+      $currencies=\App\Models\Currency::all();
 
-      $currencies=$existing_currencies=[];
+      $sorted_currencies=$existing_currencies=[];
 
      
 
-      foreach ($wallets as $key => $wallet) {
+      foreach ($currencies as $key => $currency) {
 
-        if($wallet->coin > 0)
-        {
-            
+     
 
-            if($wallet->currency->hasMedia('icon')){
-             $wallet->currency->img=$wallet->currency->firstMedia('icon')->getUrl();
+            if($currency->hasMedia('icon')){
+             $currency->img=$currency->firstMedia('icon')->getUrl();
 
-        }
-        else
-        {
-            $wallet->currency->img='';
-        }
+      
+              $sorted_currencies[]=$currency->toArray();
 
-            // if(!in_array($wallet->currency_id,$existing_currencies))
-            // {
-              $wallet->currency->wallet_type=$wallet->wallet_type;
-              $currencies[]=$wallet->currency->toArray();
-
-            //   $existing_currencies[]=$wallet->currency_id;
-               
-            // }
+      
 
 
         }
@@ -405,7 +435,7 @@ class TransactionController extends Controller
 
      //echo '<pre>';print_r($currencies);die;
 
-      return $currencies;
+      return $sorted_currencies;
     }
 
 
@@ -415,7 +445,7 @@ class TransactionController extends Controller
 
          $wallet_to=3;
 
-         if($request->wallet_from=='p2p')
+         if($request->wallet_from=='3')
          {
              $type=3;
 

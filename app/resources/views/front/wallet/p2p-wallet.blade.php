@@ -39,7 +39,7 @@
 							<h3>{{__($walletType->type)}} {{__('Wallet')}} <a onclick="toggleBalance(this)" href="#"><i class="fa fa-eye-slash"  aria-hidden="true"></i> {{__('Hide Balance')}}</a></h3>
 						</div>
 						<div class="col-lg-6 text-right col-sm-6 col-6">
-							<a href="{{route('p2p.exchange')}}" class="btn-primary">Buy</a>
+							<a data-toggle="modal" data-target="#exampleModalnew" class="btn-primary">{{__('Transfer')}}</a>
 							<a href="#" class="btn-success">{{ __('Deposit')}}
 							</a>
 							<a class="mobile-tag" href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a>
@@ -122,7 +122,7 @@
 											@endif
 											<label>{{__($currency->short_name)}}<br><span>{{__($currency->name)}}</span></label>
 										</td>
-										<td>{{$currency->user_total}}</td>
+										<td>{{$currency->user_p2p_total}}</td>
 
 										<td>{{$currency->user_p2p_balance}}</td>
 										<td>
@@ -172,6 +172,7 @@
  </div>
 </div>
 
+@include('front.components.transfer-modal')
 
 
 
@@ -179,6 +180,11 @@
 
 @section('page_scripts')
 <script> 
+
+		var wallets=@json($wallets);
+
+var currencies=@json($currencies);
+
     $(document).ready(function(){
         $('.bxslider').bxSlider({
             auto:false,
@@ -212,4 +218,8 @@
   }
 }
 </script>
+
+@include('front._inc.transfer-js')
+
+
 @endsection     

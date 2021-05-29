@@ -54,15 +54,15 @@ text-decoration: none !important; }
 
         <div class=" mt-3">
             <div class=""> 
-                <label class="text-dark">Crypto coins</label>
-                <select id="crypto-list" name="tradable_coins[]" onchange="tradeableCoinsList(this)" placeholder="Select upto 10 coins" multiple>
+                <label class="text-dark">Common Crypto Wallet</label>
+                <select id="crypto-list" name="crypto[]" placeholder="Select upto 10 coins" multiple>
                 </select>
             </div>
         </div>
         <!--Fiat currencies multi-select with choices.css&js-->
         <div class=" mt-3">
             <div class="">
-                <label class="text-dark">Fiat currencies</label>
+                <label class="text-dark">Common Fiat Wallet</label>
                 <select id="fiat-list" name="fiat[]" placeholder="Select currencies" class="custom-select" multiple></select>
             </div>
         </div>
@@ -72,28 +72,28 @@ text-decoration: none !important; }
 
          <div class=" mt-3">
             <div class="">
-                <label class="text-dark">Trade</label>
+                <label class="text-dark">P2P Wallet</label>
                 <select id="trade-list" name="trade[]" placeholder="Select currencies" class="custom-select" multiple></select>
             </div>
         </div>
         <!--Exchange select with ddslick-->
 
-        <div class=" mt-3">
+        <!-- <div class=" mt-3">
             <div class="">
                 <label class="text-dark">Exchange List</label>
                 <div>
                     <select id="exchange-list" name="exchange[]" class="custom-select"></select>
                 </div>
             </div>
-        </div>
+        </div> -->
 
          <!--Fiat currencies multi-select with choices.css&js-->
-         <div class=" mt-3">
+       <!--   <div class=" mt-3">
              <div class=""> 
                  <label class="text-dark">Loanable Coins</label>
                  <select id="coin-loan-list" name="loanable_coins[]" placeholder="Select coins" class="custom-select" multiple></select>
              </div>
-         </div>
+         </div> -->
          <div class="mt-3">
             <div class=""> 
                 <input type="submit" id="UpdateCurrencySettings" class="form-control btn btn-sm btn-default"   value="Save Settings"> 

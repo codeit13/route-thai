@@ -27,6 +27,7 @@ trait ConsumeExternalService
             'http_errors' => false,
             'debug'=>false
         ]);
+
         return $response->getBody()->getContents();
     }
 }

@@ -63,6 +63,13 @@ class Currency extends Model
 
     return $wallet;
     }
+
+    public function getUserP2pTotalAttribute()
+    {
+        $user=\Auth::user();
+        $total=$user->transactions()->where('status','approved')->where('type','transfer')->where('wallet_to',3)->where('currency_id',$this->id)->sum('trans_amount');
+        return ($total>0)?$total:'0.00000';
+    }
     
 
 }

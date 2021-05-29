@@ -102,7 +102,10 @@
 									</div>
 									<div class="dropdown currency_two three_coins crypto currencyDropdown">
 									
-													     @foreach($currencies as $cIndex=> $currency)
+													     @foreach($transactions as $cIndex=> $trans_row)
+													     @php
+													     $currency=$trans_row->currency;
+													     @endphp
 
                     @if($currency->id==$currentCurrency)
 
@@ -123,19 +126,19 @@
                       @endforeach
 
                       
-                    @if(!$currentCurrency)
+                    @if(!$currentCurrency && isset($transactions[0]))
 
                       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         
-                      @if($currencies[0]->hasMedia('icon'))
+                      @if($transactions[0]->currency->hasMedia('icon'))
     
                                       
 
-                      <img style="max-width: 28px;" src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$transactions[0]->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transactions[0]->currency->name)}}"/> 
 
                       @endif
 
-                      {{__($currencies[0]->short_name)}} <span>{{__($currencies[0]->name)}}</span>
+                      {{__($transactions[0]->currency->short_name)}} <span>{{__($transactions[0]->currency->name)}}</span>
                       </button>
 
 
@@ -146,7 +149,10 @@
 
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                           @foreach($currencies as $cIndex=> $currency)
+                           @foreach($transactions as $cIndex=> $trans_row)
+													     @php
+													     $currency=$trans_row->currency;
+													     @endphp
 
                             <a class="dropdown-item" data-id="{{$currency->id}}" href="#">
 
@@ -216,7 +222,10 @@
 											<td style="width:180px; display:inline-block;">
 												<div class="dropdown currency_two three_coins crypto currencyDropdown">
 
-													     @foreach($currencies as $cIndex=> $currency)
+													   @foreach($transactions as $cIndex=> $trans_row)
+													     @php
+													     $currency=$trans_row->currency;
+													     @endphp
 
                     @if($currency->id==$currentCurrency)
 
@@ -237,19 +246,19 @@
                       @endforeach
 
                       
-                    @if(!$currentCurrency)
+                    @if(!$currentCurrency && isset($transactions[0]))
 
                       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         
-                      @if($currencies[0]->hasMedia('icon'))
+                      @if($transactions[0]->currency->hasMedia('icon'))
     
                                       
 
-                      <img style="max-width: 28px;" src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$transactions[0]->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transactions[0]->currency->name)}}"/> 
 
                       @endif
 
-                      {{__($currencies[0]->short_name)}} <span>{{__($currencies[0]->name)}}</span>
+                      {{__($transactions[0]->currency->short_name)}} <span>{{__($transactions[0]->currency->name)}}</span>
                       </button>
 
 
@@ -260,7 +269,10 @@
 
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                           @foreach($currencies as $cIndex=> $currency)
+                         @foreach($transactions as $cIndex=> $trans_row)
+													     @php
+													     $currency=$trans_row->currency;
+													     @endphp
 
                             <a class="dropdown-item" data-id="{{$currency->id}}" href="#">
 

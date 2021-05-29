@@ -2,13 +2,16 @@
 	
 	var allCurrencies=@json($allCurrencies);
 
-	var wallet_types=[{'type':'fiat_and_spot','text':'Fiat and Spot'},{'type':'p2p','text':'P2P'}];
+	var wallet_types=[{'type':1,'text':'Fiat and Spot'},{'type':3,'text':'P2P'}];
 
 	
 
 	function changeCurrencyDropdown(selector)
 	{
         var wallet=$(selector).val();
+
+
+
 
         $('#to_wallet_server').html('');
 
@@ -24,15 +27,26 @@
         	}
         })
 
+        
+        var wallet2=$('[name="wallet_to"]').val();
+
+        var check='is_crypto';
+
+        if(wallet2==3)
+        {
+           check='is_tradable';
+        }
+
         var filteredCurrencies=allCurrencies.filter(function(v,k)
         {
-        	if(wallet=='fiat_and_spot')
+
+        	if(wallet=='1')
         	{
-               return v.wallet_type==1;
+               return v.is_crypto==1 && v[check]==1;
         	}
         	else
         	{
-               return v.is_tradable==1 && v.wallet_type==3;
+               return v.is_tradable==1 && v[check]==1;
                
         	}
         	
@@ -102,22 +116,23 @@
 function showBalanceForTransfer(coin_id)
 {
     var walletSelected=1;
-    if($('[name="wallet_from"]').val()=='p2p')
+    if($('[name="wallet_from"]').val()=='3')
     {
         walletSelected=3;
     }
 
 
-	
+	  
 
     var balance='0.00000';
 
     transferSelectedCurrencyBalance=balance;
 
-
     var balanceRows=wallets.filter(function(wallet){
           return wallet.currency_id==coin_id && wallet.wallet_type==walletSelected;
     })
+
+    var balanceRow='';
 
     if(balanceRows.length)
     {
@@ -127,12 +142,14 @@ function showBalanceForTransfer(coin_id)
     }
 
 
+
+
     var currencyRow=allCurrencies.filter(function(currency)
     {
        return currency.id==coin_id;
     })
 
-    console.log(currencyRow);
+   // console.log(currencyRow);
 
     currencyRow=currencyRow[0];
 
@@ -145,6 +162,7 @@ function showBalanceForTransfer(coin_id)
          transferSelectedCurrencyBalance=balanceRow.coin;
     }
 
+    
 
 
     $('#totalBalanceForTransfer').text(balance);

@@ -33,8 +33,8 @@
 										<label>From</label>
 										<select class="form-control" onchange="changeCurrencyDropdown(this)" name="wallet_from">
 										
-											<option value="fiat_and_spot">Fiat and Spot</option>
-											<option value="p2p">P2P</option>
+											<option value="1">Fiat and Spot</option>
+											<option value="3">P2P</option>
 										</select>
 
 										@error('wallet_from')
@@ -46,8 +46,8 @@
 									<div class="field">
 										<label>To</label>
 										<select class="form-control" id="to_wallet_server" name="wallet_to">
-											<option value="fiat_and_spot">Fiat and Spot</option>
-											<option value="p2p">P2P</option>
+											<option value="1">Fiat and Spot</option>
+											<option value="3">P2P</option>
 										</select>
 										@error('wallet_to')
                                 <p class="invalid-value" role="alert">

@@ -131,9 +131,10 @@ class Transaction extends Model
     public function sendMessage($mobile,$message)
     {
 
-     
-           $this->service = new \App\Services\SMSService();
-           $this->service->send($mobile,$message);
+        //  echo '<pre>';print_r($mobile);print_r($message);die;
+          // $this->service = new \App\Services\SMSService();
+          // $this->service->send($mobile,$message);
+
     }
 
 
