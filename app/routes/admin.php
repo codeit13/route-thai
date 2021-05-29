@@ -48,4 +48,20 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
 
     print_r($crypto);die;
 });
+
+    Route::get('run/seed',function()
+{
+     \Artisan::call('db:seed');
+
+    dd("seeding is cleared");
+});
+
+    Route::get('run/migration',function()
+{
+     \Artisan::call('migrate');
+
+    dd("migrations is cleared");
+});
+
+
 });
