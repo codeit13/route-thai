@@ -58,6 +58,8 @@ class SettingsController extends Controller
 
        $dropdowns=[];
 
+       $dropdowns['crypto']=$dropdowns['trade']=$dropdowns['fiat']=[];
+
        foreach ($currencies as $key => $currency) {
 
         //crypto
