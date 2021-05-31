@@ -38,8 +38,8 @@ class SMSService
     }  
     
     
-    public function send(Array $to, String $message , DateTime $schedule = NULL ){
-        $from = 'TFCTOR';
+    public function send(Array $to,String $templateName = '' , $var = [] ,  DateTime $schedule = NULL ){
+        $from = 'ROUTET';
         $to = trim(str_replace(['+',' '],'',implode(',',$to)));
 
       
@@ -48,11 +48,14 @@ class SMSService
         $message = $message;
         $param = array(
             "To" => $to,
-            "Msg" =>$message,
-        );      
+            "From" => $from,
+            "Msg" => $message,
+            "TemplateName" => $templateName
+        );    
+        $param = array_merge($param, $var);
         if($schedule != null) {
             $param['sendAt'] = $schedule;
         }       
-        return $this->performRequest('POST', $this->secret.'/ADDON_SERVICES/SEND/PSMS',$param, ['Content-type'=>'application/json']);
+        return $this->performRequest('POST', $this->secret.'/ADDON_SERVICES/SEND/TSMS',$param, ['content-type'=>'application/x-www-form-urlencoded']);
     }
 }   
