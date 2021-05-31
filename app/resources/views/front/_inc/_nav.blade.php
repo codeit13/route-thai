@@ -153,7 +153,13 @@
                                         $default_currency = !empty(Auth::user()->default_currency) ? \App\Models\Currency::find(Auth::user()->default_currency) : \App\Models\Currency::where('type_id',2)->first();
                                         @endphp
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="{{ $default_currency->firstMedia('icon')->getUrl() }}" alt="{{__($default_currency->name)}}">{{__($default_currency->short_name)}}
+                                              @if($default_currency->hasMedia('icon'))
+
+                                            <img src="{{ $default_currency->firstMedia('icon')->getUrl() }}" alt="{{__($default_currency->name)}}">
+
+                                            @endif
+
+                                            {{__($default_currency->short_name)}}
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
                                         @foreach($currencies as $cIndex=> $currency)

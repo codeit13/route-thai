@@ -95,8 +95,14 @@ class TransactionController extends Controller
 
           
 
+         $filters=$user->transactions()->whereHas('currency', function ($query)use ($type,$request) {
+                                          $query->where('type_id',$type);
+      
 
-      return view('front.wallet.wallet-history',compact('transactions','currencies','currency_types','walletType','currentCurrency','request'));
+                                        })->get();
+
+
+      return view('front.wallet.wallet-history',compact('transactions','currencies','currency_types','walletType','currentCurrency','request','filters'));
     }
 
     /**
@@ -159,7 +165,7 @@ class TransactionController extends Controller
     {
 
     
-        $request->validate(['quantity' =>'required|numeric','currency_id'=>'required|numeric','transaction_image'=>'required']);
+        $request->validate(['quantity' =>'required|numeric|gt:0','currency_id'=>'required|numeric','transaction_image'=>'required']);
 
 
         $fileName=time().'____'.$request->file('transaction_image')->getClientOriginalName();
@@ -334,7 +340,7 @@ class TransactionController extends Controller
     {
 
     
-        $request->validate(['quantity' =>['required','numeric',new \App\Rules\CheckWalletBalance($request)],'currency_id'=>'required|numeric','address'=>'required']);
+        $request->validate(['quantity' =>['required','gt:0','numeric',new \App\Rules\CheckWalletBalance($request)],'currency_id'=>'required|numeric','address'=>'required']);
 
         $type='withdraw';  //for withdraw
  
@@ -390,7 +396,7 @@ class TransactionController extends Controller
 
          //$walletTypes=\App\Models\CurrencyType::where('id','!=',3)->get();
 
-          $currencies=\App\Models\Currency::where('is_tradable',1)->paginate(10);
+          $currencies=\App\Models\Currency::where('is_tradable',1)->where('is_crypto',1)->paginate(10);
 
 
      
@@ -456,7 +462,7 @@ class TransactionController extends Controller
 
          $request->merge(['currency_id'=>$request->transfer_currency_id]);
        
-         $request->validate(['transfer_quantity' =>['required','numeric',new \App\Rules\CheckWalletBalance($request,$type)],'transfer_currency_id'=>'required|numeric','wallet_from'=>'required','wallet_to'=>'required']);
+         $request->validate(['transfer_quantity' =>['required','numeric','gt:0',new \App\Rules\CheckWalletBalance($request,$type)],'transfer_currency_id'=>'required|numeric','wallet_from'=>'required','wallet_to'=>'required']);
           $user=auth()->user();
 
          $wallet=$user->wallet()->where('currency_id',$request->currency_id)->where('wallet_type',$type)->first();

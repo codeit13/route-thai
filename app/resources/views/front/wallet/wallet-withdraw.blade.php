@@ -36,7 +36,7 @@
       <div class="row">
         <div class="col-lg-12 bg-white-xs col-sm-12 col-12 xs-flush">
           <div class="white-box m-top-0">
-            <ul class="janral-head hidden-xs">
+            <ul class="janral-head">
            @foreach($currency_types as $index => $currency_type)
 
 
@@ -187,7 +187,7 @@
                      
                              
                   <div class="field">
-                    <button type="submit">{{__('Withdrawal')}}</button>
+                    <button id="withdrawalSubmit" type="submit">{{__('Withdrawal')}}</button>
                   </div>
                 </form>
               </div>
@@ -369,9 +369,14 @@ $(document).on('keyup','#quantity',function()
 
       $(this).after('<p class="text-danger text-bold validateError">{{__("Withdraw quantity should be less than available balance.")}}</p>');
     }
+    else if(quantity <=0)
+    {
+       $('#withdrawalSubmit').attr('disabled',true).css('opacity','0.5');
+    }
     else
     {
       $(this).removeClass('is-invalid');
+      $('#withdrawalSubmit').attr('disabled',false).css('opacity','1.0');
 
     }
 

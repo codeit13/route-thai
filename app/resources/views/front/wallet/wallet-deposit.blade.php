@@ -181,7 +181,7 @@
                                 </p>
                                 @enderror
 								<div class="field">
-									<button type="submit">{{__('Request')}}</button>
+									<button id="depositSubmit" type="submit">{{__('Request')}}</button>
 									<!-- <button type="button" data-toggle="modal" data-target="#exampleModal1">Request</button> -->
 								</div>
 							</form>	
@@ -503,6 +503,25 @@ var currentCurrency='{{($currentCurrency)?$currentCurrency:$currencies[0]->id??'
 
 
 changeShowBalance(currentCurrency);
+
+$(document).on('keyup','#quantity',function()
+{
+
+    var quantity=parseFloat($(this).val());
+
+   
+    if(quantity <=0)
+    {
+       $('#depositSubmit').attr('disabled',true).css('opacity','0.5');
+    }
+    else
+    {
+      
+      $('#depositSubmit').attr('disabled',false).css('opacity','1.0');
+
+    }
+
+})
 
 </script>
 

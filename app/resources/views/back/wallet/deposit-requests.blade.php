@@ -5,16 +5,16 @@
             <div class="header-body">
                <div class="row align-items-center py-4">
                   <div class="col-lg-12">
-                  <form action="" method="post">
+                  <form action="{{route('admin.deposit.requests.show',['type'=>$type,'name'=>$name])}}" method="get" id="depositRequestForm">
                      <div class="card">
                         <ul>
                            <li><h3><i class="fa fa-filter" aria-hidden="true"></i> Filter</h3></li>
                            <li>
-                              <select name="status" id="status_change">
-                                 <option value="all">All</option>
-                                 <option value="open">To Approve</option>
-                                 <option value="approved">Approved</option>
-                                 <option value="rejected">Rejected</option>
+                              <select name="status" onchange="submitForm()" id="status_change">
+                                 <option value="">All</option>
+                                 <option value="pending" @if($request->status=='pending')selected @endif >To Approve</option>
+                                 <option value="approved" @if($request->status=='approved')selected @endif>Approved</option>
+                                 <option value="rejected" @if($request->status=='rejected')selected @endif>Rejected</option>
                               </select>
                            </li>
                            <!-- <li class="mini_filter">
@@ -98,4 +98,19 @@
             </div>
          </div>
    </div>
+    @endsection
+
+    @section('page_scripts')
+
+    <script type="text/javascript">
+       
+
+       function submitForm()
+       {
+           document.getElementById('depositRequestForm').submit();
+       }
+    </script>
+
+
+
     @endsection

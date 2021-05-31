@@ -7,6 +7,12 @@
 
 @endsection
 @section('content')
+
+@php
+
+$existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencies1=[];
+
+@endphp
 <div class="progress-section visible-xs">
 	<h2>@if($request->type=='withdraw')
 
@@ -77,6 +83,8 @@
 
 						<div class="head-xs visible-xs">
 							<form id="filterForm1" action="{{route('wallet.request.history',array('type'=>$walletType->id??'','typename'=>$walletType->type??''))}}" method="GET" >
+
+								<input type="hidden" name="type">
 							<div class="row">
 								<div class="col-7">
 									<div class="row">
@@ -87,10 +95,10 @@
 									<div class="row">
 
 										<div class="col-6 sp-right">
-											<input type="date" id="reportdate" name="reportdate" value="{{$request->start_date??''}}">
+											<input type="date" id="reportdate" name="start_date" value="{{$request->start_date??''}}">
 										</div>
 										<div class="col-6 sp-left">
-											<input type="date" id="reportdate" name="reportdate" value="{{$request->end_date??''}}">
+											<input type="date" id="reportdate" name="end_date" value="{{$request->end_date??''}}">
 										</div>
 									</div>
 								</div>
@@ -101,11 +109,33 @@
 										</div>
 									</div>
 									<div class="dropdown currency_two three_coins crypto currencyDropdown">
+
+
+										@if(count($filters)<1)
+
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        
+                    <span>Not Available</span>
+                      </button>
+                      @endif
 									
-													     @foreach($transactions as $cIndex=> $trans_row)
-													     @php
+													     @foreach($filters as $cIndex=> $trans_row)
+													         @php
 													     $currency=$trans_row->currency;
 													     @endphp
+
+													     @if(in_array($currency->id,$existingCurrencies2))
+
+													     @continue;
+
+													     @else 
+
+													     @php
+                                                     $existingCurrencies2[]=$currency->id;
+
+                                                     @endphp
+
+													     @endif
 
                     @if($currency->id==$currentCurrency)
 
@@ -126,19 +156,28 @@
                       @endforeach
 
                       
-                    @if(!$currentCurrency && isset($transactions[0]))
+                    @if(!$currentCurrency)
 
                       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+
+                      	 @if(isset($filters[0]))
                         
-                      @if($transactions[0]->currency->hasMedia('icon'))
+                      @if($filters[0]->currency->hasMedia('icon'))
     
                                       
 
-                      <img style="max-width: 28px;" src="{{$transactions[0]->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transactions[0]->currency->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$filters[0]->currency->firstMedia('icon')->getUrl()}}" alt="{{__($filters[0]->currency->name)}}"/> 
 
                       @endif
 
                       {{__($transactions[0]->currency->short_name)}} <span>{{__($transactions[0]->currency->name)}}</span>
+
+                      @else
+
+                      <span>Not available</span>
+
+                      @endif
                       </button>
 
 
@@ -149,10 +188,23 @@
 
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                           @foreach($transactions as $cIndex=> $trans_row)
-													     @php
+                           @foreach($filters as $cIndex=> $trans_row)
+													        @php
 													     $currency=$trans_row->currency;
 													     @endphp
+
+													     @if(in_array($currency->id,$existingCurrencies3))
+
+													     @continue;
+
+													     @else 
+
+													     @php
+                                                     $existingCurrencies3[]=$currency->id;
+
+                                                     @endphp
+
+													     @endif
 
                             <a class="dropdown-item" data-id="{{$currency->id}}" href="#">
 
@@ -184,7 +236,10 @@
 							</div>
 							<div class="row">
 								<div class="col-4">
-								<select name="status" class="filter-type">
+								<select name="status" class="filter-type form-control">
+
+									<option value="">Select</option>
+
 													<option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
 													<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
 													<option value="rejected" @if($request->status=='rejected') selected @endif>{{__('Rejected')}}</option>
@@ -217,15 +272,36 @@
 
 											<td>
 
-												<input type="date" id="reportdate" name="reportdate" value="{{$request->start_date??''}}">
-											<td><input type="date" id="reportdate" name="reportdate" value="{{$request->end_date??''}}"></td>
+												<input type="date" id="reportdate" name="start_date" value="{{$request->start_date??''}}">
+											<td><input type="date" id="reportdate" name="end_date" value="{{$request->end_date??''}}"></td>
 											<td style="width:180px; display:inline-block;">
 												<div class="dropdown currency_two three_coins crypto currencyDropdown">
 
-													   @foreach($transactions as $cIndex=> $trans_row)
+													@if(count($filters)<1)
+
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        
+                    <span>Not Available</span>
+                      </button>
+                      @endif
+
+													   @foreach($filters as $cIndex=> $trans_row)
 													     @php
 													     $currency=$trans_row->currency;
 													     @endphp
+
+													     @if(in_array($currency->id,$existingCurrencies))
+
+													     @continue;
+
+													     @else 
+
+													     @php
+                                                     $existingCurrencies[]=$currency->id;
+
+                                                     @endphp
+
+													     @endif
 
                     @if($currency->id==$currentCurrency)
 
@@ -246,20 +322,34 @@
                       @endforeach
 
                       
-                    @if(!$currentCurrency && isset($transactions[0]))
+                    @if(!$currentCurrency)
 
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">
+
+                      	@if(isset($filters[0]))
                         
-                      @if($transactions[0]->currency->hasMedia('icon'))
+                      @if($filters[0]->currency->hasMedia('icon'))
     
                                       
 
-                      <img style="max-width: 28px;" src="{{$transactions[0]->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transactions[0]->currency->name)}}"/> 
+                      <img style="max-width: 28px;" src="{{$filters[0]->currency->firstMedia('icon')->getUrl()}}" alt="{{__($filters[0]->currency->name)}}"/> 
 
+                     
                       @endif
 
                       {{__($transactions[0]->currency->short_name)}} <span>{{__($transactions[0]->currency->name)}}</span>
+
+                      @else
+
+                      <span>Not available</span>
+
+                       @endif
+
+
+
                       </button>
+
+                      
 
 
 
@@ -269,10 +359,23 @@
 
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                         @foreach($transactions as $cIndex=> $trans_row)
+                         @foreach($filters as $cIndex=> $trans_row)
 													     @php
 													     $currency=$trans_row->currency;
 													     @endphp
+
+													     @if(in_array($currency->id,$existingCurrencies1))
+
+													     @continue;
+
+													     @else 
+
+													     @php
+                                                     $existingCurrencies1[]=$currency->id;
+
+                                                     @endphp
+
+													     @endif
 
                             <a class="dropdown-item" data-id="{{$currency->id}}" href="#">
 
@@ -299,15 +402,21 @@
 
 											</td>
 											<td>
-												<select name="type" class="filter-type">
+												<select name="type" class="filter-type form-control">
+													<option value="">Select</option>
 													<option value="deposit" @if($request->type=='deposit') selected @endif >{{__('Deposit')}}</option>
 
 													<option value="withdraw" @if($request->type=='withdraw') selected @endif>{{__('Withdraw')}}</option>
+
+													<option value="buy" @if($request->type=='buy') selected @endif >{{__('Buy')}}</option>
+
+													<option value="sell" @if($request->type=='sell') selected @endif >{{__('Sell')}}</option>
+
 												</select>
 											</td>
 											<td>
-												<select name="status" class="filter-type">
-													
+												<select name="status" class="filter-type form-control">
+													<option value="">Select</option>
 													<option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
 													<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
 													<option value="rejected" @if($request->status=='rejected') selected @endif>{{__('Rejected')}}</option>
@@ -359,9 +468,11 @@
 
 												@else
 
-
+                                               @if($transaction->hasMedia('file'))
 
 												<a class="btn-success" target="_blank" href="{{$transaction->firstMedia('file')->getUrl()}}">View File</a>
+
+												@endif
 
 												@endif
 
@@ -426,9 +537,11 @@
 
 												@else
 
-
+                                          @if($transaction->hasMedia('file'))
 
 												<a class="btn-success" target="_blank" href="{{$transaction->firstMedia('file')->getUrl()}}">View File</a>
+
+												@endif
 
 												@endif</td>
 											@switch($transaction->status)
@@ -509,6 +622,9 @@
 			$("#footer ul li.Support:first-child").click(function(){
 				$("ul.Support-main li").toggle();
 			});
+
+
+
 		 });
 	</script>
 	<script type="text/javascript">
@@ -553,9 +669,15 @@
 		    allOptions.toggle();
 		});
 
+
+
+
+
 		$(".currencyDropdown .dropdown-menu .dropdown-item").on("click", function(e) { e.preventDefault();
 
       var currency_id=$(this).attr('data-id');
+
+
 
  //  changeShowBalance(currency_id);
 
@@ -573,8 +695,12 @@
 
 		function submitform()
 		{
-			if($('#filterForm1').parent('.head-xs').css('display') !='none')
+			
+			if($('#filterForm1').parents('div').eq(0).css('display') !='none')
 			{
+		
+
+
 			document.getElementById("filterForm1").submit();
 
 			}
@@ -585,10 +711,20 @@
 			}
 		}
 
-		$(document).on('change','.filter-type',function()
+		$('.filter-type').on('change',function()
+		{
+			//console.log('ch');
+
+			submitform();
+		})
+
+
+		$(document).on('change','[type="date"]',function()
 		{
 			submitform();
 		})
+
+
 
   $(document).on('keyup','[name="search"]',function(e)
   {

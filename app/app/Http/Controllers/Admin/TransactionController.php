@@ -48,16 +48,22 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($type,$name)
+    public function show(Request $request,$type,$name)
     {
          
-        $transactions= Transaction::where('type','deposit')
-                                  ->whereHas('currency', function ($query)use ($type) {
+        $transactions= Transaction::where('type','deposit');
+
+
+                        if($request->status)
+                        {
+                            $transactions=$transactions->where('status',$request->status);
+                        }
+                                 $transactions=$transactions->whereHas('currency', function ($query)use ($type) {
                                           $query->where('type_id',$type);
 
                                         })->paginate(10);
 
-        return view('back.wallet.deposit-requests',compact('transactions'));
+        return view('back.wallet.deposit-requests',compact('transactions','request','type','name'));
     }
 
 
@@ -67,7 +73,7 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show_withdraw($type='',$name='')
+    public function show_withdraw(Request $request,$type='',$name='')
     {
 
         $currency_types=\App\Models\CurrencyType::all();
@@ -90,13 +96,21 @@ class TransactionController extends Controller
         }
 
 
-        $transactions= Transaction::where('type','withdraw')
-                                  ->whereHas('currency', function ($query)use ($type) {
+        $transactions= Transaction::where('type','withdraw');
+
+
+                        if($request->status)
+                        {
+                            $transactions=$transactions->where('status',$request->status);
+                        }
+
+
+                                  $transactions=$transactions->whereHas('currency', function ($query)use ($type) {
                                           $query->where('type_id',$type);
 
                                         })->paginate(10);
 
-        return view('back.wallet.withdraw-requests',compact('transactions','currency_types','walletType'));
+        return view('back.wallet.withdraw-requests',compact('transactions','currency_types','walletType','request','type','name'));
     }
 
 
@@ -150,6 +164,8 @@ class TransactionController extends Controller
 
         if($status=='approved'){
             $this->updateUserWallet($transaction,$type);
+
+
         }
          $transaction->status=$status;
 
@@ -187,13 +203,6 @@ class TransactionController extends Controller
 
 
 
-           
-       
-
-           // $this->service = new \App\Services\SMSService();
-           // $this->service->send([$transaction->user->mobile],' Your '.$type.' request of' .$transaction->trans_amount.' '.$transaction->currency->short_name.' has been approved');
-
-
         }
         else
         {
@@ -201,11 +210,21 @@ class TransactionController extends Controller
              $currency_type=\App\Models\Currency::find($transaction->currency_id)->type_id;
              $transaction->user->wallet()->create(['coin'=>$transaction->trans_amount,'currency_id'=>$transaction->currency_id,'wallet_type'=>$currency_type]);
 
-       
+
+            
+        }   
 
 
-              // $this->service = new \App\Services\SMSService();
-              // $this->service->send([$transaction->user->mobile],' Your '.$type.' request of' .$transaction->trans_amount.' '.$transaction->currency->short_name.' has been approved');
-        }
+         // $sms_variables=['VAR1'=>$transaction->user->name,'VAR2'=>$type,'VAR3'=>$transaction->trans_amount,'VAR4'=>$transaction->currency->short_name,'VAR5'=>'approved'];
+
+
+         //      $this->service = new \App\Services\SMSService();
+         //      $res=$this->service->send(['+66630370558'],'RouteDWR',$sms_variables);
+
+              
+
+
+
+
     }
 }
