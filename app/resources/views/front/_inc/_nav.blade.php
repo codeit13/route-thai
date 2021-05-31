@@ -74,11 +74,23 @@
                                     $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
                                     @endphp
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="{{ $default_language->firstMedia('icon') != null ? $default_language->firstMedia('icon')->getUrl() : '' }}" alt="">{{ $default_language->name }}
+                                         @if($default_language->hasMedia('icon'))
+                                        <img src="{{ $default_language->firstMedia('icon') != null ? $default_language->firstMedia('icon')->getUrl() : '' }}" alt="">
+                                        @endif
+
+                                        {{ $default_language->name }}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         @foreach ($languages as $item)
-                                            <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">{{ $item->name}}</a>
+                                            <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}">
+                                                    @if($item->hasMedia('icon'))
+                                       
+                                     
+                                                <img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">
+
+                                                   @endif
+
+                                                {{ $item->name}}</a>
                                         @endforeach
                                     </div> 
                                 </div>
@@ -116,11 +128,20 @@
                                     $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
                                     @endphp
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="{{ $default_language->firstMedia('icon')->getUrl()??'' }}" alt="">{{ $default_language->name }}
+                                        @if($default_language->hasMedia('icon'))
+                                        <img src="{{ $default_language->firstMedia('icon')->getUrl()??'' }}" alt="">
+                                        @endif
+                                        {{ $default_language->name }}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         @foreach ($languages as $item)
-                                            <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">{{ $item->name}}</a>
+                                            <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}">
+                                                @if($item->hasMedia('icon'))
+                                                <img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">
+
+                                                @endif
+
+                                                {{ $item->name}}</a>
                                         @endforeach
                                     </div>
                                 </div>
