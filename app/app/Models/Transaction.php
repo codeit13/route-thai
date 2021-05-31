@@ -12,7 +12,7 @@ class Transaction extends Model
     use HasFactory,Mediable;
     use GenerateTransIDTrait;
 
-    protected $fillable=['trans_id','user_id','receiver_id','balance_before_trans','status','timer','user_payment_method_id','type','quantity','fiat_currency_id','currency_id','type','trans_amount','address'];
+    protected $fillable=['trans_id','user_id','receiver_id','balance_before_trans','status','timer','user_payment_method_id','type','quantity','fiat_currency_id','currency_id','type','trans_amount','address','wallet_from','wallet_to'];
 
     /**
      * Get the quantity in 00.0000 format.
@@ -131,9 +131,10 @@ class Transaction extends Model
     public function sendMessage($mobile,$message)
     {
 
-     
-           $this->service = new \App\Services\SMSService();
-           $this->service->send($mobile,$message);
+        //  echo '<pre>';print_r($mobile);print_r($message);die;
+          // $this->service = new \App\Services\SMSService();
+          // $this->service->send($mobile,$message);
+
     }
 
 

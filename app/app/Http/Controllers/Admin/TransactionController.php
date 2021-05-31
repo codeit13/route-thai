@@ -166,9 +166,9 @@ class TransactionController extends Controller
 
     public function updateUserWallet($transaction,$type)
     {
-        if($transaction->user->wallet()->where('currency_id',$transaction->currency_id)->where('wallet_type','!=',3)->exists())
+        if($transaction->user->wallet()->where('currency_id',$transaction->currency_id)->whereIn('wallet_type',[1,2])->exists())
         {
-            $wallet=$transaction->user->wallet()->where('currency_id',$transaction->currency_id)->where('wallet_type','!=',3)->first();
+            $wallet=$transaction->user->wallet()->where('currency_id',$transaction->currency_id)->whereIn('wallet_type',[1,2])->first();
 
             if($type=='withdraw')
             {
@@ -188,7 +188,10 @@ class TransactionController extends Controller
 
 
            
-           $transaction->sendMessage([$transaction->user->mobile],' Your '.$type.' request of' .$transaction->trans_amount.' '.$transaction->currency->short_name.' has been approved');
+       
+
+           // $this->service = new \App\Services\SMSService();
+           // $this->service->send([$transaction->user->mobile],' Your '.$type.' request of' .$transaction->trans_amount.' '.$transaction->currency->short_name.' has been approved');
 
 
         }
@@ -198,7 +201,11 @@ class TransactionController extends Controller
              $currency_type=\App\Models\Currency::find($transaction->currency_id)->type_id;
              $transaction->user->wallet()->create(['coin'=>$transaction->trans_amount,'currency_id'=>$transaction->currency_id,'wallet_type'=>$currency_type]);
 
-             $transaction->sendMessage([$transaction->user->mobile],' Your '.$type.' request of' .$transaction->trans_amount.' '.$transaction->currency->short_name.' has been approved');
+       
+
+
+              // $this->service = new \App\Services\SMSService();
+              // $this->service->send([$transaction->user->mobile],' Your '.$type.' request of' .$transaction->trans_amount.' '.$transaction->currency->short_name.' has been approved');
         }
     }
 }

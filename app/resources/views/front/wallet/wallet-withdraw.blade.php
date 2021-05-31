@@ -379,4 +379,6 @@ $(document).on('keyup','#quantity',function()
 
   </script>
 
+  @include('front._inc.transfer-js')
+
   @endsection

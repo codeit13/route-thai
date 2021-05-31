@@ -41,6 +41,10 @@ class SMSService
     public function send(Array $to,String $templateName = '' , $var = [] ,  DateTime $schedule = NULL ){
         $from = 'ROUTET';
         $to = trim(str_replace(['+',' '],'',implode(',',$to)));
+
+      
+
+
         $message = $message;
         $param = array(
             "To" => $to,
