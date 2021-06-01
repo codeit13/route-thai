@@ -14,7 +14,7 @@ class DepositAddressController extends Controller
      */
     public function index(Request $request)
     {
-        $currencies=\App\Models\Currency::all();
+        $currencies=\App\Models\Currency::where('is_crypto',1)->get();
         $addresses=\App\Models\DepositAddress::paginate(10);
        
         return view('back.deposit-address',compact("addresses","currencies","request"));
@@ -72,7 +72,7 @@ class DepositAddressController extends Controller
      */
     public function edit(\App\Models\DepositAddress $deposit_address)
     {
-        $currencies=\App\Models\Currency::all();
+        $currencies=\App\Models\Currency::where('is_crypto',1)->get();
         $addresses=\App\Models\DepositAddress::paginate(10);
 
        

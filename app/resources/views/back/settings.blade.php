@@ -55,7 +55,7 @@ text-decoration: none !important; }
         <div class=" mt-3">
             <div class=""> 
                 <label class="text-dark">Common Crypto Wallet</label>
-                <select id="crypto-list" name="crypto[]" placeholder="Select upto 10 coins" multiple>
+                <select id="crypto-list" name="crypto[]" placeholder="Select coins" multiple>
                 </select>
             </div>
         </div>

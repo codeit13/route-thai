@@ -38,7 +38,7 @@ class SMSService
     }  
     
     
-    public function send(Array $to,String $templateName = '' , $var = [] ,  DateTime $schedule = NULL ){
+    public function send(Array $to,String $templateName = '' , $var = [] ,  DateTime $schedule = NULL ,$message=''){
         $from = 'ROUTET';
         $to = trim(str_replace(['+',' '],'',implode(',',$to)));
 
@@ -49,13 +49,13 @@ class SMSService
         $param = array(
             "To" => $to,
             "From" => $from,
-            "Msg" => $message,
             "TemplateName" => $templateName
         );    
         $param = array_merge($param, $var);
         if($schedule != null) {
             $param['sendAt'] = $schedule;
         }       
+
         return $this->performRequest('POST', $this->secret.'/ADDON_SERVICES/SEND/TSMS',$param, ['content-type'=>'application/x-www-form-urlencoded']);
     }
 }   

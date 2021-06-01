@@ -100,7 +100,7 @@
                                </button>
                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 @foreach($currencies as $cIndex=> $currency)
-                                    <a class="dropdown-item currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}>
+                                    <a class="dropdown-item currency-item server-class-currency" href="javascript:void(0)" data-currency={{ $currency->id }}>
                                    @if($currency->hasMedia('icon'))
                                       <img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}">
 
@@ -117,11 +117,25 @@
                               $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
                               @endphp
                               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ $default_language->firstMedia('icon')->getUrl() }}" alt="">{{ $default_language->name }}
+
+                                @if($default_language->hasMedia('icon'))
+                                <img src="{{ $default_language->firstMedia('icon')->getUrl() }}" alt="">
+                                @endif
+
+                                {{ $default_language->name }}
                               </button>
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 @foreach ($languages as $item)
-                                    <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">{{ $item->name}}</a>
+                                    <a class="dropdown-item language-item server-class-language" href="#" data-language="{{ $item->id }}">
+
+                                        @if($item->hasMedia('icon'))
+
+                                      <img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">
+
+                                      @endif
+
+                                      {{ $item->name}}</a>
+
                                 @endforeach
                               </div>
                             </div>
@@ -437,36 +451,36 @@
             }
          });
     });
-    $('.currency-item').on('click',function(e){
-      e.preventDefault();
-      var currency= $(this).data('currency');
-      $.ajax({
-         type:'POST',
-         dataType:'JSON',
-         url:"{{ route('user.update.currency') }}",
-         data:{ currency : currency, _token: "{{ csrf_token() }}" },
-         success:function(data) {
-            $('.currency-msg').html(data.message).show();
-            setTimeout(function() { $(".currency-msg").hide() }, 2000);
-            location.reload();
-         }
-      });
-   });
-   $('.language-item').on('click',function(e){
-      e.preventDefault();
-      var language= $(this).data('language');
-      $.ajax({
-         type:'POST',
-         dataType:'JSON',
-         url:"{{ route('user.update.language') }}",
-         data:{ language : language, _token: "{{ csrf_token() }}" },
-         success:function(data) {
-            $('.currency-msg').html(data.message).show();
-            setTimeout(function() { $(".currency-msg").hide() }, 2000);
-            location.reload();
-         }
-      });
-   });
+   //  $('.currency-item').on('click',function(e){
+   //    e.preventDefault();
+   //    var currency= $(this).data('currency');
+   //    $.ajax({
+   //       type:'POST',
+   //       dataType:'JSON',
+   //       url:"{{ route('user.update.currency') }}",
+   //       data:{ currency : currency, _token: "{{ csrf_token() }}" },
+   //       success:function(data) {
+   //          $('.currency-msg').html(data.message).show();
+   //          setTimeout(function() { $(".currency-msg").hide() }, 2000);
+   //          location.reload();
+   //       }
+   //    });
+   // });
+   // $('.language-item').on('click',function(e){
+   //    e.preventDefault();
+   //    var language= $(this).data('language');
+   //    $.ajax({
+   //       type:'POST',
+   //       dataType:'JSON',
+   //       url:"{{ route('user.update.language') }}",
+   //       data:{ language : language, _token: "{{ csrf_token() }}" },
+   //       success:function(data) {
+   //          $('.currency-msg').html(data.message).show();
+   //          setTimeout(function() { $(".currency-msg").hide() }, 2000);
+   //          location.reload();
+   //       }
+   //    });
+   // });
  </script>
  @endsection
 
