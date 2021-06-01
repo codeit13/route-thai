@@ -19,7 +19,7 @@
                         </label>
                         <div class="site-menu">
                           <ul>
-                           @if(Auth::check())   
+                           @if(Auth::check())
                             <li>
                             <a class="not-c" href="{{ route('user.dashboard') }}">{{ ucfirst(Auth::user()->name) }}<br><label><i class="fa fa-diamond" aria-hidden="true"></i> VIP <span>Verified</span></label></a>
                             </li>
@@ -43,7 +43,7 @@
                  </div>
                 <div class="nav-menus-wrapper" style="transition-property: none;">
                     @if (!Auth::check())
-                    <div class="mobile_menu visible-xs"> 
+                    <div class="mobile_menu visible-xs">
                         <a class="" href="{{ route('login')}}">Log In</a>
                         <a class="btn btn-primary" href="{{ route('register')}}">Register</a>
                     </div>
@@ -71,7 +71,7 @@
                             <li class="hd_small"><a class="btn btn-primary" href="{{ route('register') }}">Register</a></li>
                             <li class="onsubmenu">
                                 <div class="dropdown currency_two">
-                                  @php 
+                                  @php
                                     $languages = \App\Models\Language::all();
                                     $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
                                     @endphp
@@ -86,15 +86,15 @@
                                         @foreach ($languages as $item)
                                             <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}">
                                                     @if($item->hasMedia('icon'))
-                                       
-                                     
+
+
                                                 <img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">
 
                                                    @endif
 
                                                 {{ $item->name}}</a>
                                         @endforeach
-                                    </div> 
+                                    </div>
                                 </div>
                                 </li>
                             <li>
@@ -109,13 +109,13 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <ul>
-                                        <li><a href="{{route('wallet.history')}}">{{__('Fiat and Spot')}}</a></li> 
-                                        <li><a href="{{route('wallet.p2p')}}">{{__('P2P')}}</a></li>                                   
+                                        <li><a href="{{route('wallet.history')}}">{{__('Fiat and Spot')}}</a></li>
+                                        <li><a href="{{route('wallet.p2p')}}">{{__('P2P')}}</a></li>
                                         <li><a href="{{route('wallet.deposit')}}">{{__('Deposit')}}</a></li>
                                         <li><a href="{{route('wallet.withdraw')}}">{{__('Withdraw')}}</a></li>
                                         <li><a href="{{route('wallet.request.history')}}">{{__('History ( Deposit & Withdraw ) ')}}</a></li>
-                                        {{-- <li><a href="{{route('wallet.history')}}">{{__('Crypto and Fiat')}}</a></li>   
-                                        <li><a href="{{route('wallet.p2p')}}">{{__('P2P')}}</a></li>                                     
+                                        {{-- <li><a href="{{route('wallet.history')}}">{{__('Crypto and Fiat')}}</a></li>
+                                        <li><a href="{{route('wallet.p2p')}}">{{__('P2P')}}</a></li>
                                         <li><a href="{{route('wallet.deposit')}}">{{__('Deposit')}}</a></li>
                                         <li><a href="{{route('wallet.withdraw')}}">{{__('Withdraw')}}</a></li>
                                         <li><a href="{{route('wallet.request.history')}}">{{__('History ( Deposit & Withdraw ) ')}}</a></li> --}}
@@ -125,7 +125,7 @@
                             </li>
                             <li class="onsubmenu">
                                 <div class="dropdown currency_two">
-                                    @php 
+                                    @php
                                     $languages = \App\Models\Language::all();
                                     $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
                                     @endphp
@@ -150,11 +150,11 @@
                                 </li>
                                 <li class="onsubmenu">
                                     <div class="dropdown currency_two">
-                                        @php 
+                                        @php
                                         $currencies = \App\Models\Currency::where('type_id',2)->get();
                                         $default_currency = !empty(Auth::user()->default_currency) ? \App\Models\Currency::find(Auth::user()->default_currency) : \App\Models\Currency::where('type_id',2)->first();
                                         @endphp
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownBaseCurrency" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                               @if($default_currency->hasMedia('icon'))
 
                                             <img src="{{ $default_currency->firstMedia('icon')->getUrl() }}" alt="{{__($default_currency->name)}}">
@@ -163,7 +163,7 @@
 
                                             {{__($default_currency->short_name)}}
                                         </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
+                                        <div class="dropdown-menu" aria-labelledby="dropdownBaseCurrency" x-placement="bottom-start">
                                         @foreach($currencies as $cIndex=> $currency)
                                             <a class="dropdown-item myLink currency-item server-class-currency" href="javascript:void(0)" data-currency={{ $currency->id }}>
 
@@ -174,7 +174,7 @@
                                                 @endif
 
                                                 {{ $currency->name }} <span> {{ $currency->short_name }}</span></a>
-                                        @endforeach 
+                                        @endforeach
                                     </div>
                                  </li>
                                 <li class="nav-item dropdown hidden-xs">
@@ -219,60 +219,60 @@
                                                         <div class="row">
                                                           <div class="col-lg-3 col-sm-3 col-3 text-center">
                                                             <img src="{{ asset('front/img/coin_23.png') }}" class="w-50 rounded-circle">
-                                                          </div>    
+                                                          </div>
                                                           <div class="col-lg-8 col-sm-8 col-8">
                                                             <h2>David John</h2>
                                                             <p>
                                                               Lorem ipsum dolor sit amet, consectetur
                                                             </p>
                                                             <small class="text-warning">27.11.2015, 15:00</small>
-                                                          </div>    
+                                                          </div>
                                                         </div>
                                                       </li>
                                                       <li class="notification-box bg-gray">
                                                         <div class="row">
                                                           <div class="col-lg-3 col-sm-3 col-3 text-center">
                                                             <img src="{{ asset('front/img/coin_23.png') }}" class="w-50 rounded-circle">
-                                                          </div>    
+                                                          </div>
                                                           <div class="col-lg-8 col-sm-8 col-8">
                                                             <h2>David John</h2>
                                                             <p>
                                                               Lorem ipsum dolor sit amet, consectetur
                                                             </p>
                                                             <small class="text-warning">27.11.2015, 15:00</small>
-                                                          </div>   
+                                                          </div>
                                                         </div>
                                                       </li>
                                                       <li class="notification-box">
                                                         <div class="row">
                                                           <div class="col-lg-3 col-sm-3 col-3 text-center">
                                                             <img src="{{ asset('front/img/coin_23.png') }}" class="w-50 rounded-circle">
-                                                          </div>    
+                                                          </div>
                                                           <div class="col-lg-8 col-sm-8 col-8">
                                                             <h2>David John</h2>
                                                             <p>
                                                               Lorem ipsum dolor sit amet, consectetur
                                                             </p>
                                                             <small class="text-warning">27.11.2015, 15:00</small>
-                                                          </div>    
+                                                          </div>
                                                         </div>
                                                       </li>
                                                       <li class="notification-box bg-gray">
                                                         <div class="row">
                                                           <div class="col-lg-3 col-sm-3 col-3 text-center">
                                                             <img src="{{ asset('front/img/coin_23.png') }}" class="w-50 rounded-circle">
-                                                          </div>    
+                                                          </div>
                                                           <div class="col-lg-8 col-sm-8 col-8">
                                                             <h2>David John</h2>
                                                             <p>
                                                               Lorem ipsum dolor sit amet, consectetur
                                                             </p>
                                                             <small class="text-warning">27.11.2015, 15:00</small>
-                                                          </div>   
+                                                          </div>
                                                         </div>
                                                       </li>
                                                   </ul>
-                                              </div>                    
+                                              </div>
                                           </li>
                                           <li class="footer bg-dark text-center">
                                             <a href="" class="text-light">View All</a>
