@@ -3,10 +3,13 @@
 Route: P2P Trading Platform
 @endsection
 @section('content')
-<section id="wallet-content" class="request crypto order-history">
+<div class="progress-section visible-xs">
+   <h2>{{__("Order History")}}</h2>
+</div>
+<section id="wallet-content" class="request crypto order-history hht">
    <div class="container">
    <div class="row  hidden-xs">
-      <div class="col-lg-12  col-sm-12 col-12">
+      <div class="col-lg-12  col-sm-12 col-12 flush">
          <div class="white-box" style="">
             <div class="row">
                <div class="col-lg-12 col-sm-12 col-12">
@@ -17,10 +20,32 @@ Route: P2P Trading Platform
       </div>
    </div>
    <div class="row">
-      <div class="col-lg-12  col-sm-12 col-12">
+      <div class="col-lg-12  col-sm-12 col-12 flush">
          <div class="white-box">
+            <ul class="janral-head">
+
+
+                  @foreach($currency_types as $index => $currency_type)
+
+
+                  @if(isset($walletType->id) && $walletType->id==$currency_type->id)
+
+                  <li class="active"><a href="#">{{__($currency_type->type)}}</a></li>
+                  @elseif(!isset($walletType->id) && $index==0)
+                  <li class="active"><a href="#">{{__($currency_type->type)}}</a></li>
+                  @else
+                  <li class=""><a href="{{route('wallet.request.history',['type'=>$currency_type->id,'typename'=>strtolower($currency_type->type)]).'?type='.$request->type??''}}">{{__($currency_type->type)}}</a></li>
+                  @endif
+
+
+                  
+
+                  @endforeach
+               
+                  <li class="last"><a href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a></li>
+               </ul>
             <div class="head-xs visible-xs">
-               <form id="filterForm1" action="{{route('trade.history')}}" method="GET" >
+               <form id="filterForm1" class="form_22" action="{{route('trade.history')}}" method="GET" >
                   <div class="row">
                      <div class="col-7">
                         <div class="row">

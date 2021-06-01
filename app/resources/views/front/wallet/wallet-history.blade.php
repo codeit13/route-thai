@@ -53,9 +53,7 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 			<div class="row">
 				<div class="col-lg-12  col-sm-12 col-12">
 					<div class="white-box" style="">
-						<div class="row">
-							<div class="white-box" style="background:none; box-shadow:none; margin: 0px 0px; padding: 0px 15px;">
-                              <ul class="janral-head">
+						<ul class="janral-head">
 
 
 						@foreach($currency_types as $index => $currency_type)
@@ -77,9 +75,6 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 					
 						<li class="last"><a href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a></li>
 					</ul>
-
-						</div>
-					</div>
 
 						<div class="head-xs visible-xs">
 							<form id="filterForm1" action="{{route('wallet.request.history',array('type'=>$walletType->id??'','typename'=>$walletType->type??''))}}" method="GET" >
@@ -430,8 +425,8 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 							</div>
 							</form>
 						</div>
-						<div class="row">
-							<div class="col-lg-12 history-details with-history hidden-xs view-c  col-sm-12 col-12">
+						<div class="row hidden-xs">
+							<div class="col-lg-12 history-details with-history view-c  col-sm-12 col-12">
 								<table>
 									<thead>
 										<tr>
@@ -573,8 +568,8 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 								</table>	
 							</div>
 						</div>
-						<div class="row">
-						<div class="col-lg-12 text-center nav-pagi hidden-xs col-sm-12 col-12">
+						<div class="row  hidden-xs">
+						<div class="col-lg-12 text-center nav-pagi col-sm-12 col-12">
 
 							{{ $transactions->links('front._inc._paginator') }}
 						
