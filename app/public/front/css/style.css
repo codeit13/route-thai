@@ -37,6 +37,8 @@
 
     --loader-bar: #00c98e;
     --loader-bg: #171924;
+
+    --transfer_popup_field: #f5f5f5;
 }
 .dark-mode {
     --body-bg-2: #161625;
@@ -76,6 +78,8 @@
     --mobile-white:#17171a;
     --loader-bar: #00c98e;
     --loader-bg: #171924;
+
+    --transfer_popup_field: rgb(233 233 233 / 15%);
 }
 @font-face {
     font-family: 'Poppins';
@@ -1412,7 +1416,7 @@ th.res_po {
 .dropdown.currency_two.three_coins .dropdown-menu.show a:hover {
     color: var(--text-color);
     text-decoration: none;
-    background-color: var(--card-bg);
+    background-color: var(--table-hover);
 }
 #topbar .dropdown-menu.show a:focus,
 #header .dropdown-menu.show a:focus,
@@ -4111,7 +4115,7 @@ li.footer.bg-dark.text-center {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: var(--card-bg);
+    background-color: var(--transfer_popup_field);
     padding: 0 10px;
     font-weight: 400;
     font-size: 14px;
@@ -4204,7 +4208,7 @@ li.footer.bg-dark.text-center {
 	float: left;
     width: 100%;
 	padding:0px;
-    background: #fff;
+    background: var(--body-bg-2);
 }
 
 #exampleModalnew .modal-content {
@@ -4213,10 +4217,11 @@ li.footer.bg-dark.text-center {
 }
 
 #exampleModalnew .line {
-    border-bottom: 2px solid #f4f4f4;
+    border-bottom: 2px solid  var(--body-bg-2);
     float: left;
     width: 100%;
     padding: 15px 20px;
+    background: var(--body-bg-2);
     margin-bottom: 20px;
 }
 
@@ -4233,10 +4238,10 @@ li.footer.bg-dark.text-center {
 	width:100%;
 }
 
-#exampleModalnew  .line p {
-	font-size:14px;
-	margin-bottom:20px;
-	color:#524e4b;
+#exampleModalnew .line p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: var(--white-black-text);
 }
 
 #exampleModalnew  .line.b-none {
@@ -4245,11 +4250,13 @@ li.footer.bg-dark.text-center {
 
 #exampleModalnew input {
     width: 100%;
-    background: #f5f5f5;
+    background: var(--transfer_popup_field);
     border: none;
     height: 40px;
     border-radius: 5px;
+    padding-left: 10px;
     padding-right: 10px;
+    color: var(--white-black-text);
 }
 
 #exampleModalnew input::-webkit-input-placeholder {
@@ -4388,9 +4395,29 @@ li.footer.bg-dark.text-center {
     fill: rgb(0 201 142);
 }
 
+
+#exampleModalnew .line .field .select {
+    width: 100%;
+    border-radius: 5px;
+    padding-left: 15px;
+    border: none;
+    color: #524e4b;
+     background: var(--transfer_popup_field);
+    padding-right: 15px;
+    display: inline-block;
+    color: var(--white-black-text);
+}
+
+.styledSelect:active, .styledSelect.active {
+    background: var(--transfer_popup_field);
+    color: var(--white-black-text);
+}
+
+.options li {
+    color: var(--white-black-text);
+}
+
 /* Landscape phones and portrait tablets */
-
-
 @media (max-width: 767px) {
 #wallet-content.request .field .dropdown-menu.show {
     top: 85% !important;
@@ -7490,6 +7517,21 @@ a.bell span {
 #main-heading.panding-payment h1 {
     font-size: 32px;
     font-weight: normal;
+}
+span.max_btn_set {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+span.max_btn_set a {
+    float: right;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 14px;
+    color: #00c98e;
+    font-weight: 500;
+    text-decoration: none;
 }
 h4.suborder {
     color: #adadad;
