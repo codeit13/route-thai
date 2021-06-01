@@ -123,3 +123,9 @@ Route::middleware('auth')->group(function(){
 Route::get('p2p/exchange','ExchangeController@index')->name('p2p.exchange');
 // Stocking
 Route::get('staking',function() { return view('front.staking'); })->name('staking');
+
+Route::get('arbitrage',function()
+{
+    return view('front.arbitrage');
+    
+})->name('arbitrage');
