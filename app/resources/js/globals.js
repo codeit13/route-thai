@@ -418,37 +418,37 @@ export const exchangeDetails = {
 };
 
 export const currencySymbols = {
-  'USD': '\u0024 ',
-  'KRW': '\u20A9 ',
-  'INR': '\u20B9 ',
-  'THB': '\u0E3F ',
-  'JPY': '\u00A5 ',
+  'UNITEDSTATESDOLLAR': '\u0024 ',
+  'KOREANWON': '\u20A9 ',
+  'INDIANRUPEE': '\u20B9 ',
+  'THAIBAHT': '\u0E3F ',
+  'JAPANESEYEN': '\u00A5 ',
   'TRY': '\u20BA ',
   'AUD': '\u0024 ',
 };
 
 export const currencyDetails = {
-  usd: {
+  unitedstatesdollar: {
     name: 'United States Dollar',
     img: 'front/arbitrageimg/USD.svg',
     sname: 'USD',
   },
-  krw: {
+  koreanwon: {
     name: 'Korean Won',
     img: 'front/arbitrageimg/KRW.svg',
     sname: 'KRW',
   },
-  inr: {
+  indianrupee: {
     name: 'Indian Rupee',
     img: 'front/arbitrageimg/inr.svg',
     sname: 'INR',
   },
-  thb: {
+  thaibaht: {
     name: 'Thai Baht',
     img: 'front/arbitrageimg/thb.svg',
     sname: 'THB',
   },
-  jpy: {
+  japaneseyen: {
     name: 'Japanese Yen',
     img: 'front/arbitrageimg/jp.svg',
     sname: 'JPY',
