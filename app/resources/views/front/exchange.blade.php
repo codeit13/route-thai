@@ -15,36 +15,20 @@ Route: P2P Trading Platform
     <div class="row">
         <div class="col-lg-12 col-sm-12 col-xs-12 flush">
             <ul class="mini_links">
-                <li class="active"><a href="#">P2P</a>
+                <li class="active"><a href="{{ route('p2p.exchange') }}">Buy</a>
                 </li>
-                <li><a href="#">Express</a>
+                <li><a href="{{ route('sell.create') }}">Sell</a>
                 </li>
             </ul>
         </div>
     </div>
 </div>
 @endsection
-<section id="toolbar">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <ul class="main_tool">
-                    <li>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary active" onclick="location.href = '{{ route('p2p.exchange') }}';">Buy</button>
-                            <button type="button" class="btn btn-secondary" onclick="location.href = '{{ route('sell.create') }}';">Sell</button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
 <section id="filter">
     <div class="container">
         <div class="row">
             <form id="search_form" action="{{ route('p2p.exchange') }}" method="get" accept-charset="utf-8">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <ul class="search_bar">
                         <li>
                             <label>Amount</label>
@@ -82,7 +66,7 @@ Route: P2P Trading Platform
                             <label>Fiat Currency</label>
                             <br/>
                             <div class="dropdown currency_two three_coins">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 259px">
                                     <img src="{{ $fiat_currencies->first()->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_2"> 
                                     <span style="color: black" id="text_2">{{ $fiat_currencies->first()->short_name }} <span>{{ $fiat_currencies->first()->name }}</span></span>
                                 </button>
@@ -103,12 +87,14 @@ Route: P2P Trading Platform
                                 </div>
                             </div>
                         </li>
+                        <li>
+                            <a href="javascript::void(0)" onclick="searchForm()" class="refresh">
+                            <img src="{{asset('front/img/refresh.png')}}">Refresh</a>
+                        </li>
                     </ul>
                 </div>
-                <div class="col-lg-4 text-right">
-                    <a href="javascript::void(0)" onclick="searchForm()" class="refresh">
-                    <img src="{{asset('front/img/refresh.png')}}">Refresh</a>
-                </div>
+                {{-- <div class="col-lg-4">
+                </div> --}}
             </form>
         </div>
     </div>
