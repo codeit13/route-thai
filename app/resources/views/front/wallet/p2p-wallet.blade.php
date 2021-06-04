@@ -106,7 +106,6 @@
 								<thead>
 									<tr>
 										<th>Coin <i class="fa fa-sort" aria-hidden="true"></i></th>
-										<th>Total <i class="fa fa-sort" aria-hidden="true"></i></th>
 										<th>Available <i class="fa fa-sort" aria-hidden="true"></i></th>
 										<th>Action <i class="fa fa-sort" aria-hidden="true"></i></th>
 									</tr>
@@ -122,7 +121,7 @@
 											@endif
 											<label>{{__($currency->short_name)}}<br><span>{{__($currency->name)}}</span></label>
 										</td>
-										<td>{{$currency->user_p2p_total}}</td>
+										<!-- <td>{{$currency->user_p2p_total}}</td> -->
 
 										<td>{{$currency->user_p2p_balance}}</td>
 										<td>

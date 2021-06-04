@@ -158,7 +158,10 @@
                     <label>{{__('Total Quantity')}}</label>
                    
                                   
-                                        <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"   required="" id="quantity" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus="" value="{{ old('quantity') }}">
+                                        <span class="max_btn_set">
+                                          <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"   required="" id="quantity" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus="" value="{{ old('quantity') }}">
+                                          <a href="#">MAX</a>
+                                        </span>
                                     
                                      @error('quantity')
                                 <p class="invalid-value" role="alert">
