@@ -31,10 +31,11 @@
 								<div class="col-lg-10 flush-left col-sm-10 col-10">
 									<div class="field">
 										<label>From</label>
-										<select name="status" class="filter-type" onchange="changeCurrencyDropdown(this)" name="wallet_from">
-				                           <option value=""> Fiat and Spot </option>
-				                           <option value="pending">P2P</option>
-				                        </select>
+										<select class="form-control" onchange="changeCurrencyDropdown(this)" name="wallet_from">
+										
+											<option value="1">Fiat and Spot</option>
+											<option value="3">P2P</option>
+										</select>
 
 										@error('wallet_from')
                                 <p class="invalid-value" role="alert">
@@ -44,10 +45,10 @@
 									</div>
 									<div class="field">
 										<label>To</label>
-										<select name="status" id="to_wallet_server" class="filter-type" onchange="changeCurrencyDropdown(this)" name="wallet_to">
-				                           <option value=""> Fiat and Spot </option>
-				                           <option value="pending">P2P</option>
-				                        </select>
+										<select class="form-control" id="to_wallet_server" name="wallet_to">
+											<option value="1">Fiat and Spot</option>
+											<option value="3">P2P</option>
+										</select>
 										@error('wallet_to')
                                 <p class="invalid-value" role="alert">
                                     <strong>{{ __($message) }}</strong>

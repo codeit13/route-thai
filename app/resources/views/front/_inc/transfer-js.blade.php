@@ -8,6 +8,8 @@
 
 	function changeCurrencyDropdown(selector)
 	{
+
+
         var wallet=$(selector).val();
 
 
