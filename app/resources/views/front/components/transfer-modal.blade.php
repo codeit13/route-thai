@@ -31,10 +31,11 @@
 								<div class="col-lg-10 flush-left col-sm-10 col-10">
 									<div class="field">
 										<label>From</label>
-										<select name="status" class="filter-type" onchange="changeCurrencyDropdown(this)" name="wallet_from">
-				                           <option value=""> Fiat and Spot </option>
-				                           <option value="pending">P2P</option>
-				                        </select>
+										<select class="form-control" onchange="changeCurrencyDropdown(this)" name="wallet_from">
+										
+											<option value="1">Fiat and Spot</option>
+											<option value="3">P2P</option>
+										</select>
 
 										@error('wallet_from')
                                 <p class="invalid-value" role="alert">
@@ -44,10 +45,10 @@
 									</div>
 									<div class="field">
 										<label>To</label>
-										<select name="status" id="to_wallet_server" class="filter-type" onchange="changeCurrencyDropdown(this)" name="wallet_to">
-				                           <option value=""> Fiat and Spot </option>
-				                           <option value="pending">P2P</option>
-				                        </select>
+										<select class="form-control" id="to_wallet_server" name="wallet_to">
+											<option value="1">Fiat and Spot</option>
+											<option value="3">P2P</option>
+										</select>
 										@error('wallet_to')
                                 <p class="invalid-value" role="alert">
                                     <strong>{{ __($message) }}</strong>
@@ -80,7 +81,14 @@
 										<label><span id="totalBalanceForTransfer"></span> available</label>
 									</div>
 								</div>
-								<input type="text" name="transfer_quantity" id="transfer_quantity" placeholder="Max" value="" />
+								<!--dont delete this element -->
+								<span style="position:relative;"></span>
+								<div id="max_transfer_quantity" style="text-align:center;position: relative;color:#00c98e;top:32px;width:13%;float: right;">Max</div>
+
+								<!--end -->
+								<input type="text" name="transfer_quantity" id="transfer_quantity" style="" placeholder="" value="" />
+
+								
 
 								@error('transfer_quantity')
                                 <p class="invalid-value" role="alert">

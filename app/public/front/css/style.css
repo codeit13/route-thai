@@ -1227,15 +1227,15 @@ button.btn.dropdown-toggle.btn-light {
     border-color: #707070;
 }
 .main_data_dable {
-	margin-top: 10px;
-	margin-bottom: 0px;
-	display: inline-block;
-	width: 100%;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    display: inline-block;
+    width: 100%;
     overflow-y: hidden;
 }
 
 .main_data_dable table {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
     white-space: nowrap;
     border-collapse: separate;
     border-spacing: 2px;
@@ -1244,26 +1244,26 @@ button.btn.dropdown-toggle.btn-light {
 }
 
 .main_data_dable table thead{
-	background-color: var(--new-card-bg);
-	border: none;
+    background-color: var(--new-card-bg);
+    border: none;
 }
 
 .main_data_dable table thead tr th {
-	text-transform: uppercase;
-	font-size: 12px;
-	vertical-align: middle;
-	text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
     padding: 10px 20px;
 }
 
 .main_data_dable table thead tr th:first-child {
-	text-align: left;
+    text-align: left;
 }
 
 .main_data_dable table thead tr th img {
-	width: 15px;
-	height: 15px;
-	margin-top: -3px;
+    width: 15px;
+    height: 15px;
+    margin-top: -3px;
 }
 
 .main_data_dable table tr td:first-child {
@@ -1296,8 +1296,8 @@ button.btn.dropdown-toggle.btn-light {
 }
 
 .main_data_dable table tr th.first span {
-	font-size: 10px;
-	color: var(--table-text);
+    font-size: 10px;
+    color: var(--table-text);
 }
 
 .main_data_dable table tr td {
@@ -1311,65 +1311,65 @@ button.btn.dropdown-toggle.btn-light {
 }
 
 .main_data_dable table {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .main_data_dable table .highlight {
-	background-color: var(--highlighted-cell);
-	border-left: 2px solid var(--border-color);
-	border-right: 2px solid var(--border-color);
+    background-color: var(--highlighted-cell);
+    border-left: 2px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
 }
 
 .main_data_dable table .highlight-top {
-	background-color: var(--highlighted-cell);
-	border-top: 2px solid var(--border-color);
-	border-left: 2px solid var(--border-color);
-	border-right: 2px solid var(--border-color);
+    background-color: var(--highlighted-cell);
+    border-top: 2px solid var(--border-color);
+    border-left: 2px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
 }
 
 .main_data_dable table .highlight-bottom {
-	background-color: var(--highlighted-cell);
-	border-bottom: 2px solid var(--border-color);
-	border-left: 2px solid var(--border-color);
-	border-right: 2px solid var(--border-color);
+    background-color: var(--highlighted-cell);
+    border-bottom: 2px solid var(--border-color);
+    border-left: 2px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
 }
 
 .main_data_dable table td.updated {
-	animation: highlightupdate 1s 1;
+    animation: highlightupdate 1s 1;
 }
 
 @keyframes highlightupdate {
-	from {background-color: inherit;}
-	to {background-color: var(--table-updated)}
+    from {background-color: inherit;}
+    to {background-color: var(--table-updated)}
 }
 
 /* .main_data_dable table .highlight-bottom {
-	background-color: var(--card-bg);
-	border-bottom: 2px solid var(--border-color);
-	border-left: 2px solid var(--border-color);
-	border-right: 2px solid var(--border-color);
+    background-color: var(--card-bg);
+    border-bottom: 2px solid var(--border-color);
+    border-left: 2px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
 }
 
 .main_data_dable table thead{
-	background-color: var(--new-card-bg);
-	border: none;
+    background-color: var(--new-card-bg);
+    border: none;
 }
 
 .main_data_dable table thead tr th {
-	text-transform: uppercase;
-	font-size: 12px;
-	vertical-align: middle;
-	text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .main_data_dable table thead tr th:first-child {
-	text-align: left;
+    text-align: left;
 }
 
 .main_data_dable table thead tr th img {
-	width: 15px;
-	height: 15px;
-	margin-top: -3px;
+    width: 15px;
+    height: 15px;
+    margin-top: -3px;
 }
 
 .main_data_dable table tr td:first-child {
@@ -1401,8 +1401,8 @@ button.btn.dropdown-toggle.btn-light {
 }
 
 .main_data_dable table tr th.first span {
-	font-size: 10px;
-	color: var(--table-text);
+    font-size: 10px;
+    color: var(--table-text);
 }
 
 .main_data_dable table tr td {
@@ -1555,10 +1555,10 @@ th.res_po {
 .features select {
     flex: 1;
     height: 40px;
-	border-radius: 6px;
-	border: 1px solid #707070 !important;
-	background-color: var(--card-bg);
-	color: var(--text-color);
+    border-radius: 6px;
+    border: 1px solid #707070 !important;
+    background-color: var(--card-bg);
+    color: var(--text-color);
 }
 
 .dropdown.currency_two.three_coins {
@@ -4390,8 +4390,8 @@ li.footer.bg-dark.text-center {
 /** New Css Popup**/
 
 #exampleModalnew .modal-dialog {
-	background:var(--body-bg);
-	border-radius:5px;
+    background:var(--body-bg);
+    border-radius:5px;
 }
 
 #exampleModalnew .modal-header {
@@ -4402,40 +4402,40 @@ li.footer.bg-dark.text-center {
 }
 
 #exampleModalnew .modal-dialog .field {
-	float:left;
-	width:100%;
+    float:left;
+    width:100%;
 }
 
 #exampleModalnew .modal-dialog .field label {
-	font-size:14px;
-	color:#6e6e6e;
+    font-size:14px;
+    color:#6e6e6e;
 }
 
 #exampleModalnew .modal-dialog .field label span {
-	color:#000;
+    color:#000;
 }
 
 #exampleModalnew .modal-dialog .field select {
-	width:100%;
-	height:40px;
-	border-radius:5px;
-	padding-left:15px;
-	border:none;
-	color:#524e4b;
-	background:#f5f5f5;
+    width:100%;
+    height:40px;
+    border-radius:5px;
+    padding-left:15px;
+    border:none;
+    color:#524e4b;
+    background:#f5f5f5;
     padding-right: 15px;
 }
 
 #exampleModalnew .modal-body {
-	float: left;
+    float: left;
     width: 100%;
-	padding:0px;
+    padding:0px;
     background: var(--body-bg-2);
 }
 
 #exampleModalnew .modal-content {
-	border:none;
-	border-radius:5px 5px 0px 0px;
+    border:none;
+    border-radius:5px 5px 0px 0px;
 }
 
 #exampleModalnew .line {
@@ -4448,16 +4448,16 @@ li.footer.bg-dark.text-center {
 }
 
 #exampleModalnew .icon-bg {
-	background:url(../img/icon-30.png) 0% 50% no-repeat;
-	float:left;
-	padding-left:40px;
-	width:100%;
+    background:url(../img/icon-30.png) 0% 50% no-repeat;
+    float:left;
+    padding-left:40px;
+    width:100%;
 }
 
 #exampleModalnew  .line .field {
-	padding-bottom:15px;
-	float:left;
-	width:100%;
+    padding-bottom:15px;
+    float:left;
+    width:100%;
 }
 
 #exampleModalnew .line p {
@@ -4467,7 +4467,7 @@ li.footer.bg-dark.text-center {
 }
 
 #exampleModalnew  .line.b-none {
-	border-bottom:none;
+    border-bottom:none;
 }
 
 #exampleModalnew input {
@@ -4482,18 +4482,18 @@ li.footer.bg-dark.text-center {
 }
 
 #exampleModalnew input::-webkit-input-placeholder {
-	color:#00c98e !important;
-	text-align:right;
+    color:#00c98e !important;
+    text-align:right;
 }
 
 #exampleModalnew .field button {
-	background:#00c98e;
-	line-height:40px;
-	color:#fff;
-	border:none;
-	padding:0px 30px;
-	float:right;
-	border-radius:5px;
+    background:#00c98e;
+    line-height:40px;
+    color:#fff;
+    border:none;
+    padding:0px 30px;
+    float:right;
+    border-radius:5px;
     cursor: pointer;
 }
 
@@ -4653,7 +4653,7 @@ li.footer.bg-dark.text-center {
         margin-bottom: 0px !important;
 }
 #exampleModalnew.modal-open {
-	padding-left:0px;
+    padding-left:0px;
 }
 .dropdown.currency_two.three_coins .dropdown-menu.show a {
     padding: 9px 16px !important;
