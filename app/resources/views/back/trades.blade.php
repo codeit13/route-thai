@@ -42,7 +42,7 @@
                                                 <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
                                                 <td>{{ $item->trans_id }}</td>
                                                 <td>{{ ucfirst($item->user->name) }}</td>
-                                                <td>{{ ucfirst($item->receiver->name) }}</td>
+                                                <td>{{ ucfirst($item->buyer_trans->user->name) }}</td>
                                                 <td>{{ ucfirst($item->status) }}</td>
                                                 <td>{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
                                             </tr>

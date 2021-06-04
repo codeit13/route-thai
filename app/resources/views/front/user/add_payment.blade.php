@@ -42,7 +42,12 @@ Payment Methods - Route: P2P Trading Platform
                         <form action="{{ route('user.payment.save') }}" id="add_method" method="post" enctype="multipart/form-data">
                            @csrf()
                         <div class="card pd_card an_card auto_card">
-                            <h2><img src="{{ $payment_method->firstMedia('icon')->getUrl() }}"> {{ $payment_method->name }} </h2> 
+                            <h2>
+                                @if($payment_method->hasMedia('icon'))
+                                    <img src="{{ $payment_method->firstMedia('icon')->getUrl() }}"> 
+                                @endif
+                              {{ $payment_method->name }} 
+                            </h2> 
                             <div class="iverify baccount">
                                <div class="form">
                                   <div class="form-group">

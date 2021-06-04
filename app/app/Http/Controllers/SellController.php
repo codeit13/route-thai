@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Currency;
+use App\Models\Wallet;
 use App\Models\Transaction;
 use App\Models\UserPaymentMethod;
 use App\Http\Traits\GenerateTransIDTrait;
@@ -20,6 +21,11 @@ class SellController extends Controller
     	$step = $request->get('step');
     	$crypto_currencies = Currency::where('type_id',1)->get();
     	$fiat_currencies = Currency::where('type_id',2)->get();
+        $crypto_ids = $crypto_currencies->pluck('id');
+
+        $current_balance = Wallet::where('wallet_type',3)
+                                    ->where('user_id',auth()->user()->id)
+                                    ->pluck('coin','currency_id');
 
         $default_fiat_currency = (auth()->user()->default_currency != '')?Currency::find(auth()->user()->default_currency):Currency::where('type_id',2)->first();
     	
@@ -37,13 +43,15 @@ class SellController extends Controller
                 'sell_data',
                 'selected_currency',
                 'selected_fiat_currency',
-                'user_payment_methods'
+                'user_payment_methods',
+                'current_balance'
             ));
     	}else{
 	    	return view('front.sell.index',compact(
 	    		'crypto_currencies',
                 'default_fiat_currency',
-	    		'fiat_currencies'
+	    		'fiat_currencies',
+                'current_balance'
 	    	));
     	}
     }
@@ -189,11 +197,29 @@ class SellController extends Controller
                                         ->with('buyer_trans')
                                         ->withCount('buyer_requests')
                                         ->where('trans_id',$trans_id)->first();
-
+            
         if ($transcation->buyer_requests_count > 0) {
             $transcation->update(['status'=>'approved']);
             $transcation->buyer_trans->update(['status'=>'approved']);
             $transcation->buyer_requests->first()->update(['status'=>'paid']);
+            $amount = $transcation->quantity;
+            $seller_wallet_update = Wallet::firstOrNew([
+                                                'currency_id'=>$transcation->currency_id,
+                                                'user_id'=>$transcation->user_id,
+                                                'wallet_type'=>3
+                                            ]);
+            $seller_wallet_update->coin = $seller_wallet_update->coin-$amount;
+            $seller_wallet_update->user_id = $transcation->user_id;
+            $seller_wallet_update->save();
+
+            $buyer_wallet_update = Wallet::firstOrNew([
+                                                'currency_id'=>$transcation->currency_id,
+                                                'user_id'=>$transcation->buyer_trans->user_id,
+                                                'wallet_type'=>3
+                                            ]);
+            $buyer_wallet_update->coin = $buyer_wallet_update->coin+$amount;
+            $buyer_wallet_update->user_id = $transcation->buyer_trans->user_id;
+            $buyer_wallet_update->save();                                            
 
             $user_payment_methods = UserPaymentMethod::with('payment_methods')
                                                         ->with('user')

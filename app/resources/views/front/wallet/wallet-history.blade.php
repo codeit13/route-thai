@@ -53,9 +53,7 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 			<div class="row">
 				<div class="col-lg-12  col-sm-12 col-12">
 					<div class="white-box" style="">
-						<div class="row">
-							<div class="white-box" style="background:none; box-shadow:none; margin: 0px 0px; padding: 0px 15px;">
-                              <ul class="janral-head">
+						<ul class="janral-head">
 
 
 						@foreach($currency_types as $index => $currency_type)
@@ -77,9 +75,6 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 					
 						<li class="last"><a href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a></li>
 					</ul>
-
-						</div>
-					</div>
 
 						<div class="head-xs visible-xs">
 							<form id="filterForm1" action="{{route('wallet.request.history',array('type'=>$walletType->id??'','typename'=>$walletType->type??''))}}" method="GET" >
@@ -111,13 +106,6 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 									<div class="dropdown currency_two three_coins crypto currencyDropdown">
 
 
-										@if(count($filters)<1)
-
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        
-                    <span>Not Available</span>
-                      </button>
-                      @endif
 									
 													     @foreach($filters as $cIndex=> $trans_row)
 													         @php
@@ -171,7 +159,7 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 
                       @endif
 
-                      {{__($transactions[0]->currency->short_name)}} <span>{{__($transactions[0]->currency->name)}}</span>
+                      {{__($filters[0]->currency->short_name)}} <span>{{__($filters[0]->currency->name)}}</span>
 
                       @else
 
@@ -236,9 +224,9 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 							</div>
 							<div class="row">
 								<div class="col-4">
-								<select name="status" class="filter-type form-control">
+								<select name="status" class="filter-type ">
 
-									<option value="">Select</option>
+									<option value="">All</option>
 
 													<option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
 													<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
@@ -277,13 +265,6 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 											<td style="width:180px; display:inline-block;">
 												<div class="dropdown currency_two three_coins crypto currencyDropdown">
 
-													@if(count($filters)<1)
-
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        
-                    <span>Not Available</span>
-                      </button>
-                      @endif
 
 													   @foreach($filters as $cIndex=> $trans_row)
 													     @php
@@ -337,7 +318,7 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
                      
                       @endif
 
-                      {{__($transactions[0]->currency->short_name)}} <span>{{__($transactions[0]->currency->name)}}</span>
+                      {{__($filters[0]->currency->short_name)}} <span>{{__($filters[0]->currency->name)}}</span>
 
                       @else
 
@@ -402,21 +383,19 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 
 											</td>
 											<td>
-												<select name="type" class="filter-type form-control">
-													<option value="">Select</option>
+												<select name="type" class="filter-type">
+													<option value="">All</option>
 													<option value="deposit" @if($request->type=='deposit') selected @endif >{{__('Deposit')}}</option>
 
 													<option value="withdraw" @if($request->type=='withdraw') selected @endif>{{__('Withdraw')}}</option>
 
-													<option value="buy" @if($request->type=='buy') selected @endif >{{__('Buy')}}</option>
-
-													<option value="sell" @if($request->type=='sell') selected @endif >{{__('Sell')}}</option>
+											
 
 												</select>
 											</td>
 											<td>
-												<select name="status" class="filter-type form-control">
-													<option value="">Select</option>
+												<select name="status" class="filter-type ">
+													<option value="">All</option>
 													<option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
 													<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
 													<option value="rejected" @if($request->status=='rejected') selected @endif>{{__('Rejected')}}</option>
@@ -430,8 +409,8 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 							</div>
 							</form>
 						</div>
-						<div class="row">
-							<div class="col-lg-12 history-details with-history hidden-xs view-c  col-sm-12 col-12">
+						<div class="row hidden-xs">
+							<div class="col-lg-12 history-details with-history view-c  col-sm-12 col-12">
 								<table>
 									<thead>
 										<tr>
@@ -573,8 +552,8 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 								</table>	
 							</div>
 						</div>
-						<div class="row">
-						<div class="col-lg-12 text-center nav-pagi hidden-xs col-sm-12 col-12">
+						<div class="row  hidden-xs">
+						<div class="col-lg-12 text-center nav-pagi col-sm-12 col-12">
 
 							{{ $transactions->links('front._inc._paginator') }}
 						
@@ -732,6 +711,12 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
   	{
   		submitform();
   	}
+  })
+
+  $('.options li').on('click',function()
+  {
+
+  	submitform();
   })
 
 	</script>

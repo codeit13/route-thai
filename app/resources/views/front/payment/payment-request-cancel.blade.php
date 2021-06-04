@@ -6,18 +6,7 @@
 <div class="progress-section visible-xs">
 				<h2>{{__('Order Cancel')}}</h2>
 			</div>
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12 col-sm-12 col-xs-12 flush">
-						<ul class="mini_links">
-							<li class="active"><a href="#">{{__('P2P')}}</a>
-							</li>
-							<li><a href="#">{{__('Express')}}</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
+			@include('front.sell.sub_header')
 @endsection
 @section('content')
 	<section id="main-heading" class="panding-payment hidden-xs csss">

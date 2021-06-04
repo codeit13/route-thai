@@ -50,6 +50,12 @@ Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'v
 Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class, 'sendOTPOnLogin'])->name('send.otp.login');
 
 Route::middleware('auth')->group(function(){
+
+    Route::get('arbitrage',function()
+{
+    return view('front.arbitrage');
+    
+})->name('arbitrage');
     // Profile
     Route::prefix('user')->name('user.')->group(function(){ 
         Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
@@ -82,7 +88,7 @@ Route::middleware('auth')->group(function(){
         Route::get('deposit/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create'])->name('wallet.deposit');
         Route::get('{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'show'])->name('wallet.history');
         Route::post('create/deposit/',[App\Http\Controllers\TransactionController::class, 'store'])->name('wallet.create.deposit');
-        Route::get('wallet/deposit/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.request.history');
+        Route::get('/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.request.history');
 
 
 
@@ -115,6 +121,24 @@ Route::middleware('auth')->group(function(){
 
 //end
 
+    // Loan Routes
+  Route::prefix('loan')->group(function(){
+
+    Route::get('request',[App\Http\Controllers\LoanController::class, 'create'])->name('loan.create');
+
+    Route::get('request/{id}/detail',[App\Http\Controllers\LoanController::class, 'show'])->name('loan.request.detail');
+
+    Route::get('{id}/detail',[App\Http\Controllers\LoanController::class, 'edit'])->name('loan.show.detail');
+
+    Route::get('{id}/status',[App\Http\Controllers\LoanController::class, 'status'])->name('loan.status');
+
+    Route::get('history',[App\Http\Controllers\LoanController::class, 'index'])->name('loan.history');
+
+
+  });
+
+    //end
+
 
 });
 
@@ -124,8 +148,3 @@ Route::get('p2p/exchange','ExchangeController@index')->name('p2p.exchange');
 // Stocking
 Route::get('staking',function() { return view('front.staking'); })->name('staking');
 
-Route::get('arbitrage',function()
-{
-    return view('front.arbitrage');
-    
-})->name('arbitrage');
