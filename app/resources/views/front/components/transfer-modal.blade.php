@@ -83,7 +83,7 @@
 								</div>
 								<!--dont delete this element -->
 								<span style="position:relative;"></span>
-								<div id="max_transfer_quantity" style="text-align:center;position: relative;color:#00c98e;top:32px;width:13%;float: right;">Max</div>
+								<div id="max_transfer_quantity" style="text-align:center;position: relative;color:#00c98e;top:32px;width:13%;float: right;cursor: pointer;">Max</div>
 
 								<!--end -->
 								<input type="text" name="transfer_quantity" id="transfer_quantity" style="" placeholder="" value="" />

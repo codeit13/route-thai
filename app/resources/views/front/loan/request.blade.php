@@ -54,7 +54,7 @@
             </div>
 			 <div class="col-lg-5 btc text-right col-sm-6 col-6">
 
-				<p><img src="{{asset('front/img/sm-icon-1.png')}}" alt=""/>&nbsp; BTC:<b>1,797,994.87</b> USD <span>|</span> <a href="#">+0.73%</a></p>
+				<p><img src="{{asset('front/img/sm-icon-1.png')}}" alt=""/>&nbsp; BTC:<b id="backend-current-usd-rate">1,797,994.87</b> USD <span>|</span> <a href="#">+0.73%</a></p>
 
             </div>
          </div>
@@ -474,6 +474,38 @@ var crypto_exchange_rates={!! $crypto_rates !!};
 
 var fiat_exchange_rates={!! $fiat_rates !!};
 
+var usdPrice=0;
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function showCurrencyRate()
+{
+	var crypto_id=$('#coin_id').val();
+
+	var cryptoRow=currencies.find(function(currency)
+    {
+       return currency.id==crypto_id;
+    })
+
+   
+
+	var filteredCryptoExchangeRow=crypto_exchange_rates.find(function(v,i){
+
+	   return v.symbol==cryptoRow.short_name+'USDT';
+	})
+
+
+	//$('#backend-current-usd-rate').text(numberWithCommas(parseFloat(filteredCryptoExchangeRow.lastPrice.toFixed(2))));
+
+	usdPrice=filteredCryptoExchangeRow.lastPrice;
+
+
+
+	console.log(filteredCryptoExchangeRow);
+}
+
 	$(".currencyDropdown .dropdown-menu .dropdown-item").on("click", function(e) { e.preventDefault();
 
       var currency_id=$(this).attr('data-id');
@@ -485,18 +517,7 @@ var fiat_exchange_rates={!! $fiat_rates !!};
 
     $('.currencyDropdown .dropdown-toggle').html($(this).html());
 
-    $('.mainTabs').siblings(':not(.d-none)').addClass('d-none');
-
-    //console.log($('#MainTab__'+currency_id));
-
-    
-
-    $('.containerTabs').siblings(':not(.d-none)').addClass('d-none');
-
-    $('#MainTab__'+currency_id).removeClass('d-none');
-
-
-    $('#myTabContent__'+currency_id).removeClass('d-none');
+  showCurrencyRate();
 
 
    
