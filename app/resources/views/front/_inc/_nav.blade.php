@@ -149,7 +149,7 @@
                                 </div>
                                 </li>
                                 <li class="onsubmenu">
-                                    <div class="dropdown currency_two">
+                                    <div class="dropdown currency_two" id="currency">
                                         @php
                                         $currencies = \App\Models\Currency::where('type_id',2)->get();
                                         $default_currency = !empty(Auth::user()->default_currency) ? \App\Models\Currency::find(Auth::user()->default_currency) : \App\Models\Currency::where('type_id',2)->first();
@@ -165,7 +165,7 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownBaseCurrency" x-placement="bottom-start">
                                         @foreach($currencies as $cIndex=> $currency)
-                                            <a class="dropdown-item myLink currency-item server-class-currency" href="javascript:void(0)" data-currency={{ $currency->id }}>
+                                            <a class="dropdown-item myLink currency-item server-class-currency" data-currency={{ $currency->id }}>
 
                                                   @if($currency->hasMedia('icon'))
 

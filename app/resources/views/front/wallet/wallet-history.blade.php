@@ -111,13 +111,6 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 									<div class="dropdown currency_two three_coins crypto currencyDropdown">
 
 
-										@if(count($filters)<1)
-
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        
-                    <span>Not Available</span>
-                      </button>
-                      @endif
 									
 													     @foreach($filters as $cIndex=> $trans_row)
 													         @php
@@ -171,7 +164,7 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 
                       @endif
 
-                      {{__($transactions[0]->currency->short_name)}} <span>{{__($transactions[0]->currency->name)}}</span>
+                      {{__($filters[0]->currency->short_name)}} <span>{{__($filters[0]->currency->name)}}</span>
 
                       @else
 
@@ -277,13 +270,6 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 											<td style="width:180px; display:inline-block;">
 												<div class="dropdown currency_two three_coins crypto currencyDropdown">
 
-													@if(count($filters)<1)
-
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        
-                    <span>Not Available</span>
-                      </button>
-                      @endif
 
 													   @foreach($filters as $cIndex=> $trans_row)
 													     @php
@@ -337,7 +323,7 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
                      
                       @endif
 
-                      {{__($transactions[0]->currency->short_name)}} <span>{{__($transactions[0]->currency->name)}}</span>
+                      {{__($filters[0]->currency->short_name)}} <span>{{__($filters[0]->currency->name)}}</span>
 
                       @else
 
