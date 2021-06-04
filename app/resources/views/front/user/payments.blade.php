@@ -50,7 +50,11 @@ Payment Methods - Route: P2P Trading Platform
                      @foreach (Auth::user()->user_payment_method as $item)
                      <div class="col-lg-6 col-xs-12 flush-left  xs-flush">
                            <div class="card pd_card an_card">
-                              <h2><img src=" {{ $item->payment_methods->firstMedia('icon')->getUrl() }} "> {{ $item->payment_methods->name }} 
+                              <h2>
+                                 @if($item->hasMedia('icon'))
+                                    <img src=" {{ $item->payment_methods->firstMedia('icon')->getUrl() }} "> 
+                                 @endif
+                                 {{ $item->payment_methods->name }} 
                                  <span class="rt_span"><a href="{{ route('user.payment.edit', $item->id)}}"><i class="fal fa-edit"></i></a>
                                  <a href="#" data-target="#exampleModal" data-url="{{ route('user.payment.delete', $item->id)}}"  data-toggle="modal" class="delete-this" ><i class="fal fa-trash-alt"></i></a></span></h2> 
                               <div class="iverify baccount">
