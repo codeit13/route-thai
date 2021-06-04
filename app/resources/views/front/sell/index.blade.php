@@ -65,7 +65,8 @@ Route: P2P Trading Platform - sell crypto
 						</div>
 	                    <div class="field">
 	                        <label>Total Quantity</label>
-	                        <input type="number" name="quantity" placeholder="Enter Quantity"/>
+	                        <input type="number" id="quantity" name="quantity" placeholder="Enter Quantity"/>
+	                        <span class="size">Total balance: <b id="totalBalance"></b> <a href="javascript:void(0)" onclick="setMax()">Use Max</a></span><br>
 	                        <span class="text-danger" id="quantity_error"></span>
 	                    </div>
 	                    <div class="field">
@@ -94,48 +95,81 @@ Route: P2P Trading Platform - sell crypto
 @section('page_scripts')
 	<script src="{{asset('front/js/jquery_form.min.js') }}"></script>
 	<script>
+		var coin_balance = JSON.parse('<?= json_encode($current_balance,true) ?>');
+		var current_short_name = '{{ $crypto_currencies->first()->short_name }}';
+		var current_coin_balance = 0;
+		var current_coin_text = '';
+
+		function setMax(){
+			$('#quantity').val(current_coin_balance);
+		}
+
+		$('#currency_id').change(function(){
+			var currency_id = $(this).val();
+			if (coin_balance[currency_id] != undefined) {
+				current_coin_balance = coin_balance[currency_id];
+				current_coin_text = current_coin_balance+" "+current_short_name;
+				$('#totalBalance').text(current_coin_balance+" "+current_short_name)
+			}
+			$('#quantity_error').text('');
+		});
+		$('#currency_id').trigger('change');
+
+		$('#quantity').change(function(){
+			var quantity = $(this).val();
+			$('#quantity_error').text('');
+			if (quantity > current_coin_balance) {
+				$('#quantity_error').text('You can only sell less than '+current_coin_text+'.')
+			}
+		});
+
 		function selectCurrency(current_obj,input_id,image_id,text_id){
 			var current_obj = $(current_obj);
 			var current_image = current_obj.attr('data-img');
 			var current_name = current_obj.attr('data-name');
-			var current_short_name = current_obj.attr('data-short_name');
+			current_short_name = current_obj.attr('data-short_name');
 			var current_currency = current_obj.attr('data-currency');
 
-			$('#'+input_id).val(current_currency);
+			$('#'+input_id).val(current_currency).trigger('change');
 			$('#'+image_id).attr('src',current_image);
 			$('#'+text_id).html(current_short_name+'<span> '+current_name+'</span>');
-
+			$('#quantity').val('');
 			console.log(current_image,current_name,current_short_name,current_currency)
 		}
 
 		function saveSell(){
-			var form_id = 'save_sell';
-			$('body').find('button').prop('disabled', true);
+			var quantity = $('#quantity').val();
+			if (quantity > current_coin_balance) {
+				$('#quantity_error').text('You can only sell less than '+current_coin_text+'.')
+			}else{
+				var form_id = 'save_sell';
+				$('body').find('button').prop('disabled', true);
 
-			$('#'+form_id).ajaxSubmit({
-				url: '{{ route("sell.save_sell") }}',
-				type : 'POST',
-				dataType: 'json',
-				beforeSubmit : function(){
-					$("[id$='_error']").empty();
-				},
-				success:function(result){
-					if (result.success == true) {
-						window.location = result.redirect_url;
-						$('#'+form_id)[0].reset();
+				$('#'+form_id).ajaxSubmit({
+					url: '{{ route("sell.save_sell") }}',
+					type : 'POST',
+					dataType: 'json',
+					beforeSubmit : function(){
+						$("[id$='_error']").empty();
+					},
+					success:function(result){
+						if (result.success == true) {
+							window.location = result.redirect_url;
+							$('#'+form_id)[0].reset();
+						}
+						$('body').find('button').prop('disabled', false);
+					},
+					error:function(resobj){
+						console.log(resobj.responseJSON.message)
+
+						$.each(resobj.responseJSON.errors, function(k,v){
+							var id_arr = k.split('.');
+							$('#'+id_arr[0]+'_error').text(v);
+						});
+						$('body').find('button').prop('disabled', false);
 					}
-					$('body').find('button').prop('disabled', false);
-				},
-				error:function(resobj){
-					console.log(resobj.responseJSON.message)
-
-					$.each(resobj.responseJSON.errors, function(k,v){
-						var id_arr = k.split('.');
-						$('#'+id_arr[0]+'_error').text(v);
-					});
-					$('body').find('button').prop('disabled', false);
-				}
-			});
+				});
+			}
 		}
 	</script>
 @stop
