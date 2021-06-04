@@ -27,16 +27,22 @@
       <div class="container">
          <div class="row tb-l">
             <div class="col-lg-7 col-sm-6 col-6">
+
 			  <h5 class="visible-xs">LOANABLE COINS</h5>
+
               <h3 class="hidden-xs">Get Instant Loan</h3>
+
             </div>
+
 			 <div class="col-lg-5 text-right col-sm-6 col-6">
+
 				<p>
 					<img src="{{asset('front/img/bitcoin.png')}}" alt=""/>
 					<img src="{{asset('front/img/icon-5.png')}}" alt=""/>
 					<img src="{{asset('front/img/icon-6.png')}}" alt=""/>
 					<img src="{{asset('front/img/icon-7.png')}}" alt=""/>
 				</p>
+
             </div>
          </div>
 		  <div class="col-lg-12 text-left flush xs-f col-sm-12 col-12">
@@ -47,7 +53,9 @@
               <label class="main">Enter your loan details</label>
             </div>
 			 <div class="col-lg-5 btc text-right col-sm-6 col-6">
+
 				<p><img src="{{asset('front/img/sm-icon-1.png')}}" alt=""/>&nbsp; BTC:<b>1,797,994.87</b> USD <span>|</span> <a href="#">+0.73%</a></p>
+
             </div>
          </div>
 			<div class="row">
@@ -61,23 +69,62 @@
 											<label>My Collateral is</label>
 										</div>
 										<div class="col-lg-8 text-right col-sm-8 col-7">
-											<label class="sm-size">Total balance: <b>0.00000000 BTC</b></label>
+											<label class="sm-size">Total balance: <b id="totalBalance">0.00000000 BTC</b></label>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-lg-12 col-sm-12 col-12">
 											<div class="multi_form">
-												<div class="dropdown currency_two three_coins crypto">
+												<div class="dropdown currencyDropdown currency_two three_coins crypto">
+
 												  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													<img src="{{asset('front/img/bitcoin.png')}}" alt=""> BTC
+
+                                              @if( isset($currencies[0]) && $currencies[0]->hasMedia('icon'))
+
+													<img src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"> {{__($currencies[0]->short_name)}}
+
+													@else
+
+													<span>{{__('Not Available')}}</span>
+
+													@endif
+
+
 												  </button>
 												  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 47px, 0px); top: 0px; left: 0px; will-change: transform;">
-													<a class="dropdown-item" href="#"><img src="{{asset('front/img/bitcoin.png')}}" alt=""> BTC <span>Bitcoin</span></a>
+
+
+                           @foreach($currencies as $cIndex=> $currency)
+
+
+                            <a class="dropdown-item" data-id="{{$currency->id}}" href="#">
+
+                                 @if($currency->hasMedia('icon'))
+    
+                                      
+
+                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+
+                      @endif
+
+                      {{__($currency->short_name)}} <span>{{__($currency->name)}}</span>
+
+
+
+                            </a>
+
+                            @endforeach
+												<!-- 	<a class="dropdown-item" href="#"><img src="{{asset('front/img/bitcoin.png')}}" alt=""> BTC <span>Bitcoin</span></a>
 													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-5.png')}}" alt=""> ETH <span>Ethereum</span></a>
-													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-6.png')}}" alt=""> BNB <span>BNB</span></a>
+													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-6.png')}}" alt=""> BNB <span>BNB</span></a> -->
+
+
+
 												  </div>
+
+												  <input type="hidden" name="currency_id" id="coin_id" value="{{$currencies[0]->id??''}}">
 												</div>
-												<input type="text" name="" value="2">
+												<input type="text" name="quantity" id="collateral_quantity" value="">
 											</div>
 										</div>
 									</div>
@@ -98,15 +145,46 @@
 											<div class="multi_form">
 												<div class="dropdown currency_two three_coins crypto">
 												  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													USD
+												   @if( isset($fiat_currencies[0]) && $fiat_currencies[0]->hasMedia('icon'))
+
+													<img src="{{$fiat_currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($fiat_currencies[0]->name)}}"> {{__($fiat_currencies[0]->short_name)}}
+
+													@else
+
+													<span>{{__('Not Available')}}</span>
+
+													@endif
 												  </button>
 												  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 47px, 0px); top: 0px; left: 0px; will-change: transform;">
-													<a class="dropdown-item" href="#"><img src="{{asset('front/img/bitcoin.png')}}" alt=""> BTC <span>Bitcoin</span></a>
+
+												  	@foreach($fiat_currencies as $cIndex=> $currency)
+
+
+                            <a class="dropdown-item" data-id="{{$currency->id}}" href="#">
+
+                                 @if($currency->hasMedia('icon'))
+    
+                                      
+
+                      <img src="{{$currency->firstMedia('icon')->getUrl()}}" alt="{{__($currency->name)}}"/> 
+
+                      @endif
+
+                      {{__($currency->short_name)}} <span>{{__($currency->name)}}</span>
+
+
+
+                            </a>
+
+                            @endforeach
+												<!-- 	<a class="dropdown-item" href="#"><img src="{{asset('front/img/bitcoin.png')}}" alt=""> BTC <span>Bitcoin</span></a>
 													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-5.png')}}" alt=""> ETH <span>Ethereum</span></a>
-													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-6.png')}}" alt=""> BNB <span>BNB</span></a>
+													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-6.png')}}" alt=""> BNB <span>BNB</span></a> -->
 												  </div>
+
+
 												</div>
-												<input type="text" name="" value="33899.8">
+												<input style="width:65%;" type="text" name="" value="33899.8">
 											</div>
 										</div>
 									</div>
@@ -385,6 +463,103 @@
 
 
 @section('page_scripts')
+
+<script type="text/javascript">
+
+	var wallets=@json($wallets);
+
+var currencies=@json($currencies);
+
+var crypto_exchange_rates={!! $crypto_rates !!};
+
+var fiat_exchange_rates={!! $fiat_rates !!};
+
+	$(".currencyDropdown .dropdown-menu .dropdown-item").on("click", function(e) { e.preventDefault();
+
+      var currency_id=$(this).attr('data-id');
+
+   changeShowBalance(currency_id);
+
+
+    $('#coin_id').val(currency_id);
+
+    $('.currencyDropdown .dropdown-toggle').html($(this).html());
+
+    $('.mainTabs').siblings(':not(.d-none)').addClass('d-none');
+
+    //console.log($('#MainTab__'+currency_id));
+
+    
+
+    $('.containerTabs').siblings(':not(.d-none)').addClass('d-none');
+
+    $('#MainTab__'+currency_id).removeClass('d-none');
+
+
+    $('#myTabContent__'+currency_id).removeClass('d-none');
+
+
+   
+});
+
+	var currentCurrency=$('#coin_id').val();
+
+	changeShowBalance(currentCurrency);
+
+function changeShowBalance(coin_id)
+{
+
+    var balance='0.00000';
+
+
+    var balanceRow=wallets.filter(function(wallet){
+          return wallet.currency_id==coin_id;
+    })
+
+    balanceRow=balanceRow[0];
+
+    var currencyRow=currencies.filter(function(currency)
+    {
+       return currency.id==coin_id;
+    })
+
+    currencyRow=currencyRow[0];
+
+    balance=balance+' '+currencyRow.short_name;
+
+    if( balanceRow && typeof balanceRow.coin !='undefined')
+    {
+         balance=balanceRow.coin + ' '+currencyRow.short_name;
+    }
+
+    $('#totalBalance').text(balance);
+}
+
+$(document).on('keyup','#collateral_quantity',function()
+{
+
+    var quantity=parseFloat($(this).val());
+
+    $(this).next('.validateError').remove();
+  
+    transferSelectedCurrencyBalance=parseFloat(transferSelectedCurrencyBalance);
+
+    if(transferSelectedCurrencyBalance < quantity)
+    {
+      $(this).addClass('is-invalid');
+
+      $(this).after('<p class="text-danger text-bold validateError">{{__("Withdraw quantity should be less than available balance.")}}</p>');
+    }
+    else
+    {
+      $(this).removeClass('is-invalid');
+
+    }
+
+})
+	
+
+</script>
 
 
 @endsection

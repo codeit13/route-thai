@@ -1810,6 +1810,7 @@ span.fa.fa-fw.field-icon.toggle-password.fa-eye, span.fa.fa-fw.field-icon.toggle
     top: -27px;
     right: 12px;
     width: auto;
+    cursor: pointer;
 }
 
 span.fa.fa-fw.field-icon.toggle-password.fa-eye::after, span.fa.fa-fw.field-icon.toggle-password.fa-eye-slash::after {
@@ -1823,6 +1824,7 @@ span.fa.fa-fw.field-icon.toggle-password.fa-eye::after, span.fa.fa-fw.field-icon
     display: none;
     left: 0;
     z-index: -1;
+    cursor: pointer;
 }
 .login_forms span::after {
     display: inline-block;
@@ -5464,19 +5466,20 @@ ul.loan_code li i.fa {
 
 #loans-deshboard-new.repay {
     padding-bottom:60px;
+    background: var(--wallet_bg_color) !important;
 }
 
 #loans-deshboard-new.repay .apply-new-loan {
     float:left;
     width:100%;
     border-radius:5px;
-    background:#fff;
+    background:var(--new-card-bg);
     padding:15px;
 }
 
 #loans-deshboard-new.repay .apply-new-loan p {
     font-size:12px;
-    color:#000;
+    color:var(--white-black-text);
     font-weight:normal;
     padding-left:25px;
     margin-left:15px;
@@ -5539,10 +5542,317 @@ body.dark-mode #loans-deshboard-new .how-to-start img.show_white {
     display: inline-block;
 }
 
+section#loans-deshboard-new {
+    background-color: var(--wallet_bg_color) !important;
+}
+
+.security {
+    float:left;
+    width:100%;
+    padding:34px;
+    padding-bottom:100px;
+}
+
+.security p {
+    color:#333333;
+    font-size:14px;
+}
+
+.security p img {
+    position:relative;
+    top:-2px;
+    margin:0px 5px;
+}
+
+.security h3 {
+    color:#333333;
+    margin-top:20px;
+}
+
+.security p.gray {
+    color:#9b9b9b;
+}
+
+.security .table-responsive {
+    margin-top:30px;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0px 0px 5px 2px #ebebeb;
+}
+
+.security .table-responsive th {
+    color:#b3b3b3;
+    font-size:14px;
+    font-weight:600;
+    background:#fbfbfb;
+}
+
+.security .table-responsive table {
+    margin-bottom:0px;
+}
+
+.security .table-responsive td a {
+    color:#ce3030;
+}
+
+.security .table-responsive td {
+    border-bottom:1px solid #ebebeb;
+    font-size:14px;
+}
+
+.security .white-email {
+    float:left;
+    width:100%;
+    background:#fff;
+    border-radius:8px;
+        box-shadow: 0px 1px 6px 1px #dadada;
+    margin-top:40px;
+    z-index: 9999;
+    position: relative;
+}
+
+.security .white-email .field {
+    float:left;
+    width:100%;
+    padding:25px 0px;
+}
+
+
+.security .white-email h5 {
+    font-weight:normal;
+    margin-bottom:5px;
+}
+
+.security .white-email p {
+    color:#9b9b9b;
+    font-size:14px;
+    margin-bottom:15px;
+}
+
+.security .white-email label {
+    color:#9b9b9b;
+    font-size:14px;
+}
+
+.security .white-email input {
+    width:100%;
+    border:1px solid #b7b7b7;
+    border-radius:5px;
+}
+
+.security .white-email span {
+    color:#9b9b9b;
+    /*font-size:12px;*/
+    position: relative;
+}
+
+.security .white-email a {
+    border:1px solid #00c98e;
+    display:inline-block;
+    line-height:40px;
+    color:#00c98e;
+    border-radius:5px;
+    padding:0px 20px;
+    margin-top:15px;
+    font-size:14px;
+}
+
+.security .white-email.change {
+    padding:25px 0px;
+}
+
+.security .white-email.change .field {
+    padding:12px 25px;
+}
+
+.security .white-email.change input {
+    height:36px;
+    color:#000;
+    border-radius:5px;
+    padding-left:10px;
+    position: relative;
+}
+
+.security .white-email input.password{
+    background:url(../img/password.png) 98% 50% no-repeat !important;
+}
+
+.security  button {
+    background:#00c98e;
+    color:#fff;
+    line-height:40px;
+    border:none;
+    font-size:18px;
+    margin-top:30px;
+    outline:0;
+    border-radius:5px;
+    width:100%;
+}
+
+.security a.send-code {
+    padding:0px;
+    width:100%;
+    border:none;
+    text-align:center;
+    margin-top:25px;
+}
+
+.account-security {
+    padding:30px 20px;
+}
+
+.account-security h3 {
+    font-weight:normal;
+}
+
+.account-security h3 span {
+        color: #00c98e;
+}
+
+.account-security .account-s ul {
+    margin-top:12px;
+    margin-bottom:30px;
+}
+
+.account-security .account-s ul li {
+    list-style:none;
+    display:inline-block;
+    color:#333333;
+    font-size:14px;
+    background:url(../img/tick-2.png) 0px 6px no-repeat;
+    padding:0px 18px;
+}
+
+.account-security .account-s ul li:last-child {
+    background:url(../img/close-1.png) 0px 6px no-repeat;
+}
+
+.account-security .fa-box-white {
+    float:left;
+    width:100%;
+    background:#fff;
+    border-radius:5px;
+    box-shadow:0px 1px 2px 1px #ebebeb;
+    margin-bottom:25px;
+}
+
+.account-security .fa-box-white h5 {
+    font-weight:600;
+    font-size:18px;
+    line-height:40px;
+    border:1px solid #dbe5ed;
+    padding:0px 15px;
+    border-radius:5px 5px 0px 0px;
+}
+
+.account-security .fa-box-white h4 {
+    font-weight:600;
+    font-size:18px;
+    line-height:40px;
+}
+
+.account-security .fa-box-white h4 span {
+    color:#adadad;
+    font-weight:normal;
+    font-size:12px;
+    float:right;
+    margin-top:2px;
+}
+
+.account-security .fa-box-white p {
+    color: #adadad;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.account-security .fa-box-white p b {
+    color:#000;
+}
+
+.account-security .fa-box-white .field {
+    float:left;
+    padding:15px 15px;
+    width:100%;
+    border-bottom:1px solid #ebebeb;
+}
+.account-security .fa-box-white .field label.text {
+    color:#333333;
+    font-size:14px;
+    font-weight:600;
+    width:100%;
+}
+
+.account-security .fa-box-white .field label span {
+    color:#adadad;
+    font-weight:normal;
+    font-size:12px;
+}
+
+.account-security .fa-box-white .field label a {
+    color:#adadad;
+    font-size:12px;
+    text-decoration:underline;
+    font-style:italic;
+}
+
+.account-security .fa-box-white .field a.btn-info {
+    padding:0px 20px;
+    line-height:30px;
+    border:1px solid #00c98e;
+    border-radius:5px;
+    color:#00c98e;
+    background:none;
+    text-align:center;
+    font-weight:normal;
+    margin-top:7px;
+}
+
+.account-security .fa-box-white .field p {
+    margin-bottom:35px;
+}
+
+.account-security .fa-box-white .field a.btn-info.change {
+    color:#adadad;
+    border-color:#adadad;
+}
+
+.account-security .fa-box-white .field label img {
+    float:left;
+    margin-right:10px;
+}
+
+.account-security .fa-box-white.device label {
+    font-size:18px;
+    margin-top:10px;
+    font-weight:600;
+}
+
+.account-security .toggle.ios,.account-security .toggle-on.ios,.account-security .toggle-off.ios { border-radius: 50px !important; height: 30px !important; }
+.account-security .toggle.ios .toggle-handle { border-radius:  50px !important; height: 30px !important;  }
+
+.account-security .toggle.btn {
+    min-height: 1.15rem;
+}
+
+.account-security .toggle-on.btn {
+    line-height: 17px;
+    font-size: 12px;
+}
+
+.account-security .btn-light {
+    background:#9b9b9b;
+}
+
+.account-security .btn-toggle.btn-sm {
+    margin-top:10px;
+}
+
 /* Landscape phones and portrait tablets */
-
-
 @media (max-width: 767px) {
+.multi_form .dropdown.currency_two.three_coins .dropdown-menu.show a {
+    padding: 0px 15px !important;
+    color: var(--text-color);
+}
 .notification_page span {
     float: left;
     height: auto;
@@ -5557,9 +5867,9 @@ body.dark-mode #loans-deshboard-new .how-to-start img.show_white {
 .notification_page h6 {
     font-size: 12px !important;
     margin-top: 10px !important;
-}   
-#loans-deshboard-new .how-to-start ul li {
-    padding-bottom: 18px;
+} 
+.multi_form input[type="text"] {
+    width: 58%;
 }
 h3.sm_center {
     text-align: center;
@@ -5587,6 +5897,309 @@ ul.loan_code li i.fa {
     font-size: 24px;
     color: var(--white-black-text);
 }
+#loans-deshboard-new .space-normal .xs-v label {
+    line-height:22px;
+}
+
+#loans-deshboard-new .space-normal .xs-v input {
+    margin-top:5px;
+    float:left;
+    margin-right:5px;
+}
+
+#wallet-content.request .field .dropdown-menu.show {
+    top: 85% !important;
+    left: 0 !important;
+}
+
+.account-security .fa-box-white .field label img {
+    margin-bottom: 2px;
+}
+
+
+.account-security .fa-box-white .field a.btn-info {
+    font-size:12px;
+}
+
+
+.account-security .xs-btn .fa-box-white .field a.btn-info {
+    width:auto;
+    padding:0px 15px;
+}
+
+.account-security h3 {
+    font-size:22px;
+    padding:0px 15px;
+}
+
+.account-security .fa-box-white .field label span {
+    font-size:10px;
+}
+
+.account-security .fa-box-white .field label.text {
+    font-size:12px;
+}
+
+.account-security .fa-box-white.device label {
+    font-size: 15px;
+}
+
+.account-security .fa-box-white .field a.btn-info {
+    padding:0px;
+    width:100%;
+}
+
+.account-s  {
+    padding:0px 30px;
+}
+
+.account-security {
+    padding: 30px 0px;
+}
+
+.account-security .account-s ul li {
+    width:100%;
+    background-position:0px 12px !important;
+    padding:5px 15px;
+}
+
+.security  button {
+    margin-bottom:25px;
+}
+
+.security .white-email.change label {
+    text-align:left !important;
+    width:100%;
+}
+
+.security h3 {
+    font-size:24px;
+    margin-bottom:5px;
+}
+
+.security th {
+    font-size: 15px;
+    font-weight:normal;
+    border-top:1px solid #dee2e6;
+    border-bottom:1px solid #dee2e6;
+}
+
+.security {
+    padding:0px;
+}
+
+.head-table {
+    float:left;
+    width:100%;
+}
+
+.head-table p {
+    border-top:1px solid #dbe5ed;
+    border-bottom:1px solid #dbe5ed;
+    text-align:left;
+    line-height:30px;
+    padding:0px 10px;
+}
+
+.head-table label {
+    width: 100%;
+    padding:0px 5px;
+    font-size: 14px;
+}
+
+.head-table .gray-c label {
+    color:#adadad;
+    text-align: left;
+}
+
+.head-table label a {
+    background:none;
+    border:none;
+    padding:0px;
+    color:#d13d3d;
+    line-height:20px;
+    font-size:14px;
+}
+
+.head-table .bg-white-box {
+    background:#fff;
+    float:left;
+    width:100%;
+    padding:10px 10px;
+}
+
+.xs-space {
+    padding:10px 25px !important;
+}
+
+#loans-deshboard-new .how-to-start ul li {
+    height:40px;
+    font-size:12px;
+    padding-bottom: 18px;
+}
+
+#your-application .white-box .m-l {
+    margin:0px;
+}
+
+#your-application .pdl-2 label a.btn-info {
+    width:100%;
+    padding:0px;
+        font-size: 14px;
+    text-align:center;
+}
+
+#your-application.repay-details.bottom-0 {
+    padding-bottom: 30px;
+}
+
+#loans-deshboard-new.repay .apply-new-loan p {
+    margin-left:0px;
+    margin-bottom:10px;
+}
+
+#your-application .pdl-2 label {
+    width:100%;
+}
+
+#loans-deshboard-new.repay .apply-new-loan a.btn-info {
+    width:100%;
+    padding:0px;
+    text-align:center;
+}
+
+#loans-deshboard-new a.btn-success.apply-for {
+    border:1px dashed #00c98e;
+    text-transform:uppercase;
+    margin-top:10px;
+}
+
+#your-application.repay-details .nav-tabs .nav-link  {
+    font-size:10px;
+    line-height:24px;
+    padding: 0px 8px;
+}
+
+#your-application h3 {
+    font-size: 20px;
+    margin-top: 7px;
+}
+
+#your-application a.btn-info.close-now {
+    width:100%;
+    padding:0px;
+    text-align:center;
+}
+
+#your-application a.btn-info.repay-now {
+    width:100%;
+    padding:0px;
+    text-align:center;
+    line-height: 40px;
+    margin-top:30px;
+}
+
+.xs-l-flush {
+    padding-left:0px !important;
+}
+
+#your-application p.red-position {
+    font-size:9px;
+    font-weight:normal;
+    color:red;
+    margin:5px 0px;
+}
+
+#your-application.repay-details .crypto-b button {
+    font-size: 10px;
+}
+
+.xs-text-right {
+    text-align:right;
+}
+
+#your-application.repay-details .collateral-w h5 {
+    background:url(../img/bitcoin-new.png) 95% 50% no-repeat;
+    background-size:25px auto;
+    line-height:30px;
+}
+
+#your-application.repay-details .collateral-w a.btn-info {
+    width:100%;
+    text-align:center;
+}
+
+#your-application label {
+    font-size: 12px;
+}
+
+#your-application a.btn-info.go-back {
+    width:100%;
+    text-align:center;
+}
+
+#your-application .white-box a.btn-info {
+    width:100%;
+    text-align:center;
+}
+
+#your-application .l-coins {
+    margin-top:0px;
+    margin-bottom:10px;
+}
+
+#your-application .l-coins .one-1 {
+        background: #252525;
+            padding: 8px 0px;
+}
+
+#your-application.repay-details span.in-progress, #your-application.repay-details h3 {
+        margin-top: 0px;
+}
+
+#your-application .l-coins h5 {
+    font-size:15px;
+    line-height:30px;
+        color: #00c98e;
+}
+
+#your-application .white-box .m-bottom {
+    margin-bottom:0px;
+}
+
+#your-application {
+    padding-bottom:20px;
+    padding-top: 0px;
+}
+
+#your-application .white-box h5 a {
+    background:none;
+    padding:0px;
+    color: #00cb8b;
+        text-align: right;
+    line-height: 24px;
+    font-size:14px;
+}
+
+#your-application .white-box h6 {
+    margin-top:20px;
+}
+
+.xs-flush-right {
+    padding-right:0px !important;
+}
+
+#your-application .white-box {
+    padding: 5px 10px;
+}
+
+#wallet-content.my-loan {
+    padding-top:15px !important;
+}
+.head-xs  {
+    padding-top:15px !important;
+}
+
 #loans-deshboard-new .loan-duration .b-right {
     border-right:none;
 }
@@ -5626,8 +6239,8 @@ ul.loan_code li i.fa {
 }
 
 #banner_search.loans-deshboard {
-    padding-bottom:10px;
-    padding-top:10px;
+    padding-bottom:0px;
+    padding-top:0px;
     margin-bottom:0px;
 }
 
@@ -5637,6 +6250,7 @@ ul.loan_code li i.fa {
 
 #banner_search.loans-deshboard.desh-2 h2 {
     margin-bottom:20px;
+    font-weight: normal;
 }
 
 #banner_search.loans-deshboard.desh-2 img {
@@ -5648,10 +6262,6 @@ ul.loan_code li i.fa {
     width:100%;
     margin-top:15px;
     margin-bottom:25px;
-}
-
-.multi_form input[type="text"] {
-    width: 58%;
 }
 
 #loans-deshboard-new .space-normal .xs-v label {
@@ -5684,8 +6294,7 @@ ul.loan_code li i.fa {
 }
 
 #loans-deshboard-new .close-price label form {
-    margin-left: 0px;
-    margin-top: 10px;
+    margin-left:0px;
 }
 
 #loans-deshboard-new .final-loan h3 {
@@ -5727,7 +6336,6 @@ ul.loan_code li i.fa {
     display:inline-block;
     text-align:right;
     border:none !important;
-    vertical-align: middle;
 }
 
 #loans-deshboard-new .my-loan-history tbody td img {
@@ -5782,13 +6390,9 @@ ul.loan_code li i.fa {
 #loans-deshboard-new .white-box label.sm-size {
     font-size: 11px;
 }
-#wallet-content.request .field .dropdown-menu.show {
-    top: 85% !important;
-    left: 0 !important;
-}
 
 #exampleModalnew.modal-open {
-	padding-left:0px;
+    padding-left:0px;
 }
 .dropdown.currency_two.three_coins .dropdown-menu.show a {
     padding: 9px 16px !important;
@@ -7596,6 +8200,11 @@ body {
         z-index: 99999;
         position: relative;
     }
+    
+    .head-xs {
+        display:block !important;
+    }
+    
     #header.p2p-wallet ul.main_ul li {
         display: none;
     }
@@ -7622,11 +8231,19 @@ body {
     .hidden-xs {
         display: none !important;
     }
+    .vs-sm {
+        display:block !important;
+    }
+    
     #news-add h2 {
         font-size: 45px;
     }
     .visible-sm {
         display: block !important;
+    }
+    
+    #your-application .repay {
+        margin-top:15px;
     }
     button.navbar-toggler {
         outline: none;

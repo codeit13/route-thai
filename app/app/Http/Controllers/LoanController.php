@@ -25,7 +25,30 @@ class LoanController extends Controller
      */
     public function create()
     {
-        return view('front.loan.request');
+
+        $currencies=\App\Models\Currency::where('is_crypto',1)->get();
+
+        $fiat_currencies=\App\Models\Currency::where('is_fiat',1)->get();
+
+        $ExchangeRatesService=new \App\Services\ExchangeRatesService;
+
+        $crypto_rates=$ExchangeRatesService->crypto_rates();
+
+        $fiat_rates=$ExchangeRatesService->fiat_rates();
+
+        $terms=(object)array(['days'=>30,'percentage'=>90],['days'=>30,'percentage'=>60],['days'=>60,'percentage'=>90]);
+
+        $price_down=(object)(['percentage'=>5]);
+        
+
+
+        $wallets=auth()->user()->wallet;
+
+
+
+        
+
+        return view('front.loan.request',compact('currencies','wallets','fiat_currencies','crypto_rates','fiat_rates','terms','price_down'));
     }
 
     /**

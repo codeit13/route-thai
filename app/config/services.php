@@ -38,4 +38,10 @@ return [
         'secret'  =>  '0e6ab3c38a43c6460820a2992cda5454',
     ],
 
+    'exchange'=>[
+        'crypto_uri' => "https://api.binance.com/api/v1/",
+        'fiat_uri'=>"https://api.coinbase.com/v2/"
+
+    ],
+
 ];
