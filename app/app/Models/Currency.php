@@ -38,7 +38,8 @@ class Currency extends Model
 	    $wallet=$user->wallet()->where('currency_id',$this->id)->where('wallet_type','!=',3);
         if($wallet->exists())
         {
-            $wallet=$wallet->sum('coin');
+
+            $wallet=$wallet->first()->coin;
         }
         else
         {
