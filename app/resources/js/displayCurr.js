@@ -18,8 +18,8 @@ $(function () {
 
   let localbasecurrency = localStorage.getItem('localbasecurrency');
   if (localbasecurrency === null) {
-    localStorage.setItem('localbasecurrency', 'usd');
-    localbasecurrency = 'usd';
+    localStorage.setItem('localbasecurrency', 'unitedstatesdollar');
+    localbasecurrency = 'unitedstatesdollar';
   }
   base_currency_button.empty();
   base_currency_button.val(localbasecurrency);
@@ -34,9 +34,10 @@ $(function () {
   let baseexchangename = base_exchange_button.val().toLowerCase();
   let basecurrencyname = base_currency_button.val().toLowerCase();
   let currentForexData;
-
-  $('.features select').change(() => {
+  // console.log($('.features select'));
+  $('.features select').on('change', () => {
     const maxrow = $('.features select').val();
+    console.log(maxrow)
     if (maxrow === 'all') {
       $('#tablesearchinput').prop('disabled', false);
       coinsList.forEach((coin) => {
@@ -324,8 +325,8 @@ $(function () {
     base_currency_button.val(currencyVAL.toLowerCase());
     localStorage.setItem('localbasecurrency', currencyVAL.toLowerCase());
     basecurrencyname = currencyVAL.toLowerCase();
-    const oldrate = currentForexData.rates[oldbasecurrencyname.toUpperCase()];
-    const newrate = currentForexData.rates[basecurrencyname.toUpperCase()];
+    const oldrate = currentForexData.rates[currencyDetails[oldbasecurrencyname]['sname']];
+    const newrate = currentForexData.rates[currencyDetails[basecurrencyname]['sname']];
 
     coinsList.forEach((coin) => {
       basevalues[coin] = currentPrice[coin][excname] * newrate / oldrate;
@@ -426,12 +427,12 @@ $(function () {
 
       const idname = info.exchange.toLowerCase() + '_' + info.uid.toLowerCase();
       const idnamep = idname + '_p';
-      if (info.base_currency.toLowerCase() !== basecurrencyname && currentForexData) {
-        if (basecurrencyname === 'usd') {
+      if (info.base_currency !== currencyDetails[basecurrencyname]['sname'] && currentForexData) {
+        if (basecurrencyname === 'unitedstatesdollar') {
           info.price = info.price / currentForexData.rates[info.base_currency];
         } else {
           const usdrate = currentForexData.rates[info.base_currency];
-          const otherrate = currentForexData.rates[basecurrencyname.toUpperCase()];
+          const otherrate = currentForexData.rates[currencyDetails[basecurrencyname]['sname']];
           info.price = info.price * otherrate / usdrate;
         }
       }

@@ -37,7 +37,7 @@
                 <div class="card trade">
                     <h2 class="text-left">General Transaction Details</h2>
                     <div class="profile">
-                        <img alt="Image placeholder" src="/assets/img/characters/Suzuki Swift.webp">
+                        <img alt="Image placeholder" src="{{ $trans->currency->getMedia('icon')->first()->getUrl() }}">
                     </div>
                     <div class="side_content">
                     <h3><b> {{  $trans->currency->name }}</b></h3>
@@ -70,11 +70,9 @@
                 <div class="card inner-tabs">
                     <h2 class="text-left">Buyer Details</h2>
                     <ul class="details nospace">
-                        <li>Buyer Username : <b>{{ $trans->receiver->name }}<</b></li>
+                        <li>Buyer Username : <b>{{ $trans->receiver->name }}</b></li>
                         <li>Mobile Number: <b>{{ $trans->receiver->mobile}}</b></li>
                         <li>Line ID: <b>{{ $trans->receiver->line_number}}</b></li>
-                        <li>Account Name: <b>{{ $trans->receiver->payment_methods->where('id',$trans->receiver_payment_method_id)->first()->account_label }}</b></li>
-                        <li>Account No: <b>{{ $trans->receiver->payment_methods->where('id',$trans->receiver_payment_method_id)->first()->account_number}}</b></li>
                     </ul>
                 </div>
             </div>

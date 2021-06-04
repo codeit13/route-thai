@@ -94,8 +94,8 @@
                                     <tr>
                                         <th>Coin <i class="fa fa-sort" aria-hidden="true"></i>
                                         </th>
-                                        <th>Total <i class="fa fa-sort" aria-hidden="true"></i>
-                                        </th>
+                                        <!-- <th>Total <i class="fa fa-sort" aria-hidden="true"></i>
+                                        </th> -->
                                         <th>Available <i class="fa fa-sort" aria-hidden="true"></i>
                                         </th>
                                         <th>Action <i class="fa fa-sort" aria-hidden="true"></i>
@@ -110,7 +110,7 @@
                                                 <br><span>Bitcoin</span>
                                             </label>
                                         </td>
-                                        <td>0.00000000</td>
+                                        <!-- <td>0.00000000</td> -->
                                         <td>0.00000000</td>
                                         <td>	<a href="#" class="btn-success">Deposit</a>
                                             <a href="#" class="btn-primary">P2P Trading</a>
@@ -123,7 +123,7 @@
                                                 <br><span>Ethereum</span>
                                             </label>
                                         </td>
-                                        <td>0.00000000</td>
+                                        <!-- <td>0.00000000</td> -->
                                         <td>0.00000000</td>
                                         <td>	<a href="#" class="btn-success">Deposit</a>
                                             <a href="#" class="btn-primary">P2P Trading</a>
@@ -136,7 +136,7 @@
                                                 <br><span>BNB</span>
                                             </label>
                                         </td>
-                                        <td>0.00000000</td>
+                                        <!-- <td>0.00000000</td> -->
                                         <td>0.00000000</td>
                                         <td>	<a href="#" class="btn-success">Deposit</a>
                                             <a href="#" class="btn-primary">P2P Trading</a>
@@ -149,7 +149,7 @@
                                                 <br><span>BNB</span>
                                             </label>
                                         </td>
-                                        <td>0.00000000</td>
+                                        <!-- <td>0.00000000</td> -->
                                         <td>0.00000000</td>
                                         <td>	<a href="#" class="btn-success">Deposit</a>
                                             <a href="#" class="btn-primary">P2P Trading</a>
@@ -162,7 +162,7 @@
                                                 <br><span>Bitcoin</span>
                                             </label>
                                         </td>
-                                        <td>0.00000000</td>
+                                        <!-- <td>0.00000000</td> -->
                                         <td>0.00000000</td>
                                         <td>	<a href="#" class="btn-success">Deposit</a>
                                             <a href="#" class="btn-primary">P2P Trading</a>
@@ -175,7 +175,7 @@
                                                 <br><span>Ethereum</span>
                                             </label>
                                         </td>
-                                        <td>0.00000000</td>
+                                        <!-- <td>0.00000000</td> -->
                                         <td>0.00000000</td>
                                         <td>	<a href="#" class="btn-success">Deposit</a>
                                             <a href="#" class="btn-primary">P2P Trading</a>
