@@ -3876,10 +3876,10 @@ span.rt_span i.fa-trash-alt {
 
 .long_btn {
     background: #00c98e;
-    line-height: 60px;
+    line-height: 45px;
     width: 100%;
     text-align: center;
-    font-size: 22px;
+    font-size: 18px;
     border: 3px solid #00c98e !important;
     font-weight: 500;
     border-radius: 6px;
@@ -3899,10 +3899,10 @@ span.rt_span i.fa-trash-alt {
     background: #adadad;
     border-color: #adadad !important;
     border: 3px solid #adadad !important;
-    line-height: 60px;
+    line-height: 45px;
     width: 100%;
     text-align: center;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 500;
     border-radius: 6px;
     text-decoration: none;
@@ -4638,6 +4638,8 @@ li.footer.bg-dark.text-center {
 .options li {
     color: var(--white-black-text);
 }
+
+/********** arbitrage css ******************/
 
 /* Landscape phones and portrait tablets */
 @media (max-width: 767px) {
@@ -7830,10 +7832,10 @@ p.untext-2 {
 }
 #content.padning-payment a.btn-success {
     background: #00c98e;
-    line-height: 60px;
+    line-height: 45px;
     width: 100%;
     text-align: center;
-    font-size: 22px;
+    font-size: 18px;
      border: 3px solid #00c98e !important;
     font-weight: 500;
     border-radius: 6px;
