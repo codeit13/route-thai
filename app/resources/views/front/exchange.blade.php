@@ -26,8 +26,8 @@ Route: P2P Trading Platform
 @endsection
 <section id="filter">
     <div class="container">
-        <div class="row">
-            <form id="search_form" action="{{ route('p2p.exchange') }}" method="get" accept-charset="utf-8">
+        <form id="search_form" action="{{ route('p2p.exchange') }}" method="get" accept-charset="utf-8">
+            <div class="row">
                 <div class="col-lg-12">
                     <ul class="search_bar">
                         <li>
@@ -65,7 +65,7 @@ Route: P2P Trading Platform
                         <li>
                             <label>Fiat Currency</label>
                             <br/>
-                            <div class="dropdown currency_two three_coins">
+                            <div class="dropdown currency_two three_coins" style="width: 259px">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 259px">
                                     <img src="{{ $fiat_currencies->first()->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_2"> 
                                     <span style="color: black" id="text_2">{{ $fiat_currencies->first()->short_name }} <span>{{ $fiat_currencies->first()->name }}</span></span>
@@ -95,8 +95,8 @@ Route: P2P Trading Platform
                 </div>
                 {{-- <div class="col-lg-4">
                 </div> --}}
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </section>
 <section id="content" class="p2p">
