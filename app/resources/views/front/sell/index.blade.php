@@ -112,6 +112,7 @@ Route: P2P Trading Platform - sell crypto
 				$('#totalBalance').text(current_coin_balance+" "+current_short_name)
 			}else{
 				current_coin_balance = 0;
+				current_coin_text = current_coin_balance+" "+current_short_name;
 			}
 			$('#totalBalance').text(current_coin_balance+" "+current_short_name)
 			$('#quantity_error').text('');
