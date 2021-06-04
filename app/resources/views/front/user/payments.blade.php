@@ -24,7 +24,9 @@ Payment Methods - Route: P2P Trading Platform
                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                    <h4>Select Payment Method</h4>
                                    @foreach ($payment_methods as $item)
-                                    <a class="dropdown-item" href="{{ route('user.payment.add',$item->name) }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}"> {{ $item->name }}</a>
+                                      @if($item->hasMedia('icon'))
+                                       <a class="dropdown-item" href="{{ route('user.payment.add',$item->name) }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}"> {{ $item->name }}</a>
+                                       @endif
                                    @endforeach
                                    {{-- <a href="#" data-toggle="modal" data-target="#exampleModal4"><h4>More <i class="far fa-chevron-down"></i></h4></a> --}}
                                  </div>
