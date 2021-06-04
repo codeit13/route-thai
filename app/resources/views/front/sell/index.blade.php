@@ -3,37 +3,10 @@
 Route: P2P Trading Platform - sell crypto
 @endsection
 @section('header-bar')
-<div class="container">
-	<div class="row">
-		<div class="col-lg-12 col-sm-12 col-xs-12 flush">
-			<ul class="mini_links">
-				<li class="active"><a href="#">P2P</a>
-				</li>
-				<li><a href="#">Express</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-</div>
+	@include('front.sell.sub_header')
 @endsection
 @section('content')
-<section id="toolbar">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <ul class="main_tool">
-                    <li>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary" onclick="location.href = '{{ route('p2p.exchange') }}';">Buy</button>
-                            <button type="button" class="btn btn-secondary active" onclick="location.href = '{{ route('sell.create') }}';">Sell</button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-<br><br><br><br>
+<br><br>
 <section id="content" class="banktransfer padning-payment sellers">
     <div class="container">
         <div class="row">
