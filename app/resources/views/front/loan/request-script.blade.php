@@ -1,4 +1,6 @@
 <script type="text/javascript">
+
+	var collateral_quantity=0;
 	
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -9,6 +11,19 @@ function get_currency_row_by_id(currency_id)
 {
 
 	var currency=currencies.find(function(currency)
+    {
+       return currency.id==currency_id;
+    })
+
+    return currency;
+}
+
+
+
+function get_fiat_currency_row_by_id(currency_id)
+{
+
+	var currency=fiat_currencies.find(function(currency)
     {
        return currency.id==currency_id;
     })
@@ -29,10 +44,8 @@ function get_crypto_exchange_row(cryptoRow)
 
 function get_fiat_exchange_row(fiatRow)
 {
-	var fiat_exchange_rate=fiat_exchange_rates.data.rates.find(function(v,i)
-	{
-		return i==fiatRow.short_name;
-	})
+	var fiat_exchange_rate=fiat_exchange_rates.data.rates[fiatRow.short_name];
+	
 
 	return fiat_exchange_rate;
 }
@@ -56,9 +69,32 @@ function showCurrencyRate()
 
 		var fiat_currency=$('#backend-fiat-coin-id').val();
 
-		var fiatRow=get_currency_row_by_id(fiat_currency);
+		var fiatRow=get_fiat_currency_row_by_id(fiat_currency);
+
+		var fiatRateFromUsd=get_fiat_exchange_row(fiatRow);
+
+		console.log(fiatRateFromUsd);
+
+		var newUpdateLaonPrice=(parseFloat(usdPrice)*parseFloat(fiatRateFromUsd)*collateral_quantity);
+
+		newUpdateLaonPrice=newUpdateLaonPrice - (newUpdateLaonPrice * (100-term.percentage) / 100)
+
+		if(newUpdateLaonPrice)
+		{
+
+		$('#backend-loan-amount').val(newUpdateLaonPrice.toFixed(2));
+
+		}
+		else
+		{
+		$('#backend-loan-amount').val('');
+
+		}
 
 
+       
+
+		//console.log(newUpdateLaonPrice);
 
 
 }
@@ -88,9 +124,11 @@ $(document).ready(function(){
   // changeShowBalance(currency_id);
 
 
-    $('#coin_id').val(currency_id);
+    $('#backend-fiat-coin-id').val(currency_id);
 
     $('.backend-fiat-dropdown .dropdown-toggle').html($(this).html());
+
+    showCurrencyRate();
 
  
 });
@@ -99,21 +137,29 @@ $(document).ready(function(){
 	$(document).on('keyup','#collateral_quantity',function()
 {
 
-    var quantity=parseFloat($(this).val());
+    collateral_quantity=parseFloat($(this).val());
 
-    $(this).parents('.multi_form').eq(0).('.validateError').remove();
+    $(this).parents('.multi_form').eq(0).next('.validateError').remove();
   
     transferSelectedCurrencyBalance=parseFloat(transferSelectedCurrencyBalance);
 
-    if(transferSelectedCurrencyBalance < quantity && $('.backend-is-wallet').prop('checked')==true)
+    if(transferSelectedCurrencyBalance < collateral_quantity && $('.backend-is-wallet').prop('checked')==true)
     {
       
 
       $(this).parents('.multi_form').eq(0).after('<p class="text-danger text-bold validateError">{{__("Loan quantity should be less than available balance.")}}</p>');
     }
 
+    showCurrencyRate();
+
     
 })
+
+	$(document).on('click','.backend-is-wallet',function()
+	{
+		
+		$('#collateral_quantity').keyup();
+	})
 
 
 })
@@ -169,9 +215,7 @@ function changeShowBalance(coin_id)
 
 
 
-var terms=@json($terms);
 
-var term=@json($terms[0]??'');
 
 function activeThisTerm(selector,term)
 {
@@ -181,7 +225,11 @@ function activeThisTerm(selector,term)
 
      term=get_term(term);
 
+     $('#backend-loan-term-id').val(term.id);
+
      $('#backend-term-days').html(term.days+' days');
+
+     showCurrencyRate();
 }
 
 function get_term(term_id)
