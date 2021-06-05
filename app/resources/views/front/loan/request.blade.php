@@ -54,7 +54,7 @@
             </div>
 			 <div class="col-lg-5 btc text-right col-sm-6 col-6">
 
-				<p><img src="{{asset('front/img/sm-icon-1.png')}}" alt=""/>&nbsp; BTC:<b id="backend-current-usd-rate">1,797,994.87</b> USD <span>|</span> <a href="#">+0.73%</a></p>
+				<p id="backend-current-usd-rate"><img src="{{asset('front/img/sm-icon-1.png')}}" alt=""/>&nbsp; BTC:<b>1,797,994.87</b> USD <span></span> <a href="#"></a></p>
 
             </div>
          </div>
@@ -107,8 +107,7 @@
 
                       @endif
 
-                      {{__($currency->short_name)}} <span>{{__($currency->name)}}</span>
-
+                      {{__($currency->short_name)}} 
 
 
                             </a>
@@ -131,7 +130,7 @@
 								</div>
 								<div class="xs-v visible-xs">
 									<div class="col-lg-12 col-sm-12 col-12">
-										<label><input type="checkbox"/> Use Wallet Balance</label>
+										<label><input type="checkbox" name="is_wallet" id="backend-is-wallet" /> Use Wallet Balance</label>
 									</div>
 								</div>
 								<div class="col-lg-4  col-12 col-sm-4">
@@ -143,7 +142,7 @@
 									<div class="row">
 										<div class="col-lg-12 col-sm-12 col-12">
 											<div class="multi_form">
-												<div class="dropdown currency_two three_coins crypto">
+												<div class="backend-fiat-dropdown dropdown currency_two three_coins crypto">
 												  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												   @if( isset($fiat_currencies[0]) && $fiat_currencies[0]->hasMedia('icon'))
 
@@ -170,7 +169,7 @@
 
                       @endif
 
-                      {{__($currency->short_name)}} <span>{{__($currency->name)}}</span>
+                      {{__($currency->short_name)}} 
 
 
 
@@ -181,10 +180,10 @@
 													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-5.png')}}" alt=""> ETH <span>Ethereum</span></a>
 													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-6.png')}}" alt=""> BNB <span>BNB</span></a> -->
 												  </div>
-
+                                            <input type="hidden" name="fiat_currency" id="backend-fiat-coin-id" value="{{$fiat_currencies[0]->id??''}}">
 
 												</div>
-												<input style="width:65%;" type="text" name="" value="33899.8">
+												<input style="width:65%;" type="text" name="loan_amount" id="backend-loan-amount" value="">
 											</div>
 										</div>
 									</div>
@@ -199,24 +198,20 @@
 										<div class="col-lg-12 col-sm-12 col-12">
 											<div class="days">
 												<div class="row">
+
+
+													@foreach($terms as $tIndex=> $term)
+
+
 													<div class="col-lg-4  col-4 col-sm-4">
-														<a class="active" href="#">
-															<b>90%</b><br>
-															30 days
+														<a class="@if($tIndex==0)active @endif" href="javascript:void(0)" onclick="activeThisTerm(this,{{$term->id}})">
+															<b>{{$term->percentage}}%</b><br>
+															{{$term->days}} days
 														</a>
 													</div>
-													<div class="col-lg-4  col-4 col-sm-4">
-														<a class="" href="#">
-															<b>90%</b><br>
-															30 days
-														</a>
-													</div>
-													<div class="col-lg-4  col-4 col-sm-4">
-														<a class="" href="#">
-															<b>90%</b><br>
-															30 days
-														</a>
-													</div>
+												@endforeach
+
+
 												</div>
 											</div>
 										</div>
@@ -225,7 +220,7 @@
 							</div>
 							<div class="row">
 								<div class="col-lg-12 hidden-xs check col-sm-12 col-12">
-									<label><input type="checkbox"/> Use Wallet Balance</label>
+									<label><input type="checkbox" name="is_wallet" class="backend-is-wallet" /> Use Wallet Balance</label>
 								</div>
 							</div>
 							<div class="row">
@@ -234,13 +229,12 @@
 										<div class="row">
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Loan Duration</h5>
-												<h4>30 days</h4>
-												<p>Extend at anytime by paying 701.88 USD (2.10%) 
-												loan fee.</p>
+												<h4 id="backend-term-days">{{$terms[0]->days??30}} days</h4>
+												<p></p>
 											</div>
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Price down limit</h5>
-												<h4>5.00% or 35279.76 <span>BTC/USD</span></h4>
+												<h4 id="backend-price-down-limit">5.00% or 35279.76 <span>BTC/USD</span></h4>
 												<p>Add more collateral and extend PDL</p>
 											</div>
 											<div class="col-lg-4 col-sm-4 col-12">
@@ -256,7 +250,7 @@
 						<div class="close-price">
 							<div class="row">
 								<div class="col-lg-8 b-right col-sm-8 col-12">
-									<label><input type="checkbox"/> Set close price at  <form><input type="text" placeholder="Enter amount"/><button type="submit">USD</button></form></label>
+									<label><input type="checkbox" name="close_price" id="backend-set-close-price" /> Set close price at  <form><input type="text" placeholder="Enter amount"/><button type="submit">USD</button></form></label>
 								</div>
 								<div class="col-lg-4 col-sm-4 col-12">
 									<div class="row">
@@ -468,7 +462,7 @@
 
 	var wallets=@json($wallets);
 
-var currencies=@json($currencies);
+var currencies=@json($currencies+$fiat_currencies);
 
 var crypto_exchange_rates={!! $crypto_rates !!};
 
@@ -476,111 +470,14 @@ var fiat_exchange_rates={!! $fiat_rates !!};
 
 var usdPrice=0;
 
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-function showCurrencyRate()
-{
-	var crypto_id=$('#coin_id').val();
-
-	var cryptoRow=currencies.find(function(currency)
-    {
-       return currency.id==crypto_id;
-    })
-
-   
-
-	var filteredCryptoExchangeRow=crypto_exchange_rates.find(function(v,i){
-
-	   return v.symbol==cryptoRow.short_name+'USDT';
-	})
-
-
-	//$('#backend-current-usd-rate').text(numberWithCommas(parseFloat(filteredCryptoExchangeRow.lastPrice.toFixed(2))));
-
-	usdPrice=filteredCryptoExchangeRow.lastPrice;
 
 
 
-	console.log(filteredCryptoExchangeRow);
-}
-
-	$(".currencyDropdown .dropdown-menu .dropdown-item").on("click", function(e) { e.preventDefault();
-
-      var currency_id=$(this).attr('data-id');
-
-   changeShowBalance(currency_id);
-
-
-    $('#coin_id').val(currency_id);
-
-    $('.currencyDropdown .dropdown-toggle').html($(this).html());
-
-  showCurrencyRate();
-
-
-   
-});
-
-	var currentCurrency=$('#coin_id').val();
-
-	changeShowBalance(currentCurrency);
-
-function changeShowBalance(coin_id)
-{
-
-    var balance='0.00000';
-
-
-    var balanceRow=wallets.filter(function(wallet){
-          return wallet.currency_id==coin_id;
-    })
-
-    balanceRow=balanceRow[0];
-
-    var currencyRow=currencies.filter(function(currency)
-    {
-       return currency.id==coin_id;
-    })
-
-    currencyRow=currencyRow[0];
-
-    balance=balance+' '+currencyRow.short_name;
-
-    if( balanceRow && typeof balanceRow.coin !='undefined')
-    {
-         balance=balanceRow.coin + ' '+currencyRow.short_name;
-    }
-
-    $('#totalBalance').text(balance);
-}
-
-$(document).on('keyup','#collateral_quantity',function()
-{
-
-    var quantity=parseFloat($(this).val());
-
-    $(this).next('.validateError').remove();
-  
-    transferSelectedCurrencyBalance=parseFloat(transferSelectedCurrencyBalance);
-
-    if(transferSelectedCurrencyBalance < quantity)
-    {
-      $(this).addClass('is-invalid');
-
-      $(this).after('<p class="text-danger text-bold validateError">{{__("Withdraw quantity should be less than available balance.")}}</p>');
-    }
-    else
-    {
-      $(this).removeClass('is-invalid');
-
-    }
-
-})
 	
 
 </script>
+
+@include('front.loan.request-script')
 
 
 @endsection
