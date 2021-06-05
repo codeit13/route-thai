@@ -224,9 +224,9 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 							</div>
 							<div class="row">
 								<div class="col-4">
-								<select name="status" class="filter-type form-control">
+								<select name="status" class="filter-type ">
 
-									<option value="">Select</option>
+									<option value="">All</option>
 
 													<option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
 													<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
@@ -383,21 +383,19 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 
 											</td>
 											<td>
-												<select name="type" class="filter-type form-control">
-													<option value="">Select</option>
+												<select name="type" class="filter-type">
+													<option value="">All</option>
 													<option value="deposit" @if($request->type=='deposit') selected @endif >{{__('Deposit')}}</option>
 
 													<option value="withdraw" @if($request->type=='withdraw') selected @endif>{{__('Withdraw')}}</option>
 
-													<option value="buy" @if($request->type=='buy') selected @endif >{{__('Buy')}}</option>
-
-													<option value="sell" @if($request->type=='sell') selected @endif >{{__('Sell')}}</option>
+											
 
 												</select>
 											</td>
 											<td>
-												<select name="status" class="filter-type form-control">
-													<option value="">Select</option>
+												<select name="status" class="filter-type ">
+													<option value="">All</option>
 													<option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
 													<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
 													<option value="rejected" @if($request->status=='rejected') selected @endif>{{__('Rejected')}}</option>
@@ -713,6 +711,12 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
   	{
   		submitform();
   	}
+  })
+
+  $('.options li').on('click',function()
+  {
+
+  	submitform();
   })
 
 	</script>

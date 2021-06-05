@@ -121,6 +121,24 @@ Route::middleware('auth')->group(function(){
 
 //end
 
+    // Loan Routes
+  Route::prefix('loan')->group(function(){
+
+    Route::get('request',[App\Http\Controllers\LoanController::class, 'create'])->name('loan.create');
+
+    Route::get('request/{id}/detail',[App\Http\Controllers\LoanController::class, 'show'])->name('loan.request.detail');
+
+    Route::get('{id}/detail',[App\Http\Controllers\LoanController::class, 'edit'])->name('loan.show.detail');
+
+    Route::get('{id}/status',[App\Http\Controllers\LoanController::class, 'status'])->name('loan.status');
+
+    Route::get('history',[App\Http\Controllers\LoanController::class, 'index'])->name('loan.history');
+
+
+  });
+
+    //end
+
 
 });
 

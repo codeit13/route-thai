@@ -1227,15 +1227,15 @@ button.btn.dropdown-toggle.btn-light {
     border-color: #707070;
 }
 .main_data_dable {
-	margin-top: 10px;
-	margin-bottom: 0px;
-	display: inline-block;
-	width: 100%;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    display: inline-block;
+    width: 100%;
     overflow-y: hidden;
 }
 
 .main_data_dable table {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
     white-space: nowrap;
     border-collapse: separate;
     border-spacing: 2px;
@@ -1244,26 +1244,26 @@ button.btn.dropdown-toggle.btn-light {
 }
 
 .main_data_dable table thead{
-	background-color: var(--new-card-bg);
-	border: none;
+    background-color: var(--new-card-bg);
+    border: none;
 }
 
 .main_data_dable table thead tr th {
-	text-transform: uppercase;
-	font-size: 12px;
-	vertical-align: middle;
-	text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
     padding: 10px 20px;
 }
 
 .main_data_dable table thead tr th:first-child {
-	text-align: left;
+    text-align: left;
 }
 
 .main_data_dable table thead tr th img {
-	width: 15px;
-	height: 15px;
-	margin-top: -3px;
+    width: 15px;
+    height: 15px;
+    margin-top: -3px;
 }
 
 .main_data_dable table tr td:first-child {
@@ -1296,8 +1296,8 @@ button.btn.dropdown-toggle.btn-light {
 }
 
 .main_data_dable table tr th.first span {
-	font-size: 10px;
-	color: var(--table-text);
+    font-size: 10px;
+    color: var(--table-text);
 }
 
 .main_data_dable table tr td {
@@ -1311,65 +1311,65 @@ button.btn.dropdown-toggle.btn-light {
 }
 
 .main_data_dable table {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .main_data_dable table .highlight {
-	background-color: var(--highlighted-cell);
-	border-left: 2px solid var(--border-color);
-	border-right: 2px solid var(--border-color);
+    background-color: var(--highlighted-cell);
+    border-left: 2px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
 }
 
 .main_data_dable table .highlight-top {
-	background-color: var(--highlighted-cell);
-	border-top: 2px solid var(--border-color);
-	border-left: 2px solid var(--border-color);
-	border-right: 2px solid var(--border-color);
+    background-color: var(--highlighted-cell);
+    border-top: 2px solid var(--border-color);
+    border-left: 2px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
 }
 
 .main_data_dable table .highlight-bottom {
-	background-color: var(--highlighted-cell);
-	border-bottom: 2px solid var(--border-color);
-	border-left: 2px solid var(--border-color);
-	border-right: 2px solid var(--border-color);
+    background-color: var(--highlighted-cell);
+    border-bottom: 2px solid var(--border-color);
+    border-left: 2px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
 }
 
 .main_data_dable table td.updated {
-	animation: highlightupdate 1s 1;
+    animation: highlightupdate 1s 1;
 }
 
 @keyframes highlightupdate {
-	from {background-color: inherit;}
-	to {background-color: var(--table-updated)}
+    from {background-color: inherit;}
+    to {background-color: var(--table-updated)}
 }
 
 /* .main_data_dable table .highlight-bottom {
-	background-color: var(--card-bg);
-	border-bottom: 2px solid var(--border-color);
-	border-left: 2px solid var(--border-color);
-	border-right: 2px solid var(--border-color);
+    background-color: var(--card-bg);
+    border-bottom: 2px solid var(--border-color);
+    border-left: 2px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
 }
 
 .main_data_dable table thead{
-	background-color: var(--new-card-bg);
-	border: none;
+    background-color: var(--new-card-bg);
+    border: none;
 }
 
 .main_data_dable table thead tr th {
-	text-transform: uppercase;
-	font-size: 12px;
-	vertical-align: middle;
-	text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .main_data_dable table thead tr th:first-child {
-	text-align: left;
+    text-align: left;
 }
 
 .main_data_dable table thead tr th img {
-	width: 15px;
-	height: 15px;
-	margin-top: -3px;
+    width: 15px;
+    height: 15px;
+    margin-top: -3px;
 }
 
 .main_data_dable table tr td:first-child {
@@ -1401,8 +1401,8 @@ button.btn.dropdown-toggle.btn-light {
 }
 
 .main_data_dable table tr th.first span {
-	font-size: 10px;
-	color: var(--table-text);
+    font-size: 10px;
+    color: var(--table-text);
 }
 
 .main_data_dable table tr td {
@@ -1555,10 +1555,10 @@ th.res_po {
 .features select {
     flex: 1;
     height: 40px;
-	border-radius: 6px;
-	border: 1px solid #707070 !important;
-	background-color: var(--card-bg);
-	color: var(--text-color);
+    border-radius: 6px;
+    border: 1px solid #707070 !important;
+    background-color: var(--card-bg);
+    color: var(--text-color);
 }
 
 .dropdown.currency_two.three_coins {
@@ -3876,10 +3876,10 @@ span.rt_span i.fa-trash-alt {
 
 .long_btn {
     background: #00c98e;
-    line-height: 45px;
+    line-height: 60px;
     width: 100%;
     text-align: center;
-    font-size: 18px;
+    font-size: 22px;
     border: 3px solid #00c98e !important;
     font-weight: 500;
     border-radius: 6px;
@@ -3899,10 +3899,10 @@ span.rt_span i.fa-trash-alt {
     background: #adadad;
     border-color: #adadad !important;
     border: 3px solid #adadad !important;
-    line-height: 45px;
+    line-height: 60px;
     width: 100%;
     text-align: center;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 500;
     border-radius: 6px;
     text-decoration: none;
@@ -4390,8 +4390,8 @@ li.footer.bg-dark.text-center {
 /** New Css Popup**/
 
 #exampleModalnew .modal-dialog {
-	background:var(--body-bg);
-	border-radius:5px;
+    background:var(--body-bg);
+    border-radius:5px;
 }
 
 #exampleModalnew .modal-header {
@@ -4402,40 +4402,40 @@ li.footer.bg-dark.text-center {
 }
 
 #exampleModalnew .modal-dialog .field {
-	float:left;
-	width:100%;
+    float:left;
+    width:100%;
 }
 
 #exampleModalnew .modal-dialog .field label {
-	font-size:14px;
-	color:#6e6e6e;
+    font-size:14px;
+    color:#6e6e6e;
 }
 
 #exampleModalnew .modal-dialog .field label span {
-	color:#000;
+    color:#000;
 }
 
 #exampleModalnew .modal-dialog .field select {
-	width:100%;
-	height:40px;
-	border-radius:5px;
-	padding-left:15px;
-	border:none;
-	color:#524e4b;
-	background:#f5f5f5;
+    width:100%;
+    height:40px;
+    border-radius:5px;
+    padding-left:15px;
+    border:none;
+    color:#524e4b;
+    background:#f5f5f5;
     padding-right: 15px;
 }
 
 #exampleModalnew .modal-body {
-	float: left;
+    float: left;
     width: 100%;
-	padding:0px;
+    padding:0px;
     background: var(--body-bg-2);
 }
 
 #exampleModalnew .modal-content {
-	border:none;
-	border-radius:5px 5px 0px 0px;
+    border:none;
+    border-radius:5px 5px 0px 0px;
 }
 
 #exampleModalnew .line {
@@ -4448,16 +4448,16 @@ li.footer.bg-dark.text-center {
 }
 
 #exampleModalnew .icon-bg {
-	background:url(../img/icon-30.png) 0% 50% no-repeat;
-	float:left;
-	padding-left:40px;
-	width:100%;
+    background:url(../img/icon-30.png) 0% 50% no-repeat;
+    float:left;
+    padding-left:40px;
+    width:100%;
 }
 
 #exampleModalnew  .line .field {
-	padding-bottom:15px;
-	float:left;
-	width:100%;
+    padding-bottom:15px;
+    float:left;
+    width:100%;
 }
 
 #exampleModalnew .line p {
@@ -4467,7 +4467,7 @@ li.footer.bg-dark.text-center {
 }
 
 #exampleModalnew  .line.b-none {
-	border-bottom:none;
+    border-bottom:none;
 }
 
 #exampleModalnew input {
@@ -4482,18 +4482,18 @@ li.footer.bg-dark.text-center {
 }
 
 #exampleModalnew input::-webkit-input-placeholder {
-	color:#00c98e !important;
-	text-align:right;
+    color:#00c98e !important;
+    text-align:right;
 }
 
 #exampleModalnew .field button {
-	background:#00c98e;
-	line-height:40px;
-	color:#fff;
-	border:none;
-	padding:0px 30px;
-	float:right;
-	border-radius:5px;
+    background:#00c98e;
+    line-height:40px;
+    color:#fff;
+    border:none;
+    padding:0px 30px;
+    float:right;
+    border-radius:5px;
     cursor: pointer;
 }
 
@@ -4639,10 +4639,2017 @@ li.footer.bg-dark.text-center {
     color: var(--white-black-text);
 }
 
-/********** arbitrage css ******************/
+/******** New Style **********/
+#wallet-content .white-box.np {
+    padding: 0px 0px;
+    margin: 0px 0px;
+}
+
+.notification_page {
+    border-bottom: 1px solid rgba(234,236,239,.4);
+    padding: 20px 20px;
+}
+
+.notification_page h2 {
+    font-size: 16px !important;
+    color: var(--white-black-text);
+    font-weight: 500 !important;
+    margin: 0px 0px !important;
+    margin-bottom: 6px !important;
+}
+
+.notification_page p {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--gray);
+    margin: 0px 0px !important;
+}
+
+.notification_page span {
+    float: left;
+    height: 100%;
+    padding-right: 10px;
+}
+
+.notification_page span i.fa {
+    color: #7a80816b;
+}
+
+.notification_page h6 {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #00c98e;
+    margin: 0px 0px !important;
+    height: 100%;
+    padding: 2px 0px;
+}
+
+
+a.btn-notifi {
+    background: #00c98e;
+    line-height: 35px;
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #ffffff;
+    padding: 0px 26px;
+    text-align: center;
+}
+
+a.btn-notifi:hover {
+    color: #fff;
+    background-color: #000;
+}
+
+span.not_active {
+    display: inline-block;
+    margin-right: 18px;
+    margin-top: 3px;
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+    vertical-align: middle;
+    background: rgb(216, 216, 216);
+}
+
+span.active {
+    display: inline-block;
+    margin-right: 18px;
+    margin-top: 3px;
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+    vertical-align: middle;
+    background: rgb(0 201 142);
+}
+
+#banner_search.loans-deshboard {
+    background:#393838;
+    padding-top:30px;
+    padding-bottom:40px;
+}
+
+#banner_search.loans-deshboard h2 {
+    margin-top:25px;
+}
+
+#banner_search.loans-deshboard  p {
+    font-size:14px;
+    color:#adadad;
+}
+
+/*#loans-deshboard-new {
+    background:#fafafa;
+}*/
+
+#loans-deshboard-new .tb-l img {
+    margin-left:5px;
+}
+
+#loans-deshboard-new .tb-l {
+    margin-bottom:15px;
+}
+
+#loans-deshboard-new label.main {
+    font-size:16px;
+    color:var(--white-black-text);
+}
+
+#loans-deshboard-new .btc p {
+    font-size:14px;
+    color:#7a7a7a;
+}
+
+#loans-deshboard-new .btc p img {
+    position:relative;
+    top:-2px;
+}
+
+#loans-deshboard-new .btc p a {
+    color:#00c98e;
+    font-size:12px;
+}
+
+#loans-deshboard-new .white-box {
+    float:left;
+    width:100%;
+    background:var(--new-card-bg);
+    border-radius:7px;
+    margin-bottom:60px;
+    box-shadow: 0px 2px 12px rgb(0 0 0 / 16%);
+}
+
+#loans-deshboard-new .white-box label {
+    color:var(--white-black-text);
+    font-size:16px;
+}
+
+#loans-deshboard-new .white-box label.sm-size {
+    font-size:14px;
+    color:rgba(0,0,0,0.3);
+}
+
+#loans-deshboard-new .white-box label.sm-size b {
+    color:var(--white-black-text);
+}
+
+#loans-deshboard-new .space-normal {
+    float:left;
+    width:100%;
+    padding:15px;
+}
+
+#loans-deshboard-new .space-normal button {
+    width:100%;
+    border:none;
+    background:#f6f6f6;
+    outline:0;
+    font-size:16px;
+    padding:10px 15px;
+    line-height:32px;
+    border-radius:5px;
+}
+
+#loans-deshboard-new .space-normal button b {
+    font-size:22px;
+}
+
+#loans-deshboard-new .space-normal button img {
+    float:left;
+    margin-top:4px;
+    margin-right:5px;
+}
+
+#loans-deshboard-new .space-normal button span {
+    color:rgba(51,51,51,0.65);
+}
+
+#loans-deshboard-new .days {
+    float: left;
+    width: 100%;
+    padding: 4px 3px;
+    background: var(--acordian) !important;
+}
+
+#loans-deshboard-new .days a {
+    font-size:12px;
+    color:#acacac;
+    display:inline-block;
+    width:100%;
+    text-decoration:none;
+    text-align:center;
+}
+
+#loans-deshboard-new .days a:hover,#loans-deshboard-new .days a.active {
+    background:#00c98e;
+    border-radius:5px;
+    color:#fff;
+}
+
+#loans-deshboard-new .days a:hover b,#loans-deshboard-new .days a.active b {
+    color:#fff !important;
+}
+
+#loans-deshboard-new .days a b {
+    color:#acacac;
+    font-size:18px;
+}
+
+#loans-deshboard-new .check {
+    padding-top:15px;
+}
+
+#loans-deshboard-new .check input[type="checkbox"] {
+    margin-left:5px;
+}
+
+#loans-deshboard-new .loan-duration {
+    float:left;
+    width:100%;
+    border:1px solid #e6e6e6;
+    border-radius:5px;
+    padding:10px;
+}
+
+#loans-deshboard-new .loan-duration h5 {
+    color:var(--white-black-text);
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+#loans-deshboard-new .loan-duration h4 {
+    color:var(--white-black-text);
+    font-size:16px;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+#loans-deshboard-new .loan-duration .b-right {
+    border-right:1px solid #e6e6e6;
+}
+
+#loans-deshboard-new .loan-duration p {
+    color:var(--white-black-text);
+    font-size:14px;
+}
+
+#loans-deshboard-new .close-price {
+    float: left;
+    width: 100%;
+    padding: 10px 15px;
+    background: var(--acordian);
+}
+
+#loans-deshboard-new .close-price label {
+    width:100%;
+    color: var(--white-black-text);
+}
+
+#loans-deshboard-new .close-price .b-right {
+    border-right:1px solid #e6e6e6;
+}
+
+#loans-deshboard-new .close-price label form {
+    display: inline-block;
+    margin-left: 15px;
+    background: var(--acordian);
+    border-radius: 5px;
+    padding: 2px 5px;
+    box-shadow: 0px 0px 0px 1px #ccc;
+}
+
+#loans-deshboard-new .close-price p a {
+    float:right;
+}
+
+#loans-deshboard-new .close-price p mark {
+    background: none;
+    float: right;
+    margin-top: -5px;
+    color: var(--white-black-text);
+}
+
+#loans-deshboard-new .close-price p.pull-right {
+    float:right !important;
+}
+
+#loans-deshboard-new .close-price label form input::-webkit-input-placeholder {
+    text-transform:uppercase;
+    background-color: var(--acordian);
+}
+
+#loans-deshboard-new .close-price label form input {
+    border:none;
+    height:36px;
+    background-color: var(--acordian);
+    color: var(--white-black-text);
+}
+
+#loans-deshboard-new .close-price label form button {
+    background:none;
+    border:none;
+    line-height:36px;
+    padding:0px 15px;
+    color: var(--white-black-text);
+    border-left:1px solid #e6e6e6;
+}
+
+#loans-deshboard-new .close-price p {
+    font-size:14px;
+    color:#7a7a7a;
+}
+
+#loans-deshboard-new .close-price p span {
+    font-size:14px;
+    color:var(--white-black-text);
+}
+
+#loans-deshboard-new .close-price p a {
+    font-size:12px;
+    color:#00c98e;
+}
+
+#loans-deshboard-new .final-loan {
+    background:var(--light_green);
+    float:left;
+    width:100%;
+    margin-top:30px;
+    padding:15px 15px;
+}
+
+#loans-deshboard-new .final-loan label {
+    color:var(--white-black-text);
+    font-size:14px;
+}
+
+#loans-deshboard-new .final-loan h3  {
+    color:var(--white-black-text);
+    font-size:30px;
+    font-weight:bold;
+}
+
+#loans-deshboard-new .final-loan h3 span {
+    color:var(--white-black-text);
+    font-weight:normal;
+    font-size:16px;
+}
+
+#loans-deshboard-new .final-loan .btn-info {
+    margin-top:0px;
+}
+
+#loans-deshboard-new .final-loan .read  label {
+    font-size:14px;
+    color:var(--white-black-text);
+    margin-top:13px;
+}
+
+#loans-deshboard-new .final-loan .read  label a {
+    color:#00c98e;
+    text-decoration:underline;
+}
+
+#loans-deshboard-new .final-loan .read  label input[type="checkbox"] {
+    float:left;
+}
+
+#loans-deshboard-new .final-loan .read  label input[type="checkbox"] {
+    border: none;
+    width: auto;
+    color: #00c98e;
+    text-decoration: underline;
+    -webkit-appearance:none;
+    position:relative;
+    height:16px;
+    width:16px;
+    border-radius:3px;
+    border:1px solid var(--white-black-text);
+    line-height: 24px !important;
+    margin: 0px;
+    margin-bottom:20px;
+    margin-right:5px;
+    margin-top:2px;
+}
+#loans-deshboard-new .final-loan .read  label input[type="checkbox"]:checked:before {
+    content: '\✓';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 15px;
+    width: 100%;
+    height: 100%
+}
+
+#loans-deshboard-new .my-loan-history {
+    float:left;
+    width:100%;
+}
+
+#loans-deshboard-new .my-loan-history h4 {
+    font-size:16px;
+    color: var(--white-black-text);
+    font-weight:600;
+    margin-top:10px;
+}
+
+#loans-deshboard-new a.btn-success {
+    font-size:12px;
+    color:#00c98e;
+    line-height:30px;
+    padding:0px 15px;
+    border:1px solid #00c98e;
+    border-radius:5px;
+    background:none;
+    text-decoration: none;
+}
+
+#loans-deshboard-new a.btn-success:hover {
+    background-color: #00c98e;
+    color: #fff;
+}
+
+#loans-deshboard-new .my-loan-history table th {
+    color:#9b9b9b;
+    font-size:12px;
+    font-weight:normal;
+    border-bottom:1px solid #dbe5ed;
+}
+
+#loans-deshboard-new .my-loan-history .table {
+    background:var(--new-card-bg);
+    border-radius:5px;
+    box-shadow:0px 2px 12px rgb(0 0 0 / 16%);
+    margin-top:20px;
+    box-shadow: 0px 2px 12px rgb(0 0 0 / 16%);
+}
+
+#loans-deshboard-new .my-loan-history .table-responsive {
+    padding:2px;
+}
+
+#loans-deshboard-new .my-loan-history tbody td {
+    color:var(--white-black-text);
+    font-size:12px;
+    vertical-align: middle;
+}
+
+#loans-deshboard-new .my-loan-history tbody td:first-child {
+    font-size:16px;
+    font-weight:600;
+}
+
+#loans-deshboard-new .my-loan-history tbody td:first-child span {
+    color:#797979;
+    font-size:12px;
+}
+
+#loans-deshboard-new .my-loan-history tbody td a {
+    color:#00c98e;
+    text-decoration:underline;
+}
+
+#loans-deshboard-new .my-loan-history tbody td.red-c {
+    color:#f57070!important;
+    font-size:12px !important;
+}
+
+#loans-deshboard-new h3.loan-d {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+#loans-deshboard-new .final-loan.collateral {
+    margin-top:0px;
+}
+
+#loans-deshboard-new .final-loan.collateral h4 {
+    font-size:18px !important;
+}
+
+#loans-deshboard-new .final-loan.collateral h4 span {
+    color:#797979!important;
+    font-size:16px!important;
+    font-weight:normal!important;
+}
+
+.collateral-deposit-details {
+    float:left;
+    width:100%;
+    border:1px solid #00c98e;
+    border-radius:5px;
+    padding:15px;
+}
+
+.collateral-deposit-details label {
+    color:rgba(51,51,51,0.65);
+    font-size:16px;
+    margin-bottom:0px;
+}
+
+.collateral-deposit-details p {
+    font-size:12px;
+    color:var(--white-black-text);
+    margin-bottom:15px;
+}
+
+.collateral-deposit-details p b {
+ color: var(--white-black-text);   
+}
+
+.collateral-deposit-details img.top-min {
+    margin-top:-25px;
+}
+
+#wallet-content.my-loan .white-box {
+    margin-bottom:0px!important;
+    padding:0px !important;
+}
+
+#wallet-content.my-loan .white-box a.green-c {
+    color:#05ca90;
+    font-weight:600;
+    font-size:14px;
+    display:inline-block;
+    margin-top:5px;
+    border:2px dashed #05ca90;
+    padding:5px 9px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+#wallet-content.my-loan .white-box a.green-c:hover {
+    background-color: #05ca90;
+    color: #fff;
+}
+
+#exampleModalloan .modal-content {
+    background:#fff !important;
+    border:none;
+    padding:10px 20px;
+}
+
+
+#exampleModalloan .modal-content p {
+    font-size:16px;
+    color:#333333;
+    line-height:22px;
+    margin:15px 0px;
+}
+
+#exampleModalloan .modal-header .close {
+    opacity:1;
+    font-weight:normal;
+    font-size:38px;
+    color:#a8a8a8;
+}
+
+#exampleModalloan .modal-content a.btn-primary {
+    background:#00c98e;
+    line-height:50px;
+    width:100%;
+    border-radius:5px;
+    font-size:16px;
+    color:#ffffff;
+    text-decoration:none;
+    text-transform:uppercase;
+}
+
+#loans-deshboard-new .space-normal .dropdown.currency_two.three_coins button#dropdownMenuButton {
+    border: none !important;
+    background: var(--acordian) !important;
+    padding: 10px 15px;
+    line-height: 32px;
+    display: inline-block;
+    width: auto;
+    border-radius: 0px;
+}
+
+#loans-deshboard-new .space-normal .dropdown.currency_two.three_coins.crypto button#dropdownMenuButton img {
+    margin-top: 4px;
+    width:25px;
+}
+
+.multi_form {
+    border: none !important;
+    background: var(--acordian) !important;
+    padding: 0px 0px;
+    line-height: 50px;
+}
+
+.multi_form .dropdown.currency_two.three_coins.crypto {
+    width: auto !important;
+    background-color: var(--card-bg);
+    display: inline-block;
+}
+
+.multi_form input[type="text"] {
+    float: right;
+    margin: 0px 0px !important;
+    border: none;
+    background: transparent;
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    padding-right: 15px;
+    width: 250px;
+    color: var(--text-color);
+}
+
+.multi_form .dropdown.currency_two.three_coins .dropdown-menu.show a {
+    padding: 0px 15px;
+    color: var(--text-color);
+}
+
+.multi_form .dropdown.currency_two .dropdown-menu.show a {
+    padding-right: 0px !important;
+}
+
+#loans-deshboard-new .dropdown.currency_two.three_coins .dropdown-toggle::after {
+    float:left;
+    position: relative;
+    left: 50px;
+    top: 2px;
+    color:#acacac;
+}
+
+/*#loans-deshboard-new .dropdown.currency_two.three_coins .dropdown-toggle:before {
+    content:'2';
+    position:absolute;
+    top:10px;
+    font-size:20px;
+    font-weight:bold;
+    right:20px;
+}*/
+
+/*#loans-deshboard-new .dropdown.currency_two.three_coins.usd .dropdown-toggle:before {
+    content:'33899.8';
+    position:absolute;
+    top:10px;
+    font-size:20px;
+    font-weight:bold;
+    right:20px;
+}*/
+
+#loans-deshboard-new.desh-2 {
+    padding-top:40px;
+}
+
+ul.loan_code {
+    padding-right: 15px;
+}
+
+ul.loan_code li {
+    display: inline-block;
+    padding-left: 15px;
+}
+
+ul.loan_code li i.fa {
+    font-size: 35px;
+    color: var(--white-black-text)
+}
+
+#your-application {
+    background:var(--wallet_bg_color) !important;
+    padding-top:40px;
+    padding-bottom:190px;
+}
+
+#your-application label {
+    color:var(--white-black-text);
+    font-size:14px;
+}
+
+#your-application .white-box {
+    float: left;
+    width: 100%;
+    background: var(--new-card-bg);
+    padding:15px 15px;
+    border-radius: 7px;
+    box-shadow: 0px 2px 12px rgb(0 0 0 / 3%);
+}
+
+#your-application .white-box h6 {
+    color:#858585;
+    font-size:14px;
+    font-weight:normal;
+    margin-bottom:15px;
+}
+
+#your-application .white-box h5 {
+    color:#858585;
+    font-size:14px;
+    font-weight:normal;
+}
+
+#your-application .white-box h5 b {
+    color:var(--white-black-text);
+    font-size:18px;
+}
+
+#your-application .white-box h5 b.green {
+    color:#00cb8b;
+    font-weight:900;
+}
+
+#your-application .white-box h5 img {
+    position:relative;
+    top:-4px;
+}
+
+#your-application .white-box p img {
+    float:left;
+    margin-top:3px;
+    margin-bottom:15px;
+    margin-right:3px;
+}
+
+#your-application .white-box p a {
+    color:#00cb8b;
+}
+
+#your-application .white-box .m-bottom {
+    margin-bottom:40px;
+}
+
+#your-application .white-box p b {
+    color:var(--white-black-text);
+    font-weight:normal;
+}
+
+#your-application .white-box a.btn-info {
+    color:#00cb8b;
+    line-height:38px;
+    border-radius:5px;
+    font-size:14px;
+    text-transform:uppercase;
+    border-radius:5px;
+    background:none;
+    padding:0px 30px;
+    border:1px solid #00cb8b;
+    margin:0px;
+    margin-top:10px;
+}
+
+#your-application .white-box a.btn-info:hover, #your-application a.btn-info.go-back:hover {
+    background: #00cb8b;
+    color: #fff;
+}
+
+#your-application h3 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    font-weight: 600;
+    line-height: 35px;
+}
+
+#your-application p.successfully {
+    font-size:18px;
+    color:#00c98e;
+    margin-top:25px;
+}
+
+#your-application a.btn-info.go-back {
+    color:#00cb8b;
+    line-height:38px;
+    border-radius:5px;
+    font-size:14px;
+    text-transform:uppercase;
+    border-radius:5px;
+    background:none;
+    padding:0px 30px;
+    border:1px solid #00cb8b;
+    margin:0px;
+    margin-top:30px;
+}
+
+#your-application span.repaid {
+    background:#c8f0e4;
+    line-height:30px;
+    color:#00c98e;
+    font-size:16px;
+    font-weight:bold;
+    display:inline-block;
+    margin-top:5px;
+    padding:0px 15px;
+    border-radius:18px;
+}
+
+#your-application .white-box h5 a {
+    color: #00cb8b;
+    font-size:18px;
+    text-decoration:none;
+}
+
+#your-application span.in-progress {
+    background:#dff0dd;
+    line-height:30px;
+    color:#72c66a;
+    font-size:16px;
+    font-weight:bold;
+    display:inline-block;
+    margin-top:5px;
+    padding:0px 15px;
+    border-radius:18px;
+}
+
+#your-application span.repaid img {
+    float:left;
+    margin-top:10px;
+    margin-right:10px;
+}
+
+#your-application a.btn-info.close-now {
+    color:#b4b4b4;
+    line-height:38px;
+    border-radius:5px;
+    font-size:14px;
+    text-transform:uppercase;
+    border-radius:5px;
+    background:none;
+    padding:0px 30px;
+    border:1px solid #b4b4b4;
+    margin:0px;
+    margin-top:30px;
+}
+
+/*#your-application  h3 {
+    font-weight:normal;
+}*/
+
+#your-application .repay {
+    background:var(--wallet_bg_color);
+}
+
+#your-application .repay h3 a {
+    float:right;
+    margin-top:7px;
+}
+
+#your-application.repay-details {
+    background-image: linear-gradient(to left, #fff, #fff 35%, #fafafa 65%);
+    padding: 0px;
+}
+
+#your-application.repay-details h3 {
+    margin-top: 40px;
+}
+
+#your-application.repay-details span.in-progress {
+    margin-top: 43px;
+}
+
+#your-application.repay-details .use-wallet {
+    float:left;
+    width:100%;
+    border:1px solid #edeaea;
+    border-radius:5px;
+    margin-bottom: 30px;
+}
+
+#your-application.repay-details .crypto-b {
+    float:left;
+    width:100%;
+    border-bottom:1px solid #edeaea;
+    padding:10px 15px;
+}
+
+#your-application.repay-details .crypto-b button {
+    background:#f6f6f6;
+    border:none;
+    border-radius:15px;
+    outline:0;
+    line-height:30px;
+    font-size:14px;
+    padding-right:10px;
+}
+
+#your-application.repay-details .crypto-b button span {
+    background:#00c98e;
+    color:#fff;
+    line-height:30px;
+    display:inline-block;
+    padding:0px 15px;
+    border-radius:15px;
+    margin-right:5px;
+}
+
+
+#your-application.repay-details .nav-tabs {
+    background: var(--card-heder);
+    border:none !important;
+    border-radius:15px;
+    outline:0;
+    line-height:30px !important;
+    font-size:14px;
+    display:inline-flex;
+}
+
+#your-application.repay-details .nav-tabs .nav-link {
+    line-height:30px;
+    display:inline-block;
+    padding:0px 15px;
+    border:none !important;
+    font-weight:normal;
+    border-radius:15px;
+    background: var(--card-heder);
+}
+
+#your-application.repay-details .nav-item.show .nav-link,#your-application.repay-details .nav-tabs .nav-link.active {
+    border:none !important;
+    line-height:30px !important;
+    background:#00c98e;
+    color:#fff !important;
+}
+
+#your-application.repay-details .usd-amound button img.bit {
+    float:left;
+    margin:0px;
+    margin-top:2px;
+    margin-right:10px;
+}
+
+#your-application.repay-details  .network-w {
+    border:1px solid #00c98e;
+    border-radius:5px;
+    width:100%;
+    float:left;
+    margin-bottom:20px;
+    padding:10px;
+}
+
+#your-application.repay-details  .network-w label {
+    font-size:11px;
+}
+
+#your-application.repay-details  .network-w .top-n {
+    margin-top:10px;
+}
+
+#your-application.repay-details .b-right {
+    border-right:2px solid #80e4c7;
+}
+
+#your-application.repay-details  .network-w p {
+    color:#000;
+    font-size:11px;
+}
+
+#your-application.repay-details .amount {
+    float:left;
+    width:100%;
+    padding:10px 15px
+}
+
+#your-application.repay-details .usd-amound {
+    float:left;
+    background:#f6f6f6;
+    color:#00c98e;
+    font-size:18px;
+    font-weight:bold;
+    border-radius:5px;
+    padding:5px 10px;
+    width:100%;
+}
+
+#your-application.repay-details .usd-amound button {
+    border:none;
+    background:none;
+}
+
+#your-application.repay-details .usd-amound button img {
+    float:right;
+    margin-top:10px;
+    margin-left:5px;
+}
+
+#your-application.repay-details .amount h5 {
+    font-size:18px;
+    color:#9c9c9c;
+    margin-bottom:15px;
+    font-weight:normal;
+}
+
+#your-application.repay-details .wallet-b {
+    float:left;
+    padding:5px 15px;
+    width:100%;
+}
+
+#your-application.repay-details .wallet-b p {
+    color: #9c9c9c;
+    font-size:14px;
+    border-bottom: 1px solid #edeaea;
+    padding-bottom:7px;
+    margin-bottom:10px;
+}
+
+#your-application.repay-details .wallet-b p b {
+    color:#000;
+    font-weight:normal;
+}
+
+#your-application.repay-details .black-c {
+    color:#000 !important;
+}
+
+#your-application.repay-details .wallet-b .tb-w {
+    padding-bottom:3px;
+    padding-top:3px;
+}
+
+#your-application.repay-details .collateral-w {
+    float:left;
+    padding:15px 15px;
+    width:100%;
+    background:#eafff9;
+    margin-top: 125px;
+}
+
+#your-application.repay-details .collateral-w h5 {
+    font-size:14px;
+    font-weight:600;
+}
+
+#your-application.repay-details .collateral-w input {
+    width:100%;
+    background:#fff;
+    height:50px;
+    padding-left:15px;
+    border:none;
+    margin:15px 0px;
+    border-radius:5px;
+}
+
+#your-application.repay-details .collateral-w a.btn-info {
+    padding:0px 10px;
+    line-height:38px;
+    margin:0px;
+}
+
+#your-application .white-box .m-l {
+    margin-left:-80px;
+    margin-right:80px;
+}
+
+#your-application .pdl-2 label {
+    font-size:14px;
+}
+
+#your-application .pdl-2 label span {
+     color: #00cb8b;
+}
+
+#your-application .pdl-2 label a.btn-info {
+    text-transform:uppercase;
+    font-size:20px;
+    margin-top:30px;
+    padding:0px 60px;
+    line-height:40px;
+}
+
+#your-application .pdl-2 p {
+    font-size:12px;
+    color:red;
+}
+
+#your-application.repay-details.bottom-0 {
+    padding-bottom:100px;
+}
+
+#loans-deshboard-new.repay {
+    padding-bottom:60px;
+    background: var(--wallet_bg_color) !important;
+}
+
+#loans-deshboard-new.repay .apply-new-loan {
+    float:left;
+    width:100%;
+    border-radius:5px;
+    background:var(--new-card-bg);
+    padding:15px;
+}
+
+#loans-deshboard-new.repay .apply-new-loan p {
+    font-size:12px;
+    color:var(--white-black-text);
+    font-weight:normal;
+    padding-left:25px;
+    margin-left:15px;
+    background:url(../img/tick.png) 0px 3px no-repeat;
+}
+
+#loans-deshboard-new.repay .apply-new-loan a.btn-info {
+    font-size:18px;
+    text-transform:uppercase;
+    background:none;
+    color:#00c98e;
+    margin-top:0px;
+    width:100%;
+    padding:0px;
+    text-align:center;
+    line-height:50px;
+    border:1px solid #00c98e;
+}
+
+#loans-deshboard-new .how-to-start {
+    float:left;
+    width:100%;
+    padding:50px 0px;
+}
+
+#loans-deshboard-new .how-to-start h2 {
+    margin-bottom:50px;
+}
+
+#loans-deshboard-new .how-to-start ul {
+    margin-top: 15px;
+}
+
+#loans-deshboard-new .how-to-start ul li {
+    list-style:none;
+    width:100%;
+    font-size:14px;
+    padding-left:35px;
+    padding-bottom:40px;
+    background:url(../img/tick-1.png) 0px 0px no-repeat;
+    background-size: 23px auto;
+    position:relative;
+}
+
+#loans-deshboard-new .how-to-start ul li:before {
+    content: '';
+    position: absolute;
+    top: 18px;
+    background: #00c98e;
+    width: 2px;
+    height: 44px;
+    left: 11px;
+}
+
+#loans-deshboard-new .how-to-start ul li:last-child:before, #loans-deshboard-new .how-to-start img.show_white, body.dark-mode #loans-deshboard-new .how-to-start img.hide_dark {
+    display:none;
+}
+
+body.dark-mode #loans-deshboard-new .how-to-start img.show_white {
+    display: inline-block;
+}
+
+section#loans-deshboard-new {
+    background-color: var(--wallet_bg_color) !important;
+}
+
+.security {
+    float:left;
+    width:100%;
+    padding:34px;
+    padding-bottom:100px;
+}
+
+.security p {
+    color:#333333;
+    font-size:14px;
+}
+
+.security p img {
+    position:relative;
+    top:-2px;
+    margin:0px 5px;
+}
+
+.security h3 {
+    color:#333333;
+    margin-top:20px;
+}
+
+.security p.gray {
+    color:#9b9b9b;
+}
+
+.security .table-responsive {
+    margin-top:30px;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0px 0px 5px 2px #ebebeb;
+}
+
+.security .table-responsive th {
+    color:#b3b3b3;
+    font-size:14px;
+    font-weight:600;
+    background:#fbfbfb;
+}
+
+.security .table-responsive table {
+    margin-bottom:0px;
+}
+
+.security .table-responsive td a {
+    color:#ce3030;
+}
+
+.security .table-responsive td {
+    border-bottom:1px solid #ebebeb;
+    font-size:14px;
+}
+
+.security .white-email {
+    float:left;
+    width:100%;
+    background:#fff;
+    border-radius:8px;
+        box-shadow: 0px 1px 6px 1px #dadada;
+    margin-top:40px;
+    z-index: 9999;
+    position: relative;
+}
+
+.security .white-email .field {
+    float:left;
+    width:100%;
+    padding:25px 0px;
+}
+
+
+.security .white-email h5 {
+    font-weight:normal;
+    margin-bottom:5px;
+}
+
+.security .white-email p {
+    color:#9b9b9b;
+    font-size:14px;
+    margin-bottom:15px;
+}
+
+.security .white-email label {
+    color:#9b9b9b;
+    font-size:14px;
+}
+
+.security .white-email input {
+    width:100%;
+    border:1px solid #b7b7b7;
+    border-radius:5px;
+}
+
+.security .white-email span {
+    color:#9b9b9b;
+    /*font-size:12px;*/
+    position: relative;
+}
+
+.security .white-email a {
+    border:1px solid #00c98e;
+    display:inline-block;
+    line-height:40px;
+    color:#00c98e;
+    border-radius:5px;
+    padding:0px 20px;
+    margin-top:15px;
+    font-size:14px;
+}
+
+.security .white-email.change {
+    padding:25px 0px;
+}
+
+.security .white-email.change .field {
+    padding:12px 25px;
+}
+
+.security .white-email.change input {
+    height:36px;
+    color:#000;
+    border-radius:5px;
+    padding-left:10px;
+    position: relative;
+}
+
+.security .white-email input.password{
+    background:url(../img/password.png) 98% 50% no-repeat !important;
+}
+
+.security  button {
+    background:#00c98e;
+    color:#fff;
+    line-height:40px;
+    border:none;
+    font-size:18px;
+    margin-top:30px;
+    outline:0;
+    border-radius:5px;
+    width:100%;
+}
+
+.security a.send-code {
+    padding:0px;
+    width:100%;
+    border:none;
+    text-align:center;
+    margin-top:25px;
+}
+
+.account-security {
+    padding:30px 20px;
+}
+
+.account-security h3 {
+    font-weight:normal;
+}
+
+.account-security h3 span {
+        color: #00c98e;
+}
+
+.account-security .account-s ul {
+    margin-top:12px;
+    margin-bottom:30px;
+}
+
+.account-security .account-s ul li {
+    list-style:none;
+    display:inline-block;
+    color:#333333;
+    font-size:14px;
+    background:url(../img/tick-2.png) 0px 6px no-repeat;
+    padding:0px 18px;
+}
+
+.account-security .account-s ul li:last-child {
+    background:url(../img/close-1.png) 0px 6px no-repeat;
+}
+
+.account-security .fa-box-white {
+    float:left;
+    width:100%;
+    background:#fff;
+    border-radius:5px;
+    box-shadow:0px 1px 2px 1px #ebebeb;
+    margin-bottom:25px;
+}
+
+.account-security .fa-box-white h5 {
+    font-weight:600;
+    font-size:18px;
+    line-height:40px;
+    border:1px solid #dbe5ed;
+    padding:0px 15px;
+    border-radius:5px 5px 0px 0px;
+}
+
+.account-security .fa-box-white h4 {
+    font-weight:600;
+    font-size:18px;
+    line-height:40px;
+}
+
+.account-security .fa-box-white h4 span {
+    color:#adadad;
+    font-weight:normal;
+    font-size:12px;
+    float:right;
+    margin-top:2px;
+}
+
+.account-security .fa-box-white p {
+    color: #adadad;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.account-security .fa-box-white p b {
+    color:#000;
+}
+
+.account-security .fa-box-white .field {
+    float:left;
+    padding:15px 15px;
+    width:100%;
+    border-bottom:1px solid #ebebeb;
+}
+.account-security .fa-box-white .field label.text {
+    color:#333333;
+    font-size:14px;
+    font-weight:600;
+    width:100%;
+}
+
+.account-security .fa-box-white .field label span {
+    color:#adadad;
+    font-weight:normal;
+    font-size:12px;
+}
+
+.account-security .fa-box-white .field label a {
+    color:#adadad;
+    font-size:12px;
+    text-decoration:underline;
+    font-style:italic;
+}
+
+.account-security .fa-box-white .field a.btn-info {
+    padding:0px 20px;
+    line-height:30px;
+    border:1px solid #00c98e;
+    border-radius:5px;
+    color:#00c98e;
+    background:none;
+    text-align:center;
+    font-weight:normal;
+    margin-top:7px;
+}
+
+.account-security .fa-box-white .field p {
+    margin-bottom:35px;
+}
+
+.account-security .fa-box-white .field a.btn-info.change {
+    color:#adadad;
+    border-color:#adadad;
+}
+
+.account-security .fa-box-white .field label img {
+    float:left;
+    margin-right:10px;
+}
+
+.account-security .fa-box-white.device label {
+    font-size:18px;
+    margin-top:10px;
+    font-weight:600;
+}
+
+.account-security .toggle.ios,.account-security .toggle-on.ios,.account-security .toggle-off.ios { border-radius: 50px !important; height: 30px !important; }
+.account-security .toggle.ios .toggle-handle { border-radius:  50px !important; height: 30px !important;  }
+
+.account-security .toggle.btn {
+    min-height: 1.15rem;
+}
+
+.account-security .toggle-on.btn {
+    line-height: 17px;
+    font-size: 12px;
+}
+
+.account-security .btn-light {
+    background:#9b9b9b;
+}
+
+.account-security .btn-toggle.btn-sm {
+    margin-top:10px;
+}
 
 /* Landscape phones and portrait tablets */
 @media (max-width: 767px) {
+.multi_form .dropdown.currency_two.three_coins .dropdown-menu.show a {
+    padding: 0px 15px !important;
+    color: var(--text-color);
+}
+.notification_page span {
+    float: left;
+    height: auto;
+    padding-right: 10px;
+}
+.notification_page h2 {
+    font-size: 14px !important;
+}
+.notification_page p {
+    font-size: 12px;
+}
+.notification_page h6 {
+    font-size: 12px !important;
+    margin-top: 10px !important;
+} 
+.multi_form input[type="text"] {
+    width: 58%;
+}
+h3.sm_center {
+    text-align: center;
+}
+a.btn-notifi {
+    background: #00c98e;
+    line-height: 35px;
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #ffffff;
+    padding: 0px 26px;
+    width: 100%;
+    margin-top: 15px;
+    text-align: center;
+}
+#wallet-content.my-loan {
+    padding-top:15px !important;
+}
+.head-xs  {
+    padding-top:15px !important;
+}
+ul.loan_code li i.fa {
+    font-size: 24px;
+    color: var(--white-black-text);
+}
+#loans-deshboard-new .space-normal .xs-v label {
+    line-height:22px;
+}
+
+#loans-deshboard-new .space-normal .xs-v input {
+    margin-top:5px;
+    float:left;
+    margin-right:5px;
+}
+
+#wallet-content.request .field .dropdown-menu.show {
+    top: 85% !important;
+    left: 0 !important;
+}
+
+.account-security .fa-box-white .field label img {
+    margin-bottom: 2px;
+}
+
+
+.account-security .fa-box-white .field a.btn-info {
+    font-size:12px;
+}
+
+
+.account-security .xs-btn .fa-box-white .field a.btn-info {
+    width:auto;
+    padding:0px 15px;
+}
+
+.account-security h3 {
+    font-size:22px;
+    padding:0px 15px;
+}
+
+.account-security .fa-box-white .field label span {
+    font-size:10px;
+}
+
+.account-security .fa-box-white .field label.text {
+    font-size:12px;
+}
+
+.account-security .fa-box-white.device label {
+    font-size: 15px;
+}
+
+.account-security .fa-box-white .field a.btn-info {
+    padding:0px;
+    width:100%;
+}
+
+.account-s  {
+    padding:0px 30px;
+}
+
+.account-security {
+    padding: 30px 0px;
+}
+
+.account-security .account-s ul li {
+    width:100%;
+    background-position:0px 12px !important;
+    padding:5px 15px;
+}
+
+.security  button {
+    margin-bottom:25px;
+}
+
+.security .white-email.change label {
+    text-align:left !important;
+    width:100%;
+}
+
+.security h3 {
+    font-size:24px;
+    margin-bottom:5px;
+}
+
+.security th {
+    font-size: 15px;
+    font-weight:normal;
+    border-top:1px solid #dee2e6;
+    border-bottom:1px solid #dee2e6;
+}
+
+.security {
+    padding:0px;
+}
+
+.head-table {
+    float:left;
+    width:100%;
+}
+
+.head-table p {
+    border-top:1px solid #dbe5ed;
+    border-bottom:1px solid #dbe5ed;
+    text-align:left;
+    line-height:30px;
+    padding:0px 10px;
+}
+
+.head-table label {
+    width: 100%;
+    padding:0px 5px;
+    font-size: 14px;
+}
+
+.head-table .gray-c label {
+    color:#adadad;
+    text-align: left;
+}
+
+.head-table label a {
+    background:none;
+    border:none;
+    padding:0px;
+    color:#d13d3d;
+    line-height:20px;
+    font-size:14px;
+}
+
+.head-table .bg-white-box {
+    background:#fff;
+    float:left;
+    width:100%;
+    padding:10px 10px;
+}
+
+.xs-space {
+    padding:10px 25px !important;
+}
+
+#loans-deshboard-new .how-to-start ul li {
+    height:40px;
+    font-size:12px;
+    padding-bottom: 18px;
+}
+
+#your-application .white-box .m-l {
+    margin:0px;
+}
+
+#your-application .pdl-2 label a.btn-info {
+    width:100%;
+    padding:0px;
+        font-size: 14px;
+    text-align:center;
+}
+
+#your-application.repay-details.bottom-0 {
+    padding-bottom: 30px;
+}
+
+#loans-deshboard-new.repay .apply-new-loan p {
+    margin-left:0px;
+    margin-bottom:10px;
+}
+
+#your-application .pdl-2 label {
+    width:100%;
+}
+
+#loans-deshboard-new.repay .apply-new-loan a.btn-info {
+    width:100%;
+    padding:0px;
+    text-align:center;
+}
+
+#loans-deshboard-new a.btn-success.apply-for {
+    border:1px dashed #00c98e;
+    text-transform:uppercase;
+    margin-top:10px;
+}
+
+#your-application.repay-details .nav-tabs .nav-link  {
+    font-size:10px;
+    line-height:24px;
+    padding: 0px 8px;
+}
+
+#your-application h3 {
+    font-size: 20px;
+    margin-top: 7px;
+}
+
+#your-application a.btn-info.close-now {
+    width:100%;
+    padding:0px;
+    text-align:center;
+}
+
+#your-application a.btn-info.repay-now {
+    width:100%;
+    padding:0px;
+    text-align:center;
+    line-height: 40px;
+    margin-top:30px;
+}
+
+.xs-l-flush {
+    padding-left:0px !important;
+}
+
+#your-application p.red-position {
+    font-size:9px;
+    font-weight:normal;
+    color:red;
+    margin:5px 0px;
+}
+
+#your-application.repay-details .crypto-b button {
+    font-size: 10px;
+}
+
+.xs-text-right {
+    text-align:right;
+}
+
+#your-application.repay-details .collateral-w h5 {
+    background:url(../img/bitcoin-new.png) 95% 50% no-repeat;
+    background-size:25px auto;
+    line-height:30px;
+}
+
+#your-application.repay-details .collateral-w a.btn-info {
+    width:100%;
+    text-align:center;
+}
+
+#your-application label {
+    font-size: 12px;
+}
+
+#your-application a.btn-info.go-back {
+    width:100%;
+    text-align:center;
+}
+
+#your-application .white-box a.btn-info {
+    width:100%;
+    text-align:center;
+}
+
+#your-application .l-coins {
+    margin-top:0px;
+    margin-bottom:10px;
+}
+
+#your-application .l-coins .one-1 {
+        background: #252525;
+            padding: 8px 0px;
+}
+
+#your-application.repay-details span.in-progress, #your-application.repay-details h3 {
+        margin-top: 0px;
+}
+
+#your-application .l-coins h5 {
+    font-size:15px;
+    line-height:30px;
+        color: #00c98e;
+}
+
+#your-application .white-box .m-bottom {
+    margin-bottom:0px;
+}
+
+#your-application {
+    padding-bottom:20px;
+    padding-top: 0px;
+}
+
+#your-application .white-box h5 a {
+    background:none;
+    padding:0px;
+    color: #00cb8b;
+        text-align: right;
+    line-height: 24px;
+    font-size:14px;
+}
+
+#your-application .white-box h6 {
+    margin-top:20px;
+}
+
+.xs-flush-right {
+    padding-right:0px !important;
+}
+
+#your-application .white-box {
+    padding: 5px 10px;
+}
+
+#wallet-content.my-loan {
+    padding-top:15px !important;
+}
+.head-xs  {
+    padding-top:15px !important;
+}
+
+#loans-deshboard-new .loan-duration .b-right {
+    border-right:none;
+}
+
+.collateral-deposit-details img.top-min {
+    margin-top: -7px;
+    max-width: 51px;
+}
+
+#loans-deshboard-new.desh-2 {
+    padding-top:0px;
+}
+
+#wallet-content.my-loan .white-box h3 {
+    font-size:14px;
+}
+
+#wallet-content.my-loan .white-box a.green-c {
+    font-size:10px;
+}
+
+#loans-deshboard-new .final-loan.collateral .tb-x {
+    padding-top:8px;
+    padding-bottom:8px;
+}
+
+.collateral-deposit-details p {
+    word-break: break-all;
+}
+
+#banner_search.loans-deshboard h2 {
+    font-size:17px;
+}
+
+#banner_search.loans-deshboard p {
+    font-size: 9px;
+}
+
+#banner_search.loans-deshboard {
+    padding-bottom:0px;
+    padding-top:0px;
+    margin-bottom:0px;
+}
+
+#banner_search.loans-deshboard img {
+    margin-top:30px;
+}
+
+#banner_search.loans-deshboard.desh-2 h2 {
+    margin-bottom:20px;
+    font-weight: normal;
+}
+
+#banner_search.loans-deshboard.desh-2 img {
+    margin-top:0px;
+}
+
+#loans-deshboard-new .space-normal .xs-v {
+    float:left;
+    width:100%;
+    margin-top:15px;
+    margin-bottom:25px;
+}
+
+#loans-deshboard-new .space-normal .xs-v label {
+    line-height:22px;
+}
+
+#loans-deshboard-new .space-normal .xs-v input {
+    margin-top:5px;
+    float:left;
+    margin-right:5px;
+}
+
+#loans-deshboard-new .space-normal .xs-top {
+    margin-top:25px;
+}
+
+#loans-deshboard-new .loan-duration {
+    margin-top:15px;
+}
+
+#loans-deshboard-new .close-price label {
+    font-size:14px !important;
+    color:#000;
+}
+
+#loans-deshboard-new .close-price label input[type="checkbox"] {
+    float:left;
+    margin-top:5px;
+    margin-right:5px;
+}
+
+#loans-deshboard-new .close-price label form {
+    margin-left:0px;
+}
+
+#loans-deshboard-new .final-loan h3 {
+    margin-bottom:15px;
+}
+
+#loans-deshboard-new .final-loan .btn-info {
+    margin-top:15px;
+}
+
+#loans-deshboard-new .my-loan-history table thead {
+    width:50%;
+    float:left;
+}
+
+#loans-deshboard-new .my-loan-history table tr {
+    width:100%;
+    display:inline-block;
+}
+
+#loans-deshboard-new .my-loan-history table th {
+    width:100%;
+    display:inline-block;
+    border:none;
+}
+
+#loans-deshboard-new .my-loan-history table tbody {
+    width:48%;
+    float:right;
+}
+
+#loans-deshboard-new .my-loan-history tbody tr {
+    width:100%;
+    display:inline-block;
+}
+
+#loans-deshboard-new .my-loan-history tbody td {
+    width:100%;
+    display:inline-block;
+    text-align:right;
+    border:none !important;
+}
+
+#loans-deshboard-new .my-loan-history tbody td img {
+    max-width:20px !important;
+}
+
+#loans-deshboard-new .my-loan-history tbody td:last-child {
+    margin:0px;
+    padding:0px 12px;
+}
+
+#loans-deshboard-new .my-loan-history tbody td a {
+    background:none;
+    font-size:12px;
+    text-align:right;
+}
+
+#loans-deshboard-new .my-loan-history tbody td:first-child {
+    font-size: 12px;
+}
+
+#loans-deshboard-new h5 {
+    font-size:14px;
+    color:#00c98e;
+    font-weight:600;
+    margin-top:5px;
+}
+
+#loans-deshboard-new  .tb-l {
+    background:#252525;
+    padding:8px 0px;
+    margin-bottom:10px;
+}
+
+#loans-deshboard-new .tb-l img {
+    margin-left: 2px;
+}
+
+#loans-deshboard-new .xs-f h3 {
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+#loans-deshboard-new .btc p {
+    font-size: 13px;
+}
+
+#loans-deshboard-new .white-box label {
+    font-size: 11px;
+}
+
+#loans-deshboard-new .white-box label.sm-size {
+    font-size: 11px;
+}
+
+#exampleModalnew.modal-open {
+    padding-left:0px;
+}
 #wallet-content.request .field .dropdown-menu.show {
     top: 85% !important;
     left: 0 !important;
@@ -4655,7 +6662,7 @@ li.footer.bg-dark.text-center {
         margin-bottom: 0px !important;
 }
 #exampleModalnew.modal-open {
-	padding-left:0px;
+    padding-left:0px;
 }
 .dropdown.currency_two.three_coins .dropdown-menu.show a {
     padding: 9px 16px !important;
@@ -7832,10 +9839,10 @@ p.untext-2 {
 }
 #content.padning-payment a.btn-success {
     background: #00c98e;
-    line-height: 45px;
+    line-height: 60px;
     width: 100%;
     text-align: center;
-    font-size: 18px;
+    font-size: 22px;
      border: 3px solid #00c98e !important;
     font-weight: 500;
     border-radius: 6px;
