@@ -36,13 +36,15 @@ class LoanController extends Controller
 
         $fiat_rates=$ExchangeRatesService->fiat_rates();
 
-        $terms=(object)array(['days'=>30,'percentage'=>90],['days'=>30,'percentage'=>60],['days'=>60,'percentage'=>90]);
+        $terms=array((object)['id'=>1,'days'=>30,'percentage'=>90],(object)['id'=>2,'days'=>30,'percentage'=>60],(object)['id'=>3,'days'=>60,'percentage'=>90]);
 
         $price_down=(object)(['percentage'=>5]);
         
 
 
         $wallets=auth()->user()->wallet;
+
+        
 
 
 
