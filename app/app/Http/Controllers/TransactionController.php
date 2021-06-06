@@ -225,7 +225,7 @@ class TransactionController extends Controller
 
         $currencies=$currencies->select('currency.*')->leftJoin('wallet', function($join) {
       $join->on('currency.id', '=', 'wallet.currency_id')->where('user_id',auth()->id())->whereIn('wallet_type',[1,2]);
-    })->where($currency_type,1)->where('is_tradable',0);
+    })->where($currency_type,1);
 
 
            if($request->coin)
