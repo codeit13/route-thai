@@ -77,17 +77,31 @@ function showCurrencyRate()
 
 		var newUpdateLaonPrice=(parseFloat(usdPrice)*parseFloat(fiatRateFromUsd)*collateral_quantity);
 
-		newUpdateLaonPrice=newUpdateLaonPrice - (newUpdateLaonPrice * (100-term.percentage) / 100)
+		newUpdateLaonPrice=(newUpdateLaonPrice - (newUpdateLaonPrice * (100-term.percentage) / 100)).toFixed(2);
 
-		if(newUpdateLaonPrice)
+		if(newUpdateLaonPrice >0)
 		{
 
-		$('#backend-loan-amount').val(newUpdateLaonPrice.toFixed(2));
+		$('#backend-loan-amount').val(newUpdateLaonPrice);
+
+		var Interest=(newUpdateLaonPrice*2.1*(term.days/30)/100);
+
+
+		newUpdateLaonPrice=(parseFloat(newUpdateLaonPrice)+parseFloat(Interest)).toFixed(2);
+
+
+		$('#backend-loan-repayment,#backend-final-loan-amount').html(newUpdateLaonPrice+'<span>'+fiatRow.short_name+'</span>');
+
+		$('#backend-collateral-amount').html(collateral_quantity+'<span>'+cryptoRow.short_name+'</span>')
+
+
 
 		}
 		else
 		{
 		$('#backend-loan-amount').val('');
+
+		$('#backend-loan-repayment,#backend-final-loan-amount').html('-----');
 
 		}
 

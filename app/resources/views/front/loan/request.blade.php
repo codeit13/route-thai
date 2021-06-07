@@ -239,7 +239,7 @@
 											</div>
 											<div class="col-lg-4 col-sm-4 col-12">
 												<h5>Loan repayment</h5>
-												<h4>34124.81 <span>USD</span></h4>
+												<h4 id="backend-loan-repayment">----</h4>
 												<p>Full repayment required only for full collateral return.</p>
 											</div>
 										</div>
@@ -272,11 +272,11 @@
 									<div class="row">
 										<div class="col-lg-6 col-sm-6 col-12">
 											<label>Final Loan Amount</label>
-											<h3>33422.93 <span>USD</span></h3>
+											<h3 id="backend-final-loan-amount">-----</h3>
 										</div>
 										<div class="col-lg-6 col-sm-6 col-12">
 											<label>Collateral Amount</label>
-											<h3>1.00 <span>BTC</span></h3>
+											<h3 id="backend-collateral-amount">-----</h3>
 										</div>
 									</div>
 								</div>
