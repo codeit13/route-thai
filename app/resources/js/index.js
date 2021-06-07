@@ -1,5 +1,5 @@
 // import '../styles/index.scss';
-import './darkmode.js';
+// import './darkmode.js';
 import './displayCurr.js';
 import './alertsManagement.js';
 import './makeTable.js';
