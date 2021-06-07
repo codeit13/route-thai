@@ -1,5 +1,5 @@
 // import '../styles/index.scss';
-import './darkmode.js';
+// import './darkmode.js';
 import './displayCurr.js';
 import './alertsManagement.js';
 import './makeTable.js';
@@ -90,6 +90,37 @@ $(function () {
       });
     } else {
       $('#exchange .dropdown-item').show();
+    }
+  });
+  $('#exchangeSelectCenter input').on('keyup change', () => {
+    const searchterm = $('#exchangeSelectCenter input').val().replace(/[^\w\s]/gi, '');
+    if (searchterm.length > 0) {
+      const items = $('#exchangeSelectCenter .ex-select').toArray();
+      items.forEach((item) => {
+        if ($(item).html().includes(searchterm.toLowerCase())) {
+          $(item).show();
+        } else {
+          $(item).hide();
+        }
+      });
+    } else {
+      $('#exchangeSelectCenter .ex-select').show();
+    }
+  });
+  
+  $('#coinSelectCenter input').on('keyup change', () => {
+    const searchterm = $('#coinSelectCenter input').val().replace(/[^\w\s]/gi, '');
+    if (searchterm.length > 0) {
+      const items = $('#coinSelectCenter .ex-select').toArray();
+      items.forEach((item) => {
+        if ($(item).html().includes(searchterm.toLowerCase())) {
+          $(item).show();
+        } else {
+          $(item).hide();
+        }
+      });
+    } else {
+      $('#coinSelectCenter .ex-select').show();
     }
   });
 

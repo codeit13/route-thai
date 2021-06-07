@@ -39,6 +39,9 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
 
         Route::get('settings', 'SettingsController@index')->name('settings');
         Route::post('settings/update', 'SettingsController@update')->name('settings.update');
+        Route::get('settings/loan', 'SettingsController@loan_settings')->name('settings.loan');
+        Route::post('settings/loan', 'SettingsController@loan_settings_update')->name('settings.loan.update');
+        Route::post('settings/loan/terms', 'SettingsController@loan_terms_settings_update')->name('settings.loan.termsupdate');
     });
 
     Route::get('test',function()

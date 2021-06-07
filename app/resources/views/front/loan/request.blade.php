@@ -183,7 +183,7 @@
                                             <input type="hidden" name="fiat_currency" id="backend-fiat-coin-id" value="{{$fiat_currencies[0]->id??''}}">
 
 												</div>
-												<input style="width:65%;" type="text" name="loan_amount" id="backend-loan-amount" value="">
+												<input style="width:65%;" type="text" name="loan_amount" readonly="" id="backend-loan-amount" value="">
 											</div>
 										</div>
 									</div>
@@ -211,7 +211,7 @@
 													</div>
 												@endforeach
 
-
+                                    <input type="hidden" name="term_id" id="backend-loan-term-id">
 												</div>
 											</div>
 										</div>
@@ -239,7 +239,7 @@
 											</div>
 											<div class="col-lg-4 col-sm-4 col-12">
 												<h5>Loan repayment</h5>
-												<h4>34124.81 <span>USD</span></h4>
+												<h4 id="backend-loan-repayment">----</h4>
 												<p>Full repayment required only for full collateral return.</p>
 											</div>
 										</div>
@@ -272,11 +272,11 @@
 									<div class="row">
 										<div class="col-lg-6 col-sm-6 col-12">
 											<label>Final Loan Amount</label>
-											<h3>33422.93 <span>USD</span></h3>
+											<h3 id="backend-final-loan-amount">-----</h3>
 										</div>
 										<div class="col-lg-6 col-sm-6 col-12">
 											<label>Collateral Amount</label>
-											<h3>1.00 <span>BTC</span></h3>
+											<h3 id="backend-collateral-amount">-----</h3>
 										</div>
 									</div>
 								</div>
@@ -462,13 +462,19 @@
 
 	var wallets=@json($wallets);
 
-var currencies=@json($currencies+$fiat_currencies);
+var currencies=@json($currencies);
+
+var fiat_currencies=@json($fiat_currencies);
 
 var crypto_exchange_rates={!! $crypto_rates !!};
 
 var fiat_exchange_rates={!! $fiat_rates !!};
 
 var usdPrice=0;
+
+var terms=@json($terms);
+
+var term=@json($terms[0]??'');
 
 
 

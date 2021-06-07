@@ -51,11 +51,7 @@ Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class
 
 Route::middleware('auth')->group(function(){
 
-    Route::get('arbitrage',function()
-{
-    return view('front.arbitrage');
     
-})->name('arbitrage');
     // Profile
     Route::prefix('user')->name('user.')->group(function(){ 
         Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
@@ -147,4 +143,12 @@ Route::middleware('auth')->group(function(){
 Route::get('p2p/exchange','ExchangeController@index')->name('p2p.exchange');
 // Stocking
 Route::get('staking',function() { return view('front.staking'); })->name('staking');
+
+// Arbitrage
+
+Route::get('arbitrage',function()
+{
+    return view('front.arbitrage');
+    
+})->name('arbitrage');
 
