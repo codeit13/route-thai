@@ -57,11 +57,80 @@ $(function () {
       });
     }
   });
+  //Generating exchange filter modal
+exchangeList.forEach((exchange) => {
+  const eximgpath = exchangeDetails[exchange]['img'];
+  const eximage = $('<img>', { src: eximgpath,height: '20px',width:'auto',alt: exchange.toLowerCase(), class:'pr-1' });
+  const inputCh=$('<input type="checkbox" value="'+exchange+'" name="exchangecheckbox" autocomplete="off">');
+  const inputicon=$('<i class="cr-icon fa fa-check"></i>');
+  $('#ex-data-img').append(
+     '<div class="col ex-select"> <label class="btn bg-white rounded btn-light btn-block text-left">'+
+     inputCh[0].outerHTML+'<span class="cr">'+inputicon[0].outerHTML+'</span>'+
+      eximage[0].outerHTML + exchange+
+      '</label></div>'
+      );        
+});
+//Generating coin filter modal
+coinsList.forEach((coin) => {
+  const Coinimgpath = coinsAlertsList[coin]['img'];
+  const Coinimage = $('<img>', { src: Coinimgpath,height: '20px',width:'auto',alt: coin.toLowerCase(), class:'mr-1'});
+  const inputCh=$('<input type="checkbox" value="'+coin+'" name="coincheckbox" autocomplete="off">');
+  const inputicon=$('<i class="cr-icon fa fa-check"></i>');
+  $('#coin-data-img').append(
+     '<div class="col ex-select"> <label class="btn bg-white rounded btn-light btn-block text-left">'+
+     inputCh[0].outerHTML+'<span class="cr">'+inputicon[0].outerHTML+'</span>'+
+     Coinimage[0].outerHTML + coin+
+      '</label></div>'
+      );        
+});
+//show or hide exchange columns
+$(document).ready(function() {
+  //Exchange Filter
+  $('input[type=checkbox][name=exchangecheckbox]').change(function() {
+    const checkboxes = document.querySelectorAll(`input[name="exchangecheckbox"]:checked`);
+    let values = [];
+    checkboxes.forEach((checkbox) => {
+        values.push(checkbox.value);
+    });
+    console.log(values);
+    if(values.length>=3){
+      exchangeList.forEach((exchange)=>{
+        if(values.includes(exchange)){$("."+exchange).show();}
+        else{$("."+exchange).hide();}        
+      });
+    }
+    else{
+      exchangeList.forEach((exchange)=>{
+          $("."+exchange).show();
+      });
+    }
+  });
+
+  //Coin Filter
+  $('input[type=checkbox][name=coincheckbox]').change(function() {
+    const checkboxes = document.querySelectorAll(`input[name="coincheckbox"]:checked`);
+    let values = [];
+    checkboxes.forEach((checkbox) => {
+        values.push(checkbox.value);
+    });
+    if(values.length!=0){
+      coinsList.forEach((coin)=>{
+        if(values.includes(coin)){$('#'+coin.toLowerCase() + '_row').show();}
+        else{$('#'+coin.toLowerCase() + '_row').hide();}        
+      });
+    }
+    else{
+      coinsList.forEach((coin)=>{
+        $('#'+coin.toLowerCase() + '_row').show();
+            });
+    }
+  });
+});
 
   const tableBody = $('#currencytable_body');
   const tableHeader = $('#currency_header_row');
   exchangeList.forEach((exchange) => {
-    const headercol = $('<th>', { scope: 'col', id: exchange + '_col' });
+    const headercol = $('<th>', { scope: 'col', id: exchange + '_col' ,class:exchange });
     const eximgpath = exchangeDetails[exchange]['img'];
     const headimg = $('<img>', { src: eximgpath, alt: exchange.toLowerCase() });
     headercol.append(headimg);
@@ -71,7 +140,7 @@ $(function () {
       headercol.addClass('highlight-top');
     }
     const ddlink = $('<a>', { class: 'dropdown-item' });
-    const ddimage = $('<img>', { src: eximgpath, alt: exchange.toLowerCase() });
+    const ddimage = $('<img>', { src: eximgpath, alt: exchange.toLowerCase() , height:'20px',width:'auto'});
     ddlink.append(ddimage);
     ddlink.append(' ' + exchangeDetails[exchange]['name']);
     $('#exchange .dropdown-menu').append(ddlink);
@@ -79,8 +148,8 @@ $(function () {
 
   coinsList.forEach((coin, idc) => {
     const coinrow = $('<tr>', { id: coin.toLowerCase() + '_row' });
-    const firstcol = $('<td>', { class: 'fav', html: '<i class="fa fa-star-o" aria-hidden="true"></i>' });
-    coinrow.append(firstcol);
+    // const firstcol = $('<td>', { class: 'fav', html: '<i class="fa fa-star-o" aria-hidden="true"></i>' });
+    // coinrow.append(firstcol);
     const imgpath = coinsAlertsList[coin]['img'];
     const imgtext = ' <span class="d-none d-sm-none d-md-block">' + coinsAlertsList[coin]['name'] + '</span> <span class="d-sm-block">' + coin + '</span>';
     const imgdiv = $('<img>', { src: imgpath, alt: coin });
@@ -93,7 +162,7 @@ $(function () {
       const divname2 = divname1 + '_p';
       const span2 = $('<span>', { id: divname2, text: '--' });
       const span1 = $('<span>', { id: divname1, class: 'text-green', text: '--' });
-      const coincol = $('<td>');
+      const coincol = $('<td>',{class:exchange});
       const lb = $('<br>');
       coincol.append(span2);
       coincol.append(lb);
@@ -372,11 +441,33 @@ $(function () {
     });
   });
 
+    //Dropdown auto close bug fixing.
+    $('div.dropdown-menu.custome-class').on('click', function(event){
+      var events = $._data(document, 'events') || {};
+      events = events.click || [];
+      for(var i = 0; i < events.length; i++) {
+          if(events[i].selector) {
+  
+              //Check if the clicked element matches the event selector
+              if($(event.target).is(events[i].selector)) {
+                  events[i].handler.call(event.target, event);
+              }
+  
+              // Check if any of the clicked element parents matches the 
+              // delegated event selector (Emulating propagation)
+              $(event.target).parents(events[i].selector).each(function(){
+                  events[i].handler.call(this, event);
+              });
+          }
+      }
+      event.stopPropagation(); //Always stop propagation
+  });
+
   var addCount = 1;
   var str1='';
   $('.add-more-range').click((e) =>  {
     e.preventDefault();
-    str1 = `<div class="d-flex align-items-center addrange" id="range-row-`+ addCount +`"> <div class="mb-3 pr-3"> <label class="d-flex justify-content-start">Min (%):</label> <input type="number" id="min-value-`+ addCount +`" style="width: 80px;height: 35px;" class="form-control"> </div> <div class="pr-3"> <span>TO</span> </div> <div class="mb-3 pr-3"> <label class="d-flex justify-content-start">Max (%) :</label> <input type="number"  id="max-value-`+ addCount +`" style="width: 80px;height: 35px;" class="form-control"> </div> <div class="mb-3 pr-3"> <!-- <label class="d-flex justify-content-start">Choose color :</label> --> <input type="color" id="set-color-`+ addCount +`" class="form-control p-0 mt-4 border-0 rounded-circle selectcolor" style="box-shadow: none !important;"> </div></div>`;
+    str1 = `<div class="d-flex align-items-center addrange" id="range-row-`+ addCount +`"> <div class="mb-3 pr-3"> <input type="number" id="min-value-`+ addCount +`" style="width: 80px;height: 35px;" class="form-control" placeholder="Min"> </div> <div class="mb-3 pr-3"> <span class="font-weight-bold">-</span> </div> <div class="mb-3 pr-3"> <input type="number"  id="max-value-`+ addCount +`" style="width: 80px;height: 35px;" class="form-control" placeholder="Max"> </div> <div class="mb-3 pr-3"> <!-- <label class="d-flex justify-content-start">Choose color :</label> --> <input type="color" id="set-color-`+ addCount +`" class="form-control p-0 border-0 rounded-circle selectcolor" style="box-shadow: none !important;"> </div></div>`;
     //  <div> <button style="font-size: 22px;" class="btn mt-2 bg-transparent p-0 delete-more-range-`+addCount+`"><i class="text-red fa fa-trash"></i></button> </div> </div>`;
     var finalDiv = document.createElement('div'); // is the node
     finalDiv.innerHTML = str1;
@@ -404,7 +495,7 @@ $(function () {
   $('#cancel-color').click((e)=>{
     e.preventDefault();
     var str= '';
-    str = '<div class="d-flex align-items-center addrange" id="range-row-0"> <div class="mb-3 pr-3"> <label class="d-flex justify-content-start">Min (%):</label> <input type="number" id="min-value-0" style="width: 80px;height: 35px;" class="form-control"> </div> <div class="pr-3"> <span>TO</span> </div> <div class="mb-3 pr-3"> <label class="d-flex justify-content-start">Max (%) :</label> <input type="number" id="max-value-0" style="width: 80px;height: 35px;" class="form-control"> </div> <div class="mb-3 pr-3"> <input type="color" id="set-color-0" class="form-control p-0 mt-4 border-0 rounded-circle selectcolor" style="box-shadow: none !important;"> </div> </div>';
+    str = '<div class="d-flex align-items-center addrange" id="range-row-0"> <div class="mb-3 pr-3"> <input type="number" id="min-value-0" style="width: 80px;height: 35px;" class="form-control" placeholder="Min"> </div> <div class="mb-3 pr-3"> <span class="font-weight-bold">-</span> </div> <div class="mb-3 pr-3"> <input type="number" id="max-value-0" style="width: 80px;height: 35px;" class="form-control" placeholder="Max"> </div> <div class="mb-3 pr-3"> <input type="color" id="set-color-0" class="form-control p-0 border-0 rounded-circle selectcolor" style="box-shadow: none !important;"> </div> </div>';
     document.getElementsByClassName("range-percent")[0].innerHTML = str;
     minrange = [];
     maxrange = [];
