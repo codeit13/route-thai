@@ -59,10 +59,10 @@
                         </li>
                         <li class="nav-item"> <a class="nav-link" href="#"><span class="visible-xs"><i class="fal fa-info-circle"></i></span>ICO Information</a>
                         </li>
-                        @if(Auth::check())
+                      
                         <li class="nav-item"> <a class="nav-link" href="{{route('arbitrage')}}"><span class="visible-xs"><i class="fab fa-bitcoin"></i></span>Arbitrage</a>
                         </li>
-                        @endif
+                        
                     </ul>
                     <div class="right_side  my-2 my-lg-0">
 
