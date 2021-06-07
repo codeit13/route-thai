@@ -67,6 +67,11 @@
                      <span class="nav-link-text">Settings</span>
                      </a>
                   </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="{{ route('admin.settings.loan') }}"> <i class="fa fa-settings text-green" aria-hidden="true"></i>
+                     <span class="nav-link-text">Loan Settings</span>
+                     </a>
+                  </li>
                   {{-- 
                   <li class="nav-item">
                      <a class="nav-link" href="#"> <i class="fa fa-file-excel-o" aria-hidden="true"></i>
