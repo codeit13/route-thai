@@ -98,7 +98,7 @@
                                 </div>
                                 </li>
                             <li>
-                            <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i></div>
+                            <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i> <span class="visible-xs">Dark Mode</span></div>
                             </li>
                             @else
                             @php $wallet_types = \App\Models\CurrencyType::all(); @endphp

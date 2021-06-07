@@ -2298,9 +2298,9 @@ img.header_img {
 #content.p2p .card {
     box-shadow: none;
 }
-#content.p2p .card thead {
+/*#content.p2p .card thead {
     background-color: #FAFAFA;
-}
+}*/
 #content.p2p .card tbody {
     box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.102)
 }
@@ -5553,6 +5553,7 @@ section#loans-deshboard-new {
 }
 #header.p2p-wallet .dropdown-menu ul li a.not-c {
     text-transform: lowercase;
+    overflow-wrap: break-word;
 }
 #header.p2p-wallet .dropdown-menu ul li a.not-c label {
     text-transform: capitalize;
@@ -6629,7 +6630,7 @@ span#thb_eth_volume {
     width: 100%;
     float: right;
     cursor: pointer;
-    right: -375px;
+    right: -340px;
 }
 
 #content.padning-payment a.btn-success.sell {
@@ -7116,7 +7117,7 @@ p.untext-2 {
     top: 0px;
     width: 100%;
     height: 100%;
-    z-index: 9999;
+    z-index: 99999999;
     background: var(--loader-bg);
 }
 #bars {
@@ -7775,6 +7776,13 @@ a.btn-info:hover {
     display: none;
 }
 
+.iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
+    padding-right: 6px;
+    padding-left: 52px;
+    margin-left: 0;
+    background: var(--card-bg);
+    color: var(--white-black-text);
+}
 
 
 
@@ -8466,9 +8474,9 @@ a.btn-info:hover {
     .mobile_menu.visible-xs a.btn.btn-primary {
         position: relative !important;
         margin: 0px 0px !important;
-        background-color: #00C98E;
-        padding: 0px 45px;
-        font-size: 16px;
+        background-color: #00C98E !important;
+        padding: 0px 0px;
+        font-size: 14px;
     }
     .nav-menu>li>a {
         color: var(--white-black-text);
@@ -8548,6 +8556,7 @@ a.btn-info:hover {
         text-align: left;
         font-size: 15px;
         display: inline-block;
+        padding: 14px 0px !important;
     }
     .dark-light span.visible-xs {
         display: inline-block !important;
@@ -8791,6 +8800,14 @@ a.btn-info:hover {
         text-align: right;
         padding: 3px 0px;
         vertical-align: middle;
+        padding-right: 5px;
+    }
+    .main_data_dable table tr td a {
+        padding: 5px 12px;
+        color: #fff;
+        background-color: #00C98E;
+        border-radius: 3px;
+        text-decoration: none;
     }
     .main_data_dable table tr td:first-child {
         text-align: left;
@@ -8939,11 +8956,11 @@ a.btn-info:hover {
         opacity: 1;
     }
     .side_image {
-        display: none;
+        display: none !important;
     }
-    .login_forms {
+    /*.login_forms {
         padding: 25% 10%;
-    }
+    }*/
     .login_forms ul li.google a {
         padding: 10px 30px;
     }
@@ -9119,11 +9136,12 @@ a.btn-info:hover {
     .main_data_dable table thead tr th {
         background-color: rgb(66 66 66 / 5%) !important;
         padding: 0px 0px;
-        font-size: 13px;
+        font-size: 11px;
+        text-align: left;
     }
     th.ft_first {
         padding: 15px 4px;
-        font-size: 16px;
+        font-size: 12px;
     }
     th.ft_first span {
         color: #ADADAD;
@@ -9131,7 +9149,7 @@ a.btn-info:hover {
         font-weight: normal;
         /* margin-left: 9px; */
         width: 100%;
-        display: inline-block;
+        display: none;
         padding-left: 24px;
         margin-top: -13px;
     }
@@ -9143,8 +9161,10 @@ a.btn-info:hover {
     }
     th.ft_first img {
         float: left;
-        margin-top: 8px;
-        height: 28px;
+        margin-top: 0px;
+        height: 20px;
+        width: 20px;
+        margin-right: 4px;
     }
     ul.bxslider {
         left: 50%;
@@ -9179,6 +9199,7 @@ a.btn-info:hover {
     #faq h2 {
         text-align: left;
         margin-bottom: 20px;
+        font-size: 20px;
     }
     #faq p.faq_step img {
         float: left;
@@ -9199,7 +9220,7 @@ a.btn-info:hover {
         background: url(../img/plus-white.svg) 95% 50% no-repeat;
     }
     .login_forms {
-        padding: 0px 35px;
+        padding: 0px 35px !important;
     }
     .login_forms form label {
         color: var(--white-black-text);
@@ -9218,6 +9239,7 @@ a.btn-info:hover {
         font-size: 14px !important;
         font-weight: 400;
         margin-bottom: 0px;
+        margin-top: 10px;
     }
     #copy p {
         color: #fff;
@@ -9239,7 +9261,7 @@ a.btn-info:hover {
         font-weight: bold;
         margin-bottom: 0px;
         text-align: center;
-        margin-top: 24px;
+        margin-top: 10px;
     }
     #news h2 {
         text-align: left;
@@ -9509,13 +9531,13 @@ a.btn-info:hover {
         border-bottom: 3px solid #00C98E;
         color: #00C98E;
     }
-    #header.p2p-wallet nav#navigation a.btn.btn-primary {
+/*    #header.p2p-wallet nav#navigation a.btn.btn-primary {
         background: none!important;
         box-shadow: none !important;
         border: none !important;
         margin-bottom: 0px;
         margin-top: 14px;
-    }
+    }*/
     /* The switch - the box around the slider */
     .switch {
         position: relative;
