@@ -11,7 +11,7 @@ Route: P2P Trading Platform
 @stop
 @section('content')
 
-<section id="main-content">
+<section id="main-content" class="arbitrage">
   <div class="container">
     <div class="row">
       <div class="col text-center">
