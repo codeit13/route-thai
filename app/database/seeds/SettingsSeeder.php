@@ -26,6 +26,10 @@ class SettingsSeeder extends Seeder
                 'setting_title' => "Loan Max Percentage",
                 'setting_code' => "loan_max_percentage",
                 "setting_value" => "10"
+            ],[
+                'setting_title' => "Loan Repay Currency Type",
+                'setting_code' => "loan_repay_currency_type",
+                "setting_value" => "1"
             ]
         ]);
     }
