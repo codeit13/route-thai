@@ -146,7 +146,6 @@
 										<td>
 											<a href="#" class="btn-success"><i class="fas fa-coins"></i> {{__('Deposit')}}</a>
 											<a href="{{route('p2p.exchange')}}" class="btn-primary"><i class="fal fa-chart-line"></i> {{__('P2P Trading')}}</a>
-											<a href="#" class="btn-primary"><i class="fas fa-exchange-alt"></i> Transfer</a>
 										</td>
 									</tr>
 									@endforeach
