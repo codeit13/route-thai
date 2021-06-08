@@ -9028,6 +9028,9 @@ a.btn-info:hover {
     .visible-xs {
         display: block !important;
     }
+    .no_more {
+        display: inline-block !important;
+    }
     .visible-xs h3 {
         font-size: 24px;
         font-weight: bold;
@@ -9363,14 +9366,16 @@ a.btn-info:hover {
         padding-top: 0px !important;
     }
     #wallet-content .white-box {
-        padding: 7px;
-        margin-top: 15px;
+        padding: 0px 9%;
+        margin-top: 0px;
     }
     #wallet-content .white-box thead {
         display: none;
     }
     #wallet-content .white-box td {
-        /*width:50%;*/
+        font-size: 16px;
+        font-weight: 400;
+        padding: 5px 0px;
         display: inline-block;
     }
     #wallet-content .white-box td:last-child {
@@ -9379,9 +9384,10 @@ a.btn-info:hover {
     #wallet-content .white-box td:nth-child(2n) {
         text-align: right;
         float: right;
+        padding-top: 21px;
     }
     #wallet-content .white-box td:nth-child(3n) {
-        display: none;
+        /*display: none;*/
     }
     #wallet-content .white-box tbody {
         width: 100%;
@@ -9399,9 +9405,15 @@ a.btn-info:hover {
         text-align: center;
         padding: 0px;
     }
-    #wallet-content .white-box td .btn-primary {
-        float: left;
+    #wallet-content .white-box td .btn-primary, #wallet-content .white-box td .btn-success {
+        
+        padding: 0px 9px !important;
+        width: auto !important;
+        margin-right: 6px !important;
     }
+    /*td.center_small {
+        text-align: center;
+    }*/
     a.load-more {
         background: none;
         color: #212121;
@@ -9818,7 +9830,7 @@ a.btn-info:hover {
         font-size: 20px !important;
     }
     #content.sellers .white-box {
-        margin-top: 20px;
+        margin-top: 0px;
     }
     #Available {
         text-align: left !important;
