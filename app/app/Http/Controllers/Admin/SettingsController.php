@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Currency;
 use App\Models\Settings;
 use App\Models\LoanTerms;
+use App\Models\LoanRepayCurrency;
 use Auth;
 
 class SettingsController extends Controller
@@ -142,17 +143,21 @@ class SettingsController extends Controller
 
     }
 
-    public function loan_settings() {
-        $loanSettings=Settings::whereIn("setting_code",["loan_price_down_limit","loan_min_percentage","loan_max_percentage"])->get();
+    public function loan_settings(Request $request) {
+        $loanSettings=Settings::whereIn("setting_code",["loan_price_down_limit","loan_min_percentage","loan_max_percentage","loan_repay_currency_type"])->get();
 
         $settingValue = [];
         foreach ($loanSettings as $key => $value) {
           $settingValue[$value->setting_code] = $value->setting_value;
         }
         $dropdowns=$this->currenciesForDropDown();
-
         $lornTerms = LoanTerms::get();
-        return view('back.settings.loan',compact('settingValue','dropdowns','lornTerms'));
+        $cruptoCurrencies=\App\Models\Currency::where('is_crypto',1)->get();
+        $loanRepay=LoanRepayCurrency::with('currency')->get();
+
+        $actionName = $request->route()->getName();
+        $editId = ($request->id)?$request->id:0;
+        return view('back.settings.loan',compact('settingValue','dropdowns','lornTerms','cruptoCurrencies','loanRepay','actionName','editId'));
     }
 
     public function loan_settings_update(Request $request) {
@@ -160,7 +165,7 @@ class SettingsController extends Controller
       $request->validate([
         'loan_price_down_limit'=>'required|numeric|min:1|max:100',
         'loan_min_percentage'=>'required|numeric|min:1|max:100',
-        'loan_max_percentage'=>'required|numeric|min:1|max:100'
+        'loan_max_percentage'=>'required|numeric|gt:loan_min_percentage|min:1|max:100'
       ]);
 
       try {
@@ -206,5 +211,45 @@ class SettingsController extends Controller
       } catch (Throwable $exception) {
           return redirect()->back()->with('warning',$exception->getMessage());
       }
-    }   
+    }
+
+    public function loan_terms_repay_update(Request $request) {
+      $adminId = Auth::user()->id;
+      try {
+        if($request->btn_action=="update_record") {
+          Settings::where('setting_code','loan_repay_currency_type')->update(['setting_value' => $request->loan_repay_currency_type,"updated_by"=>$adminId]);
+          return redirect()->back()->with('success','Loan currency type update successfully');
+        }else if($request->btn_action=="new_record") {
+          $request->validate(['currency_id'=>'required','crypto_wallet_address'=>'required']);
+          $request->merge(["updated_by"=>$adminId]);          
+          LoanRepayCurrency::updateOrCreate(['currency_id'=>$request->currency_id],$request->except(["_token","btn_action","loan_repay_currency_type"]));
+
+          return redirect()->back()->with('success','Loan currency added successfully');
+        } else {
+          LoanRepayCurrency::destroy($request->btn_action);
+          return redirect()->back()->with('success','Loan currency deleted successfully');
+        }
+          
+      } catch (Throwable $exception) {
+          return redirect()->back()->with('warning',$exception->getMessage());
+      }
+    }
+
+    public function loan_currency_update(Request $request,$id) {
+      $request->validate([
+        'currency_id'=>'required',
+        'crypto_wallet_address'=>'required'
+      ]);
+
+      $loanCurData = LoanRepayCurrency::find($id);
+
+      if($loanCurData) {
+        // $loanCurData->currency_id = $request->currency_id;
+        $loanCurData->crypto_wallet_address = $request->crypto_wallet_address;
+        $loanCurData->update();
+        return redirect()->route("admin.settings.loan")->with('success','Loan currency updated successfully');
+      } else {
+        return redirect()->route("admin.settings.loan")->with('warning','Loan currency record update failed');
+      }
+    }
 }
