@@ -5937,8 +5937,8 @@ section#loans-deshboard-new {
 }
 #wallet-content .white-box td .btn-success,
 #wallet-content .white-box td .btn-primary {
-    padding: 0px 10px;
-    font-size: 14px;
+    padding: 0px 7px;
+    font-size: 13px;
     margin: 0px !important;
 }
 #wallet-content .white-box td .btn-success {
@@ -6045,7 +6045,11 @@ a.bell span {
 }
 
 /***** Unknown Css *****/
-
+#wallet-content .white-box td.center_small {
+    padding: 23px 0px;
+    display: inline-block;
+    width: 200px;
+}
 #main-heading {
     box-shadow: 0px 1px 3px rgb(0 0 0 / 16%);
     padding: 30px 0px;
@@ -9386,8 +9390,18 @@ a.btn-info:hover {
         float: right;
         padding-top: 21px;
     }
-    #wallet-content .white-box td:nth-child(3n) {
-        /*display: none;*/
+    #wallet-content .white-box td:nth-child(3n), #wallet-content .white-box td:nth-child(4n), #wallet-content .white-box td:nth-child(5n) {
+        display: none;
+    }
+    #wallet-content .white-box td:nth-child(6n) {
+        display: inline-block;
+        text-align: left;
+        padding-top: 0px;
+        padding-bottom: 5px;
+    }
+    #wallet-content .white-box tbody tr {
+        width: 100%;
+        display: inline-block;
     }
     #wallet-content .white-box tbody {
         width: 100%;
