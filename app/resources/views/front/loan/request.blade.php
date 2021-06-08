@@ -9,6 +9,17 @@
 
 @section('content')
 
+@php
+$loan_variables=[];
+foreach($loanSettings as $loan_setting)
+{
+	 $loan_variables[$loan_setting->setting_code]=$loan_setting->setting_value;
+}
+
+$loan_variables=(object)$loan_variables;
+
+@endphp
+
   <section id="banner_search" class="loans-deshboard">
       <div class="container">
          <div class="row">
@@ -144,9 +155,9 @@
 											<div class="multi_form">
 												<div class="backend-fiat-dropdown dropdown currency_two three_coins crypto">
 												  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												   @if( isset($fiat_currencies[0]) && $fiat_currencies[0]->hasMedia('icon'))
+												   @if( isset($currencies[0]) && $currencies[0]->hasMedia('icon'))
 
-													<img src="{{$fiat_currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($fiat_currencies[0]->name)}}"> {{__($fiat_currencies[0]->short_name)}}
+													<img src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"> {{__($currencies[0]->short_name)}}
 
 													@else
 
@@ -156,7 +167,7 @@
 												  </button>
 												  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 47px, 0px); top: 0px; left: 0px; will-change: transform;">
 
-												  	@foreach($fiat_currencies as $cIndex=> $currency)
+												  	@foreach($currencies as $cIndex=> $currency)
 
 
                             <a class="dropdown-item" data-id="{{$currency->id}}" href="#">
@@ -180,7 +191,7 @@
 													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-5.png')}}" alt=""> ETH <span>Ethereum</span></a>
 													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-6.png')}}" alt=""> BNB <span>BNB</span></a> -->
 												  </div>
-                                            <input type="hidden" name="fiat_currency" id="backend-fiat-coin-id" value="{{$fiat_currencies[0]->id??''}}">
+                                            <input type="hidden" name="fiat_currency" id="backend-fiat-coin-id" value="{{$currencies[0]->id??''}}">
 
 												</div>
 												<input style="width:65%;" type="text" name="loan_amount" readonly="" id="backend-loan-amount" value="">
@@ -205,8 +216,8 @@
 
 													<div class="col-lg-4  col-4 col-sm-4">
 														<a class="@if($tIndex==0)active @endif" href="javascript:void(0)" onclick="activeThisTerm(this,{{$term->id}})">
-															<b>{{$term->percentage}}%</b><br>
-															{{$term->days}} days
+															<b>{{$term->terms_percentage}}%</b><br>
+															{{$term->no_of_duration}} {{$term->duration_type}}
 														</a>
 													</div>
 												@endforeach
@@ -229,12 +240,12 @@
 										<div class="row">
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Loan Duration</h5>
-												<h4 id="backend-term-days">{{$terms[0]->days??30}} days</h4>
+												<h4 id="backend-term-days">{{$terms[0]->no_of_duration??30}} {{$terms[0]->duration_type}}</h4>
 												<p></p>
 											</div>
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Price down limit</h5>
-												<h4 id="backend-price-down-limit">5.00% or 35279.76 <span>BTC/USD</span></h4>
+												<h4 id="backend-price-down-limit">{{$loan_variables->loan_price_down_limit}}% or <plimit>35279.76 </plimit><span id="backend-limit-text">BTC/USD</span></h4>
 												<p>Add more collateral and extend PDL</p>
 											</div>
 											<div class="col-lg-4 col-sm-4 col-12">
@@ -250,12 +261,12 @@
 						<div class="close-price">
 							<div class="row">
 								<div class="col-lg-8 b-right col-sm-8 col-12">
-									<label><input type="checkbox" name="close_price" id="backend-set-close-price" /> Set close price at  <form><input type="text" placeholder="Enter amount"/><button type="submit">USD</button></form></label>
+									<label><input type="checkbox" name="close_price" id="backend-set-close-price" /> Set close price at  <form><input type="number" name="close_price" id="backend-close-price" placeholder="Enter amount"/><button type="button">USD</button></form></label>
 								</div>
 								<div class="col-lg-4 col-sm-4 col-12">
 									<div class="row">
 										<div class="col-lg-12 text-right col-sm-12 col-12">
-											<p>Min: <span>1,797,994.87</span> USD &nbsp;&nbsp; <mark>Max: <span>1,797,994.87</span> USD</mark></p>
+											<p>Min: <span id="backend-min-price">1,797,994.87</span> USD &nbsp;&nbsp; <mark>Max: <span id="backend-max-price">1,797,994.87</span> USD</mark></p>
 										</div>
 									</div>	
 									<div class="row">
@@ -476,6 +487,18 @@ var terms=@json($terms);
 
 var term=@json($terms[0]??'');
 
+var price_down_limit='{{$loan_variables->loan_price_down_limit}}';
+
+var set_price_min='{{$loan_variables->loan_min_percentage}}';
+
+var set_price_max='{{$loan_variables->loan_max_percentage}}';
+
+
+// crypto_exchange_rates.forEach(function(v,i){
+// 	console.log(v);
+
+// 	return false;
+// })
 
 
 
