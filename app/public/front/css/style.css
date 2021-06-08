@@ -5831,7 +5831,7 @@ section#loans-deshboard-new {
     padding: 0px 26px;
 }
 #wallet-content a.btn-primary:hover {
-    background-color: #000;
+    background-color: #05ca90;
     color: #fff;
 }
 #wallet-content a.btn-success {
@@ -5846,7 +5846,7 @@ section#loans-deshboard-new {
     margin-left: 10px;
 }
 #wallet-content a.btn-success:hover {
-    background: #00c98e;
+    background-color: #969090;
     color: #fff;
 }
 #wallet-content h6 {
@@ -5937,7 +5937,9 @@ section#loans-deshboard-new {
 }
 #wallet-content .white-box td .btn-success,
 #wallet-content .white-box td .btn-primary {
-    padding: 0px 14px;
+    padding: 0px 10px;
+    font-size: 14px;
+    margin: 0px !important;
 }
 #wallet-content .white-box td .btn-success {
     margin-left: 0px;

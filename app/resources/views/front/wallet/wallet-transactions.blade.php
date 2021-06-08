@@ -169,8 +169,9 @@
 
 										<td>{{$currency->user_balance}}</td>
 										<td>
-											<a href="{{route('wallet.deposit',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-success">{{__('Deposit')}}</a>
-											<a href="{{route('wallet.withdraw',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-primary">{{__('Withdraw')}}</a>
+											<a href="{{route('wallet.deposit',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-success"><i class="fas fa-coins"></i>  {{__('Deposit')}}</a>
+											<a href="{{route('wallet.withdraw',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-primary"><i class="fal fa-chart-line"></i> {{__('Withdraw')}}</a>
+											<a href="#" class="btn-primary"><i class="fas fa-exchange-alt"></i> Transfer</a>
 										</td>
 									</tr>
 									@endforeach
