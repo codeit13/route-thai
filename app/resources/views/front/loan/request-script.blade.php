@@ -96,11 +96,11 @@ function showCurrencyRate()
 
 
 
-	var newText='<img src="" alt=""/>&nbsp; '+cryptoRow.short_name+':<b>'+numberWithCommas(usdPrice)+'</b> USD <span></span> <a href="#"></a>';
+	var newText='<img src="" alt=""/>&nbsp; '+cryptoRow.short_name+':<b>'+numberWithCommas(usdPrice)+'</b> USDT <span></span> <a href="#"></a>';
 
 	  $('plimit').html((usdPrice*parseFloat(price_down_limit)/100).toFixed(2));
 
-	  $('#backend-limit-text').html(cryptoRow.short_name+'/USD');
+	  $('#backend-limit-text').html(cryptoRow.short_name+'/USDT');
 
 		$('#backend-current-usd-rate').html(newText);
 
@@ -119,7 +119,7 @@ function showCurrencyRate()
 		    var newUpdateLoanPrice=((parseFloat(filteredCryptoExchangeRow.lastPrice)/parseFloat(filteredLoanExchangeRow.lastPrice))*collateral_quantity);
 		  //  console.log(newUpdateLoanPrice);
 
-		    newUpdateLoanPrice=(newUpdateLoanPrice - (newUpdateLoanPrice * (100-term.terms_percentage) / 100)).toFixed(8);
+		    newUpdateLoanPrice=(newUpdateLoanPrice - (newUpdateLoanPrice * (100-term.terms_percentage) / 100)).toFixed(5);
 
 
 
@@ -167,7 +167,7 @@ function showCurrencyRate()
 
 
 
-		newUpdateLoanPrice=(parseFloat(newUpdateLoanPrice)+parseFloat(Interest)).toFixed(8);
+		newUpdateLoanPrice=(parseFloat(newUpdateLoanPrice)+parseFloat(Interest)).toFixed(5);
 
 
 		$('#backend-loan-repayment,#backend-final-loan-amount').html(newUpdateLoanPrice+'<span>'+fiatRow.short_name+'</span>');

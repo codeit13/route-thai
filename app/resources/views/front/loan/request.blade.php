@@ -241,12 +241,12 @@ $loan_variables=(object)$loan_variables;
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Loan Duration</h5>
 												<h4 id="backend-term-days">{{$terms[0]->no_of_duration??30}} {{$terms[0]->duration_type}}</h4>
-												<p></p>
+												<p>The interest rate 2.1% will be charge on the loan amount.</p>
 											</div>
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Price down limit</h5>
-												<h4 id="backend-price-down-limit">{{$loan_variables->loan_price_down_limit}}% or <plimit>35279.76 </plimit><span id="backend-limit-text">BTC/USD</span></h4>
-												<p>Add more collateral and extend PDL</p>
+												<h4 id="backend-price-down-limit">{{$loan_variables->loan_price_down_limit}}% or <plimit>35279.76 </plimit><span id="backend-limit-text">BTC/USDT</span></h4>
+												<!-- <p>Add more collateral and extend PDL</p> -->
 											</div>
 											<div class="col-lg-4 col-sm-4 col-12">
 												<h5>Loan repayment</h5>
@@ -261,12 +261,12 @@ $loan_variables=(object)$loan_variables;
 						<div class="close-price">
 							<div class="row">
 								<div class="col-lg-8 b-right col-sm-8 col-12">
-									<label><input type="checkbox" name="close_price" id="backend-set-close-price" /> Set close price at  <form><input type="number" name="close_price" id="backend-close-price" placeholder="Enter amount"/><button type="button">USD</button></form></label>
+									<label><input type="checkbox" name="close_price" id="backend-set-close-price" /> Set close price at  <form><input type="number" name="close_price" id="backend-close-price" placeholder="Enter amount"/><button type="button">USDT</button></form></label>
 								</div>
 								<div class="col-lg-4 col-sm-4 col-12">
 									<div class="row">
 										<div class="col-lg-12 text-right col-sm-12 col-12">
-											<p>Min: <span id="backend-min-price">1,797,994.87</span> USD &nbsp;&nbsp; <mark>Max: <span id="backend-max-price">1,797,994.87</span> USD</mark></p>
+											<p>Min: <span id="backend-min-price">1,797,994.87</span> USDT &nbsp;&nbsp; <mark>Max: <span id="backend-max-price">1,797,994.87</span> USDT</mark></p>
 										</div>
 									</div>	
 									<div class="row">
