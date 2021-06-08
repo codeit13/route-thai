@@ -36,7 +36,9 @@ class LoanController extends Controller
 
         $fiat_rates=$ExchangeRatesService->fiat_rates();
 
-        $terms=array((object)['id'=>1,'days'=>30,'percentage'=>90],(object)['id'=>2,'days'=>30,'percentage'=>60],(object)['id'=>3,'days'=>60,'percentage'=>90]);
+        $terms=\App\Models\LoanTerms::all();
+
+        $loanSettings=\App\Models\Settings::whereIn('setting_code',['loan_price_down_limit','loan_max_percentage','loan_min_percentage'])->get();
 
         $price_down=(object)(['percentage'=>5]);
         
@@ -50,7 +52,7 @@ class LoanController extends Controller
 
         
 
-        return view('front.loan.request',compact('currencies','wallets','fiat_currencies','crypto_rates','fiat_rates','terms','price_down'));
+        return view('front.loan.request',compact('currencies','wallets','fiat_currencies','crypto_rates','fiat_rates','terms','price_down','loanSettings'));
     }
 
     /**
