@@ -146,8 +146,8 @@
 										<td>{{$currency->user_p2p_total-$currency->user_p2p_balance}}</td>
 										<td>{{$currency->user_p2p_total}}</td>
 										<td class="center_small">
-											<a href="#" class="btn-success"><i class="fas fa-coins"></i> Buy</a>
-											<a href="{{route('p2p.exchange')}}" class="btn-primary"><i class="fal fa-chart-line"></i> Sell</a>
+											<a href="{{route('p2p.exchange')}}" class="btn-success"><i class="fas fa-coins"></i> Buy</a>
+											<a href="{{route('sell.create')}}" class="btn-primary"><i class="fal fa-chart-line"></i> Sell</a>
 											<a href="{{route('p2p.exchange')}}" class="btn-primary"><i class="fal fa-chart-line"></i> Transfer</a>
 										</td>
 									</tr>
