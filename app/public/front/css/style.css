@@ -3448,6 +3448,7 @@ span.rt_span i.fa-trash-alt {
     display: inline-block;
     text-align: left;
     border-radius: 0;
+    word-break: break-all;
 }
 .site-menu ul li label {
     color: #00c98e;
@@ -5455,11 +5456,11 @@ section#loans-deshboard-new {
     font-style:italic;
     font-size:12px;
 }
-#wallet-content.order-history .history-details tbody tr {
+/*#wallet-content.order-history .history-details tbody tr {
     background:var(--new-card-bg);
     border-bottom:1px solid #dbe5ed;
     background:var(--new-card-bg);
-}
+}*/
 #wallet-content.order-history .history-details tbody tr:nth-of-type(odd) {
     background:var(--new-card-bg);
 }
@@ -8565,7 +8566,7 @@ a.btn-info:hover {
         text-align: left;
         font-size: 15px;
         display: inline-block;
-        padding: 14px 0px !important;
+        padding: 2px 0px !important;
     }
     .dark-light span.visible-xs {
         display: inline-block !important;
