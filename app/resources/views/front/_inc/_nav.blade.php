@@ -76,7 +76,7 @@
                                     $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
                                     @endphp
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                         @if($default_language->hasMedia('icon'))
+                                         @if(isset($default_language) and $default_language != null and $default_language->hasMedia('icon'))
                                         <img src="{{ $default_language->firstMedia('icon') != null ? $default_language->firstMedia('icon')->getUrl() : '' }}" alt="">
                                         @endif
 
