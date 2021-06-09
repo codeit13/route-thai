@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LoanRepayCurrency extends Model
+class CollateralAddress extends Model
 {
     use HasFactory;
 
-    protected $table='loan_repay_currency';
+    protected $table='collateral_address';
     protected $fillable=['currency_id','crypto_wallet_address','updated_by','created_at'];
 
     public function currency() {

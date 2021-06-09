@@ -3,6 +3,8 @@
     Settings |
 @endsection
 @section('content')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <div class="container">
     @foreach (['danger', 'warning', 'success', 'info'] as $msg)
       @if(Session::has($msg))
@@ -25,14 +27,51 @@
           <div class="card-header">
             <div class="row align-items-center">
               <div class="col-8">
-                <h3 class="mb-0">Loan Settings</h3>
+                <h3 class="mb-0">{{ __("Loan Application Settings")}}</h3>
               </div>
               <div class="col-4 text-right">
-                <button type="submit" class="btn btn-default">Update</button>
+                <button type="submit" class="btn btn-default" value="update_record" name="btn_action">Update</button>
               </div>
             </div>
           </div>
           <div class="card-body">
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="loanable_currency">Loanable Currency</label>
+                    <select class="form-control select2" name="loanable_currency[]" id="loanable_currency" multiple="multiple">
+                      @foreach($cruptoCurrencies as $record)
+                        <option value="{{ $record->id }}" @if($record->is_loanable == "1") selected="" @endif>{{ $record->name }}</option>
+                      @endforeach
+                    </select>
+                    @error('loanable_currency')
+                    <p class="invalid-value" role="alert">
+                        <strong>{{ __($message) }}</strong>
+                    </p>
+                    @enderror
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="collateral_currency">Collateral Currency  <a href="#" data-toggle="modal" data-target="#collateralAddressModal"><u>Assign Address</u></a></label>
+                    <select class="form-control select2" name="collateral_currency[]" id="collateral_currency" multiple="multiple">
+                      @foreach($cruptoCurrencies as $record)
+                        <option value="{{ $record->id }}" @if($record->is_collateral == "1") selected="" @endif>{{ $record->name }}</option>
+                      @endforeach
+                    </select>
+                    @error('collateral_currency')
+                    <p class="invalid-value" role="alert">
+                        <strong>{{ __($message) }}</strong>
+                    </p>
+                    @enderror
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4">
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-lg-6">
@@ -57,7 +96,7 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="loan_min_percentage">Min</label>
+                    <label class="form-control-label" for="loan_min_percentage">Close Price Min</label>
                     <div class="input-group">
                       <input type="number" min="1" max="100" id="loan_min_percentage" name="loan_min_percentage" class="form-control percentage_input" placeholder="Min Percentage" onchange="checkMinMax()" value="{{ $settingValue['loan_min_percentage'] }}">
                       <div class="input-group-append">
@@ -73,7 +112,7 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="loan_max_percentage">Max</label>
+                    <label class="form-control-label" for="loan_max_percentage">Close Price Max</label>
                     <div class="input-group">
                       <input type="number" min="1" max="100" id="loan_max_percentage" name="loan_max_percentage" class="form-control percentage_input" placeholder="Max Percentage" onchange="checkMinMax()" value="{{ $settingValue['loan_max_percentage'] }}">
                       <div class="input-group-append">
@@ -89,32 +128,15 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </form>
-
-      <!-- Loan Term Setting -->
-      <form action="{{ route('admin.settings.loan.termsupdate') }}" method="POST">
-        @csrf()
-        <div class="card">
-          <div class="card-header">
-            <div class="row align-items-center">
-              <div class="col-8">
-                <h3 class="mb-0">Loan Terms Settings</h3>
-              </div>
-              <div class="col-4 text-right">
-                <button type="submit" class="btn btn-default" value="update_record" name="btn_action">Update</button>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
+            <hr class="my-4">
+            <h6 class="heading-small text-muted mb-4">Loan Term information</h6>
             <div class="pl-lg-4">
               @foreach($lornTerms as $key=>$term)
               <div class="row">
                 <div class="col-lg-3">
                   <div class="form-group">
                     <div class="input-group">
-                      <input type="number" min="1" max="100" class="form-control percentage_input" name="terms[{{$term->id}}][percentage]" placeholder="Terms Percentage" value="{{ $term->terms_percentage }}">
+                      <input type="number" min="1" max="100" class="form-control percentage_input" name="terms[{{$term->id}}][percentage]" placeholder="Term Percentage" value="{{ $term->terms_percentage }}">
 
                       <div class="input-group-append">
                         <span class="input-group-text">%</span>
@@ -129,7 +151,7 @@
                 </div>
                 <div class="col-lg-3">
                   <div class="form-group">
-                    <input type="number" class="form-control percentage_input" name="terms[{{$term->id}}][duration]" placeholder="No of Days/Month" value="{{ $term->no_of_duration }}">
+                    <input type="number" class="form-control percentage_input" name="terms[{{$term->id}}][duration]" placeholder="Loan Term Value" value="{{ $term->no_of_duration }}">
                     @error("terms.".$term->id.".duration")
                     <p class="invalid-value" role="alert">
                         <strong>{{ __($message) }}</strong>
@@ -155,7 +177,7 @@
                 <div class="col-lg-3">
                   <div class="form-group">
                     <div class="input-group">
-                      <input type="number" min="1" max="100" class="form-control percentage_input" id="terms_percentage" name="terms_percentage" placeholder="Terms Percentage">
+                      <input type="number" min="1" max="100" class="form-control percentage_input" id="terms_percentage" name="terms_percentage" placeholder="Term Percentage">
 
                       <div class="input-group-append">
                         <span class="input-group-text">%</span>
@@ -170,7 +192,7 @@
                 </div>
                 <div class="col-lg-3">
                   <div class="form-group">
-                    <input type="number" class="form-control percentage_input" id="no_of_duration" name="no_of_duration" placeholder="No of Days/Month">
+                    <input type="number" class="form-control percentage_input" id="no_of_duration" name="no_of_duration" placeholder="Loan Term Value">
                     @error('no_of_duration')
                     <p class="invalid-value" role="alert">
                         <strong>{{ __($message) }}</strong>
@@ -195,6 +217,44 @@
           </div>
         </div>
       </form>
+      <!-- Collateral Address Attach Modal -->
+      <div class="modal fade" id="collateralAddressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="{{ route('admin.settings.loan.collateral') }}" method="POST">
+        @csrf()
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">{{ __("Collateral Crypto Address") }}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              @foreach($collateralCruptoCurrencies as $record)
+              <div class="row">
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <select class="form-control" name="currency_id" disabled="">
+                          <option value="{{ $record->id }}">{{ $record->name }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-8">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="crypto_wallet_address" name="crypto_wallet_address[{{$record->id}}]" placeholder="Crypto Wallet Address" required="" value="{{ $record->collateral_address->crypto_wallet_address }}">
+                    </div>
+                  </div>
+              </div>
+              @endforeach
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
 
 <!-- Loan Repay Setting -->
 @if($actionName=="admin.settings.loan.repay.edit")
@@ -209,10 +269,12 @@
           <div class="card-header">
             <div class="row align-items-center">
               <div class="col-8">
-                <h3 class="mb-0">Loan Repay Settings</h3>
+                <h3 class="mb-0">Loan Repayment</h3>
               </div>
               <div class="col-4 text-right">
+                @if($actionName!="admin.settings.loan.repay.edit")
                 <button type="submit" class="btn btn-default" value="update_record" name="btn_action">Update</button>
+                @endif
               </div>
             </div>
           </div>
@@ -221,7 +283,7 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="loan_repay_currency_type">Loan Repay Currency Type</label>
+                    <label class="form-control-label" for="loan_repay_currency_type">Type of Crypto Repayment Currency</label>
                     <div class="tab-pane tab-example-result fade show active" id="loan_repay_currency_type" role="tabpanel" aria-labelledby="-component-tab">
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-secondary active">
@@ -240,7 +302,7 @@
             </div>
             <div id="other_crypto_section" @if($settingValue["loan_repay_currency_type"]==1) style="display: none" @endif>
                 <hr class="my-4">
-                <h6 class="heading-small text-muted mb-4">Select & Add Crypto Address</h6>
+                <h6 class="heading-small text-muted mb-4">Repayment Crypto Address</h6>
                 <div class="pl-lg-4">
                     @foreach($loanRepay as $key=>$record)
                         @if($record->id==$editId) @php $editData=$record; continue; @endphp @endif
@@ -333,8 +395,13 @@
 @endsection
 
 @section('page_scripts')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
+    $( function() {
+      $( "#dialog" ).dialog();
+    } );
+
     function checkMinMax() {
         var minVal = parseInt($("#loan_min_percentage").val());
         var maxVal = parseInt($("#loan_max_percentage").val());
@@ -368,6 +435,14 @@
         } else {
             $("#other_crypto_section").hide();
         }
+    });
+
+    $('#collateral_currency').select2({
+      placeholder: "Select a currency",
+    });
+
+    $('#loanable_currency').select2({
+      placeholder: "Select a currency",
     });
 </script>
 @endsection

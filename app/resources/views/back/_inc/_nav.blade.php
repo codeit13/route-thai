@@ -67,12 +67,7 @@
                      <span class="nav-link-text">Settings</span>
                      </a>
                   </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="{{ route('admin.settings.loan') }}"> <i class="fa fa-settings text-green" aria-hidden="true"></i>
-                     <span class="nav-link-text">Loan Settings</span>
-                     </a>
-                  </li>
-                  {{-- 
+                  {{--
                   <li class="nav-item">
                      <a class="nav-link" href="#"> <i class="fa fa-file-excel-o" aria-hidden="true"></i>
                      <span class="nav-link-text"></span>
@@ -150,20 +145,22 @@
                  <!-- Divider -->
                    
                  <!-- Heading -->
+                 <hr class="my-3">
                  <h6 class="navbar-heading p-0 text-muted">
-                   <span class="docs-normal"></span>
+                   <span class="docs-normal">Loan Management</span>
                  </h6>
-                 <ul class="navbar-nav">
-                  {{-- <li class="nav-item">
-                     <a class="nav-link" href="#"><i class="fa fa-language text-green" aria-hidden="true"></i>
-                       <span class="nav-link-text"></span>
+                 <ul class="navbar-nav mb-md-3">
+                  <li class="nav-item">
+                    <!-- {{ route('admin.loan.list') }} -->
+                     <a class="nav-link" href="#"> <i class="ni ni-money-coins text-red" aria-hidden="true"></i>
+                     <span class="nav-link-text">Loan Requestes</span>
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" href="#"><i class="fa fa-language text-red" aria-hidden="true"></i>
-                       <span class="nav-link-text"></span>
+                     <a class="nav-link" href="{{ route('admin.settings.loan') }}"> <i class="ni ni-money-coins text-red" aria-hidden="true"></i>
+                     <span class="nav-link-text">Loan Settings</span>
                      </a>
-                  </li> --}}
+                  </li>
              </ul>
           </div>
        </div>

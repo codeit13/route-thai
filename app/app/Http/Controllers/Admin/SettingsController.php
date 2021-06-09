@@ -7,6 +7,7 @@ use App\Models\Currency;
 use App\Models\Settings;
 use App\Models\LoanTerms;
 use App\Models\LoanRepayCurrency;
+use App\Models\CollateralAddress;
 use Auth;
 
 class SettingsController extends Controller
@@ -143,6 +144,7 @@ class SettingsController extends Controller
 
     }
 
+    // Loan Setting Page
     public function loan_settings(Request $request) {
         $loanSettings=Settings::whereIn("setting_code",["loan_price_down_limit","loan_min_percentage","loan_max_percentage","loan_repay_currency_type"])->get();
 
@@ -153,34 +155,17 @@ class SettingsController extends Controller
         $dropdowns=$this->currenciesForDropDown();
         $lornTerms = LoanTerms::get();
         $cruptoCurrencies=\App\Models\Currency::where('is_crypto',1)->get();
+        $collateralCruptoCurrencies=\App\Models\Currency::with('collateral_address')->where('is_collateral',1)->get();
         $loanRepay=LoanRepayCurrency::with('currency')->get();
 
         $actionName = $request->route()->getName();
         $editId = ($request->id)?$request->id:0;
-        return view('back.settings.loan',compact('settingValue','dropdowns','lornTerms','cruptoCurrencies','loanRepay','actionName','editId'));
+        return view('back.settings.loan',compact('settingValue','dropdowns','lornTerms','cruptoCurrencies','loanRepay','actionName','editId','collateralCruptoCurrencies'));
     }
 
+    // Application Loan Setting Save Method
     public function loan_settings_update(Request $request) {
       $adminId = Auth::user()->id;
-      $request->validate([
-        'loan_price_down_limit'=>'required|numeric|min:1|max:100',
-        'loan_min_percentage'=>'required|numeric|min:1|max:100',
-        'loan_max_percentage'=>'required|numeric|gt:loan_min_percentage|min:1|max:100'
-      ]);
-
-      try {
-            Settings::where("setting_code","loan_price_down_limit")->update(["setting_value"=>$request->loan_price_down_limit,"updated_by"=>$adminId]);
-            Settings::where("setting_code","loan_min_percentage")->update(["setting_value"=>$request->loan_min_percentage,"updated_by"=>$adminId]);
-            Settings::where("setting_code","loan_max_percentage")->update(["setting_value"=>$request->loan_max_percentage,"updated_by"=>$adminId]);
-
-            return redirect()->back()->with('success','Loan setting updated successfully');
-            
-        } catch (Throwable $exception) {
-            return redirect()->back()->with('warning',$exception->getMessage());
-        }
-    }
-
-    public function loan_terms_settings_update(Request $request) {
       try {
         if($request->btn_action=="update_record") {
           $rules = [];
@@ -189,23 +174,43 @@ class SettingsController extends Controller
               $rules['terms.'.$key.'.duration'] = 'required|numeric|min:1';
               $rules['terms.'.$key.'.type'] = 'required';
           }
+          
+          $rules['collateral_currency']='required|array|min:1';
+          $rules['loanable_currency']='required|array|min:1';
+          $rules['loan_price_down_limit']='required|numeric|min:1|max:100';
+          $rules['loan_min_percentage']='required|numeric|min:1|max:100';
+          $rules['loan_max_percentage']='required|numeric|gt:loan_min_percentage|min:1|max:100';
+
           $request->validate($rules);
+
+          if(count($request->collateral_currency)){
+            Currency::whereIn("id",$request->collateral_currency)->update(["is_collateral"=>"1"]);
+            Currency::whereNotIn("id",$request->collateral_currency)->update(["is_collateral"=>"0"]);
+          }
+          if(count($request->loanable_currency)){
+            Currency::whereIn("id",$request->loanable_currency)->update(["is_loanable"=>"1"]);
+            Currency::whereNotIn("id",$request->loanable_currency)->update(["is_loanable"=>"0"]);
+          }
+
+          Settings::where("setting_code","loan_price_down_limit")->update(["setting_value"=>$request->loan_price_down_limit,"updated_by"=>$adminId]);
+          Settings::where("setting_code","loan_min_percentage")->update(["setting_value"=>$request->loan_min_percentage,"updated_by"=>$adminId]);
+          Settings::where("setting_code","loan_max_percentage")->update(["setting_value"=>$request->loan_max_percentage,"updated_by"=>$adminId]);
           
           foreach($request->get('terms') as $key => $val) {
             LoanTerms::where("id",$key)->update(["terms_percentage"=>$val['percentage'],"no_of_duration"=>$val['duration'],"duration_type"=>$val['type']]);
           }
-          return redirect()->back()->with('success','Loan terms updated successfully');
+          return redirect()->back()->with('success','Loan application setting updated successfully');
         } else if($request->btn_action=="new_record") {
           $request->validate([
             'terms_percentage'=>'required|numeric|min:1|max:100',
             'no_of_duration'=>'required|numeric|min:1',
             'duration_type'=>'required'
           ]);
-          LoanTerms::insert($request->except(["_token","btn_action","terms"]));
-          return redirect()->back()->with('success','Loan terms added successfully');
+          LoanTerms::insert(["terms_percentage"=>$request->terms_percentage,"no_of_duration"=>$request->no_of_duration,"duration_type"=>$request->duration_type]);
+          return redirect()->back()->with('success','Loan term added successfully');
         } else {
           LoanTerms::destroy($request->btn_action);
-          return redirect()->back()->with('success','Loan terms deleted successfully');
+          return redirect()->back()->with('success','Loan term deleted successfully');
         }
           
       } catch (Throwable $exception) {
@@ -221,8 +226,7 @@ class SettingsController extends Controller
           return redirect()->back()->with('success','Loan currency type update successfully');
         }else if($request->btn_action=="new_record") {
           $request->validate(['currency_id'=>'required','crypto_wallet_address'=>'required']);
-          $request->merge(["updated_by"=>$adminId]);          
-          LoanRepayCurrency::updateOrCreate(['currency_id'=>$request->currency_id],$request->except(["_token","btn_action","loan_repay_currency_type"]));
+          LoanRepayCurrency::updateOrCreate(['currency_id'=>$request->currency_id],["currency_id"=>$request->currency_id,"crypto_wallet_address"=>$request->crypto_wallet_address,"updated_by"=>$adminId]);
 
           return redirect()->back()->with('success','Loan currency added successfully');
         } else {
@@ -237,13 +241,14 @@ class SettingsController extends Controller
 
     public function loan_currency_update(Request $request,$id) {
       $request->validate([
-        'currency_id'=>'required',
+        // 'currency_id'=>'required',
         'crypto_wallet_address'=>'required'
       ]);
 
       $loanCurData = LoanRepayCurrency::find($id);
 
       if($loanCurData) {
+        // dd("Yes");
         // $loanCurData->currency_id = $request->currency_id;
         $loanCurData->crypto_wallet_address = $request->crypto_wallet_address;
         $loanCurData->update();
@@ -251,5 +256,13 @@ class SettingsController extends Controller
       } else {
         return redirect()->route("admin.settings.loan")->with('warning','Loan currency record update failed');
       }
+    }
+
+    public function collateral_address_update(Request $request) {
+      $adminId = Auth::user()->id;
+      foreach ($request->crypto_wallet_address as $key => $value) {
+        CollateralAddress::updateOrCreate(['currency_id'=>$key],["currency_id"=>$key,"crypto_wallet_address"=>$value,"updated_by"=>$adminId]);
+      }
+      return redirect()->back()->with('success','Collateral address attached successfully');
     }
 }
