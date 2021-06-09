@@ -192,7 +192,7 @@
 							will be temporarily unavailable for withdrawals.</p>
 						</div>
 						<div class="col-lg-6 xs-flush col-sm-6 col-12">
-								<div class="white-box">
+								<div class="white-box deposite_second_sec">
 
 									@foreach($currencies as $c_index => $currency)
 
@@ -297,7 +297,14 @@
 															<h3>{{$currency->deposit_address->address??''}}</h3>
 														</div>
 														<div class="col-6 text-right col-sm-6 col-lg-6">
-															<img class="small_mobiledd" src="{{asset('front/img/icon-14.png')}}" alt="">
+															<!-- <img class="small_mobiledd" src="{{asset('front/img/icon-14.png')}}" alt=""> -->
+															<ul>
+																<li><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy Address"><i class="fa fa-clone" aria-hidden="true"></i></a></li>
+																<li class="css-11nldkw">
+																	<a href="#"><i class="fa fa-qrcode" aria-hidden="true"></i></a>
+																	<div class="QrCode css-jac2fa"><div class="css-ghsb4z"></div><canvas height="120" width="120" style="height: 120px; width: 120px; background: url({{asset('front/img/qrcode.png')}});"></canvas></div>
+																</li>
+															</ul>
 														</div>
 													</div>
 												</div>

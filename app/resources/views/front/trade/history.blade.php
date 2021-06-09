@@ -47,7 +47,7 @@ Route: P2P Trading Platform
             <div class="head-xs visible-xs">
                <form id="filterForm1" class="form_22" action="{{route('trade.history')}}" method="GET" >
                   <div class="row">
-                     <div class="col-7">
+                     <div class="col-xs-12">
                         <div class="row">
                            <div class="col-12">
                               <label>{{__("Date")}}</label>
@@ -62,7 +62,7 @@ Route: P2P Trading Platform
                            </div>
                         </div>
                      </div>
-                     <div class="col-5 sp-left">
+                     <div class="col-xs-12 sp-left">
                         <div class="row">
                            <div class="col-12">
                               <label>{{__('Types of Currency')}}</label>
@@ -101,19 +101,21 @@ Route: P2P Trading Platform
                         </div>
                      </div>
                   </div>
-                  <div class="col-12 flush">
-                     <label>{{__("Status")}}</label>
+                  <div class="row">
+                     <div class="col-xs-12 flush">
+                        <label>{{__("Status")}}</label>
+                     </div>
                   </div>
                   <div class="row">
                      <div class="col-4">
                         <select name="status" class="filter-type">
-                           <option value=""> select </option>
+                           <option value=""> Select </option>
                            <option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
                            <option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
                            <option value="rejected" @if($request->status=='rejected') selected @endif>{{__('Rejected')}}</option>
                         </select>
                      </div>
-                     <div class="col-8">
+                     <div class="col-8 xs-flush-right">
                         <input class="coin" name="search" value="{{$request->search??''}}" type="search" placeholder="Search Coin Name" />
                      </div>
                   </div>

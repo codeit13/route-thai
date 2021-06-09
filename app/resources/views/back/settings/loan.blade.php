@@ -241,7 +241,7 @@
                   </div>
                   <div class="col-lg-8">
                     <div class="form-group">
-                      <input type="text" class="form-control" id="crypto_wallet_address" name="crypto_wallet_address[{{$record->id}}]" placeholder="Crypto Wallet Address" required="" value="{{ $record->collateral_address->crypto_wallet_address }}">
+                      <input type="text" class="form-control" id="crypto_wallet_address" name="crypto_wallet_address[{{$record->id}}]" placeholder="Crypto Wallet Address" required="" @if($record->collateral_address) value="{{ $record->collateral_address->crypto_wallet_address }}" @endif>
                     </div>
                   </div>
               </div>
