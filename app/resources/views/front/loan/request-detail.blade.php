@@ -48,7 +48,7 @@
 											<label>My Collateral is</label>
 										</div>	
 										<div class="col-lg-12 xs-right col-sm-12 col-6">
-											<h4>1.00 <span>BTC</span></h4>
+											<h4>{{$loan_detail->collateral_amount}} <span>{{__($loan_detail->collateral_currency->short_name)}}</span></h4>
 										</div>
 									</div>
 								</div>
@@ -58,7 +58,7 @@
 											<label>Loan Amount</label>
 										</div>
 										<div class="col-lg-12 xs-right col-sm-12 col-6">	
-											<h4>33899.98 <span>USD</span></h4>
+											<h4>{{$loan_detail->loan_amount}}<span>{{$loan_detail->loan_currency->short_name}}</span></h4>
 										</div>
 									</div>
 								</div>
@@ -68,7 +68,7 @@
 											<label>Loan Term Value</label>
 										</div>
 										<div class="col-lg-12 xs-right col-sm-12 col-6">
-											<h4>90% <br><span>30 days</span></h4>
+											<h4>{{$loan_detail->term_detail->terms_percentage}}% <br><span>{{$loan_detail->term_detail->no_of_duration}} &nbsp;{{$loan_detail->term_detail->duration_type}}</span></h4>
 										</div>
 									</div>
 								</div>
@@ -78,7 +78,9 @@
 											<label>Close price set at</label>
 										</div>
 										<div class="col-lg-12 xs-right col-sm-12 col-6">	
-											<h4>21900 <span>USD</span></h4>
+											@if($loan_detail->close_price)
+											<h4>{{$loan_detail->close_price}} <span>USDT</span></h4>
+											@endif
 										</div>
 									</div>
 								</div>
@@ -91,18 +93,17 @@
 										<div class="row">
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Loan Duration</h5>
-												<h4>30 days</h4>
-												<p>Extend at anytime by paying 701.88 USD (2.10%) 
-												loan fee.</p>
+												<h4>{{$loan_detail->term_detail->no_of_duration}} &nbsp;{{$loan_detail->term_detail->duration_type}}</h4>
+												<p>The interest rate 2.1% will be charge on the loan amount.</p>
 											</div>
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Price down limit</h5>
-												<h4>5.00% or 35279.76 <span>BTC/USD</span></h4>
+												<h4>{{$loan_detail->settings->loan_price_down_limit}}% or {{$loan_detail->price_down_value}} <span>{{__($loan_detail->collateral_currency->short_name)}}/USDT</span></h4>
 												<p>Add more collateral and extend PDL</p>
 											</div>
 											<div class="col-lg-4 col-sm-4 col-12">
 												<h5>Loan repayment</h5>
-												<h4>34124.81 <span>USD</span></h4>
+												<h4>{{$loan_detail->loan_repayment}} <span>{{$loan_detail->loan_currency->short_name}}</span></h4>
 												<p>Full repayment required only for full collateral return.</p>
 											</div>
 										</div>
@@ -173,11 +174,11 @@
 									<div class="row">
 										<div class="col-lg-6 col-sm-6 col-12">
 											<label>Final Loan Amount</label>
-											<h3>33422.93 <span>USD</span></h3>
+											<h3>{{$loan_detail->loan_repayment}}<span>{{$loan_detail->loan_currency->short_name}}</span></h3>
 										</div>
 										<div class="col-lg-6 col-sm-6 col-12">
 											<label>Collateral Amount</label>
-											<h3>1.00 <span>BTC</span></h3>
+											<h3>{{$loan_detail->collateral_amount}} <span>{{$loan_detail->collateral_currency->short_name}}</span></h3>
 										</div>
 									</div>
 								</div>
