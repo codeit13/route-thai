@@ -152,8 +152,26 @@
                                <button type="button" class="btn btn-sm btn-toggle" data-mode="line_notification" data-toggle="button" aria-pressed="{{ Auth::user()->line_notification ? 'true' : 'false' }}" autocomplete="off">
                                  <div class="handle"></div>
                                </button>
+                            </div>
+                            <div class="sn_notificatio">
+                               <i class="fa fa-telegram"></i>
+                               Telegram Notification
+                               <button type="button" class="btn btn-sm btn-toggle" data-mode="telegram_notification" data-toggle="button" aria-pressed="{{ Auth::user()->telegram_notification ? 'true' : 'false' }}" autocomplete="off">
+                                 <div class="handle"></div>
+                               </button>
                             </div> 
-                            <p class="alert toggle-msg small" style="display: none"></p>             
+                            <p class="alert toggle-msg small" style="display: none"></p>       
+
+                            <div class="sn_notificatio">
+                               <i class="fa fa-telegram"></i>
+                               Telegram User Id
+                               <div>
+                               <input id="telegram-user-id" class="form-control" style="width: 70%; float: left;" type="text">
+                               <button id="telegram-user-id-submit" class="btn btn-sm btn-primary" style="font-size: large;">Submit</button>
+                               </div>
+                               
+                            </div> 
+
                          </div>
                       </div>
                    </div>
@@ -451,6 +469,22 @@
             }
          });
     });
+
+    $('#telegram-user-id-submit').on('click',function(e){
+        e.preventDefault();
+        var telegram_user_id= $('#telegram-user-id').val();
+         $.ajax({
+            type:'POST',
+            dataType:'JSON',
+            url:"{{ route('user.update.telegram-user-id') }}",
+            data:{ telegram_user_id : telegram_user_id, _token: "{{ csrf_token() }}" },
+            success:function(data) {
+               $('.usr-msg').html(data.message).show();
+               setTimeout(function() { $(".usr-msg").hide() }, 2000);               
+            }
+         });
+    });
+
    //  $('.currency-item').on('click',function(e){
    //    e.preventDefault();
    //    var currency= $(this).data('currency');

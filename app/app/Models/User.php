@@ -77,4 +77,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\UserPaymentMethod','user_id','id');
     }
+    public function routeNotificationForTelegram()
+    {
+        return $this->telegram_user_id;
+    }
 }
