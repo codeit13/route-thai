@@ -122,7 +122,11 @@ Route::middleware('auth')->group(function(){
 
     Route::get('request',[App\Http\Controllers\LoanController::class, 'create'])->name('loan.create');
 
-    Route::get('request/{id}/detail',[App\Http\Controllers\LoanController::class, 'show'])->name('loan.request.detail');
+    Route::post('request/loan/initialize',[App\Http\Controllers\LoanController::class, 'initialize'])->name('loan.initialize');
+
+
+
+    Route::get('request/detail',[App\Http\Controllers\LoanController::class, 'show'])->name('loan.request.detail');
 
     Route::get('{id}/detail',[App\Http\Controllers\LoanController::class, 'edit'])->name('loan.show.detail');
 
