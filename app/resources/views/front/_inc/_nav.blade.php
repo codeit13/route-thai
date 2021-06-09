@@ -78,9 +78,9 @@
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                          @if(isset($default_language) and $default_language != null and $default_language->hasMedia('icon'))
                                         <img src="{{ $default_language->firstMedia('icon') != null ? $default_language->firstMedia('icon')->getUrl() : '' }}" alt="">
+                                        {{ $default_language->name }}
                                         @endif
 
-                                        {{ $default_language->name }}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         @foreach ($languages as $item)
@@ -132,8 +132,8 @@
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         @if(isset($default_language) and $default_language != null and $default_language->hasMedia('icon'))
                                         <img src="{{ $default_language->firstMedia('icon')->getUrl()??'' }}" alt="">
-                                        @endif
                                         {{ $default_language->name }}
+                                        @endif
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         @foreach ($languages as $item)
