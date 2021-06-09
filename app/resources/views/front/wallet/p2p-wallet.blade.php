@@ -98,7 +98,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12 col-sm-12 col-12">
+			<div class="col-lg-12 col-sm-12 col-12 xs-flush">
 				<div class="white-box">
 					<div class="row">
 						<div class="col-lg-12 xs-flush col-sm-12 col-12">
@@ -145,9 +145,10 @@
 										<td>{{$currency->user_p2p_balance}}</td>
 										<td>{{$currency->user_p2p_total-$currency->user_p2p_balance}}</td>
 										<td>{{$currency->user_p2p_total}}</td>
-										<td>
-											<a href="#" class="btn-success"><i class="fas fa-coins"></i> {{__('Deposit')}}</a>
-											<a href="{{route('p2p.exchange')}}" class="btn-primary"><i class="fal fa-chart-line"></i> {{__('P2P Trading')}}</a>
+										<td class="center_small">
+											<a href="#" class="btn-success"><i class="fas fa-coins"></i> Buy</a>
+											<a href="{{route('p2p.exchange')}}" class="btn-primary"><i class="fal fa-chart-line"></i> Sell</a>
+											<a href="{{route('p2p.exchange')}}" class="btn-primary"><i class="fal fa-chart-line"></i> Transfer</a>
 										</td>
 									</tr>
 									@endforeach
@@ -164,7 +165,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-12 text-center visible-xs col-sm-12 col-12">
+				<div class="col-lg-12 text-center visible-xs col-sm-12 col-12 no_more">
 					<a href="#" class="load-more">Load More</a>
 				</div>
 			</div>
