@@ -23,10 +23,7 @@ class SellController extends Controller
     	$fiat_currencies = Currency::where('type_id',2)->get();
         $crypto_ids = $crypto_currencies->pluck('id');
 
-        $current_balance = Wallet::where('wallet_type',3)
-                                    ->where('user_id',auth()->user()->id)
-                                    ->pluck('coin','currency_id');
-
+        $current_balance = Wallet::toOptionList(['wallet_type'=>3,'user_id'=>auth()->user()->id]);
         $default_fiat_currency = (auth()->user()->default_currency != '')?Currency::find(auth()->user()->default_currency):Currency::where('type_id',2)->first();
     	
     	if ($step == 2) {
@@ -120,10 +117,14 @@ class SellController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function buyRequest($trans_id){
-        $transcation = Transaction::with('buyer_requests')
+        $transcation = Transaction::with(['buyer_requests'=>function($query){
+                                            $query->where('status','!=','cancel');
+                                        }])
                                         ->with('currency')
                                         ->with('fiat_currency')
-                                        ->withCount('buyer_requests')
+                                        ->withCount(['buyer_requests'=>function($query){
+                                            $query->where('status','!=','cancel');
+                                        }])
                                         ->where('trans_id',$trans_id)->first();
         
         if ($transcation->buyer_requests_count >0) {
