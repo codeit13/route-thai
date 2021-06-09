@@ -59,7 +59,7 @@ Route: P2P Trading Platform - sell crypto
 										</div>
 									</div>
 									<div class="col-lg-12 xs-right col-sm-12 col-6">
-										<div id="ID5268172_USD__10_s"><img src="{{ $transcation->currency->getMedia('icon')->first()->getUrl() }}" alt=""/><span class="hidden-xs">{{ $transcation->currency->name }}</span><span class="visible-xs red-c">{{ $transcation->currency->short_name }}</span>
+										<div id="ID5268172_USD__10_s"><img class="coin_image" src="{{ $transcation->currency->getMedia('icon')->first()->getUrl() }}" alt=""/><span class="hidden-xs">{{ $transcation->currency->name }}</span><span class="visible-xs red-c">{{ $transcation->currency->short_name }}</span>
 										</div>
 									</div>
 								</div>
