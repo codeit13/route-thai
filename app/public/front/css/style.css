@@ -7811,6 +7811,9 @@ a.btn-info:hover {
 /* Landscape phones and portrait tablets */
 
 @media (max-width: 767px) {
+    .dropdown.currency_two.three_coins.new_select_b.crypto.currencyDropdown.show .dropdown-menu.show {
+        
+    }
     .multi_form .dropdown.currency_two.three_coins .dropdown-menu.show a {
         padding: 0px 15px !important;
         color: var(--text-color);
@@ -8261,10 +8264,10 @@ a.btn-info:hover {
         top: 85% !important;
         left: 0 !important;
     }
-    #wallet-content .white-box button#dropdownMenuButton {
+    /*#wallet-content .white-box button#dropdownMenuButton {
         line-height: 27px !important;
         font-size: 10px !important;
-    }
+    }*/
     #wallet-content.request.crypto ul.janral-head {
         margin-bottom: 0px !important;
     }
@@ -8435,7 +8438,7 @@ a.btn-info:hover {
     }
     #wallet-content .white-box button#dropdownMenuButton span {
         color: #b2b2b2;
-        font-size: 9px;
+        font-size: 14px;
     }
     #content.sellers {
         background: var(--body-bg-2) !important;
@@ -9390,10 +9393,19 @@ a.btn-info:hover {
         float: right;
         padding-top: 21px;
     }
-    #wallet-content .white-box td:nth-child(3n), #wallet-content .white-box td:nth-child(4n), #wallet-content .white-box td:nth-child(5n) {
+    #wallet-content .white-box td:nth-child(3n), #wallet-content .white-box td:nth-child(4n) {
         display: none;
     }
-    #wallet-content .white-box td:nth-child(6n) {
+    #wallet-content .white-box td:nth-child(5n) {
+        display: inline-block;
+        text-align: left;
+        padding-top: 0px;
+        padding-bottom: 5px;
+    }
+    /*#wallet-content .white-box.show_two_button td:nth-child(3n){
+        display: none;
+    }*/
+    #wallet-content .white-box.show_two_button td:nth-child(3n) {
         display: inline-block;
         text-align: left;
         padding-top: 0px;
@@ -9440,8 +9452,11 @@ a.btn-info:hover {
         padding: 0px;
     }
     #wallet-content.request .p-text {
-        padding: 0px 15px !important;
-        margin-top: 47px;
+        padding: 0px 35px !important;
+        margin-top: 0;
+    }
+    .white-box.deposite_second_sec {
+        padding: 10px 30px !important;
     }
     #wallet-content.request ul.janral-head {
         margin-bottom: 10px;
@@ -9456,7 +9471,7 @@ a.btn-info:hover {
     }
     #wallet-content.request .white-box {
         box-shadow: none;
-        padding: 0px 20px;
+        padding: 0px 0px;
     }
     #wallet-content.request ul.janral-head li a {
         color: #fff !important;
@@ -9922,7 +9937,9 @@ a.btn-info:hover {
         padding-right: 4px;
     }
     .head-xs .sp-left {
-        padding-left: 4px;
+        
+        display: inline-block;
+        width: 100%;
     }
     .head-xs input {
         height: 29px !important;
@@ -10047,13 +10064,23 @@ a.btn-info:hover {
     #content.sellers .white-box span.size a {
         right: -135px;
     }
+    .dh_padding {
+        padding: 0px 20px;
+    }
+    .head-xs.visible-xs {
+        padding: 0px 15px;
+    }
+    .dropdown.currency_two.three_coins.new_select_b button#dropdownMenuButton {
+        padding: .375rem .75rem !important;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 374px) {
     #wallet-content.withdraw-asset .step-h ul li:before {
-        height: 46% !important;
+        height: 73% !important;
         left: 10% !important;
-        margin-left: -7px!important;
+        margin-left: -5px!important;
+        top: 29px;
     }
 }
 

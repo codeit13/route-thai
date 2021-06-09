@@ -192,7 +192,7 @@
 							will be temporarily unavailable for withdrawals.</p>
 						</div>
 						<div class="col-lg-6 xs-flush col-sm-6 col-12">
-								<div class="white-box">
+								<div class="white-box deposite_second_sec">
 
 									@foreach($currencies as $c_index => $currency)
 

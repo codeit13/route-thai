@@ -51,7 +51,7 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-12  col-sm-12 col-12">
+				<div class="col-lg-12  col-sm-12 col-12 xs-flush">
 					<div class="white-box" style="">
 						<ul class="janral-head">
 
@@ -77,16 +77,12 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 					</ul>
 
 						<div class="head-xs visible-xs">
-							<form id="filterForm1" action="{{route('wallet.request.history',array('type'=>$walletType->id??'','typename'=>$walletType->type??''))}}" method="GET" >
+							<form id="filterForm1" class="dh_padding" action="{{route('wallet.request.history',array('type'=>$walletType->id??'','typename'=>$walletType->type??''))}}" method="GET" >
 
 								<input type="hidden" name="type">
 							<div class="row">
-								<div class="col-7">
-									<div class="row">
-										<div class="col-12">
-											<label>{{__('Date')}}</label>
-										</div>
-									</div>
+								<div class="col-xs-12">
+									<label>{{__('Date')}}</label>
 									<div class="row">
 
 										<div class="col-6 sp-right">
@@ -97,13 +93,9 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 										</div>
 									</div>
 								</div>
-								<div class="col-5 sp-left">
-									<div class="row">
-										<div class="col-12">
-											<label>{{__('Types of Currency')}}</label>
-										</div>
-									</div>
-									<div class="dropdown currency_two three_coins crypto currencyDropdown">
+								<div class="col-xs-12 sp-left">
+									<label>{{__('Types of Currency')}}</label>
+									<div class="dropdown currency_two three_coins new_select_b crypto currencyDropdown">
 
 
 									
@@ -216,7 +208,6 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 
 												</div>
 												     <input type="hidden" name="currency" class="coin_id_class" id="coin_id" value="{{($currentCurrency)}}"/>
-									</div>
 								</div>
 							</div>
 							<div class="col-12 flush">
