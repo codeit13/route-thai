@@ -100,7 +100,7 @@ class TradeController extends Controller
                                         // })
 
 
-         $transactions= $transactions->paginate(10)->withQueryString();
+         $transactions= $transactions->orderBy('created_at','desc')->paginate(10)->withQueryString();
 
           
        // echo '<pre>';print_r($transactions->toArray());die;
