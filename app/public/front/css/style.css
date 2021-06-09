@@ -41,6 +41,7 @@
     --transfer_popup_field: #f5f5f5;
 
     --new_dropdown_bg: #FAFAFA;
+    --light_dark_border: #00000014;
 }
 
 .dark-mode {
@@ -85,6 +86,7 @@
     --transfer_popup_field: rgb(233 233 233 / 15%);
 
     --new_dropdown_bg: #21242e;
+    --light_dark_border: #ffffff14;
 }
 
 @font-face {
@@ -1929,7 +1931,7 @@ th.res_po {
 }
 .dropdown.currency_two.three_coins.crypto button#dropdownMenuButton span {
     color: #b2b2b2 !important;
-    font-size: 14px;
+    font-size: 14px !important;
 }
 .dropdown.currency_two.three_coins.crypto .dropdown-menu.show a span{
     color: #b2b2b2;
@@ -2612,8 +2614,9 @@ img.header_img {
     margin-right: 5px;
 }
 .content_dashboard .card a.green_btn:hover {
-    background: #000;
-    color: #ffffff;
+    background-color: rgb(6 177 127);
+    border-color: rgb(6 177 127);
+    color: rgb(255, 255, 255);
 }
 .content_dashboard .card a.white_btn {
     border:1px solid #9B9B9B;
@@ -5247,20 +5250,20 @@ section#loans-deshboard-new {
 #wallet-content.withdraw-asset .step-h {
     float:left;
     width:100%;
-    padding-top:15px;
+    padding-top:10px;
 }
 #wallet-content.withdraw-asset .step-h ul li {
     padding-bottom:70px;
     position:relative;
 }
 #wallet-content.withdraw-asset .step-h ul li:before {
-    content:'';
-    position:absolute;
-        left: 6px;
-    top: 36px;
-    background:#00c98e;
-    height:60%;
-    width:2px;
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 28px;
+    background: #00c98e;
+    height: 77%;
+    width: 2px;
 }
 #wallet-content.withdraw-asset .step-h ul li:last-child:before {
     display:none;
@@ -5424,9 +5427,9 @@ section#loans-deshboard-new {
     margin-right:5px;
 }
 #wallet-content.order-history .history-details  tbody {
-    background:var(--new-card-bg);
+    /*background:var(--new-card-bg);
     border-radius:5px;
-    box-shadow: 1px 1px 12px rgb(0 0 0 / 8%);
+    box-shadow: 1px 1px 12px rgb(0 0 0 / 8%);*/
 }
 #wallet-content.order-history td.buy h2 {
     font-size:18px;
@@ -5456,11 +5459,11 @@ section#loans-deshboard-new {
     font-style:italic;
     font-size:12px;
 }
-/*#wallet-content.order-history .history-details tbody tr {
-    background:var(--new-card-bg);
-    border-bottom:1px solid #dbe5ed;
-    background:var(--new-card-bg);
-}*/
+#wallet-content.order-history .history-details tbody tr {
+    /*background:var(--new-card-bg);*/
+    border-bottom:1px solid var(--light_dark_border);
+    /*background:var(--new-card-bg);*/
+}
 #wallet-content.order-history .history-details tbody tr:nth-of-type(odd) {
     background:var(--new-card-bg);
 }
@@ -5659,7 +5662,7 @@ section#loans-deshboard-new {
 #wallet-content.request .field {
     float: left;
     width: 100%;
-    padding: 15px 0px;
+    padding: 10px 0px;
 }
 #wallet-content.request span.total {
     color: #b2b2b2;
@@ -5828,12 +5831,14 @@ section#loans-deshboard-new {
     text-decoration: none;
     border-radius: 6px;
     font-size: 16px;
+    cursor: pointer;
     color: #ffffff;
     padding: 0px 26px;
 }
 #wallet-content a.btn-primary:hover {
-    background-color: #05ca90;
-    color: #fff;
+    background-color: rgb(6 177 127);
+    border-color: rgb(6 177 127);
+    color: rgb(255, 255, 255);
 }
 #wallet-content a.btn-success {
     background: #adadad;
@@ -5845,6 +5850,7 @@ section#loans-deshboard-new {
     color: #ffffff;
     padding: 0px 26px;
     margin-left: 10px;
+    cursor: pointer;
 }
 #wallet-content a.btn-success:hover {
     background-color: #969090;
@@ -6046,10 +6052,48 @@ a.bell span {
 }
 
 /***** Unknown Css *****/
+.css-11nldkw {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    cursor: pointer;
+    position: relative;
+}
+.css-jac2fa {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    visibility: hidden;
+    position: absolute;
+    padding: 16px;
+    background-color: rgb(255, 255, 255);
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: rgb(0 0 0 / 8%) 0px 0px 30px;
+}
+.css-ghsb4z {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    border-width: 10px;
+    border-style: solid;
+    border-image: initial;
+    border-color: transparent rgb(255, 255, 255) transparent transparent;
+    position: absolute;
+    transform: translateX(-50%) rotate(
+-90deg
+);
+    bottom: -20px;
+    left: 50%;
+}
+.css-11nldkw:hover .QrCode {
+    visibility: visible;
+}
 #wallet-content .white-box td.center_small {
     padding: 23px 0px;
     display: inline-block;
-    width: 200px;
+    /*width: 200px;*/
 }
 #main-heading {
     box-shadow: 0px 1px 3px rgb(0 0 0 / 16%);
@@ -7693,7 +7737,9 @@ a.btn-info {
     margin-top: 50px;
 }
 a.btn-info:hover {
-    background: #000;
+    background-color: rgb(6 177 127);
+    border-color: rgb(6 177 127);
+    color: rgb(255, 255, 255);
 }
 #locked_staking thead th {
     font-size: 14px;
@@ -7768,8 +7814,9 @@ a.btn-info:hover {
     border: none;
 }
 #locked_staking table tr td a.table_btn:hover {
-    background-color: #000;
-    color: #fff;
+    background-color: rgb(6 177 127);
+    border-color: rgb(6 177 127);
+    color: rgb(255, 255, 255);
 }
 #locked_staking tbody {
     background: var(--new-card-bg);
@@ -7814,6 +7861,9 @@ a.btn-info:hover {
 @media (max-width: 767px) {
     .dropdown.currency_two.three_coins.new_select_b.crypto.currencyDropdown.show .dropdown-menu.show {
         
+    }
+    #wallet-content.request ul.janral-head li {
+        padding: 0px 15px;
     }
     .multi_form .dropdown.currency_two.three_coins .dropdown-menu.show a {
         padding: 0px 15px !important;
@@ -8275,17 +8325,25 @@ a.btn-info:hover {
     #exampleModalnew.modal-open {
         padding-left: 0px;
     }
+    .dropdown.currency_two.three_coins .dropdown-menu.show a.some_padding {
+        padding: 9px 12px !important;
+    }
     .dropdown.currency_two.three_coins .dropdown-menu.show a {
-        padding: 9px 16px !important;
+        padding: 2px 10px !important;
         color: var(--text-color);
     }
     .select {
-        height: 29px;
-        width: 100px;
+        float: left;
+        margin: 0;
+        width: auto;
+        position: absolute;
+        left: 0;
     }
     .styledSelect {
         font-size: 13px;
-        line-height: 30px;
+    }
+    .xs-flush-right {
+        padding-right: 0px !important;
     }
     .options li {
         font-size: 13px;
@@ -8424,7 +8482,7 @@ a.btn-info:hover {
     #wallet-content .white-box .dropdown-menu.show a {
         background-color: var(--new-card-bg);
         color: var(--white-black-text);
-        padding: 0px 0px;
+        padding: 8px 10px !important;
         font-size: 14px;
         text-align: left;
         padding-left: 15px;
@@ -8432,7 +8490,7 @@ a.btn-info:hover {
     }
     #wallet-content .white-box .dropdown-menu.show {
         top: 30px !important;
-        left: -40px !important;
+        left: 0px !important;
         width: 100% !important;
         transform: translate3d(0px, 6px, 0px) !important;
         background-color: var(--new-card-bg);
@@ -9697,6 +9755,7 @@ a.btn-info:hover {
     }
     #content.padning-payment {
         padding-bottom: 15px;
+        padding-top: 15px;
     }
     #exampleModal2 .modal-content {
         background: none !important;
@@ -9861,6 +9920,8 @@ a.btn-info:hover {
     }
     #content.sellers .white-box {
         margin-top: 0px;
+        padding: 0px 1px;
+        box-shadow: none;
     }
     #Available {
         text-align: left !important;
@@ -9943,12 +10004,21 @@ a.btn-info:hover {
         width: 100%;
     }
     .head-xs input {
-        height: 29px !important;
+        height: 35px !important;
         font-size: 12px;
         padding: 5px!important;
     }
+    #wallet-content .white-box button#dropdownMenuButton {
+        padding: 0;
+        line-height: 35px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .dropdown.currency_two.three_coins .dropdown-toggle::after {
+        margin-top: 16px;
+    }
     .head-xs select {
-        height: 29px !important;
+        height: 35px !important;
         font-size: 12px;
         padding: 5px!important;
         border: 1px solid #b7b7b7;

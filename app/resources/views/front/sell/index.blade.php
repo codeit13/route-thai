@@ -6,7 +6,6 @@ Route: P2P Trading Platform - sell crypto
 	@include('front.sell.sub_header')
 @endsection
 @section('content')
-<br><br>
 <section id="content" class="banktransfer padning-payment sellers">
     <div class="container">
         <div class="row">
@@ -23,7 +22,7 @@ Route: P2P Trading Platform - sell crypto
 	                            <input type="hidden" name="currency_id" id="currency_id" value="{{ $crypto_currencies->first()->id }}">
 	                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 	                            	@foreach($crypto_currencies as $single_currency_id)
-		                                <a class="dropdown-item" href="javascript:void(0)" 
+		                                <a class="dropdown-item some_padding" href="javascript:void(0)" 
 						                	data-img="{{ $single_currency_id->getMedia('icon')->first()->getUrl() }}"
 						                	data-name="{{ $single_currency_id->name }}"
 						                	data-short_name="{{ $single_currency_id->short_name }}"
@@ -48,7 +47,7 @@ Route: P2P Trading Platform - sell crypto
 						        <input type="hidden" name="fiat_currency_id" id="fiat_currency_id" value="{{ $default_fiat_currency->id }}">
 						        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						            @foreach($fiat_currencies as $single_fiat_currency_id)
-						                <a class="dropdown-item" href="javascript:void(0)" 
+						                <a class="dropdown-item some_padding" href="javascript:void(0)" 
 						                	data-img="{{ $single_fiat_currency_id->getMedia('icon')->first()->getUrl() }}"
 						                	data-name="{{ $single_fiat_currency_id->name }}"
 						                	data-short_name="{{ $single_fiat_currency_id->short_name }}"
