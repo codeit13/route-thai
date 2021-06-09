@@ -7862,6 +7862,9 @@ a.btn-info:hover {
     .dropdown.currency_two.three_coins.new_select_b.crypto.currencyDropdown.show .dropdown-menu.show {
         
     }
+    #dashboard .content_dashboard {
+        padding: 0px 30px;
+    }
     #wallet-content.request ul.janral-head li {
         padding: 0px 15px;
     }
@@ -8457,7 +8460,7 @@ a.btn-info:hover {
         line-height: 30px;
         font-size: 13px;
         padding: 0px 10px;
-        margin-right: 5px;
+        margin-right: 0px;
     }
     .content_dashboard .card h2 {
         font-size: 13px;
