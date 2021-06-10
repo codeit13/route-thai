@@ -77,10 +77,10 @@ $(function () {
     }
   });
 
-  $('#exchange input').on('keyup change', () => {
-    const searchterm = $('#exchange input').val().replace(/[^\w\s]/gi, '');
+  $('#exchangeCenter input').on('keyup change', () => {
+    const searchterm = $('#exchangeCenter input').val().replace(/[^\w\s]/gi, '');
     if (searchterm.length > 0) {
-      const items = $('#exchange .dropdown-item').toArray();
+      const items = $('#exchangeCenter .ex-select').toArray();
       items.forEach((item) => {
         if ($(item).html().includes(searchterm.toLowerCase())) {
           $(item).show();
@@ -89,7 +89,7 @@ $(function () {
         }
       });
     } else {
-      $('#exchange .dropdown-item').show();
+      $('#exchangeCenter .ex-select').show();
     }
   });
   $('#exchangeSelectCenter input').on('keyup change', () => {
