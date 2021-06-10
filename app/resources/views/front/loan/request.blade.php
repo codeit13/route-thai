@@ -153,7 +153,7 @@ $loan_variables=(object)$loan_variables;
 								</div>
 								<div class="xs-v visible-xs">
 									<div class="col-lg-12 col-sm-12 col-12">
-										<label><input type="checkbox" name="is_wallet" id="" class="backend-is-wallet-mobile" /> Use Wallet Balance</label>
+										<label><input type="checkbox" name="is_wallet" id="" value="1" class="backend-is-wallet-mobile" /> Use Wallet Balance</label>
 									</div>
 								</div>
 								<div class="col-lg-4  col-12 col-sm-4">
@@ -253,7 +253,7 @@ $loan_variables=(object)$loan_variables;
 							</div>
 							<div class="row">
 								<div class="col-lg-12 hidden-xs check col-sm-12 col-12">
-									<label><input type="checkbox" name="is_wallet" class="backend-is-wallet" /> Use Wallet Balance</label>
+									<label><input type="checkbox" name="is_wallet" class="backend-is-wallet" value="1" /> Use Wallet Balance</label>
 								</div>
 							</div>
 							<div class="row">

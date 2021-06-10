@@ -183,14 +183,26 @@
 									</div>
 								</div>
 								<div class="col-lg-6 read col-sm-6 col-12">
+
+									<form action="{{route('loan.store')}}" method="post" id="loanForm">
+										@csrf
+
 									<div class="row">
 										<div class="col-lg-6 col-sm-6 col-12">
-											<label><input type="checkbox"/> I have read and I agree to <a href="#">Route Staking Service Agreement</a></label>
+											<label><input type="checkbox" name="agree" id="backend-i-agree" value="1" /> I have read and I agree to <a href="#">Route Staking Service Agreement</a></label>
 										</div>
 										<div class="col-lg-6 col-sm-6 col-12">
-											<a href="#" class="btn-info">GET LOAN</a>
+											<a href="javascript:void()" onclick="submitForm()" class="btn-info">GET LOAN</a>
 										</div>
 									</div>
+									@error('agree')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
+
+								</form>
+
 								</div>
 							</div>
 						</div>
@@ -335,6 +347,30 @@
 
 
 @section('page_scripts')
+
+<script type="text/javascript">
+	
+	function submitForm()
+	{
+		$('.validateError').remove();
+
+	  if($('#backend-i-agree').prop('checked')==true)
+	  {
+         $('#backend-i-agree').css('border','1px solid black');
+        $('#loanForm').submit();
+
+	  }
+	  else
+	  {
+	  	$('#backend-i-agree').css('border','2px solid #dc3545');
+
+
+         $('#loanForm').append('<p class="text-danger text-bold validateError">{{__("The agree field is required.")}}</p>');
+
+
+	  }
+	}
+</script>
 
 
 @endsection
