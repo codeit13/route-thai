@@ -98,6 +98,7 @@ Route::middleware('auth')->group(function(){
         //sell crypt
         Route::prefix('sell')->group(function(){
             Route::get('create','SellController@create')->name('sell.create');
+            Route::get('{trans_id}/destroy','SellController@destroy')->name('sell.destroy');
             Route::post('create-sell','SellController@saveSell')->name('sell.save_sell');
         	Route::post('create-sell/confirm','SellController@confirmSell')->name('sell.confirm_sell');
             Route::get('{trans_id}/buy-request','SellController@buyRequest')->name('sell.buyer_request');

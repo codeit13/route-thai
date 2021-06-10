@@ -22,6 +22,11 @@ Route: P2P Trading Platform
     <div class="row">
         <div class="col-lg-12  col-sm-12 col-12 flush">
             <div class="white-box">
+                @if(session()->has('message'))
+                 <div class="alert alert-{{ session()->get('message_type') }}">
+                    {{ session()->get('message') }}
+                 </div>
+               @endif
                 {{-- <ul class="janral-head">
                     @foreach($currency_types as $index => $currency_type)
                     @if(isset($walletType->id) && $walletType->id==$currency_type->id)
@@ -246,8 +251,8 @@ Route: P2P Trading Platform
                                         </td>
                                         <td class="center_small">
                                             @if($transaction->status == 'pending')
-                                                <a class="btn-primary" style="padding: 6px;color: white;"><i class="fa fa-edit"></i></a> 
-                                                <a class="btn-success" style="padding: 7px;color: white;"><i class="fa fa-trash"></i></a> 
+                                                <a class="btn-primary" href="{{ route('sell.create',['trans_id'=>$transaction->trans_id]) }}" style="padding: 6px;color: white;"><i class="fa fa-edit"></i></a> 
+                                                <a class="btn-success" href="{{ route('sell.destroy',['trans_id'=>$transaction->trans_id]) }}" style="padding: 7px;color: white;"><i class="fa fa-trash"></i></a> 
                                             @endif
                                         </td>
                                     </tr>
