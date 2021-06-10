@@ -54,6 +54,12 @@ Route::middleware('auth')->group(function(){
     Route::prefix('user')->name('user.')->group(function(){ 
         Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
         Route::get('profile',[App\Http\Controllers\UserController::class, 'profile'])->name('profile');
+        Route::get('deviceManagement',[App\Http\Controllers\UserController::class, 'deviceManagement'])->name('deviceManagement');
+        Route::get('securtiy',[App\Http\Controllers\UserController::class, 'securtiy'])->name('securtiy');
+        Route::get('notifications',[App\Http\Controllers\UserController::class, 'notifications'])->name('notification');
+        Route::get('securtiy/update-email',[App\Http\Controllers\UserController::class, 'updateEmail'])->name('updateEmail');
+        Route::post('securtiy/update-email/verify',[App\Http\Controllers\UserController::class, 'confimrUpdateEmail'])->name('updateEmail.verify');
+        
         Route::get('payments',[App\Http\Controllers\UserPaymentMethodsController::class, 'index'])->name('payments');
         Route::get('payment/mode/edit/{id}',[App\Http\Controllers\UserPaymentMethodsController::class, 'edit'])->name('payment.edit');
         Route::get('payment/mode/add/{mode}',[App\Http\Controllers\UserPaymentMethodsController::class, 'create'])->name('payment.add');

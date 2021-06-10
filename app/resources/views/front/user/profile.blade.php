@@ -20,7 +20,7 @@ Basic Info - Route: P2P Trading Platform
                               @endif
                          </div>
                          <h6>@php $minFill = 4; echo preg_replace_callback('/^(.)(.*?)([^@]?)(?=@[^@]+$)/u',function ($m) use ($minFill) {return $m[1] . str_repeat("*", max($minFill, mb_strlen($m[1], 'UTF-8'))) . ($m[3] ?: $m[0]); }, Auth::user()->email ); @endphp | {{ substr(Auth::user()->mobile, 0, -6) . "****".substr(Auth::user()->mobile, -2)}} <img src=" {{ asset('front/img/verified.svg') }}"></h6>
-                         <p>Last login time: 2021-05-04 22:19:31 <span>IP: 103.103.162.223</span>
+                         <p>Last login time: {{ Auth::user()->lastLoginAt() ?? now() }} <span>IP: {{ Auth::user()->lastLoginIp() ?? \Request::ip() }}</span>
                          </p>
                       </div>
                    </div>

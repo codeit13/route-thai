@@ -63,7 +63,6 @@
                         </li>
                     </ul>
                     <div class="right_side  my-2 my-lg-0">
-
                         <ul class="main_ul">
                             @if (!Auth::check())<li class="hd_small"><a class="" href="{{ route('login') }}">Log In</a></li>
                             <li class="hd_small"><a class="btn btn-primary" href="{{ route('register') }}">Register</a></li>
@@ -74,7 +73,7 @@
                                     $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
                                     @endphp
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                         @if($default_language->hasMedia('icon'))
+                                        @if($default_language->hasMedia('icon') != null)
                                         <img src="{{ $default_language->firstMedia('icon') != null ? $default_language->firstMedia('icon')->getUrl() : '' }}" alt="">
                                         @endif
 

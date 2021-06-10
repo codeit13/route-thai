@@ -38,4 +38,11 @@ return [
         'secret'  =>  '0e6ab3c38a43c6460820a2992cda5454',
     ],
 
+    'email' =>  [
+        'base_uri'  => "https://api.sendinblue.com/v3/",
+        'secret'  =>  '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',
+    ],
+
+    //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
+
 ];

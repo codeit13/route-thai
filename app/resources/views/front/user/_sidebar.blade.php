@@ -8,7 +8,9 @@
           </li>
           <li class="{{ $route == 'user.payments' ? 'active': ''}}"> <a href="{{ route('user.payments') }}"><i class="fal fa-credit-card"></i> Payment</a>
           </li>
-          <li> <a href="#"><i class="fal fa-lock"></i> Securtiy</a>
+          <li class="{{ $route == 'user.notification' ? 'active': ''}}"> <a href="{{ route('user.notification') }}"><i class="fal fa-bell"></i> Notifications</a>
+          </li>
+          <li class="{{ $route == 'user.securtiy' ? 'active': ''}}"> <a href="{{ route('user.securtiy') }}"><i class="fal fa-lock"></i> Securtiy</a>
           </li>
        </ul>
     </div>

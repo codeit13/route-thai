@@ -111,7 +111,7 @@
                               </div>
                             </div>
                             <label>Language</label>
-                        <div class="dropdown currency_two three_coins crypto">
+                            <div class="dropdown currency_two three_coins crypto">
                               @php 
                               $languages = \App\Models\Language::all();
                               $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
@@ -139,7 +139,8 @@
                                  <div class="handle"></div>
                                </button>
                             </div> 
-                            <p class="alert toggle-msg small" style="display: none"></p>             
+                            <p class="alert toggle-msg small" style="display: none"></p>
+                            
                          </div>
                       </div>
                    </div>
@@ -157,7 +158,7 @@
                                  @foreach (auth()->user()->authentications as $item)
                                  <div class="coll_one">
                                      <div class="left_call">
-                                        <h6>Web</h6>
+                                        <h6>{{ $item->user_agent }}</h6>
                                         <p>{{ $item->login_at}}</p>
                                      </div>
                                      <div class="right_call">

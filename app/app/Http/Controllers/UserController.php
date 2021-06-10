@@ -15,6 +15,25 @@ class UserController extends Controller
     public function profile(){
         return view('front.user.profile');
     }
+    public function securtiy(){
+        return view('front.user.account');
+    } 
+
+    public function notifications(){
+        return view('front.user.notification');
+    } 
+
+    public function updateEmail(){
+        return view('front.user.update-email');
+    } 
+    public function confimrUpdateEmail(){
+        return view('front.user.confirm-update-email');
+    } 
+
+
+    public function deviceManagement(){
+        return view('front.user.deviceManagement');
+    }    
  
     public function isUsernameExist(Request $request){
         $status = User::where('name',$request->name)->count() == 0 ? 'OK': 'NOT OK';
