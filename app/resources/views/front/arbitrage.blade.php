@@ -13,8 +13,29 @@ Route: P2P Trading Platform
 @section('content')
 
 <section id="main-content" class="arbitrage">
+  <!-- Modal for Exchange select (dropdown)-->
+  <div class="modal fade full-modal-center" id="exchangeCenter" tabindex="-1" role="dialog" aria-labelledby="exchangeCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header flex-column mt-5 mt-md-2 pb-0">
+          <h5 class="modal-title" id="exampleModalLongTitle">Select Exchange</h5>
+          <form class="form-inline mt-3 w-100">
+            <input class="form-control mr-sm-2 w-100"  type="search" placeholder="Search" aria-label="Search">
+            <span><i class="fa fa-search search-icon" aria-hidden="true"></i></span>
+          </form>
+        <button type="button" style="padding-top: 0.65rem;" class="close mt-5 mt-md-1" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body big-modal-menu">
+        <div id="ex-select-menu" class="row text-left font-weight-bold row-cols-4 row-cols-sm-1">
+        </div> 
+      </div>
+    </div>
+  </div>
+</div>
  <!-- Modal for Exchange filter -->
- <div class="modal fade" id="exchangeSelectCenter" tabindex="-1" role="dialog" aria-labelledby="exchangeSelectCenterTitle" aria-hidden="true">
+ <div class="modal fade full-modal-center" id="exchangeSelectCenter" tabindex="-1" role="dialog" aria-labelledby="exchangeSelectCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
           <div class="modal-header flex-column mt-5 mt-md-2 pb-0">
@@ -28,19 +49,26 @@ Route: P2P Trading Platform
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body" id="Exhange-menu">
-            <div id="ex-data-img" class="row text-left font-weight-bold row-cols-4 row-cols-sm-1">           
+          <div class="modal-body big-modal-menu">
+            <div id="ex-data-img" class="row text-left font-weight-bold row-cols-4 row-cols-sm-1">
+              <!-- <div class="col ex-select">
+                <label class="btn bg-white rounded btn-light btn-block text-left">
+                  <input type="checkbox" value="selectall" name="exchangecheckbox" autocomplete="off">
+                  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                Select All
+                </label>
+              </div>            -->
             </div> 
           </div>
         </div>
       </div>
     </div>
     <!-- Modal for coin filter -->
-    <div class="modal fade" id="coinSelectCenter" tabindex="-1" role="dialog" aria-labelledby="coinSelectCenterTitle" aria-hidden="true">
+    <div class="modal fade full-modal-center" id="coinSelectCenter" tabindex="-1" role="dialog" aria-labelledby="coinSelectCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
           <div class="modal-header flex-column mt-5 mt-md-2">
-              <h5 class="modal-title" id="exampleModalLongTitle">Select Coins</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle">Select Crypto</h5>
               <form class="form-inline mt-3 w-100">
                 <input class="form-control mr-sm-2 w-100"  type="search" placeholder="Search" aria-label="Search">
                 <span><i class="fa fa-search search-icon" aria-hidden="true"></i></span>
@@ -49,7 +77,7 @@ Route: P2P Trading Platform
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body" id="Coin-menu">
+          <div class="modal-body big-modal-menu">
             <div id="coin-data-img" class="row text-left font-weight-bold row-cols-4 row-cols-sm-1">
             </div>
           </div>
@@ -141,54 +169,54 @@ Route: P2P Trading Platform
               <div class="row align-items-center justify-content-between">
                 <div class="col-lg-6">
                   <div class="row">
-                    <div class="col-4">
-                      <div class="dropdown currency_two three_coins" width='100%' id="exchange">
-                        <button class="btn btn-secondary dropdown-toggle" style="width: 100%;" value="BITKUB"
-                          type="button" id="dropdownBaseExchange" data-toggle="dropdown" aria-haspopup="true"
-                          aria-expanded="false">
-                          <img src="img/bitkub.svg" alt="">Bitkub</button>
-
-                        <div class="dropdown-menu" style="width:100%" aria-labelledby="dropdownBaseExchange">
-                          <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <span><i class="fa fa-search" aria-hidden="true"></i></span>
-                          </form>
-                          <!-- This dropdown is populated using javascript -->
-                        </div>
-                      </div>
-                      </div>
-                      <div class="col-4">
-                       <!-- Button trigger exchange filter modal -->
-                       <button type="button" style="font-size:14px;" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#exchangeSelectCenter">
-                          Exchange
-                          <i class="fa fa-star-o"></i>
-                        </button>
-                    </div>
-                   <div class="col-4 align-items-center">
-                      <!-- Button trigger coin filter modal -->
-                      <button type="button" class="btn btn-secondary mr-1 btn-block" data-toggle="modal" data-target="#coinSelectCenter">
-                        Coin
-                        <i class="fa fa-star-o"></i>
+                    <div class="col-8">
+                      <!-- Button trigger exchange select (dropdown) modal -->
+                      <button type="button"id="modalBaseExchange"  value="BITKUB" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#exchangeCenter">
+                        <img src="front/img/bitkub.svg" alt="">Bitkub</button>
                       </button>
+                      </div>
+                       
+                   <div class="col-4 align-items-center">
+                      
+                      <form class="form-inline" style="width:100%">
+                        <input class="form-control mr-sm-2" style="width: 100%;" id="tablesearchinput" type="search"
+                          placeholder="Crypto" aria-label="Search"> <span><i class="fa fa-search search-icon"
+                            aria-hidden="true"></i></span>
+                      </form>
                       </div>
 
                        <!-- 
                       <button type="button" id="toggleFav" style="width: 100%; font-size: 1em;" class="btn btn-outline-primary btn-block"><i
                           class="fa fa-star-o" aria-hidden="true"></i> Watchlist</button>
                      -->
-                    
                   </div>
                 </div>
-                <div class="col-1 pl-0 d-flex justify-content-lg-end justify-content-sm-center">
+                <!-- <div class="col-1 pl-0 d-flex justify-content-lg-end justify-content-sm-center">
                   
-                </div>
+                </div> -->
                 <div class="col-lg-5 ml-auto justify-content-lg-right">
                   <div class="row table-row">
                     <div class="col-12">
                       <div class="row align-items-center justify-content-around justify-content-lg-end">
-                    <!-- <div class="col-6 "> -->
-                      
-                            <form class="form-inline align-self-center mr-2">
+                        <div class="col-4 pr-0">
+                          <!-- Button trigger exchange filter modal -->
+                          <button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#exchangeSelectCenter">
+                            Exchange
+                            <i class="fa fa-star-o"></i>
+                          </button>
+                        </div>
+                        <div class="col-4 pr-0">
+                    <!-- Button trigger coin filter modal -->
+                    <button type="button" class="btn btn-secondary mr-1 btn-block" data-toggle="modal" data-target="#coinSelectCenter">
+                        Crypto
+                        <i class="fa fa-star-o"></i>
+                      </button>
+                    </div>
+                    <div class="col-1">
+                      <a id='show' class="float"><i style="color:white !important;" class="fa fa-bell my-float"></i></a>
+                    </div>
+                    <div class="col-2">
+                      <form class="form-inline align-self-center dropleft">
                               <a href="javascript:;" style="border-radius: 4px;
                               background-color: #6c757d;
                               color: white;
@@ -229,21 +257,16 @@ Route: P2P Trading Platform
                                   </div>
                                 </div>
                             </form>
+                          </div>
                         <!-- <p class="d-none d-md-block">show rows</p> -->
-                          <select class="custom-select">
+                          <!-- <select class="custom-select">
                             <option value="all">All</option>
                             <option value="10">10</option>
                             <option value="25">25</option>
                             <option value="50">50</option>
-                          </select>
+                          </select> -->
                     <!-- </div> -->
-                    <div class="col-6">
-                      <form class="form-inline" style="width:100%">
-                        <input class="form-control mr-sm-2" style="width: 100%;" id="tablesearchinput" type="search"
-                          placeholder="Coin" aria-label="Search"> <span><i class="fa fa-search search-icon"
-                            aria-hidden="true"></i></span>
-                      </form>
-                    </div>
+
                   </div>
                   </div>
                   </div>
@@ -385,9 +408,7 @@ Route: P2P Trading Platform
 </div>
 
 
-<a id='show' class="float">
-  <i class="fa fa-bell my-float"></i>
-</a>
+
 @endsection
 
 @section('page_scripts')

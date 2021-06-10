@@ -13,7 +13,7 @@ $(function () {
   const favListStore = createStore(favListState);
   localStorage.setItem('favState', false);
 
-  const base_exchange_button = $('#dropdownBaseExchange');
+  const base_exchange_button = $('#modalBaseExchange');
   const base_currency_button = $('#dropdownBaseCurrency');
 
   let localbasecurrency = localStorage.getItem('localbasecurrency');
@@ -143,7 +143,9 @@ $(document).ready(function() {
     const ddimage = $('<img>', { src: eximgpath, alt: exchange.toLowerCase() , height:'20px',width:'auto'});
     ddlink.append(ddimage);
     ddlink.append(' ' + exchangeDetails[exchange]['name']);
-    $('#exchange .dropdown-menu').append(ddlink);
+    const ddcont = $('<div>',{class:'ex-select my-1'});
+    ddcont.append(ddlink);
+    $('#ex-select-menu').append(ddcont);
   });
 
   coinsList.forEach((coin, idc) => {
@@ -256,9 +258,10 @@ $(document).ready(function() {
     return Object.assign(accu1, { [coin]: obj1 });
   }, {});
 
-  $('#exchange a').click((e) => {
+  $('#ex-select-menu a').click((e) => {
     e.preventDefault();
     const elem = $(e.currentTarget);
+    $('#exchangeCenter').modal('hide');
     const imgelem = elem.html();
     const exchangeVAL = $(imgelem).attr('alt');
     const oldexchangename = baseexchangename;
