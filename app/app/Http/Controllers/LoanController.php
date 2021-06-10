@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LoanRequest;
+
 use Illuminate\Http\Request;
-use App\Models\Loan;
+
+use App\Http\Traits\UniqueLoanIDTrait;
 
 class LoanController extends Controller
 {
+    use UniqueLoanIDTrait;
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +17,9 @@ class LoanController extends Controller
      */
     public function index()
     {
-        return view('front.loan.history');
+        $loans=auth()->user()->loans;
+
+        return view('front.loan.history',compact('loans'));
     }
 
     /**
@@ -96,7 +100,75 @@ class LoanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!$request->has('agree'))
+        {
+            $request->merge(array('agree',''));
+        }
+
+        $request->validate(['agree'=>'required']);
+
+        $loan_detail=$this->loan_data($request);
+
+        if($loan_detail)
+        {
+            $loan_data=array('loan_id'=>$this->generateID(),
+                             'currency_id'=>$loan_detail->collateral_currency->id,'collateral_amount'=>$loan_detail->collateral_amount,
+                             'loan_currency_id'=>$loan_detail->loan_currency->id,
+                             'loan_amount'=>$loan_detail->loan_amount,
+                             'duration'=>$loan_detail->term_detail->no_of_duration,
+                             'duration_type'=>$loan_detail->term_detail->duration_type,
+                             'min_price'=>$loan_detail->min_price,
+                             'max_price'=>$loan_detail->max_price,
+                             'interest_value'=>2.1,
+                             'price_down_percentage'=>$loan_detail->price_down_value,
+                             'term_percentage'=>$loan_detail->term_detail->terms_percentage,
+                             'term_id'=>$loan_detail->term_detail->id,
+                             'on_wallet'=>$loan_detail->on_wallet??0,'collateral_currency_rate'=>$loan_detail->usdt,'loan_repayment_amount'=>$loan_detail->loan_repayment,
+                             'has_close_price'=>$loan_detail->set_close_price??0,
+                             'close_price'=>$loan_detail->close_price,
+                             'is_agree'=>$request->agree,
+                        );
+        }
+
+        $user=auth()->user();
+
+        $loan=$user->loans()->create($loan_data);
+
+        $message='Your loan request is created and pending for approval.';
+
+        if(isset($loan_detail->is_wallet))
+        {
+            $wallet=$user->wallet()->where('currency_id',$loan_detail->currency_id)->where('wallet_type',1)->first();
+
+            $wallet->coin=$wallet->coin-$loan_detail->collateral_amount;
+
+            $wallet->save();
+
+            $loanWallet=$user->wallet()->where('currency_id',$loan_detail->loan_currency->id)->where('wallet_type',4)->first();
+
+            if($loanWallet)
+            {
+                $loanWallet->coin=$loanWallet->coin+$loan_detail->loan_amount;
+            }
+            else
+            {
+                $newWallet=array('currency_id'=>$loan_detail->loan_currency->id,
+                                 'coin'=>$loan_detail->loan_amount,
+                                 'wallet_type'=>4,
+                                 '');
+                $user->wallet()->create($newWallet);
+            }
+
+            $loan->status='approved';
+
+            $loan->save();
+
+            $message='Your loan request is approved successfully.';
+        }
+
+     
+
+      return redirect()->route('loan.history')->with('success',$message);
     }
 
     /**
@@ -125,7 +197,7 @@ class LoanController extends Controller
      * @param  \App\Models\LoanRequest  $loanRequest
      * @return \Illuminate\Http\Response
      */
-    public function edit(Loan $loan)
+    public function edit(\App\Models\Loan $loan)
     {
         return view('front.loan.detail');
     }
@@ -189,6 +261,19 @@ class LoanController extends Controller
         $loan_detail->price_down_value=number_format((float)($usdtPrice*((float)$loan_variables->loan_price_down_limit)/100),2,'.','');
 
         $loan_detail->usdt=$usdtPrice;
+
+
+
+
+
+         // $('#backend-min-price').html(numberWithCommas((parseFloat(usdPrice)-parseFloat(usdPrice*parseFloat(set_price_min)/100)).toFixed(2)));
+
+
+
+         //    $('#backend-max-price').html(numberWithCommas());
+           $loan_detail->min_price=number_format((float)($usdtPrice)+(float)($usdtPrice*(float)($loan_variables->loan_min_percentage)/100),2,".","");
+            
+            $loan_detail->max_price=number_format((float)($usdtPrice)+(float)($usdtPrice*(float)($loan_variables->loan_max_percentage)/100),2,".","");
 
         $loan_amounts=$this->loan_amount($loan_detail->loan_currency,$filteredCryptoExchangeRow,$loan_detail);
 
