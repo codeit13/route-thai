@@ -125,6 +125,13 @@
 		<div class="row">
 			<div class="col-lg-12 col-sm-12 col-12 xs-flush">
 				<div class="white-box show_two_button">
+					<div class="row three_buttons visible-xs">
+						<div class="col-xs-12">
+							<a href="#" class="btn-success"><i class="fas fa-coins"></i> Deposit</a>
+							<a href="#" class="btn-primary"><i class="fal fa-chart-line"></i> Withdraw</a>
+							<a href="#" class="btn-primary"><i class="fas fa-exchange-alt"></i> Transfer</a>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-lg-12 xs-flush col-sm-12 col-12">
 							<table>
