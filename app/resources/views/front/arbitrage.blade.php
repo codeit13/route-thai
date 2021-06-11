@@ -169,9 +169,9 @@ Route: P2P Trading Platform
               <div class="row align-items-center justify-content-between">
                 <div class="col-lg-6">
                   <div class="row">
-                    <div class="col-8">
+                    <div class="col-8 col-lg-4">
                       <!-- Button trigger exchange select (dropdown) modal -->
-                      <button type="button"id="modalBaseExchange"  value="BITKUB" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#exchangeCenter">
+                      <button type="button" id="modalBaseExchange" value="BITKUB" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#exchangeCenter">
                         <img src="front/img/bitkub.svg" alt="">Bitkub</button>
                       </button>
                       </div>
@@ -194,7 +194,7 @@ Route: P2P Trading Platform
                 <!-- <div class="col-1 pl-0 d-flex justify-content-lg-end justify-content-sm-center">
                   
                 </div> -->
-                <div class="col-lg-5 ml-auto justify-content-lg-right">
+                <div class="col-lg-6 ml-auto justify-content-lg-right">
                   <div class="row table-row">
                     <div class="col-12">
                       <div class="row align-items-center justify-content-around justify-content-lg-end">
