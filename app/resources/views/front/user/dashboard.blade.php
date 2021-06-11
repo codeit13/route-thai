@@ -162,16 +162,6 @@
                             </div> 
                             <p class="alert toggle-msg small" style="display: none"></p>       
 
-                            <div class="sn_notificatio">
-                               <i class="fa fa-telegram"></i>
-                               Telegram User Id
-                               <div>
-                               <input id="telegram-user-id" class="form-control" style="width: 70%; float: left;" type="text">
-                               <button id="telegram-user-id-submit" class="btn btn-sm btn-primary" style="font-size: large;">Submit</button>
-                               </div>
-                               
-                            </div> 
-
                          </div>
                       </div>
                    </div>
@@ -458,27 +448,21 @@
     $('.btn-toggle').on('click',function(e){
         e.preventDefault();
         var mode= $(this).data('mode');
+        var aria_pressed= $(this).attr('aria-pressed');
          $.ajax({
             type:'POST',
             dataType:'JSON',
             url:"{{ route('user.update.notification') }}",
             data:{ mode : mode, _token: "{{ csrf_token() }}" },
             success:function(data) {
-               $('.usr-msg').html(data.message).show();
-               setTimeout(function() { $(".usr-msg").hide() }, 2000);               
-            }
-         });
-    });
-
-    $('#telegram-user-id-submit').on('click',function(e){
-        e.preventDefault();
-        var telegram_user_id= $('#telegram-user-id').val();
-         $.ajax({
-            type:'POST',
-            dataType:'JSON',
-            url:"{{ route('user.update.telegram-user-id') }}",
-            data:{ telegram_user_id : telegram_user_id, _token: "{{ csrf_token() }}" },
-            success:function(data) {
+               console.log(mode);
+               console.log(aria_pressed);
+               if((mode == "telegram_notification") && (aria_pressed == 'false')) {
+                  $("<a>").prop({
+                        target: "_blank",
+                        href: "https://t.me/route_php_bot"
+                  })[0].click();
+               }
                $('.usr-msg').html(data.message).show();
                setTimeout(function() { $(".usr-msg").hide() }, 2000);               
             }

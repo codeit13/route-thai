@@ -42,7 +42,8 @@ class UserController extends Controller
                 'text' => "Welcome to the application " . $user->name . "!",
                 'telegram_user_id' => $user->telegram_user_id
             ]));
-            return response()->json(['status'=>'OK','message'=> __('The telegram user id settings has been updated') ]);
+            // return response()->json(['status'=>'OK','message'=> __('The telegram user id settings has been updated') ]);
+            return redirect()->route('user.dashboard');
     }
     public function updateLineUserIdSettings(Request $request){
         $user = Auth::user();

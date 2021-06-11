@@ -59,7 +59,7 @@ class LaravelTelegramNotification extends Notification
             // Optional recipient user id.
             ->to($this->telegram_user_id)
             // Markdown supported.
-            ->content("Welcome to Route PHP Notification Service.");
+            ->content($this->text);
     }
 
     /**
