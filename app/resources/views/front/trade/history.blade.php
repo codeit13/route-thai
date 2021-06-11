@@ -137,7 +137,7 @@ Route: P2P Trading Platform
                                         <td>
                                             <input type="date" id="reportdate" name="end_date" value="{{$request->end_date??''}}">
                                         </td>
-                                        <td style="width:180px; display:inline-block;">
+                                        <td style="width:250px; display:inline-block;">
                                             <div class="dropdown currency_two three_coins crypto currencyDropdown">
                                                 @foreach($currencies as $cIndex=> $currency)
                                                     @if($currency->id==$currentCurrency)
