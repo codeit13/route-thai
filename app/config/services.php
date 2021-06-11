@@ -44,4 +44,13 @@ return [
 
     ],
 
+    'telegram-bot-api' => [
+        'token' => env('TELEGRAM_BOT_TOKEN', '1862394442:AAF8NH6QsQHc4D2VI3urxtZdhkPtw2mFwDk')
+    ],
+    'ses' => [
+        'key' => env('AWS_ACCESS_KEY_ID'),
+        'secret' => env('AWS_SECRET_ACCESS_KEY'),
+        'region' => env('AWS_DEFAULT_REGION'),
+    ],
+
 ];

@@ -53,6 +53,8 @@
                             <td> <b>SMS: </b> {{  $item->sms_notification ? ' Enabled ': 'Disabled' }} 
                                <br/>
                                 <b>LINE: </b> {{ $item->line_notification ? ' Enabled ': 'Disabled'}}
+                              <br/>
+                                <b>TELEGRAM: </b> {{ $item->telegram_notification ? ' Enabled ': 'Disabled'}}
                             </td>
                             <td> 
                               <select class="form-control-sm bg-white userStatus" data-id="{{ $item->id}}"  name="status">
