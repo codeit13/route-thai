@@ -34,9 +34,8 @@ $(function () {
   let baseexchangename = base_exchange_button.val().toLowerCase();
   let basecurrencyname = base_currency_button.val().toLowerCase();
   let currentForexData;
-  console.log($('#numrowselector'));
-  $('#numrowselector').on('change', () => {
-    console.log('change');
+  // console.log($('.features select'));
+  $('.features select').on('change', () => {
     const maxrow = $('.features select').val();
     console.log(maxrow)
     if (maxrow === 'all') {
