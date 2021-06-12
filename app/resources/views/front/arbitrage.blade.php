@@ -193,7 +193,7 @@ Route: P2P Trading Platform
                   <div class="col-6">
                     <div class="features">
                       <p>show rows</p>
-                      <select>
+                      <select id="numrowselector">
                         <option value="all">All</option>
                         <option value="10">10</option>
                         <option value="25">25</option>
@@ -201,16 +201,7 @@ Route: P2P Trading Platform
                       </select>
                     </div>
 
-                    <!-- <ul>
-                      <li>
-                        <select>
-                          <option value="all">All</option>
-                          <option value="10">10</option>
-                          <option value="25">25</option>
-                          <option value="50">50</option>
-                        </select>
-                      </li>
-                    </ul> -->
+
                   </div>
                   <div class="col-6">
                     <form class="form-inline" style="width:100%">
@@ -223,24 +214,7 @@ Route: P2P Trading Platform
                 </div>
                 </div>
 
-                <!-- <ul class="features">
-                  <li>Show rows</li>
-                  <li>
-                    <select>
-                      <option value="all">All</option>
-                      <option value="10">10</option>
-                      <option value="25">25</option>
-                      <option value="50">50</option>
-                    </select>
-                  </li>
-                  <li>
-                    <form class="form-inline">
-                      <input class="form-control mr-sm-2" style="width: 100%;" id="tablesearchinput" type="search"
-                        placeholder="Search coin" aria-label="Search"> <span><i class="fa fa-search search-icon"
-                          aria-hidden="true"></i></span>
-                    </form>
-                  </li>
-                </ul> -->
+                
               </div>
             </div>
           </div>
