@@ -55,7 +55,7 @@ class LaravelTelegramNotification extends Notification
     public function toTelegram() {
         // return (new TelegramMessage())
         //     ->text($this->data['text']);
-        return TelegramMessage::create()
+            return TelegramMessage::create()
             // Optional recipient user id.
             ->to($this->telegram_user_id)
             // Markdown supported.

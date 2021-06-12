@@ -45,7 +45,7 @@ return [
     ],
 
     'telegram-bot-api' => [
-        'token' => env('TELEGRAM_BOT_TOKEN', '1862394442:AAF8NH6QsQHc4D2VI3urxtZdhkPtw2mFwDk')
+        'token' => env('TELEGRAM_BOT_TOKEN', '1831584145:AAHmjtzyMjJe4B2qMyBKnJ87FQ_0muSuKHE')
     ],
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),

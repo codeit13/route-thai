@@ -75,7 +75,7 @@ class LoginController extends Controller
             if($user->telegram_notification) {
             $user->notify(new LaravelTelegramNotification([
                 'text' => $user->name . " You currently logged in!",
-                'telegram_user_id' => $user->telegram_user_id
+                'telegram_user_id' => $user->telegram_user_id,
             ]));
             }
             return redirect('/home')->withCookie(Cookie::make('logged_in', $user->remember_token, 43200));
