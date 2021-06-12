@@ -98,8 +98,15 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12 col-sm-12 col-12">
+			<div class="col-lg-12 col-sm-12 col-12 xs-flush">
 				<div class="white-box">
+					<div class="row three_buttons visible-xs">
+						<div class="col-xs-12">
+							<a href="#" class="btn-success"><i class="fas fa-coins"></i> Buy</a>
+							<a href="#" class="btn-primary"><i class="fal fa-chart-line"></i> Sell</a>
+							<a href="#" class="btn-primary"><i class="fal fa-chart-line"></i> Transfer</a>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-lg-12 xs-flush col-sm-12 col-12">
 							<table>
@@ -126,6 +133,8 @@
 
 										<th>Coin <a href="{{route('wallet.p2p').'?coin='.$query_coin}}"><i class="fa fa-sort" aria-hidden="true"></i></a></th>
 										<th>Available  <a href="{{route('wallet.p2p').'?amount='.$query_amount}}"><i class="fa fa-sort" aria-hidden="true"></i></a></th>
+										<th>Intrade</th>
+										<th>Total</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -140,12 +149,13 @@
 											@endif
 											<label>{{__($currency->short_name)}}<br><span>{{__($currency->name)}}</span></label>
 										</td>
-										<!-- <td>{{$currency->user_p2p_total}}</td> -->
-
 										<td>{{$currency->user_p2p_balance}}</td>
-										<td>
-											<a href="#" class="btn-success">{{__('Deposit')}}</a>
-											<a href="{{route('p2p.exchange')}}" class="btn-primary">{{__('P2P Trading')}}</a>
+										<td>{{$currency->user_p2p_total-$currency->user_p2p_balance}}</td>
+										<td>{{$currency->user_p2p_total}}</td>
+										<td class="center_small">
+											<a href="{{route('p2p.exchange')}}" class="btn-success"><i class="fas fa-coins"></i> Buy</a>
+											<a href="{{route('sell.create')}}" class="btn-primary"><i class="fal fa-chart-line"></i> Sell</a>
+											<a href="{{route('p2p.exchange')}}" class="btn-primary"><i class="fal fa-chart-line"></i> Transfer</a>
 										</td>
 									</tr>
 									@endforeach
@@ -162,7 +172,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-12 text-center visible-xs col-sm-12 col-12">
+				<div class="col-lg-12 text-center visible-xs col-sm-12 col-12 no_more">
 					<a href="#" class="load-more">Load More</a>
 				</div>
 			</div>

@@ -59,10 +59,10 @@
                         </li>
                         <li class="nav-item"> <a class="nav-link" href="#"><span class="visible-xs"><i class="fal fa-info-circle"></i></span>ICO Information</a>
                         </li>
-                        @if(Auth::check())
+                      
                         <li class="nav-item"> <a class="nav-link" href="{{route('arbitrage')}}"><span class="visible-xs"><i class="fab fa-bitcoin"></i></span>Arbitrage</a>
                         </li>
-                        @endif
+                        
                     </ul>
                     <div class="right_side  my-2 my-lg-0">
 
@@ -76,11 +76,11 @@
                                     $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
                                     @endphp
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                         @if($default_language->hasMedia('icon'))
+                                         @if(isset($default_language) and $default_language != null and $default_language->hasMedia('icon'))
                                         <img src="{{ $default_language->firstMedia('icon') != null ? $default_language->firstMedia('icon')->getUrl() : '' }}" alt="">
+                                        {{ $default_language->name }}
                                         @endif
 
-                                        {{ $default_language->name }}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         @foreach ($languages as $item)
@@ -98,7 +98,7 @@
                                 </div>
                                 </li>
                             <li>
-                            <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i></div>
+                            <div class="dark-light"> <i class="fa fa-moon-o" aria-hidden="true"></i> <span class="visible-xs">Dark Mode</span></div>
                             </li>
                             @else
                             @php $wallet_types = \App\Models\CurrencyType::all(); @endphp
@@ -130,10 +130,10 @@
                                     $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
                                     @endphp
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        @if($default_language->hasMedia('icon'))
+                                        @if(isset($default_language) and $default_language != null and $default_language->hasMedia('icon'))
                                         <img src="{{ $default_language->firstMedia('icon')->getUrl()??'' }}" alt="">
-                                        @endif
                                         {{ $default_language->name }}
+                                        @endif
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         @foreach ($languages as $item)

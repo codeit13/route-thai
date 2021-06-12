@@ -51,11 +51,7 @@ Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class
 
 Route::middleware('auth')->group(function(){
 
-    Route::get('arbitrage',function()
-{
-    return view('front.arbitrage');
     
-})->name('arbitrage');
     // Profile
     Route::prefix('user')->name('user.')->group(function(){ 
         Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
@@ -69,6 +65,8 @@ Route::middleware('auth')->group(function(){
         Route::post('check-username',[App\Http\Controllers\UserController::class, 'isUsernameExist'])->name('check.username');
         Route::post('update-username',[App\Http\Controllers\UserController::class, 'updateUsername'])->name('update.username');
         Route::post('update-notification',[App\Http\Controllers\UserController::class, 'updateNotificationSettings'])->name('update.notification');
+        Route::get('update-telegram-user-id/{telegram_user_id}',[App\Http\Controllers\UserController::class, 'updateTelegramUserIdSettings'])->name('update.telegram-user-id');
+        Route::post('update-line-user-id',[App\Http\Controllers\UserController::class, 'updateLineUserIdSettings'])->name('update.line-user-id');
         Route::post('update-currency',[App\Http\Controllers\UserController::class, 'updateCurrencySettings'])->name('update.currency');
         Route::post('update-language',[App\Http\Controllers\UserController::class, 'updateLanguageSettings'])->name('update.language');
     });
@@ -102,6 +100,7 @@ Route::middleware('auth')->group(function(){
         //sell crypt
         Route::prefix('sell')->group(function(){
             Route::get('create','SellController@create')->name('sell.create');
+            Route::get('{trans_id}/destroy','SellController@destroy')->name('sell.destroy');
             Route::post('create-sell','SellController@saveSell')->name('sell.save_sell');
         	Route::post('create-sell/confirm','SellController@confirmSell')->name('sell.confirm_sell');
             Route::get('{trans_id}/buy-request','SellController@buyRequest')->name('sell.buyer_request');
@@ -126,7 +125,13 @@ Route::middleware('auth')->group(function(){
 
     Route::get('request',[App\Http\Controllers\LoanController::class, 'create'])->name('loan.create');
 
-    Route::get('request/{id}/detail',[App\Http\Controllers\LoanController::class, 'show'])->name('loan.request.detail');
+    Route::post('request/loan/initialize',[App\Http\Controllers\LoanController::class, 'initialize'])->name('loan.initialize');
+
+    Route::post('request/loan/store',[App\Http\Controllers\LoanController::class, 'store'])->name('loan.store');
+
+
+
+    Route::get('request/detail',[App\Http\Controllers\LoanController::class, 'show'])->name('loan.request.detail');
 
     Route::get('{id}/detail',[App\Http\Controllers\LoanController::class, 'edit'])->name('loan.show.detail');
 
@@ -147,4 +152,12 @@ Route::middleware('auth')->group(function(){
 Route::get('p2p/exchange','ExchangeController@index')->name('p2p.exchange');
 // Stocking
 Route::get('staking',function() { return view('front.staking'); })->name('staking');
+
+// Arbitrage
+
+Route::get('arbitrage',function()
+{
+    return view('front.arbitrage');
+    
+})->name('arbitrage');
 

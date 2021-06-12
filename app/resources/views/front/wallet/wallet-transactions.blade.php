@@ -123,8 +123,15 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12 col-sm-12 col-12">
-				<div class="white-box">
+			<div class="col-lg-12 col-sm-12 col-12 xs-flush">
+				<div class="white-box show_two_button">
+					<div class="row three_buttons visible-xs">
+						<div class="col-xs-12">
+							<a href="#" class="btn-success"><i class="fas fa-coins"></i> Deposit</a>
+							<a href="#" class="btn-primary"><i class="fal fa-chart-line"></i> Withdraw</a>
+							<a href="#" class="btn-primary"><i class="fas fa-exchange-alt"></i> Transfer</a>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-lg-12 xs-flush col-sm-12 col-12">
 							<table>
@@ -168,9 +175,10 @@
 										<!-- <td>{{$currency->user_total}}</td> -->
 
 										<td>{{$currency->user_balance}}</td>
-										<td>
-											<a href="{{route('wallet.deposit',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-success">{{__('Deposit')}}</a>
-											<a href="{{route('wallet.withdraw',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-primary">{{__('Withdraw')}}</a>
+										<td class="center_small">
+											<a href="{{route('wallet.deposit',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-success"><i class="fas fa-coins"></i>  {{__('Deposit')}}</a>
+											<a href="{{route('wallet.withdraw',['type'=>$walletType->id,'typename'=>strtolower($walletType->type),'currency'=>$currency->id,'currencyname'=>strtolower($currency->name)])}}" class="btn-primary"><i class="fal fa-chart-line"></i> {{__('Withdraw')}}</a>
+											<a href="#" class="btn-primary"><i class="fas fa-exchange-alt"></i> Transfer</a>
 										</td>
 									</tr>
 									@endforeach
@@ -187,7 +195,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-12 text-center visible-xs col-sm-12 col-12">
+				<div class="col-lg-12 text-center visible-xs col-sm-12 col-12 no_more">
 					<a href="#" class="load-more">Load More</a>
 				</div>
 			</div>

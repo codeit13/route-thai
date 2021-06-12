@@ -8,10 +8,82 @@ Route: P2P Trading Platform
             width: 81%;
         }
     </style>
+    <link rel="stylesheet" href="front/arbitragecss/arbitrage.css">
 @stop
 @section('content')
 
-<section id="main-content">
+<section id="main-content" class="arbitrage">
+  <!-- Modal for Exchange select (dropdown)-->
+  <div class="modal fade full-modal-center" id="exchangeCenter" tabindex="-1" role="dialog" aria-labelledby="exchangeCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header flex-column mt-5 mt-md-2 pb-0">
+          <h5 class="modal-title" id="exampleModalLongTitle">Select Exchange</h5>
+          <form class="form-inline mt-3 w-100">
+            <input class="form-control mr-sm-2 w-100"  type="search" placeholder="Search" aria-label="Search">
+            <span><i class="fa fa-search search-icon" aria-hidden="true"></i></span>
+          </form>
+        <button type="button" style="padding-top: 0.65rem;" class="close mt-5 mt-md-1" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body big-modal-menu">
+        <div id="ex-select-menu" class="row text-left font-weight-bold row-cols-4 row-cols-sm-1">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- Modal for Exchange filter -->
+ <div class="modal fade full-modal-center" id="exchangeSelectCenter" tabindex="-1" role="dialog" aria-labelledby="exchangeSelectCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header flex-column mt-5 mt-md-2 pb-0">
+              <h5 class="modal-title" id="exampleModalLongTitle">Select Exchanges</h5>
+              <p class="text-danger m-0" style="font-size:10px;">* Select minimum 3 Exchanges to apply filter</p>
+              <form class="form-inline mt-3 w-100">
+                <input class="form-control mr-sm-2 w-100"  type="search" placeholder="Search" aria-label="Search">
+                <span><i class="fa fa-search search-icon" aria-hidden="true"></i></span>
+              </form>
+            <button type="button" style="padding-top: 0.65rem;" class="close mt-5 mt-md-1" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body big-modal-menu">
+            <div id="ex-data-img" class="row text-left font-weight-bold row-cols-4 row-cols-sm-1">
+              <!-- <div class="col ex-select">
+                <label class="btn bg-white rounded btn-light btn-block text-left">
+                  <input type="checkbox" value="selectall" name="exchangecheckbox" autocomplete="off">
+                  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                Select All
+                </label>
+              </div>            -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal for coin filter -->
+    <div class="modal fade full-modal-center" id="coinSelectCenter" tabindex="-1" role="dialog" aria-labelledby="coinSelectCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header flex-column mt-5 mt-md-2">
+              <h5 class="modal-title" id="exampleModalLongTitle">Select Crypto</h5>
+              <form class="form-inline mt-3 w-100">
+                <input class="form-control mr-sm-2 w-100"  type="search" placeholder="Search" aria-label="Search">
+                <span><i class="fa fa-search search-icon" aria-hidden="true"></i></span>
+              </form>
+            <button type="button" style="padding-top: 0.65rem;" class="close mt-5 mt-md-1" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body big-modal-menu">
+            <div id="coin-data-img" class="row text-left font-weight-bold row-cols-4 row-cols-sm-1">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   <div class="container">
     <div class="row">
       <div class="col text-center">
@@ -93,95 +165,45 @@ Route: P2P Trading Platform
     <div class="row">
       <div class="col flush">
         <div class="card">
-          <div class="main_head">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="row">
-                  <div class="col-6">
-                    <div class="dropdown currency_two three_coins" width='100%' id="exchange">
-                      <button class="btn btn-secondary dropdown-toggle" style="width: 100%;" value="BITKUB"
-                        type="button" id="dropdownBaseExchange" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <img src="front/arbitrageimg/bitkub.svg" alt="">Bitkub</button>
-                      <div class="dropdown-menu" style="width:100%" aria-labelledby="dropdownBaseExchange">
-                        <form class="form-inline">
-                          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                          <span><i class="fa fa-search" aria-hidden="true"></i></span>
-                        </form>
-                        <!-- This dropdown is populated using javascript -->
+        <div class="main_head">
+              <div class="row align-items-center justify-content-between">
+                <div class="col-lg-6">
+                  <div class="row">
+                    <div class="col-8 col-lg-4">
+                      <!-- Button trigger exchange select (dropdown) modal -->
+                      <button type="button" id="modalBaseExchange" value="BITKUB" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#exchangeCenter">
+                        <img src="front/img/bitkub.svg" alt="">Bitkub</button>
+                      </button>
                       </div>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <button type="button" id="toggleFav" style="width: 100%;" class="btn btn-outline-primary"><i
-                        class="fa fa-star-o" aria-hidden="true"></i> Watchlist</button>
+
+                   <div class="col-4 align-items-center">
+
+                      <form class="form-inline" style="width:100%">
+                        <input class="form-control mr-sm-2" style="width: 100%;" id="tablesearchinput" type="search"
+                          placeholder="Crypto" aria-label="Search"> <span><i class="fa fa-search search-icon"
+                            aria-hidden="true"></i></span>
+                      </form>
+                      </div>
+
+                       <!--
+                      <button type="button" id="toggleFav" style="width: 100%; font-size: 1em;" class="btn btn-outline-primary btn-block"><i
+                          class="fa fa-star-o" aria-hidden="true"></i> Watchlist</button>
+                     -->
                   </div>
                 </div>
-                <!-- <ul>
-                  <li>
-                    <h2>Crypto<span>Alert</span></h2>
-                  </li>
-                  <li>
-                    <div class="dropdown currency_two three_coins" id="exchange">
-                      <button class="btn btn-secondary dropdown-toggle" style="width: 100%;" value="BITKUB"
-                        type="button" id="dropdownBaseExchange" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <img src="front/arbitrageimg/bitkub.svg" alt="">Bitkub</button>
-                      <div class="dropdown-menu" style="width:100%" aria-labelledby="dropdownBaseExchange">
-                        <form class="form-inline">
-                          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                          <span><i class="fa fa-search" aria-hidden="true"></i></span>
-                        </form>
-                        <!-- This dropdown is populated using javascript
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <button type="button" id="toggleFav" class="btn btn-outline-primary"><i class="fa fa-star-o"
-                        aria-hidden="true"></i> Watchlist</button>
-                  </li>
-                </ul> -->
-              </div>
-              <div class="col-2 pl-0 d-flex justify-content-end">
-                <form class="form-inline align-self-center">
-                   <a href="javascript:;" style="border-radius: 4px;
-                   background-color: #6c757d;
-                   color: white;
-                   width: 35px;
-                   height: 35px;
-                   display: flex;
-                   align-items: center;
-                   text-decoration: none;
-                   justify-content: center;" class="actions-drop-main" id="dropdownMenuLink" data="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fa fa-cog"
-                      aria-hidden="true" ></i></a>
+                <!-- <div class="col-1 pl-0 d-flex justify-content-lg-end justify-content-sm-center">
 
-                      <div class="dropdown-menu custome-class p-0" aria-labelledby="dropdownMenuLink" id="range-dropdown">
-                          <div class="p-3">
-                          <div class="range-percent">
-                          <div class="d-flex align-items-center addrange" id="range-row-0">
-                            <div class="mb-3 pr-3">
-                              <label class="d-flex justify-content-start">Min (%):</label>
-                              <input type="number" id="min-value-0" style="width: 80px;height: 35px;" class="form-control">
-                            </div>
-                            <div class="pr-3">
-                              <span>TO</span>
-                            </div>
-                            <div class="mb-3 pr-3">
-                              <label class="d-flex justify-content-start">Max (%) :</label>
-                              <input type="number" id="max-value-0" style="width: 80px;height: 35px;" class="form-control">
-                            </div>
-                            <div class="mb-3 pr-3">
-                              <input type="color" id="set-color-0" class="form-control p-0 mt-4 border-0 rounded-circle selectcolor" style="box-shadow: none !important;">
-                            </div>
-                            </div>
-                          </div>
-                          <div class="d-flex align-items-center justify-content-center mb-3">
-                            <button style="width: 40px; height: 40px;" class="btn btn-light add-more-range"><i class="fa fa-plus"></i></button>
-                          </div>
-                          <div class="d-flex justify-context-end border-top pt-3">
-                            <a id="change-color" class="btn btn-primary">Submit</a>
-                            <a id="cancel-color" class="btn btn-outline-primary ml-2">Reset</a>
-                          </div>
+                </div> -->
+                <div class="col-lg-6 ml-auto justify-content-lg-right">
+                  <div class="row table-row">
+                    <div class="col-12">
+                      <div class="row align-items-center justify-content-around justify-content-lg-end">
+                        <div class="col-4 pr-0">
+                          <!-- Button trigger exchange filter modal -->
+                          <button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#exchangeSelectCenter">
+                            Exchange
+                            <i class="fa fa-star-o"></i>
+                          </button>
                         </div>
                       </div>
                 </form>
@@ -200,35 +222,86 @@ Route: P2P Trading Platform
                         <option value="50">50</option>
                       </select>
                     </div>
+                    <div class="col-1">
+                      <a id='show' class="float"><i style="color:white !important;" class="fa fa-bell my-float"></i></a>
+                    </div>
+                    <div class="col-2">
+                      <form class="form-inline align-self-center dropleft">
+                              <a href="javascript:;" style="border-radius: 4px;
+                              background-color: #6c757d;
+                              color: white;
+                              width: 35px;
+                              height: 35px;
+                              display: flex;
+                              align-items: center;
+                              text-decoration: none;
+                              justify-content: center;" class="actions-drop-main" id="dropdownMenuLink" data="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fa fa-paint-brush"
+                                aria-hidden="true" ></i></a>
+
+                                <div class="dropdown-menu custome-class p-0" aria-labelledby="dropdownMenuLink" id="range-dropdown">
+                                    <div class="py-3">
+                                      <h6 class="pl-4 pb-3">Color Settings</h6>
+                                      <div class="range-percent ml-4">
+                                    <div class="d-flex align-items-center addrange" id="range-row-0">
+                                      <div class="mb-3 pr-3">
+                                        <input type="number" id="min-value-0" style="width: 80px;height: 35px;" class="form-control" placeholder="Min">
+                                      </div>
+                                      <div class="mb-3 pr-3">
+                                        <span class="font-weight-bold">-</span>
+                                      </div>
+                                      <div class="mb-3 pr-3">
+                                        <input type="number" id="max-value-0" style="width: 80px;height: 35px;" class="form-control" placeholder="Max">
+                                      </div>
+                                      <div class="mb-3 pr-3">
+                                        <input type="color" id="set-color-0" class="form-control p-0 border-0 rounded-circle selectcolor" style="box-shadow: none !important;">
+                                      </div>
+                                      </div>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center mb-3 mr-4">
+                                      <button style="width: 40px; height: 40px;" class="btn bg-transparent add-more-range text-primary"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                    <div class="d-flex justify-content-center mx-4 ml-md-0">
+                                      <a id="change-color" class="btn btn-primary">Submit</a>
+                                      <a id="cancel-color" class="btn btn-outline-primary ml-2">Reset</a>
+                                    </div>
+                                  </div>
+                                </div>
+                            </form>
+                          </div>
+                        <!-- <p class="d-none d-md-block">show rows</p> -->
+                          <!-- <select class="custom-select">
+                            <option value="all">All</option>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                          </select> -->
+                    <!-- </div> -->
 
 
                   </div>
-                  <div class="col-6">
-                    <form class="form-inline" style="width:100%">
-                      <input class="form-control mr-sm-2" style="width: 100%;" id="tablesearchinput" type="search"
-                        placeholder="Search coin" aria-label="Search"> <span><i class="fa fa-search search-icon"
-                          aria-hidden="true"></i></span>
-                    </form>
+                  </div>
                   </div>
                 </div>
                 </div>
                 </div>
 
-                
+
               </div>
             </div>
-          </div>
+
           <div class="main_data_dable">
-            <table id="main_data_table" class="table table-hover" style="width: 100%">
+            <table id="main_data_table" class="table table-hover p-0" style="width: 100%">
               <thead id="currency_header">
                 <tr id="currency_header_row">
-                  <th scope="col"></th>
+                  <!-- <th scope="col"></th> -->
                   <th scope="col" class="res_po"><span class="d-none d-sm-none d-md-block">Crypto </span>Coin</th>
                 </tr>
               </thead>
               <tbody id="currencytable_body"></tbody>
             </table>
           </div>
+        </div>
+
         </div>
       </div>
     </div>
@@ -350,9 +423,7 @@ Route: P2P Trading Platform
 </div>
 
 
-<a id='show' class="float">
-  <i class="fa fa-bell my-float"></i>
-</a>
+
 @endsection
 
 @section('page_scripts')

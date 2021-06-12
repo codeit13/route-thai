@@ -9,6 +9,17 @@
 
 @section('content')
 
+@php
+$loan_variables=[];
+foreach($loanSettings as $loan_setting)
+{
+	 $loan_variables[$loan_setting->setting_code]=$loan_setting->setting_value;
+}
+
+$loan_variables=(object)$loan_variables;
+
+@endphp
+
   <section id="banner_search" class="loans-deshboard">
       <div class="container">
          <div class="row">
@@ -54,10 +65,13 @@
             </div>
 			 <div class="col-lg-5 btc text-right col-sm-6 col-6">
 
-				<p><img src="{{asset('front/img/sm-icon-1.png')}}" alt=""/>&nbsp; BTC:<b id="backend-current-usd-rate">1,797,994.87</b> USD <span>|</span> <a href="#">+0.73%</a></p>
+				<p id="backend-current-usd-rate"><img src="{{asset('front/img/sm-icon-1.png')}}" alt=""/>&nbsp; BTC:<b>1,797,994.87</b> USD <span></span> <a href="#"></a></p>
 
             </div>
          </div>
+         <form action="{{route('loan.initialize')}}" method="post" id="backend-loan-form">
+
+         	@csrf
 			<div class="row">
 				<div class="col-lg-12 col-sm-12 col-12">
 					<div class="white-box">
@@ -107,16 +121,13 @@
 
                       @endif
 
-                      {{__($currency->short_name)}} <span>{{__($currency->name)}}</span>
-
+                      {{__($currency->short_name)}} 
 
 
                             </a>
 
                             @endforeach
-												<!-- 	<a class="dropdown-item" href="#"><img src="{{asset('front/img/bitcoin.png')}}" alt=""> BTC <span>Bitcoin</span></a>
-													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-5.png')}}" alt=""> ETH <span>Ethereum</span></a>
-													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-6.png')}}" alt=""> BNB <span>BNB</span></a> -->
+											
 
 
 
@@ -124,14 +135,25 @@
 
 												  <input type="hidden" name="currency_id" id="coin_id" value="{{$currencies[0]->id??''}}">
 												</div>
-												<input type="text" name="quantity" id="collateral_quantity" value="">
+												<input type="text" name="collateral_amount" id="collateral_quantity" value="">
 											</div>
+
+											  @error('collateral_amount')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
+											  @error('currency_id')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
 										</div>
 									</div>
 								</div>
 								<div class="xs-v visible-xs">
 									<div class="col-lg-12 col-sm-12 col-12">
-										<label><input type="checkbox"/> Use Wallet Balance</label>
+										<label><input type="checkbox" name="is_wallet" id="" value="1" class="backend-is-wallet-mobile" /> Use Wallet Balance</label>
 									</div>
 								</div>
 								<div class="col-lg-4  col-12 col-sm-4">
@@ -143,11 +165,11 @@
 									<div class="row">
 										<div class="col-lg-12 col-sm-12 col-12">
 											<div class="multi_form">
-												<div class="dropdown currency_two three_coins crypto">
+												<div class="backend-fiat-dropdown dropdown currency_two three_coins crypto">
 												  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												   @if( isset($fiat_currencies[0]) && $fiat_currencies[0]->hasMedia('icon'))
+												   @if( isset($currencies[0]) && $currencies[0]->hasMedia('icon'))
 
-													<img src="{{$fiat_currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($fiat_currencies[0]->name)}}"> {{__($fiat_currencies[0]->short_name)}}
+													<img src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"> {{__($currencies[0]->short_name)}}
 
 													@else
 
@@ -157,7 +179,7 @@
 												  </button>
 												  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 47px, 0px); top: 0px; left: 0px; will-change: transform;">
 
-												  	@foreach($fiat_currencies as $cIndex=> $currency)
+												  	@foreach($currencies as $cIndex=> $currency)
 
 
                             <a class="dropdown-item" data-id="{{$currency->id}}" href="#">
@@ -170,22 +192,25 @@
 
                       @endif
 
-                      {{__($currency->short_name)}} <span>{{__($currency->name)}}</span>
+                      {{__($currency->short_name)}} 
 
 
 
                             </a>
 
                             @endforeach
-												<!-- 	<a class="dropdown-item" href="#"><img src="{{asset('front/img/bitcoin.png')}}" alt=""> BTC <span>Bitcoin</span></a>
-													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-5.png')}}" alt=""> ETH <span>Ethereum</span></a>
-													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-6.png')}}" alt=""> BNB <span>BNB</span></a> -->
+											
 												  </div>
-
+                                            <input type="hidden" name="loan_currency" id="backend-fiat-coin-id" value="{{$currencies[0]->id??''}}">
 
 												</div>
-												<input style="width:65%;" type="text" name="" value="33899.8">
+												<input style="width:65%;" type="text" name="loan_amount" readonly="" id="backend-loan-amount" value="">
 											</div>
+											  @error('loan_currency')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
 										</div>
 									</div>
 								</div>
@@ -199,33 +224,36 @@
 										<div class="col-lg-12 col-sm-12 col-12">
 											<div class="days">
 												<div class="row">
+
+
+													@foreach($terms as $tIndex=> $term)
+
+
 													<div class="col-lg-4  col-4 col-sm-4">
-														<a class="active" href="#">
-															<b>90%</b><br>
-															30 days
+														<a class="@if($tIndex==0)active @endif" href="javascript:void(0)" onclick="activeThisTerm(this,{{$term->id}})">
+															<b>{{$term->terms_percentage}}%</b><br>
+															{{$term->no_of_duration}} {{$term->duration_type}}
 														</a>
 													</div>
-													<div class="col-lg-4  col-4 col-sm-4">
-														<a class="" href="#">
-															<b>90%</b><br>
-															30 days
-														</a>
-													</div>
-													<div class="col-lg-4  col-4 col-sm-4">
-														<a class="" href="#">
-															<b>90%</b><br>
-															30 days
-														</a>
-													</div>
+												@endforeach
+
+                                    <input type="hidden" name="term" id="backend-loan-term-id" value="{{$terms[0]->id}}">
 												</div>
 											</div>
+
+											  @error('term')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
+
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-12 hidden-xs check col-sm-12 col-12">
-									<label><input type="checkbox"/> Use Wallet Balance</label>
+									<label><input type="checkbox" name="is_wallet" class="backend-is-wallet" value="1" /> Use Wallet Balance</label>
 								</div>
 							</div>
 							<div class="row">
@@ -234,18 +262,17 @@
 										<div class="row">
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Loan Duration</h5>
-												<h4>30 days</h4>
-												<p>Extend at anytime by paying 701.88 USD (2.10%) 
-												loan fee.</p>
+												<h4 id="backend-term-days">{{$terms[0]->no_of_duration??30}} {{$terms[0]->duration_type}}</h4>
+												<p>The interest rate 2.1% will be charge on the loan amount.</p>
 											</div>
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Price down limit</h5>
-												<h4>5.00% or 35279.76 <span>BTC/USD</span></h4>
-												<p>Add more collateral and extend PDL</p>
+												<h4 id="backend-price-down-limit">{{$loan_variables->loan_price_down_limit}}% or <plimit>35279.76 </plimit><span id="backend-limit-text">BTC/USDT</span></h4>
+												<!-- <p>Add more collateral and extend PDL</p> -->
 											</div>
 											<div class="col-lg-4 col-sm-4 col-12">
 												<h5>Loan repayment</h5>
-												<h4>34124.81 <span>USD</span></h4>
+												<h4 id="backend-loan-repayment">----</h4>
 												<p>Full repayment required only for full collateral return.</p>
 											</div>
 										</div>
@@ -256,12 +283,20 @@
 						<div class="close-price">
 							<div class="row">
 								<div class="col-lg-8 b-right col-sm-8 col-12">
-									<label><input type="checkbox"/> Set close price at  <form><input type="text" placeholder="Enter amount"/><button type="submit">USD</button></form></label>
+									<label><input type="checkbox" name="set_close_price" id="backend-set-close-price" /> Set close price at  <formL><input type="number" name="close_price" id="backend-close-price" placeholder="Enter amount"/><button type="button">USDT</button></formL>
+                                  
+                                   @error('close_price')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
+
+									</label>
 								</div>
 								<div class="col-lg-4 col-sm-4 col-12">
 									<div class="row">
 										<div class="col-lg-12 text-right col-sm-12 col-12">
-											<p>Min: <span>1,797,994.87</span> USD &nbsp;&nbsp; <mark>Max: <span>1,797,994.87</span> USD</mark></p>
+											<p>Min: <span id="backend-min-price">1,797,994.87</span> USDT &nbsp;&nbsp; <mark>Max: <span id="backend-max-price">1,797,994.87</span> USDT</mark></p>
 										</div>
 									</div>	
 									<div class="row">
@@ -278,21 +313,21 @@
 									<div class="row">
 										<div class="col-lg-6 col-sm-6 col-12">
 											<label>Final Loan Amount</label>
-											<h3>33422.93 <span>USD</span></h3>
+											<h3 id="backend-final-loan-amount">-----</h3>
 										</div>
 										<div class="col-lg-6 col-sm-6 col-12">
 											<label>Collateral Amount</label>
-											<h3>1.00 <span>BTC</span></h3>
+											<h3 id="backend-collateral-amount">-----</h3>
 										</div>
 									</div>
 								</div>
 								<div class="col-lg-6 read col-sm-6 col-12">
 									<div class="row">
 										<div class="col-lg-6 col-sm-6 col-12">
-											<label><input type="checkbox"/> I have read and I agree to <a href="#">Route Staking Service Agreement</a></label>
+										<!-- 	<label><input type="checkbox"/> I have read and I agree to <a href="#">Route Staking Service Agreement</a></label> -->
 										</div>
 										<div class="col-lg-6 col-sm-6 col-12">
-											<a href="#" class="btn-info" data-bs-toggle="modal" data-bs-target="#exampleModalloan">GET LOAN</a>
+											<a href="javascript:void(0)" onclick="submitthisForm()" class="btn-info" data-bs-toggle="modal" data-bs-target="#exampleModalloan">GET LOAN</a>
 										</div>
 									</div>
 								</div>
@@ -301,6 +336,9 @@
 					</div>
 				</div>
 			</div>
+
+
+		</form>
 			<div class="my-loan-history">
 				<div class="row">
 					<div class="col-lg-6 col-sm-6 col-6">
@@ -466,121 +504,75 @@
 
 <script type="text/javascript">
 
+	var error=0;
+
+	function submitthisForm()
+	{
+		error=0;
+
+		if($('[name="currency_id"]').val()=='')
+		{
+			$('[name="currency_id"]').parents('.multi_form').eq(0).after('<p class="text-danger text-bold validateError">{{__("The collateral Coin is required.")}}</p>');
+
+			error=1;
+		}
+
+		if(($('[name="collateral_amount"]').val()<=0 || $('[name="collateral_amount"]').val()=='') || isNaN($('[name="collateral_amount"]').val()))
+		{
+			$('[name="collateral_amount"]').parents('.multi_form').eq(0).after('<p class="text-danger text-bold validateError">{{__("The collateral amount is required and must be number.")}}</p>');
+
+			  error=1;
+		}
+
+		if($('[name="loan_currency"]').val()=='')
+		{
+			$('[name="loan_currency"]').parents('.multi_form').eq(0).after('<p class="text-danger text-bold validateError">{{__("The loan Coin is required.")}}</p>');
+
+			    error=1;
+		}
+
+		if(!error)
+		{
+
+		    $('#backend-loan-form').submit();
+
+		}
+	}
+
 	var wallets=@json($wallets);
 
 var currencies=@json($currencies);
 
+
 var crypto_exchange_rates={!! $crypto_rates !!};
 
-var fiat_exchange_rates={!! $fiat_rates !!};
 
 var usdPrice=0;
 
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+var terms=@json($terms);
 
-function showCurrencyRate()
-{
-	var crypto_id=$('#coin_id').val();
+var term=@json($terms[0]??'');
 
-	var cryptoRow=currencies.find(function(currency)
-    {
-       return currency.id==crypto_id;
-    })
+var price_down_limit='{{$loan_variables->loan_price_down_limit}}';
 
-   
+var set_price_min='{{$loan_variables->loan_min_percentage}}';
 
-	var filteredCryptoExchangeRow=crypto_exchange_rates.find(function(v,i){
-
-	   return v.symbol==cryptoRow.short_name+'USDT';
-	})
+var set_price_max='{{$loan_variables->loan_max_percentage}}';
 
 
-	//$('#backend-current-usd-rate').text(numberWithCommas(parseFloat(filteredCryptoExchangeRow.lastPrice.toFixed(2))));
+// crypto_exchange_rates.forEach(function(v,i){
+// 	console.log(v);
 
-	usdPrice=filteredCryptoExchangeRow.lastPrice;
+// 	return false;
+// })
 
 
 
-	console.log(filteredCryptoExchangeRow);
-}
-
-	$(".currencyDropdown .dropdown-menu .dropdown-item").on("click", function(e) { e.preventDefault();
-
-      var currency_id=$(this).attr('data-id');
-
-   changeShowBalance(currency_id);
-
-
-    $('#coin_id').val(currency_id);
-
-    $('.currencyDropdown .dropdown-toggle').html($(this).html());
-
-  showCurrencyRate();
-
-
-   
-});
-
-	var currentCurrency=$('#coin_id').val();
-
-	changeShowBalance(currentCurrency);
-
-function changeShowBalance(coin_id)
-{
-
-    var balance='0.00000';
-
-
-    var balanceRow=wallets.filter(function(wallet){
-          return wallet.currency_id==coin_id;
-    })
-
-    balanceRow=balanceRow[0];
-
-    var currencyRow=currencies.filter(function(currency)
-    {
-       return currency.id==coin_id;
-    })
-
-    currencyRow=currencyRow[0];
-
-    balance=balance+' '+currencyRow.short_name;
-
-    if( balanceRow && typeof balanceRow.coin !='undefined')
-    {
-         balance=balanceRow.coin + ' '+currencyRow.short_name;
-    }
-
-    $('#totalBalance').text(balance);
-}
-
-$(document).on('keyup','#collateral_quantity',function()
-{
-
-    var quantity=parseFloat($(this).val());
-
-    $(this).next('.validateError').remove();
-  
-    transferSelectedCurrencyBalance=parseFloat(transferSelectedCurrencyBalance);
-
-    if(transferSelectedCurrencyBalance < quantity)
-    {
-      $(this).addClass('is-invalid');
-
-      $(this).after('<p class="text-danger text-bold validateError">{{__("Withdraw quantity should be less than available balance.")}}</p>');
-    }
-    else
-    {
-      $(this).removeClass('is-invalid');
-
-    }
-
-})
 	
 
 </script>
+
+@include('front.loan.request-script')
 
 
 @endsection
