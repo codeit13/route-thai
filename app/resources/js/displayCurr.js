@@ -25,7 +25,7 @@ $(function () {
   base_currency_button.val(localbasecurrency);
   const buttoncontent = $('<img>', { src: currencyDetails[localbasecurrency]['img'] });
   base_currency_button.append(buttoncontent);
-  base_currency_button.append('<span>' + currencyDetails[localbasecurrency]['name'] + '</span>');
+  // base_currency_button.append('<span>' + currencyDetails[localbasecurrency]['name'] + '</span>');
   base_currency_button.append(' ' + currencyDetails[localbasecurrency]['sname']);
 
   $('#tablesearchinput').prop('disabled', false);
@@ -68,7 +68,7 @@ exchangeList.forEach((exchange) => {
      inputCh[0].outerHTML+'<span class="cr">'+inputicon[0].outerHTML+'</span>'+
       eximage[0].outerHTML + exchange+
       '</label></div>'
-      );        
+      );
 });
 //Generating coin filter modal
 coinsList.forEach((coin) => {
@@ -81,7 +81,7 @@ coinsList.forEach((coin) => {
      inputCh[0].outerHTML+'<span class="cr">'+inputicon[0].outerHTML+'</span>'+
      Coinimage[0].outerHTML + coin+
       '</label></div>'
-      );        
+      );
 });
 //show or hide exchange columns
 $(document).ready(function() {
@@ -96,7 +96,7 @@ $(document).ready(function() {
     if(values.length>=3){
       exchangeList.forEach((exchange)=>{
         if(values.includes(exchange)){$("."+exchange).show();}
-        else{$("."+exchange).hide();}        
+        else{$("."+exchange).hide();}
       });
     }
     else{
@@ -116,7 +116,7 @@ $(document).ready(function() {
     if(values.length!=0){
       coinsList.forEach((coin)=>{
         if(values.includes(coin)){$('#'+coin.toLowerCase() + '_row').show();}
-        else{$('#'+coin.toLowerCase() + '_row').hide();}        
+        else{$('#'+coin.toLowerCase() + '_row').hide();}
       });
     }
     else{
@@ -258,6 +258,14 @@ $(document).ready(function() {
     return Object.assign(accu1, { [coin]: obj1 });
   }, {});
 
+  const dispCurrFormat = (val) => {
+    if (val < 10) {
+      return val.toFixed(2);
+    } else {
+      return val.toFixed(0);
+    }
+  };
+
   $('#ex-select-menu a').click((e) => {
     e.preventDefault();
     const elem = $(e.currentTarget);
@@ -310,14 +318,14 @@ $(document).ready(function() {
               $('#' + divname).removeClass('text-red');
             }
 
-            $('#' + divname).text(pratio.toFixed(2) + ' %');
-            $('#' + divnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + price.toFixed(2));
+            $('#' + divname).text(pratio.toFixed(0) + ' %');
+            $('#' + divnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + dispCurrFormat(price));
           } else {
-            $('#' + divnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + price.toFixed(2));
+            $('#' + divnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + dispCurrFormat(price));
           }
         } else if (price !== 0 && baseprice === 0) {
           $('#' + divname).text('--');
-          $('#' + divnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + price.toFixed(2));
+          $('#' + divnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + dispCurrFormat(price));
         }
         else {
           $('#' + divname).text('--');
@@ -427,14 +435,14 @@ $(document).ready(function() {
               $('#' + divname).removeClass('text-red');
             }
 
-            $('#' + divname).text(pratio.toFixed(2) + ' %');
-            $('#' + divnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + newprice.toFixed(2));
+            $('#' + divname).text(pratio.toFixed(0) + ' %');
+            $('#' + divnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + dispCurrFormat(newprice));
           } else {
-            $('#' + divnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + newprice.toFixed(2));
+            $('#' + divnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + dispCurrFormat(newprice));
           }
         } else if (newprice !== 0 && baseprice === 0) {
           $('#divname').text('--');
-          $('#divnamep').text(currencySymbols[basecurrencyname.toUpperCase()] + newprice.toFixed(2));
+          $('#divnamep').text(currencySymbols[basecurrencyname.toUpperCase()] + dispCurrFormat(newprice));
         }
         else {
           $('#' + divname).text('--');
@@ -450,13 +458,13 @@ $(document).ready(function() {
       events = events.click || [];
       for(var i = 0; i < events.length; i++) {
           if(events[i].selector) {
-  
+
               //Check if the clicked element matches the event selector
               if($(event.target).is(events[i].selector)) {
                   events[i].handler.call(event.target, event);
               }
-  
-              // Check if any of the clicked element parents matches the 
+
+              // Check if any of the clicked element parents matches the
               // delegated event selector (Emulating propagation)
               $(event.target).parents(events[i].selector).each(function(){
                   events[i].handler.call(this, event);
@@ -570,8 +578,8 @@ $(document).ready(function() {
                     $('#' + divname).removeClass('text-red');
                   }
                 }
-                $('#' + divname).text(pratio.toFixed(2) + ' %');
-                $('#' + divnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + currentPrice[info.uid][exchangeList[i]].toFixed(2));
+                $('#' + divname).text(pratio.toFixed(0) + ' %');
+                $('#' + divnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + dispCurrFormat(currentPrice[info.uid][exchangeList[i]]));
               }
             }
           }
@@ -615,9 +623,9 @@ $(document).ready(function() {
             $('#' + idname).removeClass('text-red');
           }
         }
-        $('#' + idname).text(pratio.toFixed(2) + ' %');
+        $('#' + idname).text(pratio.toFixed(0) + ' %');
       }
-      $('#' + idnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + info.price.toFixed(2));
+      $('#' + idnamep).text(currencySymbols[basecurrencyname.toUpperCase()] + dispCurrFormat(info.price));
       // $('#'+idnamep).animate({backgroundColor: 'red'}, 'fast', () => {
       //   $('#'+idnamep).animate({backgroundColor: 'white'}, 'fast');
       // });
@@ -745,5 +753,8 @@ $(document).ready(function() {
   // const socket2 = new WebSocket("ws://127.0.0.1:9001");
   const socket2 = new WebSocket("wss://ws.route-thai.com/nodews/");
   socket2.onmessage = (msg) => processMessage(msg);
+
+  const socket3 = new WebSocket("wss://ws2.route-thai.com/ws");
+  socket3.onmessage = (msg) => processMessage(msg);
 
 });

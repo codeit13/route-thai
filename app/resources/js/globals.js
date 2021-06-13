@@ -125,9 +125,49 @@ export const exchangeList = [
     'P2PB2B',
     'CROSSTOWER',
     'BHEX',
+    // 'LATOKEN',
+    // 'FINEXBOX',
+    // 'BILAXY',
+    'COINJAR',
+    'LBANK',
+    'DCOIN',
+    // 'OCEANEX',
+    'BTCALPHA',
 ];
 
 export const exchangeDetails = {
+  "BTCALPHA": {
+      "img": "front/arbitrageimg/228.png",
+      "name": "BTC-Alpha"
+  },
+  "OCEANEX": {
+      "img": "front/arbitrageimg/468.png",
+      "name": "OceanEx"
+  },
+  "DCOIN": {
+      "img": "front/arbitrageimg/479.png",
+      "name": "Dcoin"
+  },
+  "LBANK": {
+      "img": "front/arbitrageimg/333.png",
+      "name": "LBank"
+  },
+  "COINJAR": {
+      "img": "front/arbitrageimg/657.png",
+      "name": "CoinJar"
+  },
+  "BILAXY": {
+      "img": "front/arbitrageimg/415.png",
+      "name": "Bilaxy"
+  },
+  "FINEXBOX": {
+      "img": "front/arbitrageimg/514.png",
+      "name": "Finexbox"
+  },
+  "LATOKEN": {
+      "img": "front/arbitrageimg/380.png",
+      "name": "LATOKEN"
+  },
   "BHEX": {
       "img": "front/arbitrageimg/478.png",
       "name": "HBTC"
@@ -430,27 +470,27 @@ export const currencySymbols = {
 export const currencyDetails = {
   unitedstatesdollar: {
     name: 'United States Dollar',
-    img: 'front/arbitrageimg/USD.svg',
+    img: 'front/img/USD_Dollar.png',
     sname: 'USD',
   },
   koreanwon: {
     name: 'Korean Won',
-    img: 'front/arbitrageimg/KRW.svg',
+    img: 'front/img/Korean_Won.png',
     sname: 'KRW',
   },
   indianrupee: {
     name: 'Indian Rupee',
-    img: 'front/arbitrageimg/inr.svg',
+    img: 'front/img/Indian_Rupee.png',
     sname: 'INR',
   },
   thaibaht: {
     name: 'Thai Baht',
-    img: 'front/arbitrageimg/thb.svg',
+    img: 'front/img/Thai_Baht.png',
     sname: 'THB',
   },
   japaneseyen: {
     name: 'Japanese Yen',
-    img: 'front/arbitrageimg/jp.svg',
+    img: 'front/img/Japanese_Yuan.svg',
     sname: 'JPY',
   },
   try: {
