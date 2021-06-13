@@ -29,7 +29,7 @@ Route: P2P Trading Platform
       </div>
       <div class="modal-body big-modal-menu">
         <div id="ex-select-menu" class="row text-left font-weight-bold row-cols-4 row-cols-sm-1">
-        </div> 
+        </div>
       </div>
     </div>
   </div>
@@ -58,7 +58,7 @@ Route: P2P Trading Platform
                 Select All
                 </label>
               </div>            -->
-            </div> 
+            </div>
           </div>
         </div>
       </div>
@@ -175,9 +175,9 @@ Route: P2P Trading Platform
                         <img src="front/img/bitkub.svg" alt="">Bitkub</button>
                       </button>
                       </div>
-                       
+
                    <div class="col-4 align-items-center">
-                      
+
                       <form class="form-inline" style="width:100%">
                         <input class="form-control mr-sm-2" style="width: 100%;" id="tablesearchinput" type="search"
                           placeholder="Crypto" aria-label="Search"> <span><i class="fa fa-search search-icon"
@@ -185,14 +185,14 @@ Route: P2P Trading Platform
                       </form>
                       </div>
 
-                       <!-- 
+                       <!--
                       <button type="button" id="toggleFav" style="width: 100%; font-size: 1em;" class="btn btn-outline-primary btn-block"><i
                           class="fa fa-star-o" aria-hidden="true"></i> Watchlist</button>
                      -->
                   </div>
                 </div>
                 <!-- <div class="col-1 pl-0 d-flex justify-content-lg-end justify-content-sm-center">
-                  
+
                 </div> -->
                 <div class="col-lg-6 ml-auto justify-content-lg-right">
                   <div class="row table-row">
@@ -205,12 +205,22 @@ Route: P2P Trading Platform
                             <i class="fa fa-star-o"></i>
                           </button>
                         </div>
-                        <div class="col-4 pr-0">
-                    <!-- Button trigger coin filter modal -->
-                    <button type="button" class="btn btn-secondary mr-1 btn-block" data-toggle="modal" data-target="#coinSelectCenter">
-                        Crypto
-                        <i class="fa fa-star-o"></i>
-                      </button>
+                      </div>
+                </form>
+              </div>
+              <div class="col-lg-4 ml-auto text-right">
+                <div class="row table-row">
+                  <div class="col-12">
+                    <div class="row ">
+                  <div class="col-6">
+                    <div class="features">
+                      <p>show rows</p>
+                      <select id="numrowselector">
+                        <option value="all">All</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                      </select>
                     </div>
                     <div class="col-1">
                       <a id='show' class="float"><i style="color:white !important;" class="fa fa-bell my-float"></i></a>
@@ -227,7 +237,7 @@ Route: P2P Trading Platform
                               text-decoration: none;
                               justify-content: center;" class="actions-drop-main" id="dropdownMenuLink" data="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fa fa-paint-brush"
                                 aria-hidden="true" ></i></a>
-                                
+
                                 <div class="dropdown-menu custome-class p-0" aria-labelledby="dropdownMenuLink" id="range-dropdown">
                                     <div class="py-3">
                                       <h6 class="pl-4 pb-3">Color Settings</h6>
@@ -267,13 +277,18 @@ Route: P2P Trading Platform
                           </select> -->
                     <!-- </div> -->
 
+
                   </div>
                   </div>
                   </div>
                 </div>
+                </div>
+                </div>
+
+
               </div>
             </div>
-          
+
           <div class="main_data_dable">
             <table id="main_data_table" class="table table-hover p-0" style="width: 100%">
               <thead id="currency_header">
