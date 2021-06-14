@@ -109,6 +109,9 @@ Route::middleware('auth')->group(function(){
         	Route::get('{trans_id}/success','SellController@orderSuccess')->name('sell.order_success');
         });
 
+        Route::post('message','MessageController@index')->name('message.index');
+        Route::post('message/store','MessageController@store')->name('message.store');
+
         Route::get('buyer/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
         Route::get('buyer/payment/{transaction}/cancel',[App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.order.cancel');
         Route::get('buyer/payment/{transaction}/release',[App\Http\Controllers\PaymentController::class, 'release'])->name('payment.order.release');
