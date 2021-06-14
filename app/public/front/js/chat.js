@@ -19,7 +19,7 @@ function getChatBody(){
 }
 
 getChatBody()
-// setInterval(getChatBody,1000);
+setInterval(getChatBody,1000);
 
 $('#content_button').click(function(){
 	var content = $('#content_message').val();
