@@ -59,7 +59,8 @@ class UserController extends Controller
         $user->line_access_token = $request['line_access_token'] ;
         $user->line_refresh_token = $request['line_refresh_token'] ;
         $user->save();
-        LINE::replyText("Hello biro!");
+        $data_debug = LINE::replyText("Hello biro!");
+        Log::debug(json_encode($data_debug));
         return response()->json(['status'=>'OK','message'=> __('The line user id settings has been updated') ]);
 }
     public function updateUsername(Request $request){
