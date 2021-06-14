@@ -52,7 +52,7 @@ class UserController extends Controller
             // return response()->json(['status'=>'OK','message'=> __('The telegram user id settings has been updated') ]);
             return redirect()->route('user.dashboard');
     }
-    public function updateLineUserIdSettings(Request $request){
+    public static function updateLineUserIdSettings(Request $request){
         $user = Auth::user();
         $user->line_name = $request->line_name ;
         $user->line_avatar = $request->line_avatar ;
