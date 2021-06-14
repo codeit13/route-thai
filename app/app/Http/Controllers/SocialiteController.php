@@ -19,14 +19,19 @@ class SocialiteController extends Controller
         }
 
         /**
-         * @var \Laravel\Socialite\Two\User
-         */
-        $user = Socialite::driver('line-notify')->user();
+        * @var \Laravel\Socialite\Two\User
+        */
+        $user = Socialite::driver('line-login')->user();
 
-        $request->user()
-            ->fill([
-                'notify_token' => $user->token
-            ])->save();
+        $loginUser = UserController::updateLineUserIdSettings([
+            'line_user_id' => $user->id,
+            'line_name' => $user->nickname,
+            'line_avatar' => $user->avatar,
+            'line_access_token' => $user->token,
+            'line_refresh_token' => $user->refreshToken,
+        ]);
+
+        // auth()->login($loginUser, true);
 
         return redirect()->route('home');
     }

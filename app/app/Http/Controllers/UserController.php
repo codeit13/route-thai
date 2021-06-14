@@ -54,7 +54,10 @@ class UserController extends Controller
     }
     public function updateLineUserIdSettings(Request $request){
         $user = Auth::user();
-        $user->line_user_id = $request->line_user_id ;
+        $user->line_name = $request->line_name ;
+        $user->line_avatar = $request->line_avatar ;
+        $user->line_access_token = $request->line_access_token ;
+        $user->line_refresh_token = $request->line_refresh_token ;
         $user->save();
         return response()->json(['status'=>'OK','message'=> __('The line user id settings has been updated') ]);
 }
