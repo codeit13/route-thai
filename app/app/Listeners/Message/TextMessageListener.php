@@ -27,7 +27,7 @@ class TextMessageListener
      * @return void
      */
     public function handle(TextMessage $event)
-    {
-        Bot::reply($event->getReplyToken())->text($event->getText());
+    {   $url = env('APP_URL') + "/user/linelogin";
+        Bot::reply($event->getReplyToken())->text($url);
     }
 }
