@@ -30,6 +30,6 @@ class SignUpOTP extends Mailable
     public function build()
     {
         $otp = $this->otp;
-        return $this->view('email.signup-otp',compact('otp'));
+        return $this->subject("Verify your email address | Route Thai")->view('email.signup-otp',compact('otp'));
     }
 }

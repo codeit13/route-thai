@@ -110,6 +110,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getGoogle2faSecretAttribute($value)
     {
-        return decrypt($value);
+        return !empty($value) ? decrypt($value) : '';
     }
 }

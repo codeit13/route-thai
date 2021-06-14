@@ -49,11 +49,13 @@ Account Secuirity - Route: P2P Trading Platform
                                             </label>
                                         </div>
                                         <div class="col-lg-3 text-right col-sm-5 col-4">
-                                            @if(!empty(Auth::user()->google2fa_secret))
+                                            @if(Auth::user()->google2fa_secret != '')
                                             <button type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="true" autocomplete="off">
                                                 <div class="handle"></div>
                                             </button>
-                                            @endif
+                                            @else
+                                                <a href="{{ route('user.security.2fa.google.add') }}" class="btn-info">Set Up</a>
+                                            @endif 
                                         </div>
                                     </div>
                                 </div>

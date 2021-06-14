@@ -65,8 +65,8 @@ Route::middleware('auth')->group(function(){
         Route::post('security/update-email/verify',[App\Http\Controllers\UserController::class, 'confimrUpdateEmail'])->name('updateEmail.verify');
     
         //2fa 
-        Route::get('secuirity/2fa/google',[App\Http\Controllers\UserController::class, 'addGoogle2fa'])->name('secuirity.2fa.google.add');
-        Route::post('secuirity/2fa/google/save',[App\Http\Controllers\UserController::class, 'saveGoogle2fa'])->name('secuirity.2fa.google.save');
+        Route::get('security/2fa/google',[App\Http\Controllers\UserController::class, 'addGoogle2fa'])->name('security.2fa.google.add');
+        Route::post('security/2fa/google/save',[App\Http\Controllers\UserController::class, 'saveGoogle2fa'])->name('security.2fa.google.save');
         
         Route::get('payments',[App\Http\Controllers\UserPaymentMethodsController::class, 'index'])->name('payments');
         Route::get('payment/mode/edit/{id}',[App\Http\Controllers\UserPaymentMethodsController::class, 'edit'])->name('payment.edit');
