@@ -12,7 +12,7 @@ class MessageController extends Controller
                             $query->where('from_user', $request->from_user)->where('to_user', $request->to_user);
                         })->orWhere(function ($query) use ($request) {
                             $query->where('from_user', $request->to_user)->where('to_user', $request->from_user);
-                        })->get();
+                        })->orderBy('created_at','asc')->get();
 
         $current_user = auth()->user()->id;
         
@@ -26,7 +26,7 @@ class MessageController extends Controller
                             $query->where('from_user', $request->from_user)->where('to_user', $request->to_user);
                         })->orWhere(function ($query) use ($request) {
                             $query->where('from_user', $request->to_user)->where('to_user', $request->from_user);
-                        })->get();
+                        })->orderBy('created_at','asc')->get();
 
         $current_user = auth()->user()->id;
         
