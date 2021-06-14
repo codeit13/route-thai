@@ -60,11 +60,10 @@ class UserController extends Controller
         $user->line_access_token = $request['line_access_token'] ;
         $user->line_refresh_token = $request['line_refresh_token'] ;
         $user->save();
-        $data_debug = LINE::pushmessage(
+        LINE::pushmessage(
             $user->line_user_id,
-            new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello')
+            new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Your Line Notifications have been turned ON.')
         );
-        Log::debug(json_encode($data_debug));
         return response()->json(['status'=>'OK','message'=> __('The line user id settings has been updated') ]);
 }
     public function updateUsername(Request $request){
