@@ -466,7 +466,7 @@
                if((mode == "line_notification") && (aria_pressed == 'false')) {
                   $("<a>").prop({
                         target: "_blank",
-                        href: "{{ env('APP_URL') }}/user/linelogin"
+                        href: "https://line.me/R/@573gpimp"
                   })[0].click();
                }
                $('.usr-msg').html(data.message).show();
