@@ -100,6 +100,13 @@
 		<div class="row">
 			<div class="col-lg-12 col-sm-12 col-12 xs-flush">
 				<div class="white-box">
+					<div class="row three_buttons visible-xs">
+						<div class="col-xs-12">
+							<a href="#" class="btn-success"><i class="fas fa-coins"></i> Buy</a>
+							<a href="#" class="btn-primary"><i class="fal fa-chart-line"></i> Sell</a>
+							<a href="#" class="btn-primary"><i class="fal fa-chart-line"></i> Transfer</a>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-lg-12 xs-flush col-sm-12 col-12">
 							<table>
@@ -146,8 +153,8 @@
 										<td>{{$currency->user_p2p_total-$currency->user_p2p_balance}}</td>
 										<td>{{$currency->user_p2p_total}}</td>
 										<td class="center_small">
-											<a href="#" class="btn-success"><i class="fas fa-coins"></i> Buy</a>
-											<a href="{{route('p2p.exchange')}}" class="btn-primary"><i class="fal fa-chart-line"></i> Sell</a>
+											<a href="{{route('p2p.exchange')}}" class="btn-success"><i class="fas fa-coins"></i> Buy</a>
+											<a href="{{route('sell.create')}}" class="btn-primary"><i class="fal fa-chart-line"></i> Sell</a>
 											<a href="{{route('p2p.exchange')}}" class="btn-primary"><i class="fal fa-chart-line"></i> Transfer</a>
 										</td>
 									</tr>

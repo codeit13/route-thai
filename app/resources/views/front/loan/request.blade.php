@@ -69,6 +69,9 @@ $loan_variables=(object)$loan_variables;
 
             </div>
          </div>
+         <form action="{{route('loan.initialize')}}" method="post" id="backend-loan-form">
+
+         	@csrf
 			<div class="row">
 				<div class="col-lg-12 col-sm-12 col-12">
 					<div class="white-box">
@@ -124,9 +127,7 @@ $loan_variables=(object)$loan_variables;
                             </a>
 
                             @endforeach
-												<!-- 	<a class="dropdown-item" href="#"><img src="{{asset('front/img/bitcoin.png')}}" alt=""> BTC <span>Bitcoin</span></a>
-													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-5.png')}}" alt=""> ETH <span>Ethereum</span></a>
-													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-6.png')}}" alt=""> BNB <span>BNB</span></a> -->
+											
 
 
 
@@ -134,14 +135,25 @@ $loan_variables=(object)$loan_variables;
 
 												  <input type="hidden" name="currency_id" id="coin_id" value="{{$currencies[0]->id??''}}">
 												</div>
-												<input type="text" name="quantity" id="collateral_quantity" value="">
+												<input type="text" name="collateral_amount" id="collateral_quantity" value="">
 											</div>
+
+											  @error('collateral_amount')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
+											  @error('currency_id')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
 										</div>
 									</div>
 								</div>
 								<div class="xs-v visible-xs">
 									<div class="col-lg-12 col-sm-12 col-12">
-										<label><input type="checkbox" name="is_wallet" id="backend-is-wallet" /> Use Wallet Balance</label>
+										<label><input type="checkbox" name="is_wallet" id="" value="1" class="backend-is-wallet-mobile" /> Use Wallet Balance</label>
 									</div>
 								</div>
 								<div class="col-lg-4  col-12 col-sm-4">
@@ -187,15 +199,18 @@ $loan_variables=(object)$loan_variables;
                             </a>
 
                             @endforeach
-												<!-- 	<a class="dropdown-item" href="#"><img src="{{asset('front/img/bitcoin.png')}}" alt=""> BTC <span>Bitcoin</span></a>
-													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-5.png')}}" alt=""> ETH <span>Ethereum</span></a>
-													<a class="dropdown-item" href="#"><img src="{{asset('front/img/icon-6.png')}}" alt=""> BNB <span>BNB</span></a> -->
+											
 												  </div>
-                                            <input type="hidden" name="fiat_currency" id="backend-fiat-coin-id" value="{{$currencies[0]->id??''}}">
+                                            <input type="hidden" name="loan_currency" id="backend-fiat-coin-id" value="{{$currencies[0]->id??''}}">
 
 												</div>
 												<input style="width:65%;" type="text" name="loan_amount" readonly="" id="backend-loan-amount" value="">
 											</div>
+											  @error('loan_currency')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
 										</div>
 									</div>
 								</div>
@@ -222,16 +237,23 @@ $loan_variables=(object)$loan_variables;
 													</div>
 												@endforeach
 
-                                    <input type="hidden" name="term_id" id="backend-loan-term-id">
+                                    <input type="hidden" name="term" id="backend-loan-term-id" value="{{$terms[0]->id}}">
 												</div>
 											</div>
+
+											  @error('term')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
+
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-12 hidden-xs check col-sm-12 col-12">
-									<label><input type="checkbox" name="is_wallet" class="backend-is-wallet" /> Use Wallet Balance</label>
+									<label><input type="checkbox" name="is_wallet" class="backend-is-wallet" value="1" /> Use Wallet Balance</label>
 								</div>
 							</div>
 							<div class="row">
@@ -261,7 +283,15 @@ $loan_variables=(object)$loan_variables;
 						<div class="close-price">
 							<div class="row">
 								<div class="col-lg-8 b-right col-sm-8 col-12">
-									<label><input type="checkbox" name="close_price" id="backend-set-close-price" /> Set close price at  <form><input type="number" name="close_price" id="backend-close-price" placeholder="Enter amount"/><button type="button">USDT</button></form></label>
+									<label><input type="checkbox" name="set_close_price" id="backend-set-close-price" /> Set close price at  <formL><input type="number" name="close_price" id="backend-close-price" placeholder="Enter amount"/><button type="button">USDT</button></formL>
+                                  
+                                   @error('close_price')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
+
+									</label>
 								</div>
 								<div class="col-lg-4 col-sm-4 col-12">
 									<div class="row">
@@ -294,10 +324,10 @@ $loan_variables=(object)$loan_variables;
 								<div class="col-lg-6 read col-sm-6 col-12">
 									<div class="row">
 										<div class="col-lg-6 col-sm-6 col-12">
-											<label><input type="checkbox"/> I have read and I agree to <a href="#">Route Staking Service Agreement</a></label>
+										<!-- 	<label><input type="checkbox"/> I have read and I agree to <a href="#">Route Staking Service Agreement</a></label> -->
 										</div>
 										<div class="col-lg-6 col-sm-6 col-12">
-											<a href="#" class="btn-info" data-bs-toggle="modal" data-bs-target="#exampleModalloan">GET LOAN</a>
+											<a href="javascript:void(0)" onclick="submitthisForm()" class="btn-info" data-bs-toggle="modal" data-bs-target="#exampleModalloan">GET LOAN</a>
 										</div>
 									</div>
 								</div>
@@ -306,6 +336,9 @@ $loan_variables=(object)$loan_variables;
 					</div>
 				</div>
 			</div>
+
+
+		</form>
 			<div class="my-loan-history">
 				<div class="row">
 					<div class="col-lg-6 col-sm-6 col-6">
@@ -471,15 +504,48 @@ $loan_variables=(object)$loan_variables;
 
 <script type="text/javascript">
 
+	var error=0;
+
+	function submitthisForm()
+	{
+		error=0;
+
+		if($('[name="currency_id"]').val()=='')
+		{
+			$('[name="currency_id"]').parents('.multi_form').eq(0).after('<p class="text-danger text-bold validateError">{{__("The collateral Coin is required.")}}</p>');
+
+			error=1;
+		}
+
+		if(($('[name="collateral_amount"]').val()<=0 || $('[name="collateral_amount"]').val()=='') || isNaN($('[name="collateral_amount"]').val()))
+		{
+			$('[name="collateral_amount"]').parents('.multi_form').eq(0).after('<p class="text-danger text-bold validateError">{{__("The collateral amount is required and must be number.")}}</p>');
+
+			  error=1;
+		}
+
+		if($('[name="loan_currency"]').val()=='')
+		{
+			$('[name="loan_currency"]').parents('.multi_form').eq(0).after('<p class="text-danger text-bold validateError">{{__("The loan Coin is required.")}}</p>');
+
+			    error=1;
+		}
+
+		if(!error)
+		{
+
+		    $('#backend-loan-form').submit();
+
+		}
+	}
+
 	var wallets=@json($wallets);
 
 var currencies=@json($currencies);
 
-var fiat_currencies=@json($fiat_currencies);
 
 var crypto_exchange_rates={!! $crypto_rates !!};
 
-var fiat_exchange_rates={!! $fiat_rates !!};
 
 var usdPrice=0;
 

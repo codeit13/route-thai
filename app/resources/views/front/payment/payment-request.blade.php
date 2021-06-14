@@ -57,7 +57,7 @@ Route: P2P Trading Platform
                                     </div>
                                     <div class="col-lg-12 xs-right col-sm-12 col-6">
                                         <div id="ID5268172_USD__10_s">@if($transaction->currency->hasMedia('icon'))
-                                            <img src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 
+                                            <img class="coin_image" src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 
                                             @endif
                                             <span class="hidden-xs">{{__($transaction->currency->name)}}</span><span class="visible-xs red-c">{{__($transaction->currency->short_name)}}</span>
                                         </div>

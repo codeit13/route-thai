@@ -152,8 +152,16 @@
                                <button type="button" class="btn btn-sm btn-toggle" data-mode="line_notification" data-toggle="button" aria-pressed="{{ Auth::user()->line_notification ? 'true' : 'false' }}" autocomplete="off">
                                  <div class="handle"></div>
                                </button>
+                            </div>
+                            <div class="sn_notificatio">
+                               <i class="fa fa-telegram"></i>
+                               Telegram Notification
+                               <button type="button" class="btn btn-sm btn-toggle" data-mode="telegram_notification" data-toggle="button" aria-pressed="{{ Auth::user()->telegram_notification ? 'true' : 'false' }}" autocomplete="off">
+                                 <div class="handle"></div>
+                               </button>
                             </div> 
-                            <p class="alert toggle-msg small" style="display: none"></p>             
+                            <p class="alert toggle-msg small" style="display: none"></p>       
+
                          </div>
                       </div>
                    </div>
@@ -440,17 +448,27 @@
     $('.btn-toggle').on('click',function(e){
         e.preventDefault();
         var mode= $(this).data('mode');
+        var aria_pressed= $(this).attr('aria-pressed');
          $.ajax({
             type:'POST',
             dataType:'JSON',
             url:"{{ route('user.update.notification') }}",
             data:{ mode : mode, _token: "{{ csrf_token() }}" },
             success:function(data) {
+               console.log(mode);
+               console.log(aria_pressed);
+               if((mode == "telegram_notification") && (aria_pressed == 'false')) {
+                  $("<a>").prop({
+                        target: "_blank",
+                        href: "https://t.me/route_php_bot"
+                  })[0].click();
+               }
                $('.usr-msg').html(data.message).show();
                setTimeout(function() { $(".usr-msg").hide() }, 2000);               
             }
          });
     });
+
    //  $('.currency-item').on('click',function(e){
    //    e.preventDefault();
    //    var currency= $(this).data('currency');

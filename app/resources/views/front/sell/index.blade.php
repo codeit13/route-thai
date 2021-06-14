@@ -10,16 +10,29 @@ Route: P2P Trading Platform - sell crypto
     <div class="container">
         <div class="row">
             <div class="col-lg-6 offset-lg-3 offest-sm-3 col-sm-6 col-12">
+            	<br>
                 <div class="white-box">
-                	{{ Form::open(['id'=>'save_sell']) }}
+                	@if(isset($transcation))
+                		{{ Form::model($transcation,['id'=>'save_sell']) }}
+                	@else
+                		{{ Form::open(['id'=>'save_sell']) }}
+                	@endif
+                		{{ Form::hidden('trans_id',$trans_id,[]) }}
 	                    <div class="field">
 	                        <label>Choose Crypto to Sell</label>
 	                        <div class="dropdown currency_two three_coins crypto">
-	                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                            	<img src="{{ $crypto_currencies->first()->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_1"> 
-	                            		<span id="text_1" style="color: black">{{ $crypto_currencies->first()->short_name }} <span>{{ $crypto_currencies->first()->name }}</span></span>
-	                            </button>
-	                            <input type="hidden" name="currency_id" id="currency_id" value="{{ $crypto_currencies->first()->id }}">
+	                        	@if(isset($transcation))
+	                        		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                            	<img src="{{ $transcation->currency->first()->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_1"> 
+		                            	<span id="text_1" style="color: black">{{ $transcation->currency->first()->short_name }} <span>{{ $transcation->currency->first()->name }}</span></span>
+		                            </button>
+	                        	@else
+		                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                            	<img src="{{ $crypto_currencies->first()->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_1"> 
+		                            	<span id="text_1" style="color: black">{{ $crypto_currencies->first()->short_name }} <span>{{ $crypto_currencies->first()->name }}</span></span>
+		                            </button>
+	                        	@endif
+	                            {{ Form::hidden('currency_id',(isset($transcation->currency_id))?$transcation->currency_id:$crypto_currencies->first()->id,['id'=>'currency_id']) }}
 	                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 	                            	@foreach($crypto_currencies as $single_currency_id)
 		                                <a class="dropdown-item some_padding" href="javascript:void(0)" 
@@ -40,11 +53,18 @@ Route: P2P Trading Platform - sell crypto
 	                    <div class="field">
 						    <label>Choose Fiat Currency</label>
 						    <div class="dropdown currency_two three_coins crypto">
-						        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						            <img src="{{ $default_fiat_currency->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_2"> 
-						            <span style="color: black" id="text_2">{{ $default_fiat_currency->short_name }} <span>{{ $default_fiat_currency->name }}</span></span>
-						        </button>
-						        <input type="hidden" name="fiat_currency_id" id="fiat_currency_id" value="{{ $default_fiat_currency->id }}">
+						    	@if(isset($transcation))
+							        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							            <img src="{{ $transcation->fiat_currency->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_2"> 
+							            <span style="color: black" id="text_2">{{ $transcation->fiat_currency->short_name }} <span>{{ $transcation->fiat_currency->name }}</span></span>
+							        </button>
+						    	@else
+						    		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							            <img src="{{ $default_fiat_currency->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_2"> 
+							            <span style="color: black" id="text_2">{{ $default_fiat_currency->short_name }} <span>{{ $default_fiat_currency->name }}</span></span>
+							        </button>
+						    	@endif
+						        {{ Form::hidden('fiat_currency_id',(isset($transcation->fiat_currency_id))?$transcation->fiat_currency_id:$default_fiat_currency->id,['id'=>'fiat_currency_id']) }}
 						        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						            @foreach($fiat_currencies as $single_fiat_currency_id)
 						                <a class="dropdown-item some_padding" href="javascript:void(0)" 
@@ -64,13 +84,13 @@ Route: P2P Trading Platform - sell crypto
 						</div>
 	                    <div class="field">
 	                        <label>Total Quantity</label>
-	                        <input type="number" id="quantity" name="quantity" placeholder="Enter Quantity"/>
+	                        {{ Form::number('quantity',null,['id'=>'quantity','placeholder'=>'Enter Quantity']) }}
 	                        <span class="size">Total balance: <b id="totalBalance"></b> <a href="javascript:void(0)" onclick="setMax()">Use Max</a></span><br>
 	                        <span class="text-danger" id="quantity_error"></span>
 	                    </div>
 	                    <div class="field">
 	                        <label>Total Price</label>
-	                        <input type="text" name="trans_amount" placeholder="Enter Price"/>
+	                        {{ Form::number('trans_amount',null,['id'=>'trans_amount','placeholder'=>'Enter Price']) }}
 	                        <span class="size">Refrence Price is 75.25</span><br>
 	                        <span class="text-danger" id="trans_amount_error"></span>
 	                    </div>

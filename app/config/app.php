@@ -178,6 +178,11 @@ return [
 
         Plank\Mediable\MediableServiceProvider::class,
 
+
+
+        // LINE NOTIFY SERVICE
+        // Energyweapons\LineNotify\LineNotifyServiceProvider::class
+
     ],
 
     /*

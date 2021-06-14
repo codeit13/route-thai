@@ -25,4 +25,7 @@
         margin-top: 0;
     }
 } */
+.coin_image{
+    width: 28px !important;
+}
 </style>

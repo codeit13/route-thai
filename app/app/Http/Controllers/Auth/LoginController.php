@@ -12,6 +12,8 @@ use Cookie;
 use Auth;
 use App\Models\Authentication_log; 
 
+use App\Notifications\LaravelTelegramNotification;
+
 class LoginController extends Controller
 {
     /*
@@ -70,6 +72,12 @@ class LoginController extends Controller
             $user = User::where(["email" => $credential['email']])->first();
             Auth::login($user, $remember_me);
             $this->auth_locationlog($request);
+            if($user->telegram_notification) {
+            $user->notify(new LaravelTelegramNotification([
+                'text' => $user->name . " You currently logged in!",
+                'telegram_user_id' => $user->telegram_user_id,
+            ]));
+            }
             return redirect('/home')->withCookie(Cookie::make('logged_in', $user->remember_token, 43200));
         }
         // if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {

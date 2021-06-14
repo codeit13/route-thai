@@ -19,6 +19,12 @@ class SellController extends Controller
      */
     public function create(Request $request){
     	$step = $request->get('step');
+        $trans_id = $request->get('trans_id');
+
+        $transcation =  Transaction::where('trans_id',$trans_id)
+                                        ->where('status','pending')
+                                        ->first();
+
     	$crypto_currencies = Currency::where('type_id',1)->get();
     	$fiat_currencies = Currency::where('type_id',2)->get();
         $crypto_ids = $crypto_currencies->pluck('id');
@@ -41,14 +47,18 @@ class SellController extends Controller
                 'selected_currency',
                 'selected_fiat_currency',
                 'user_payment_methods',
-                'current_balance'
+                'current_balance',
+                'transcation',
+                'trans_id'
             ));
     	}else{
 	    	return view('front.sell.index',compact(
 	    		'crypto_currencies',
                 'default_fiat_currency',
 	    		'fiat_currencies',
-                'current_balance'
+                'current_balance',
+                'transcation',
+                'trans_id'
 	    	));
     	}
     }
@@ -78,7 +88,6 @@ class SellController extends Controller
     	$redirect_url = route('sell.create',['step'=>2]);
 		return response()->json(['success'=>true,'redirect_url'=>$redirect_url]);
     }
-
     /**
      * Store a newly created sell in session.
      *
@@ -87,7 +96,10 @@ class SellController extends Controller
      */
     public function confirmSell(Request $request){
         $data = $request->session()->get('sell_data');
-        $trans_id = $this->generateID();
+        $trans_id = $data['trans_id']; 
+        if ($data['trans_id'] == '') {
+            $trans_id = $this->generateID();
+        }
         $selected_currency = Currency::find($data['currency_id']);
         $selected_fiat_currency = Currency::find($data['fiat_currency_id']);
 
@@ -235,5 +247,24 @@ class SellController extends Controller
         }
 
         return redirect()->route('home');
+    }
+
+    //delete sell
+    public function destroy($trans_id){
+        $user_id = auth()->user()->id;
+
+        $transcation = Transaction::where('trans_id',$trans_id)
+                                        ->where('status','pending')
+                                        ->where('user_id',$user_id)
+                                        ->first();                           
+
+        if ($transcation) {
+            $transcation->delete();
+            return redirect()->back()->with('message_type','success')
+                                        ->with('message','Ad removed successfully');
+        }
+
+        return redirect()->back()->with('message_type','danger')
+                                        ->with('message','Something went wrong');
     }
 }
