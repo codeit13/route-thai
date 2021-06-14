@@ -11,6 +11,7 @@ class Currency extends Model
     use HasFactory,Mediable;
 
     protected $table='currency';
+    protected $fillable=['type_id','name','icon','short_name','is_tradable','is_loanable','is_crypto','is_fiat','is_collateral'];
 
     public function currency_type()
     {
@@ -20,6 +21,11 @@ class Currency extends Model
     public function deposit_address()
     {
         return $this->hasOne('App\Models\DepositAddress','currency_id','id');
+    }
+
+    public function collateral_address()
+    {
+        return $this->hasOne('App\Models\CollateralAddress','currency_id','id');
     }
 
     public function getUserTotalAttribute()
