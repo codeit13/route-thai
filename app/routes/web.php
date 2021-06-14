@@ -133,11 +133,17 @@ Route::middleware('auth')->group(function(){
 
     Route::get('request/detail',[App\Http\Controllers\LoanController::class, 'show'])->name('loan.request.detail');
 
-    Route::get('{id}/detail',[App\Http\Controllers\LoanController::class, 'edit'])->name('loan.show.detail');
+    Route::get('{loan}/detail',[App\Http\Controllers\LoanController::class, 'edit'])->name('loan.show.detail');
 
     Route::get('{id}/status',[App\Http\Controllers\LoanController::class, 'status'])->name('loan.status');
 
     Route::get('history',[App\Http\Controllers\LoanController::class, 'index'])->name('loan.history');
+
+    Route::get('{id}/repay',[App\Http\Controllers\LoanController::class, 'repay'])->name('loan.repay');
+
+    Route::get('{id}/close',[App\Http\Controllers\LoanController::class, 'close'])->name('loan.close');
+
+
 
 
   });

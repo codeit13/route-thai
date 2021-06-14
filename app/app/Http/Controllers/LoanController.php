@@ -197,9 +197,25 @@ class LoanController extends Controller
      * @param  \App\Models\LoanRequest  $loanRequest
      * @return \Illuminate\Http\Response
      */
-    public function edit(\App\Models\Loan $loan)
+    public function edit($loan)
     {
-        return view('front.loan.detail');
+        $loan=\App\Models\Loan::whereLoanId($loan)->first();
+
+        if($loan){
+
+        $loan->current_value=$this->get_crypto_exchange_row($loan->collateral_currency)->lastPrice;
+
+
+
+        $loans=auth()->user()->loans()->latest()->limit(5)->get();
+
+
+        return view('front.loan.detail',compact('loan','loans'));
+    }
+    else
+    {
+        abort(404);
+    }
     }
 
     /**
@@ -209,9 +225,22 @@ class LoanController extends Controller
      * @param  \App\Models\LoanRequest  $loanRequest
      * @return \Illuminate\Http\Response
      */
-    public function status(Request $request, Loan $loan)
+    public function status(Request $request,$loan)
     {
-        return view('front.loan.status');
+        $loan=\App\Models\Loan::whereLoanId($loan)->first();
+
+        if($loan){
+
+        $loan->current_value=$this->get_crypto_exchange_row($loan->collateral_currency)->lastPrice;
+
+
+        return view('front.loan.status',compact('loan'));
+    }
+    else
+    {
+        abort(404);
+    }
+        
     }
 
     /**
@@ -223,6 +252,17 @@ class LoanController extends Controller
     public function destroy(Loan $loan)
     {
         //
+    }
+
+
+    public function repay($loan)
+    {
+          echo 'in-progress';
+    }
+
+    public function close($loan)
+    {
+        echo 'in-progress';
     }
 
     public function loan_data($request)
