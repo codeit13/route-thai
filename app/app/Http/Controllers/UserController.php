@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 use App\Notifications\LaravelTelegramNotification;
 
-// use Phattarachai\LineNotify\Facade\Line;
+use Phattarachai\LineNotify\Facade\Line;
 
 class UserController extends Controller
 {
@@ -43,9 +43,6 @@ class UserController extends Controller
             $user = Auth::user();
             $user->telegram_user_id = $request->telegram_user_id ;
             $user->save();
-            // Line::send('Hello bro!');
-            // $profile = \LINEBot::getProfile('Ucbe288cc1c5ccfb8a80368c56a9918ce');
-            // Log::info(json_encode($profile));
             if($user->telegram_notification) {
             $user->notify(new LaravelTelegramNotification([
                 'text' => "Welcome to the application " . $user->name . "!",

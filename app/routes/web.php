@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +70,10 @@ Route::middleware('auth')->group(function(){
         Route::post('update-line-user-id',[App\Http\Controllers\UserController::class, 'updateLineUserIdSettings'])->name('update.line-user-id');
         Route::post('update-currency',[App\Http\Controllers\UserController::class, 'updateCurrencySettings'])->name('update.currency');
         Route::post('update-language',[App\Http\Controllers\UserController::class, 'updateLanguageSettings'])->name('update.language');
+
+        // LINE
+        Route::get('linelogin', [SocialiteController::class, 'linelogin']);
+        Route::get('callback', [SocialiteController::class, 'callback']);
     });
     //Wallet
     Route::prefix('wallet')->group(function(){
