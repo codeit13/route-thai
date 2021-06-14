@@ -25,7 +25,7 @@ class SellController extends Controller
                                         ->where('status','pending')
                                         ->first();
 
-    	$crypto_currencies = Currency::where('type_id',1)->get();
+    	$crypto_currencies = Currency::where('is_tradable',1)->where('type_id',1)->get();
     	$fiat_currencies = Currency::where('type_id',2)->get();
         $crypto_ids = $crypto_currencies->pluck('id');
 
