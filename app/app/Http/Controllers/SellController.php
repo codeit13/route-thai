@@ -25,7 +25,7 @@ class SellController extends Controller
                                         ->where('status','pending')
                                         ->first();
 
-    	$crypto_currencies = Currency::where('type_id',1)->get();
+    	$crypto_currencies = Currency::where('is_tradable',1)->where('type_id',1)->get();
     	$fiat_currencies = Currency::where('type_id',2)->get();
         $crypto_ids = $crypto_currencies->pluck('id');
 
@@ -105,12 +105,13 @@ class SellController extends Controller
 
         $save_sell = Transaction::firstOrNew(['trans_id'=>$trans_id]);
         $save_sell->fill($data);
+        $save_sell->trans_id = $trans_id;
         $save_sell->user_id = auth()->user()->id;
         $save_sell->user_payment_method_id = auth()->user()->user_payment_method()->value('id');
         $save_sell->type = 'sell';
         $save_sell->timer = 30;
         $save_sell->save();
-        
+        $request->session()->forget('sell_data');
         $response_data = [
             'currency_image' => $selected_currency->getMedia('icon')->first()->getUrl(),
             'currency_name'  => $selected_currency->name,
