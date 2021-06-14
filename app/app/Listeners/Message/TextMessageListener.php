@@ -4,10 +4,11 @@ namespace App\Listeners\Message;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Notification;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
-use Revolution\Line\Facades\Bot;
+use Revolution\Line\Messaging\Bot;
 
-class TextMessageListener implements ShouldQueue
+class TextMessageListener
 {
     /**
      * Create the event listener.
@@ -27,10 +28,6 @@ class TextMessageListener implements ShouldQueue
      */
     public function handle(TextMessage $event)
     {
-        $response = Bot::replyText($event->getReplyToken(), $event->getText());
-
-        if (! $response->isSucceeded()) {
-            logger()->error(static::class.$response->getHTTPStatus(), $response->getJSONDecodedBody());
-        }
+        Bot::reply($event->getReplyToken())->text($event->getText());
     }
 }
