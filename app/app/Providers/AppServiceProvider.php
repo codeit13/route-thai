@@ -4,8 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-use Revolution\Line\Facades\Bot;
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -25,8 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Bot::macro('foo', function () {
-            return $this->bot()->
-        });
+        //
     }
 }
