@@ -154,7 +154,7 @@
 												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
 												<td>{{$loan->term_percentage}}%</td>
 												<td>{{ucwords($loan->status)}}</td>
-												<td><a href="#">View Details</a></td>
+												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
 
 											</tr>
 
@@ -197,7 +197,7 @@
 												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
 												<td>{{$loan->term_percentage}}%</td>
 												<td>{{ucwords($loan->status)}}</td>
-												<td><a href="#">View Details</a></td>
+												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
 											</tr>
 										</tbody>
 									</table>
