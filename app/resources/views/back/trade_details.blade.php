@@ -75,9 +75,11 @@
                             <li>Mobile Number: <b>{{ $trans->receiver->mobile}}</b></li>
                             <li>Line ID: <b>{{ $trans->receiver->line_number}}</b></li>
                         @else
-                            <li>Buyer Username : <b>{{ $trans->buyer_requests->first()->name }}</b></li>
-                            <li>Mobile Number: <b>{{ $trans->buyer_requests->first()->mobile}}</b></li>
-                            <li>Line ID: <b>{{ $trans->buyer_requests->first()->line_number}}</b></li>
+                            @if($trans->buyer_requests != null)
+                                <li>Buyer Username : <b>{{ $trans->buyer_requests->first()->name }}</b></li>
+                                <li>Mobile Number: <b>{{ $trans->buyer_requests->first()->mobile}}</b></li>
+                                <li>Line ID: <b>{{ $trans->buyer_requests->first()->line_number}}</b></li>
+                            @endif
                         @endif
                     </ul>
                 </div>
