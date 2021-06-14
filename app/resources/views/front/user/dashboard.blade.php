@@ -463,6 +463,12 @@
                         href: "https://t.me/route_php_bot"
                   })[0].click();
                }
+               if((mode == "line_notification") && (aria_pressed == 'false')) {
+                  $("<a>").prop({
+                        target: "_blank",
+                        href: "{{ env('APP_URL') }}/user/linelogin"
+                  })[0].click();
+               }
                $('.usr-msg').html(data.message).show();
                setTimeout(function() { $(".usr-msg").hide() }, 2000);               
             }
