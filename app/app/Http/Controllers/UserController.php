@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 use App\Notifications\LaravelTelegramNotification;
 
-use Phattarachai\LineNotify\Facade\Line;
+use LINE;
 
 class UserController extends Controller
 {
@@ -59,6 +59,7 @@ class UserController extends Controller
         $user->line_access_token = $request['line_access_token'] ;
         $user->line_refresh_token = $request['line_refresh_token'] ;
         $user->save();
+        LINE::replyText("Hello biro!");
         return response()->json(['status'=>'OK','message'=> __('The line user id settings has been updated') ]);
 }
     public function updateUsername(Request $request){
