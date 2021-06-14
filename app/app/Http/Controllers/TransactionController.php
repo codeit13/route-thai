@@ -91,12 +91,18 @@ class TransactionController extends Controller
                                           $query->where('type_id',$type);
       
 
-                                        })->paginate(10)->withQueryString();
+                                        })->orderby('trans_amount','desc')->paginate(10)->withQueryString();
 
           
 
+         $filters=$user->transactions()->whereHas('currency', function ($query)use ($type,$request) {
+                                          $query->where('type_id',$type);
+      
 
-      return view('front.wallet.wallet-history',compact('transactions','currencies','currency_types','walletType','currentCurrency','request'));
+                                        })->get();
+
+
+      return view('front.wallet.wallet-history',compact('transactions','currencies','currency_types','walletType','currentCurrency','request','filters'));
     }
 
     /**
@@ -159,7 +165,7 @@ class TransactionController extends Controller
     {
 
     
-        $request->validate(['quantity' =>'required|numeric','currency_id'=>'required|numeric','transaction_image'=>'required']);
+        $request->validate(['quantity' =>'required|numeric|gt:0','currency_id'=>'required|numeric','transaction_image'=>'required']);
 
 
         $fileName=time().'____'.$request->file('transaction_image')->getClientOriginalName();
@@ -197,7 +203,7 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($type=1)
+    public function show(Request $request,$type=1)
     {
         $currency_type='is_crypto';
 
@@ -212,7 +218,35 @@ class TransactionController extends Controller
 
          $walletTypes=\App\Models\CurrencyType::where('id','!=',3)->get();
 
-          $currencies=\App\Models\Currency::where($currency_type,1)->paginate(10);
+          $currencies=new \App\Models\Currency;
+
+
+
+
+        $currencies=$currencies->select('currency.*')->leftJoin('wallet', function($join) {
+      $join->on('currency.id', '=', 'wallet.currency_id')->where('user_id',auth()->id())->whereIn('wallet_type',[1,2]);
+    })->where($currency_type,1);
+
+
+           if($request->coin)
+          {
+            $currencies=$currencies->orderBy('short_name',$request->coin);
+          }
+
+          $amount_order='desc';
+
+          if($request->amount)
+          {
+             $amount_order=$request->amount;
+          }
+
+
+
+
+
+       $currencies= $currencies->orderby('wallet.coin',$amount_order)->paginate(10)->withQueryString();
+
+      //    echo '<pre>';print_r($currencies->toArray());die;
 
 
      
@@ -225,7 +259,7 @@ class TransactionController extends Controller
 
 
  
-        return view('front.wallet.wallet-transactions',compact('walletType','currencies','walletTypes','wallets','allCurrencies'));
+        return view('front.wallet.wallet-transactions',compact('walletType','currencies','walletTypes','wallets','allCurrencies','request'));
     }
 
 
@@ -334,7 +368,7 @@ class TransactionController extends Controller
     {
 
     
-        $request->validate(['quantity' =>['required','numeric',new \App\Rules\CheckWalletBalance($request)],'currency_id'=>'required|numeric','address'=>'required']);
+        $request->validate(['quantity' =>['required','gt:0','numeric',new \App\Rules\CheckWalletBalance($request)],'currency_id'=>'required|numeric','address'=>'required']);
 
         $type='withdraw';  //for withdraw
  
@@ -382,7 +416,7 @@ class TransactionController extends Controller
        return $transaction->save();
     }
 
-     public function p2p()
+     public function p2p(Request $request)
     {
           $user = Auth::user();
 
@@ -390,7 +424,33 @@ class TransactionController extends Controller
 
          //$walletTypes=\App\Models\CurrencyType::where('id','!=',3)->get();
 
-          $currencies=\App\Models\Currency::where('is_tradable',1)->paginate(10);
+
+            $currencies=new \App\Models\Currency;
+
+
+
+
+        $currencies=$currencies->select('currency.*')->leftJoin('wallet', function($join) {
+      $join->on('currency.id', '=', 'wallet.currency_id')->where('user_id',auth()->id())->where('wallet_type',3);
+    })->where('is_tradable',1);
+
+
+           if($request->coin)
+          {
+            $currencies=$currencies->orderBy('short_name',$request->coin);
+          }
+
+          $amount_order='desc';
+
+          if($request->amount)
+          {
+             $amount_order=$request->amount;
+          }
+
+
+
+
+          $currencies=$currencies->orderBy('wallet.coin',$amount_order)->paginate(10)->withQueryString();
 
 
      
@@ -403,7 +463,7 @@ class TransactionController extends Controller
 
 
  
-        return view('front.wallet.p2p-wallet',compact('walletType','currencies','wallets','allCurrencies'));
+        return view('front.wallet.p2p-wallet',compact('walletType','currencies','wallets','allCurrencies','request'));
     }
 
 
@@ -456,7 +516,7 @@ class TransactionController extends Controller
 
          $request->merge(['currency_id'=>$request->transfer_currency_id]);
        
-         $request->validate(['transfer_quantity' =>['required','numeric',new \App\Rules\CheckWalletBalance($request,$type)],'transfer_currency_id'=>'required|numeric','wallet_from'=>'required','wallet_to'=>'required']);
+         $request->validate(['transfer_quantity' =>['required','numeric','gt:0',new \App\Rules\CheckWalletBalance($request,$type)],'transfer_currency_id'=>'required|numeric','wallet_from'=>'required','wallet_to'=>'required']);
           $user=auth()->user();
 
          $wallet=$user->wallet()->where('currency_id',$request->currency_id)->where('wallet_type',$type)->first();

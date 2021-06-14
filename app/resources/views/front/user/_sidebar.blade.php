@@ -10,7 +10,7 @@
           </li>
           <li class="{{ $route == 'user.notification' ? 'active': ''}}"> <a href="{{ route('user.notification') }}"><i class="fal fa-bell"></i> Notifications</a>
           </li>
-          <li class="{{ $route == 'user.securtiy' ? 'active': ''}}"> <a href="{{ route('user.securtiy') }}"><i class="fal fa-lock"></i> Securtiy</a>
+          <li class="{{ $route == 'user.security' ? 'active': ''}}"> <a href="{{ route('user.security') }}"><i class="fal fa-lock"></i> security</a>
           </li>
        </ul>
     </div>

@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
 
+use Illuminate\Support\Facades\Log;
+
+use App\Notifications\LaravelTelegramNotification;
+
+// use Phattarachai\LineNotify\Facade\Line;
+
 class UserController extends Controller
 {
     
@@ -15,7 +21,7 @@ class UserController extends Controller
     public function profile(){
         return view('front.user.profile');
     }
-    public function securtiy(){
+    public function security(){
         return view('front.user.account');
     } 
 
@@ -30,7 +36,6 @@ class UserController extends Controller
         return view('front.user.confirm-update-email');
     } 
 
-
     public function deviceManagement(){
         return view('front.user.deviceManagement');
     }    
@@ -41,14 +46,39 @@ class UserController extends Controller
         return response()->json(['status'=>$status,'message'=>$message]);
     }
     public function updateNotificationSettings(Request $request){
-        if($request->mode == 'sms_notification' || $request->mode = 'line_notification'){
-            $user = Auth::user();
+        $user = Auth::user();
+        if($request->mode == 'sms_notification'){
             $user->sms_notification = $request->mode == 'sms_notification' ? ($user->sms_notification == true ? false : true ) :$user->sms_notification ;
-            $user->line_notification = $request->mode == 'line_notification' ? ($user->line_notification == true ? false : true) :$user->line_notification;
-            $user->save();
-            return response()->json(['status'=>'OK','message'=> __('The settings has been updated') ]);
+        } else if($request->mode == 'line_notification'){
+            $user->line_notification = $request->mode == 'line_notification' ? ($user->line_notification == true ? false : true ) :$user->line_notification ;
+        } else if($request->mode == 'telegram_notification'){
+            $user->telegram_notification = $request->mode == 'telegram_notification' ? ($user->telegram_notification == true ? false : true ) :$user->telegram_notification ;
         }
+        $user->save();
+        return response()->json(['status'=>'OK','message'=> __('The settings has been updated') ]);
     }
+    public function updateTelegramUserIdSettings(Request $request){
+            $user = Auth::user();
+            $user->telegram_user_id = $request->telegram_user_id ;
+            $user->save();
+            // Line::send('Hello bro!');
+            // $profile = \LINEBot::getProfile('Ucbe288cc1c5ccfb8a80368c56a9918ce');
+            // Log::info(json_encode($profile));
+            if($user->telegram_notification) {
+            $user->notify(new LaravelTelegramNotification([
+                'text' => "Welcome to the application " . $user->name . "!",
+                'telegram_user_id' => $user->telegram_user_id,
+                ]));
+            }
+            // return response()->json(['status'=>'OK','message'=> __('The telegram user id settings has been updated') ]);
+            return redirect()->route('user.dashboard');
+    }
+    public function updateLineUserIdSettings(Request $request){
+        $user = Auth::user();
+        $user->line_user_id = $request->line_user_id ;
+        $user->save();
+        return response()->json(['status'=>'OK','message'=> __('The line user id settings has been updated') ]);
+}
     public function updateUsername(Request $request){
         if($request->has('username') && !empty($request->username)) {
             $user = Auth::user();
@@ -74,5 +104,22 @@ class UserController extends Controller
             $user->save();
             return response()->json(['status'=>'OK','message'=> __('The language settings has been updated.') ]);
         }
+    }
+
+    public function addGoogle2fa(){
+        $google2fa = app('pragmarx.google2fa');
+        $qrcode =  $google2fa->generateSecretKey();
+        $QR_Image = $google2fa->getQRCodeInline(
+            "Route Thai",
+            Auth::user()->email,
+            $qrcode
+        );
+        return view('front.user.addGoogle2fa',compact('QR_Image','qrcode'));
+    }
+    public function saveGoogle2fa(Request $request){
+        $user = Auth::user();
+        $user->google2fa_secret = $request->secret;
+        $user->save();
+        return redirect()->route('user.security');
     }
 }

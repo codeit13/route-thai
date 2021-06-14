@@ -44,5 +44,19 @@ return [
     ],
 
     //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
+    'exchange'=>[
+        'crypto_uri' => "https://api.binance.com/api/v1/",
+        'fiat_uri'=>"https://api.coinbase.com/v2/"
+
+    ],
+
+    'telegram-bot-api' => [
+        'token' => env('TELEGRAM_BOT_TOKEN', '1831584145:AAHmjtzyMjJe4B2qMyBKnJ87FQ_0muSuKHE')
+    ],
+    'ses' => [
+        'key' => env('AWS_ACCESS_KEY_ID'),
+        'secret' => env('AWS_SECRET_ACCESS_KEY'),
+        'region' => env('AWS_DEFAULT_REGION'),
+    ],
 
 ];

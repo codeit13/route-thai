@@ -35,7 +35,7 @@ $(document).ready(function(){
 
     var cryptoCurrencyList = new Choices('#crypto-list', {
     removeItemButton: true,
-    maxItemCount:10,
+    maxItemCount:100,
     searchResultLimit:8,
     renderChoiceLimit:100,
     items: [],
@@ -44,7 +44,7 @@ $(document).ready(function(){
     });    
     var fiatCurrencyList = new Choices('#fiat-list', {
     removeItemButton: true,
-    maxItemCount:10,
+    maxItemCount:100,
     searchResultLimit:8,
     renderChoiceLimit:100,
     items: [],
@@ -52,7 +52,7 @@ $(document).ready(function(){
     });    
     var tradeCurrencyList = new Choices('#trade-list', {
     removeItemButton: true,
-    maxItemCount:10,
+    maxItemCount:100,
     searchResultLimit:8,
     renderChoiceLimit:100,
     items: [],

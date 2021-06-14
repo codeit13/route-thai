@@ -102,7 +102,7 @@ $('select:not(.form-control)').each(function () {
     var $styledSelect = $this.next('div.styledSelect');
 
     // Show the first select option in the styled div
-    $styledSelect.text($this.children('option').eq(0).text());
+    $styledSelect.text($this.children('option:selected').eq(0).text());
 
     // Insert an unordered list after the styled div and also cache the list
     var $list = $('<ul />', {
@@ -146,6 +146,38 @@ $('select:not(.form-control)').each(function () {
     });
 
 });
+
+
+$('.server-class-currency').on('click',function(e){
+      e.preventDefault();
+      var currency= $(this).data('currency');
+      $.ajax({
+         type:'POST',
+         dataType:'JSON',
+         url:"{{ route('user.update.currency') }}",
+         data:{ currency : currency, _token: "{{ csrf_token() }}" },
+         success:function(data) {
+            $('.currency-msg').html(data.message).show();
+            setTimeout(function() { $(".currency-msg").hide() }, 2000);
+            location.reload();
+         }
+      });
+   });
+   $('.server-class-language').on('click',function(e){
+      e.preventDefault();
+      var language= $(this).data('language');
+      $.ajax({
+         type:'POST',
+         dataType:'JSON',
+         url:"{{ route('user.update.language') }}",
+         data:{ language : language, _token: "{{ csrf_token() }}" },
+         success:function(data) {
+            $('.currency-msg').html(data.message).show();
+            setTimeout(function() { $(".currency-msg").hide() }, 2000);
+            location.reload();
+         }
+      });
+   });
 
 
 </script>

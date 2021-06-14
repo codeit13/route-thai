@@ -52,20 +52,21 @@ Route::post('/mobile/otp/send',[App\Http\Controllers\HomeController::class, 'sen
 Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
 Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class, 'sendOTPOnLogin'])->name('send.otp.login');
 
-Route::get('verify/2f',[App\Http\Controllers\TwoFactorController::class, 'index'])->name('verify.2f');
-Route::post('verify/2f/save',[App\Http\Controllers\TwoFactorController::class, 'store'])->name('verify.store');
-Route::get('verify/2f/resend',[App\Http\Controllers\TwoFactorController::class, 'resend'])->name('verify.resend');
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware('auth')->group(function(){    
     // Profile
-    Route::prefix('user')->name('user.')->group(function(){ 
+    Route::prefix('user')->name('user.')->group(function(){         
         Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
         Route::get('profile',[App\Http\Controllers\UserController::class, 'profile'])->name('profile');
         Route::get('deviceManagement',[App\Http\Controllers\UserController::class, 'deviceManagement'])->name('deviceManagement');
-        Route::get('securtiy',[App\Http\Controllers\UserController::class, 'securtiy'])->name('securtiy');
+        Route::get('security',[App\Http\Controllers\UserController::class, 'security'])->name('security');
         Route::get('notifications',[App\Http\Controllers\UserController::class, 'notifications'])->name('notification');
-        Route::get('securtiy/update-email',[App\Http\Controllers\UserController::class, 'updateEmail'])->name('updateEmail');
-        Route::post('securtiy/update-email/verify',[App\Http\Controllers\UserController::class, 'confimrUpdateEmail'])->name('updateEmail.verify');
+        Route::get('security/update-email',[App\Http\Controllers\UserController::class, 'updateEmail'])->name('updateEmail');
+        Route::post('security/update-email/verify',[App\Http\Controllers\UserController::class, 'confimrUpdateEmail'])->name('updateEmail.verify');
+    
+        //2fa 
+        Route::get('secuirity/2fa/google',[App\Http\Controllers\UserController::class, 'addGoogle2fa'])->name('secuirity.2fa.google.add');
+        Route::post('secuirity/2fa/google/save',[App\Http\Controllers\UserController::class, 'saveGoogle2fa'])->name('secuirity.2fa.google.save');
         
         Route::get('payments',[App\Http\Controllers\UserPaymentMethodsController::class, 'index'])->name('payments');
         Route::get('payment/mode/edit/{id}',[App\Http\Controllers\UserPaymentMethodsController::class, 'edit'])->name('payment.edit');
@@ -76,7 +77,12 @@ Route::middleware(['auth'])->group(function(){
         Route::post('check-username',[App\Http\Controllers\UserController::class, 'isUsernameExist'])->name('check.username');
         Route::post('update-username',[App\Http\Controllers\UserController::class, 'updateUsername'])->name('update.username');
         Route::post('update-notification',[App\Http\Controllers\UserController::class, 'updateNotificationSettings'])->name('update.notification');
+        Route::get('update-telegram-user-id/{telegram_user_id}',[App\Http\Controllers\UserController::class, 'updateTelegramUserIdSettings'])->name('update.telegram-user-id');
+        Route::post('update-line-user-id',[App\Http\Controllers\UserController::class, 'updateLineUserIdSettings'])->name('update.line-user-id');
         Route::post('update-currency',[App\Http\Controllers\UserController::class, 'updateCurrencySettings'])->name('update.currency');
+        
+       
+        
         Route::post('update-language',[App\Http\Controllers\UserController::class, 'updateLanguageSettings'])->name('update.language');
     });
     //Wallet
@@ -95,7 +101,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('deposit/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create'])->name('wallet.deposit');
         Route::get('{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'show'])->name('wallet.history');
         Route::post('create/deposit/',[App\Http\Controllers\TransactionController::class, 'store'])->name('wallet.create.deposit');
-        Route::get('wallet/deposit/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.request.history');
+        Route::get('/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'index'])->name('wallet.request.history');
 
 
 
@@ -128,6 +134,24 @@ Route::middleware(['auth'])->group(function(){
 
 //end
 
+    // Loan Routes
+  Route::prefix('loan')->group(function(){
+
+    Route::get('request',[App\Http\Controllers\LoanController::class, 'create'])->name('loan.create');
+
+    Route::get('request/{id}/detail',[App\Http\Controllers\LoanController::class, 'show'])->name('loan.request.detail');
+
+    Route::get('{id}/detail',[App\Http\Controllers\LoanController::class, 'edit'])->name('loan.show.detail');
+
+    Route::get('{id}/status',[App\Http\Controllers\LoanController::class, 'status'])->name('loan.status');
+
+    Route::get('history',[App\Http\Controllers\LoanController::class, 'index'])->name('loan.history');
+
+
+  });
+
+    //end
+
 
 });
 
@@ -136,3 +160,12 @@ Route::middleware(['auth'])->group(function(){
 Route::get('p2p/exchange','ExchangeController@index')->name('p2p.exchange');
 // Stocking
 Route::get('staking',function() { return view('front.staking'); })->name('staking');
+
+// Arbitrage
+
+Route::get('arbitrage',function()
+{
+    return view('front.arbitrage');
+    
+})->name('arbitrage');
+

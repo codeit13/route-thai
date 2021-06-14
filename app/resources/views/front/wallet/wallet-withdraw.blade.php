@@ -36,7 +36,7 @@
       <div class="row">
         <div class="col-lg-12 bg-white-xs col-sm-12 col-12 xs-flush">
           <div class="white-box m-top-0">
-            <ul class="janral-head hidden-xs">
+            <ul class="janral-head">
            @foreach($currency_types as $index => $currency_type)
 
 
@@ -158,7 +158,10 @@
                     <label>{{__('Total Quantity')}}</label>
                    
                                   
-                                        <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"   required="" id="quantity" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus="" value="{{ old('quantity') }}">
+                                        <span class="max_btn_set">
+                                          <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"   required="" id="quantity" aria-describedby="emailHelp" autocomplete="e-m-a-i-l" autofocus="" value="{{ old('quantity') }}">
+                                          <a href="#">MAX</a>
+                                        </span>
                                     
                                      @error('quantity')
                                 <p class="invalid-value" role="alert">
@@ -187,7 +190,7 @@
                      
                              
                   <div class="field">
-                    <button type="submit">{{__('Withdrawal')}}</button>
+                    <button id="withdrawalSubmit" type="submit">{{__('Withdrawal')}}</button>
                   </div>
                 </form>
               </div>
@@ -369,9 +372,14 @@ $(document).on('keyup','#quantity',function()
 
       $(this).after('<p class="text-danger text-bold validateError">{{__("Withdraw quantity should be less than available balance.")}}</p>');
     }
+    else if(quantity <=0)
+    {
+       $('#withdrawalSubmit').attr('disabled',true).css('opacity','0.5');
+    }
     else
     {
       $(this).removeClass('is-invalid');
+      $('#withdrawalSubmit').attr('disabled',false).css('opacity','1.0');
 
     }
 

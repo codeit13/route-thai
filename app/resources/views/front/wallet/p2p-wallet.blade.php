@@ -105,10 +105,28 @@
 							<table>
 								<thead>
 									<tr>
-										<th>Coin <i class="fa fa-sort" aria-hidden="true"></i></th>
-										<th>Total <i class="fa fa-sort" aria-hidden="true"></i></th>
-										<th>Available <i class="fa fa-sort" aria-hidden="true"></i></th>
-										<th>Action <i class="fa fa-sort" aria-hidden="true"></i></th>
+											@php 
+
+										$query_coin='asc';
+
+										if(isset($request->coin) && $request->coin=='asc')
+										{
+											$query_coin='desc';
+										}
+
+										$query_amount='asc';
+
+										if(isset($request->amount) && $request->amount=='asc')
+										{
+											$query_amount='desc';
+										}
+
+
+										@endphp
+
+										<th>Coin <a href="{{route('wallet.p2p').'?coin='.$query_coin}}"><i class="fa fa-sort" aria-hidden="true"></i></a></th>
+										<th>Available  <a href="{{route('wallet.p2p').'?amount='.$query_amount}}"><i class="fa fa-sort" aria-hidden="true"></i></a></th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -122,12 +140,12 @@
 											@endif
 											<label>{{__($currency->short_name)}}<br><span>{{__($currency->name)}}</span></label>
 										</td>
-										<td>{{$currency->user_p2p_total}}</td>
+										<!-- <td>{{$currency->user_p2p_total}}</td> -->
 
 										<td>{{$currency->user_p2p_balance}}</td>
 										<td>
-											<a href="#" class="btn-success">{{__('Deposit')}}</a>
-											<a href="{{route('p2p.exchange')}}" class="btn-primary">{{__('P2P Trading')}}</a>
+											<a href="#" class="btn-success"><i class="fas fa-coins"></i> {{__('Deposit')}}</a>
+											<a href="{{route('p2p.exchange')}}" class="btn-primary"><i class="fal fa-chart-line"></i> {{__('P2P Trading')}}</a>
 										</td>
 									</tr>
 									@endforeach

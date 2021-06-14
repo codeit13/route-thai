@@ -92,4 +92,24 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->two_factor_expires_at = null;
         $this->save();
     }
+    public function routeNotificationForTelegram()
+    {
+        return $this->telegram_user_id;
+    }
+
+    public function setGoogle2faSecretAttribute($value)
+    {
+         $this->attributes['google2fa_secret'] = encrypt($value);
+    }
+
+    /**
+     * Decrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getGoogle2faSecretAttribute($value)
+    {
+        return decrypt($value);
+    }
 }

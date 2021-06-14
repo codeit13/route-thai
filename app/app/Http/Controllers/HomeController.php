@@ -35,6 +35,9 @@ class HomeController extends Controller
         return view('front.home');
     }
 
+    public function twofactorauth(){
+        return view('front.auth.twoFactor');  
+    }
    
     public function sendOTP(SendOTPRequest $request)
     {   

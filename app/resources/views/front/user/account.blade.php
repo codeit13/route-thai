@@ -49,9 +49,11 @@ Account Secuirity - Route: P2P Trading Platform
                                             </label>
                                         </div>
                                         <div class="col-lg-3 text-right col-sm-5 col-4">
-                                            <button type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                            @if(!empty(Auth::user()->google2fa_secret))
+                                            <button type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="true" autocomplete="off">
                                                 <div class="handle"></div>
                                             </button>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

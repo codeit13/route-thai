@@ -100,7 +100,7 @@
                                </button>
                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 @foreach($currencies as $cIndex=> $currency)
-                                    <a class="dropdown-item currency-item" href="javascript:void(0)" data-currency={{ $currency->id }}>
+                                    <a class="dropdown-item currency-item server-class-currency" href="javascript:void(0)" data-currency={{ $currency->id }}>
                                    @if($currency->hasMedia('icon'))
                                       <img src="{{ $currency->firstMedia('icon')->getUrl() }}" alt="{{ $currency->name }}">
 
@@ -117,11 +117,25 @@
                               $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
                               @endphp
                               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ $default_language->firstMedia('icon')->getUrl() }}" alt="">{{ $default_language->name }}
+
+                                @if($default_language->hasMedia('icon'))
+                                <img src="{{ $default_language->firstMedia('icon')->getUrl() }}" alt="">
+                                @endif
+
+                                {{ $default_language->name }}
                               </button>
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 @foreach ($languages as $item)
-                                    <a class="dropdown-item language-item" href="#" data-language="{{ $item->id }}"><img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">{{ $item->name}}</a>
+                                    <a class="dropdown-item language-item server-class-language" href="#" data-language="{{ $item->id }}">
+
+                                        @if($item->hasMedia('icon'))
+
+                                      <img src="{{ $item->firstMedia('icon')->getUrl() }}" alt="">
+
+                                      @endif
+
+                                      {{ $item->name}}</a>
+
                                 @endforeach
                               </div>
                             </div>
@@ -138,9 +152,16 @@
                                <button type="button" class="btn btn-sm btn-toggle" data-mode="line_notification" data-toggle="button" aria-pressed="{{ Auth::user()->line_notification ? 'true' : 'false' }}" autocomplete="off">
                                  <div class="handle"></div>
                                </button>
+                            </div>
+                            <div class="sn_notificatio">
+                               <i class="fa fa-telegram"></i>
+                               Telegram Notification
+                               <button type="button" class="btn btn-sm btn-toggle" data-mode="telegram_notification" data-toggle="button" aria-pressed="{{ Auth::user()->telegram_notification ? 'true' : 'false' }}" autocomplete="off">
+                                 <div class="handle"></div>
+                               </button>
                             </div> 
-                            <p class="alert toggle-msg small" style="display: none"></p>
-                            
+                            <p class="alert toggle-msg small" style="display: none"></p>       
+
                          </div>
                       </div>
                    </div>
@@ -427,47 +448,55 @@
     $('.btn-toggle').on('click',function(e){
         e.preventDefault();
         var mode= $(this).data('mode');
+        var aria_pressed= $(this).attr('aria-pressed');
          $.ajax({
             type:'POST',
             dataType:'JSON',
             url:"{{ route('user.update.notification') }}",
             data:{ mode : mode, _token: "{{ csrf_token() }}" },
             success:function(data) {
+               if((mode == "telegram_notification") && (aria_pressed == 'false')) {
+                  $("<a>").prop({
+                        target: "_blank",
+                        href: "https://t.me/route_php_bot"
+                  })[0].click();
+               }
                $('.usr-msg').html(data.message).show();
                setTimeout(function() { $(".usr-msg").hide() }, 2000);               
             }
          });
     });
-    $('.currency-item').on('click',function(e){
-      e.preventDefault();
-      var currency= $(this).data('currency');
-      $.ajax({
-         type:'POST',
-         dataType:'JSON',
-         url:"{{ route('user.update.currency') }}",
-         data:{ currency : currency, _token: "{{ csrf_token() }}" },
-         success:function(data) {
-            $('.currency-msg').html(data.message).show();
-            setTimeout(function() { $(".currency-msg").hide() }, 2000);
-            location.reload();
-         }
-      });
-   });
-   $('.language-item').on('click',function(e){
-      e.preventDefault();
-      var language= $(this).data('language');
-      $.ajax({
-         type:'POST',
-         dataType:'JSON',
-         url:"{{ route('user.update.language') }}",
-         data:{ language : language, _token: "{{ csrf_token() }}" },
-         success:function(data) {
-            $('.currency-msg').html(data.message).show();
-            setTimeout(function() { $(".currency-msg").hide() }, 2000);
-            location.reload();
-         }
-      });
-   });
+
+   //  $('.currency-item').on('click',function(e){
+   //    e.preventDefault();
+   //    var currency= $(this).data('currency');
+   //    $.ajax({
+   //       type:'POST',
+   //       dataType:'JSON',
+   //       url:"{{ route('user.update.currency') }}",
+   //       data:{ currency : currency, _token: "{{ csrf_token() }}" },
+   //       success:function(data) {
+   //          $('.currency-msg').html(data.message).show();
+   //          setTimeout(function() { $(".currency-msg").hide() }, 2000);
+   //          location.reload();
+   //       }
+   //    });
+   // });
+   // $('.language-item').on('click',function(e){
+   //    e.preventDefault();
+   //    var language= $(this).data('language');
+   //    $.ajax({
+   //       type:'POST',
+   //       dataType:'JSON',
+   //       url:"{{ route('user.update.language') }}",
+   //       data:{ language : language, _token: "{{ csrf_token() }}" },
+   //       success:function(data) {
+   //          $('.currency-msg').html(data.message).show();
+   //          setTimeout(function() { $(".currency-msg").hide() }, 2000);
+   //          location.reload();
+   //       }
+   //    });
+   // });
  </script>
  @endsection
 

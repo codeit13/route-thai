@@ -8,6 +8,8 @@
 
 	function changeCurrencyDropdown(selector)
 	{
+
+
         var wallet=$(selector).val();
 
 
@@ -284,6 +286,12 @@ $(document).on('change','#to_wallet_server',function()
 })
 
 $('[name="wallet_from"]').trigger('change');
+
+$(document).on('click','#max_transfer_quantity',function()
+{
+   $('#transfer_quantity').val(transferSelectedCurrencyBalance);
+})
+
 	
 
 </script>

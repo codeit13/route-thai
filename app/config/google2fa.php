@@ -58,7 +58,7 @@ return [
     /*
      * One Time Password View.
      */
-    'view' => 'google2fa.index',
+    'view' => 'front.auth.twoFactor',
 
     /*
      * One Time Password error message.

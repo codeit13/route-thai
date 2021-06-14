@@ -26,10 +26,21 @@ class WalletController extends Controller
         $currencies=new \App\Models\Currency;
 
 
-        if($type)
+        if($type==1)
             {
-                $currencies=$currencies->where('type_id',$type);
+                $currencies=$currencies->where('is_crypto',1);
             }
+        if($type==2)
+        {
+                $currencies=$currencies->where('is_fiat',1);
+
+        }   
+
+         if($type==3)
+        {
+                $currencies=$currencies->where('is_tradable',1)->where('is_crypto',1);
+
+        }     
           
                 $currencies=$currencies->get();
             
@@ -40,10 +51,12 @@ class WalletController extends Controller
         if($type)
             {
            
-            $balances=$balances->whereHas('currency', function ($query)use ($type) {
-                                          $query->where('type_id',$type);
+            // $balances=$balances->whereHas('currency', function ($query)use ($type) {
+            //                               $query->where('type_id',$type);
 
-                                        });
+            //                             });
+
+                $balances=$balances->where('wallet_type',$type);
 
              }
 

@@ -8,18 +8,7 @@
 					<div id="app"></div>
 				</label>
 			</div>
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12 col-sm-12 col-xs-12 flush">
-						<ul class="mini_links">
-							<li class="active"><a href="#">P2P</a>
-							</li>
-							<li><a href="#">Express</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
+			@include('front.sell.sub_header')
 @endsection
 @section('content')
 	<section id="main-heading" class="panding-payment hidden-xs">
@@ -225,8 +214,8 @@
 							<div class="row">
 								<div class="col-lg-9 col-sm-9 col-8">	<a href="#" class="btn-success Appeal">Appeal</a>
 								</div>
-								<div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',$transaction->trans_id)}}" class="btn-success cancel">Cancel</a>
-								</div>
+								{{-- <div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',$transaction->trans_id)}}" class="btn-success cancel">Cancel</a>
+								</div> --}}
 							</div>
 						</div>
 					</div>
