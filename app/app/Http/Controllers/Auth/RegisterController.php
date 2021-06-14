@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Wallet;
-use App\Services\SMSService;
+use App\Services\OTPService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\VerifyOTPRequest;
+
 
 class RegisterController extends Controller
 {
@@ -44,7 +45,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        $this->service = new SMSService();
+        $this->service = new OTPService();
     }
 
     /**
@@ -60,7 +61,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'otp' => ['sometimes','array'],
-            'mobile' => ['required','unique:users']
+            'mobile' => ['sometimes','unique:users']
         ]);
     }
 
@@ -72,8 +73,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
-
         $parts = explode("@",  strtolower($data['email']));
         $email = $parts[0];
         $username = $email;
@@ -86,7 +85,7 @@ class RegisterController extends Controller
         return User::create([
             'email' => $data['email'],
             'name' => $username,
-            'mobile' => $data['mobile'],
+            'mobile' => array_key_exists('mobile' , $data) ? $data['mobile'] : 0,
             'password' => Hash::make($data['password']),
         ]);
     }
@@ -108,9 +107,8 @@ class RegisterController extends Controller
 
     public function verifyOTP(Request $request){    
         $otp = implode('',$request->otp);
-        $response = $this->service->verifyOtpSms($request->mobile, $otp, $request->session);
-        $response = json_decode($response);
-        return $response->Status == 'Success' ?  true: false;
+        $response = $this->service->verifyOTP($request->email, $otp, $request->session);
+        return $response['code'] == 1 ?  true: false;
     }
 
     public function showRegistrationForm(Request $request){
@@ -123,7 +121,7 @@ class RegisterController extends Controller
         $validator = $this->validator($request->all());
         if ($validator->errors()->count() > 0)
         return redirect()->back()->withInput($request->all())->withErrors($validator); 
-        $data = $this->service->sendOtpSms($request->mobile);
+        $data = $this->service->sendOTP($request->email, 'email');
         return view('front.auth.otp',compact('request','data'));
     }
 
@@ -140,9 +138,6 @@ class RegisterController extends Controller
     }
 
     public function isUserExist(Request $request){
-        // $status = User::where('email',$request->email)->count() == 0 ? 'OK': 'NOT OK';
-        // $message = $status == 'OK' ? 'Congrats! You can register with this email address.':'Sorry ! This email address is already registered.';
-        // return response()->json(['status'=>$status,'message'=>$message]);
         $user = User::where('email',$request->email);
         $status = 'NOT OK';
         if($user->count() > 0 ){

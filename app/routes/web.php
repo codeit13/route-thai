@@ -30,6 +30,9 @@ Route::get('/createstoragelink', function () {
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
+Route::get('/sendMail', [App\Http\Controllers\HomeController::class, 'sendMail'])->name('testmail');
+
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes(['verify'=>true,'request'=>true]);
 Route::group(['middleware' => ['web']], function () {
@@ -49,7 +52,11 @@ Route::post('/mobile/otp/send',[App\Http\Controllers\HomeController::class, 'sen
 Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
 Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class, 'sendOTPOnLogin'])->name('send.otp.login');
 
-Route::middleware('auth')->group(function(){
+Route::get('verify/2f',[App\Http\Controllers\TwoFactorController::class, 'index'])->name('verify.2f');
+Route::post('verify/2f/save',[App\Http\Controllers\TwoFactorController::class, 'store'])->name('verify.store');
+Route::get('verify/2f/resend',[App\Http\Controllers\TwoFactorController::class, 'resend'])->name('verify.resend');
+
+Route::middleware(['auth'])->group(function(){
     // Profile
     Route::prefix('user')->name('user.')->group(function(){ 
         Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
