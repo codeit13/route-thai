@@ -54,12 +54,16 @@ class UserController extends Controller
     }
     public static function updateLineUserIdSettings($request){
         $user = Auth::user();
+        $user->line_user_id = $request['line_user_id'];
         $user->line_name = $request['line_name'] ;
         $user->line_avatar = $request['line_avatar'] ;
         $user->line_access_token = $request['line_access_token'] ;
         $user->line_refresh_token = $request['line_refresh_token'] ;
         $user->save();
-        $data_debug = LINE::replyText($user->line_access_token, "Hello biro!");
+        $data_debug = LINE::pushmessage(
+            $user->line_user_id,
+            new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello')
+        );
         Log::debug(json_encode($data_debug));
         return response()->json(['status'=>'OK','message'=> __('The line user id settings has been updated') ]);
 }
