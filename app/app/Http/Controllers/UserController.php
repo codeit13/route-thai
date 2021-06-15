@@ -21,6 +21,9 @@ class UserController extends Controller
     public function profile(){
         return view('front.user.profile');
     }
+    public function line_bot() {
+        return view('front.line-bot');
+    }
  
     public function isUsernameExist(Request $request){
         $status = User::where('name',$request->name)->count() == 0 ? 'OK': 'NOT OK';
@@ -66,7 +69,7 @@ class UserController extends Controller
             $user->line_user_id,
             new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Your Line Notifications have been turned ON.')
         );
-        return response()->json(['status'=>'OK','message'=> __('The line user id settings has been updated') ]);
+        return redirect()->route('line-bot');
 }
     public function updateUsername(Request $request){
         if($request->has('username') && !empty($request->username)) {

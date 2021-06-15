@@ -460,13 +460,13 @@
                if((mode == "telegram_notification") && (aria_pressed == 'false')) {
                   $("<a>").prop({
                         target: "_blank",
-                        href: "https://t.me/route_php_bot"
+                        href: "https://t.me/{{env('TELEGRAM_BOT_USERNAME'}}"
                   })[0].click();
                }
                if((mode == "line_notification") && (aria_pressed == 'false')) {
                   $("<a>").prop({
                         target: "_blank",
-                        href: "https://line.me/R/@573gpimp"
+                        href: "{{ route('user.linelogin') }}"
                   })[0].click();
                }
                $('.usr-msg').html(data.message).show();
