@@ -29,6 +29,10 @@ $(function () {
     $(".alertbox").hide();
   });
   $("#show").click(function () {
+    if (isLoggedIn !== 1) {
+      window.location.href = '/login';
+      return;
+    }
     $(".alertbox").toggle();
   });
 
@@ -107,7 +111,7 @@ $(function () {
       $('#exchangeSelectCenter .ex-select').show();
     }
   });
-  
+
   $('#coinSelectCenter input').on('keyup change', () => {
     const searchterm = $('#coinSelectCenter input').val().replace(/[^\w\s]/gi, '');
     if (searchterm.length > 0) {
