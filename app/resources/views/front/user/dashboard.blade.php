@@ -460,7 +460,7 @@
                if((mode == "telegram_notification") && (aria_pressed == 'false')) {
                   $("<a>").prop({
                         target: "_blank",
-                        href: "https://t.me/{{env('TELEGRAM_BOT_USERNAME'}}"
+                        href: "https://t.me/{{env('TELEGRAM_BOT_USERNAME')}}"
                   })[0].click();
                }
                if((mode == "line_notification") && (aria_pressed == 'false')) {
