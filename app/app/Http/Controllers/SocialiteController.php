@@ -33,6 +33,6 @@ class SocialiteController extends Controller
 
         // auth()->login($loginUser, true);
 
-        return redirect()->route('home');
+        return redirect()->route('line-bot');
     }
 }

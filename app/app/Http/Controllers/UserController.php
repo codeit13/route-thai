@@ -69,7 +69,7 @@ class UserController extends Controller
             $user->line_user_id,
             new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Your Line Notifications have been turned ON.')
         );
-        return redirect()->route('line-bot');
+        return response()->json(['status'=>'OK','message'=> __('The line user id settings has been updated') ]);
 }
     public function updateUsername(Request $request){
         if($request->has('username') && !empty($request->username)) {
