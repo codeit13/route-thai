@@ -27,7 +27,8 @@ class TextMessageListener
      * @return void
      */
     public function handle(TextMessage $event)
-    {   $url = "You can connect your this LIne Account with Route Thai Account via below url\n" . env('APP_URL') . "/user/linelogin" . "\n\n Ignore if already connected.";
-        Bot::reply($event->getReplyToken())->text($url);
+    {   
+        // $url = "You can connect your this LIne Account with Route Thai Account via below url\n" . env('APP_URL') . "/user/linelogin" . "\n\n Ignore if already connected.";
+        // Bot::reply($event->getReplyToken())->text($url);
     }
 }
