@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "bacon/bacon-qr-code": "^2.0",
         "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -22,6 +23,9 @@
         "laravelcollective/html": "^6.2",
         "linecorp/line-bot-sdk": "^7.0",
         "plank/laravel-mediable": "^5.1",
+        "revolution/laravel-line-sdk": "^1.3",
+        "pragmarx/google2fa-laravel": "^1.4",
+        "sendinblue/api-v3-sdk": "^7.4",
         "yadahan/laravel-authentication-log": "^1.4"
     },
     "require-dev": {

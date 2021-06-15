@@ -237,6 +237,8 @@ return [
 
         'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
 
+        'LINE' => Revolution\Line\Facades\Bot::class,
+
     ],
 
 ];

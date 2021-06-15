@@ -18,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','mobile','default_currency'
+        'name', 'email', 'password','mobile','default_currency', 'two_factor_code','two_factor_expires_at',
     ];
 
     /**
@@ -77,6 +77,21 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\UserPaymentMethod','user_id','id');
     }
+
+    public function generateTwoFactorCode()
+    {
+        $this->timestamps = false;
+        $this->two_factor_code = rand(100000, 999999);
+        $this->two_factor_expires_at = now()->addMinutes(10);
+        $this->save();
+    }
+    public function resetTwoFactorCode()
+    {
+        $this->timestamps = false;
+        $this->two_factor_code = null;
+        $this->two_factor_expires_at = null;
+        $this->save();
+    }    
     public function loans()
     {
         return $this->hasMany('App\Models\Loan','user_id','id');
@@ -84,5 +99,24 @@ class User extends Authenticatable implements MustVerifyEmail
     public function routeNotificationForTelegram()
     {
         return $this->telegram_user_id;
+    }
+    public function routeNotificationForLineNotify($notification)
+    {
+        return $this->notify_token;
+    }   
+    public function setGoogle2faSecretAttribute($value)
+    {
+         $this->attributes['google2fa_secret'] = encrypt($value);
+    }
+
+    /**
+     * Decrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getGoogle2faSecretAttribute($value)
+    {
+        return !empty($value) ? decrypt($value) : '';
     }
 }

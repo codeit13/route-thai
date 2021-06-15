@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,9 @@ Route::get('/createstoragelink', function () {
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
+Route::get('/sendMail', [App\Http\Controllers\HomeController::class, 'sendMail'])->name('testmail');
+
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes(['verify'=>true,'request'=>true]);
 Route::group(['middleware' => ['web']], function () {
@@ -48,14 +52,25 @@ Route::post('/verify/register',[App\Http\Controllers\Auth\RegisterController::cl
 Route::post('/mobile/otp/send',[App\Http\Controllers\HomeController::class, 'sendOTP'])->name('send.otp');
 Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
 Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class, 'sendOTPOnLogin'])->name('send.otp.login');
+// LINE
+Route::get('line-bot', [App\Http\Controllers\UserController::class, 'line_bot'])->name('line-bot');
 
-Route::middleware('auth')->group(function(){
 
-    
+Route::middleware('auth')->group(function(){    
     // Profile
-    Route::prefix('user')->name('user.')->group(function(){ 
+    Route::prefix('user')->name('user.')->group(function(){         
         Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
         Route::get('profile',[App\Http\Controllers\UserController::class, 'profile'])->name('profile');
+        Route::get('deviceManagement',[App\Http\Controllers\UserController::class, 'deviceManagement'])->name('deviceManagement');
+        Route::get('security',[App\Http\Controllers\UserController::class, 'security'])->name('security');
+        Route::get('notifications',[App\Http\Controllers\UserController::class, 'notifications'])->name('notification');
+        Route::get('security/update-email',[App\Http\Controllers\UserController::class, 'updateEmail'])->name('updateEmail');
+        Route::post('security/update-email/verify',[App\Http\Controllers\UserController::class, 'confimrUpdateEmail'])->name('updateEmail.verify');
+    
+        //2fa 
+        Route::get('security/2fa/google',[App\Http\Controllers\UserController::class, 'addGoogle2fa'])->name('security.2fa.google.add');
+        Route::post('security/2fa/google/save',[App\Http\Controllers\UserController::class, 'saveGoogle2fa'])->name('security.2fa.google.save');
+        
         Route::get('payments',[App\Http\Controllers\UserPaymentMethodsController::class, 'index'])->name('payments');
         Route::get('payment/mode/edit/{id}',[App\Http\Controllers\UserPaymentMethodsController::class, 'edit'])->name('payment.edit');
         Route::get('payment/mode/add/{mode}',[App\Http\Controllers\UserPaymentMethodsController::class, 'create'])->name('payment.add');
@@ -68,7 +83,14 @@ Route::middleware('auth')->group(function(){
         Route::get('update-telegram-user-id/{telegram_user_id}',[App\Http\Controllers\UserController::class, 'updateTelegramUserIdSettings'])->name('update.telegram-user-id');
         Route::post('update-line-user-id',[App\Http\Controllers\UserController::class, 'updateLineUserIdSettings'])->name('update.line-user-id');
         Route::post('update-currency',[App\Http\Controllers\UserController::class, 'updateCurrencySettings'])->name('update.currency');
+        
+       
+        
         Route::post('update-language',[App\Http\Controllers\UserController::class, 'updateLanguageSettings'])->name('update.language');
+
+        // LINE
+        Route::get('linelogin', [SocialiteController::class, 'linelogin'])->name('linelogin');
+        Route::get('callback', [SocialiteController::class, 'callback'])->name('callback');
     });
     //Wallet
     Route::prefix('wallet')->group(function(){

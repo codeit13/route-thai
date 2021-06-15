@@ -38,6 +38,12 @@ return [
         'secret'  =>  '0e6ab3c38a43c6460820a2992cda5454',
     ],
 
+    'email' =>  [
+        'base_uri'  => "https://api.sendinblue.com/v3/",
+        'secret'  =>  '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',
+    ],
+
+    //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
     'exchange'=>[
         'crypto_uri' => "https://api.binance.com/api/v1/",
         'fiat_uri'=>"https://api.coinbase.com/v2/"
@@ -45,7 +51,7 @@ return [
     ],
 
     'telegram-bot-api' => [
-        'token' => env('TELEGRAM_BOT_TOKEN', '1831584145:AAHmjtzyMjJe4B2qMyBKnJ87FQ_0muSuKHE')
+        'token' => env('TELEGRAM_BOT_TOKEN', env('TELEGRAM_BOT_TOKEN'))
     ],
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),

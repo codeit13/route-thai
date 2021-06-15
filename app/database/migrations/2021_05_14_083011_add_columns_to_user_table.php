@@ -20,9 +20,6 @@ class AddColumnsToUserTable extends Migration
             $table->boolean('sms_notification')->default(0);
             $table->boolean('line_notification')->default(0);
             $table->string('line_number')->nullable();
-            $table->string('line_user_id')->nullable();
-            $table->boolean('telegram_notification')->default(0);
-            $table->string('telegram_user_id')->nullable();
         });
     }
 

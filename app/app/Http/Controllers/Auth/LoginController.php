@@ -13,6 +13,7 @@ use Auth;
 use App\Models\Authentication_log; 
 
 use App\Notifications\LaravelTelegramNotification;
+use LINE;
 
 class LoginController extends Controller
 {
@@ -73,17 +74,17 @@ class LoginController extends Controller
             Auth::login($user, $remember_me);
             $this->auth_locationlog($request);
             if($user->telegram_notification) {
-            $user->notify(new LaravelTelegramNotification([
-                'text' => $user->name . " You currently logged in!",
-                'telegram_user_id' => $user->telegram_user_id,
-            ]));
+                $this->sendTelegramNotification($user);
+            }
+            if($user->line_notification) {
+                LINE::pushmessage(
+                    $user->line_user_id,
+                    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($user->name . " You currently logged in!")
+                );
             }
             return redirect('/home')->withCookie(Cookie::make('logged_in', $user->remember_token, 43200));
         }
-        // if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-        //     return redirect()->intended('/home');
-        // }
-        return back()->withInput($request->only('email', 'remember'));
+       return back()->withInput($request->only('email', 'remember'));
     }
     public function auth_locationlog(Request $request){
         $location = $this->locationService->getLocation($request->ip()); 
@@ -100,4 +101,15 @@ class LoginController extends Controller
         $authlog = Authentication_log::where('id',Auth::user()->authentications->first()->id)->update($newlocation);
         return true;
     }
+
+    private function sendTelegramNotification($user){
+        $location =  Authentication_log::where('authenticatable_id',$user->id)->orderBy('id','DESC')->first();
+        $welcomeMessage = "Hi, ".$user->name . ", You currently logged in! \n";
+        $welcomeMessage .= "Location: ".$location->city.", ".$location->region_name.", ".$location->country_name."\n";
+        $welcomeMessage .= "IP Address: ".$location->ip_address;
+        $user->notify(new LaravelTelegramNotification([
+            'text' => $welcomeMessage,
+            'telegram_user_id' => $user->telegram_user_id,
+        ]));
+    }   
 }

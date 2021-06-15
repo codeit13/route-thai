@@ -3365,7 +3365,6 @@ span.rt_span i.fa-trash-alt {
     transform: translateX(100%);
     will-change: transform;
     z-index: 99999;
-    display: none;
 }
 .site-menu ul {
   padding: 0;
@@ -3382,7 +3381,6 @@ span.rt_span i.fa-trash-alt {
 }
 #site-menu-trigger:checked ~ .site-menu {
   transform: translateX(0%);
-  display: flex;
 }
 #site-menu-trigger:checked ~ label[for=site-menu-trigger] {
   transform: translateX(-8px) scale(1.05);
@@ -4263,7 +4261,7 @@ span.active {
 #loans-deshboard-new .close-price .b-right {
     border-right:1px solid #e6e6e6;
 }
-#loans-deshboard-new .close-price label formL {
+#loans-deshboard-new .close-price label form {
     display: inline-block;
     margin-left: 15px;
     background: var(--acordian);
@@ -4283,24 +4281,23 @@ span.active {
 #loans-deshboard-new .close-price p.pull-right {
     float:right !important;
 }
-#loans-deshboard-new .close-price label formL input::-webkit-input-placeholder {
+#loans-deshboard-new .close-price label form input::-webkit-input-placeholder {
     text-transform:uppercase;
     background-color: var(--acordian);
 }
-#loans-deshboard-new .close-price label formL input {
+#loans-deshboard-new .close-price label form input {
     border:none;
     height:36px;
     background-color: var(--acordian);
     color: var(--white-black-text);
 }
-#loans-deshboard-new .close-price label formL button {
+#loans-deshboard-new .close-price label form button {
     background:none;
     border:none;
     line-height:36px;
     padding:0px 15px;
     color: var(--white-black-text);
     border-left:1px solid #e6e6e6;
-    cursor: pointer;
 }
 #loans-deshboard-new .close-price p {
     font-size:14px;
@@ -4514,7 +4511,6 @@ ul.loan_code li i.fa {
 .multi_form .dropdown.currency_two.three_coins .dropdown-menu.show a {
     padding: 0px 15px;
     color: var(--text-color);
-    line-height: 37px;
 }
 .multi_form .dropdown.currency_two .dropdown-menu.show a {
     padding-right: 0px !important;
@@ -5410,11 +5406,9 @@ section#loans-deshboard-new {
     padding-left:15px;
     color: var(--white-black-text);
 }
-#wallet-content.request.order-history input.coin {
-    width: 250px !important;
-    outline: 0;
-    /* float: right; */
-    margin-left: 27%;
+#wallet-content.request.order-history  input.coin {
+    width:350px !important;
+    outline:0;
 }
 #wallet-content.order-history .history-details th {
     background:none;
@@ -7868,13 +7862,6 @@ a.btn-info:hover {
     .dropdown.currency_two.three_coins.new_select_b.crypto.currencyDropdown.show .dropdown-menu.show {
         
     }
-    .col-xs-12.sp-left {
-        display: inline-block;
-        width: 100%;
-    }
-    #loans-deshboard-new .dropdown.currency_two.three_coins .dropdown-toggle::after {
-        top: -3px;
-    }
     #dashboard .content_dashboard {
         padding: 0px 30px;
     }
@@ -8246,7 +8233,7 @@ a.btn-info:hover {
         margin-top: 5px;
         margin-right: 5px;
     }
-    #loans-deshboard-new .close-price label formL {
+    #loans-deshboard-new .close-price label form {
         margin-left: 0px;
     }
     #loans-deshboard-new .final-loan h3 {
@@ -8381,9 +8368,9 @@ a.btn-info:hover {
     #header.p2p-wallet nav#navigation a.bell {
         margin-right: 45px;
     }
-/*    body {
+    body {
         overflow-x: hidden;
-    }*/
+    }
     .iverify ul {
         width: 85%;
     }
@@ -9441,33 +9428,8 @@ a.btn-info:hover {
     ul.main_tool {
         margin-top: 11px;
     }
-    /*#filter {
+    #filter {
         display: none;
-    }*/
-    #filter ul.search_bar li {
-        width: 100%;
-    }
-    #filter ul.search_bar li .dropdown.currency_two.three_coins {
-        width: 100% !important;
-    }
-    #filter ul.search_bar li label {
-        margin-top: 10px;
-    }
-    #filter ul.search_bar li .dropdown.currency_two.three_coins button#dropdownMenuButton {
-        width: 100% !important;
-    }
-    #filter a.refresh {
-        margin-top: 15px;
-        width: 100%;
-        text-align: center;
-    }
-    #filter ul.search_bar li .dropdown-menu.show {
-        top: -2px !important;
-        width: 100% !important;
-        left: 0 !important;
-    }
-    #filter ul.search_bar li .dropdown-menu.show a {
-        padding: 8px 10px !important;
     }
     #wallet-content {
         padding-top: 0px !important;
@@ -9497,21 +9459,20 @@ a.btn-info:hover {
         display: none;
     }
     #wallet-content .white-box td:nth-child(5n) {
-        /*display: inline-block;
-        text-align: left;
-        padding-top: 0px;
-        padding-bottom: 5px;*/
-        display: none;
-    }
-    #wallet-content .white-box.show_two_button td:nth-child(3n){
-        display: none;
-    }
-    /*#wallet-content .white-box.show_two_button td:nth-child(3n) {
         display: inline-block;
         text-align: left;
         padding-top: 0px;
         padding-bottom: 5px;
+    }
+    /*#wallet-content .white-box.show_two_button td:nth-child(3n){
+        display: none;
     }*/
+    #wallet-content .white-box.show_two_button td:nth-child(3n) {
+        display: inline-block;
+        text-align: left;
+        padding-top: 0px;
+        padding-bottom: 5px;
+    }
     #wallet-content .white-box tbody tr {
         width: 100%;
         display: inline-block;
@@ -9525,14 +9486,12 @@ a.btn-info:hover {
         margin-right: 0px !important;
         margin-left: 0px !important;
     }
-    #wallet-content a.btn-success, #wallet-content a.btn-primary {
+    #wallet-content a.btn-success,
+    #wallet-content a.btn-primary {
         font-size: 13px !important;
-        width: 32%!important;
+        width: 49%!important;
         text-align: center;
         padding: 0px;
-        margin-left: 0px !important;
-        margin-top: 10px;
-        margin-bottom: 10px;
     }
     #wallet-content .white-box td .btn-primary, #wallet-content .white-box td .btn-success {
         
@@ -10093,7 +10052,6 @@ a.btn-info:hover {
     }
     #wallet-content.request.order-history .head-xs input.coin {
         width: 100% !important;
-        margin-left: 0%;
     }
     #wallet-content.request.crypto .white-box .history-details table {
         margin-top: 25px !important;
@@ -10198,7 +10156,11 @@ a.btn-info:hover {
         margin-left: -5px!important;
         top: 29px;
     }
+<<<<<<< Updated upstream
+} 
+=======
 }
+>>>>>>> Stashed changes
 
 @media (min-width: 375px) and (max-width: 413px) {
     #wallet-content.withdraw-asset .step-h ul li:before {
@@ -10217,7 +10179,6 @@ a.btn-info:hover {
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-
     .navbar-toggler:not(:disabled):not(.disabled) {
         cursor: pointer;
         z-index: 99999;
