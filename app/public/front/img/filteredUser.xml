@@ -1,0 +1,44 @@
+<report filename="event_users">
+    <page>
+        <title></title>
+        <sort>enrolledOn</sort>
+    </page>
+    <col key="id" display="no">
+        <name>id</name>
+    </col>
+    <col key="username">
+        <name>Name</name>
+    </col>
+    <col key="email" format="email">
+        <name>Email</name>
+    </col>
+
+
+    <col key="rolename">
+        <name>Role</name>
+    </col>
+    
+    <col key="event_name">
+        <name>Event name</name>
+    </col>
+    <col key="starttime">
+        <name>Start Time</name>
+    </col>
+    <col key="end_time">
+        <name>End Time</name>
+    </col>
+     <col key="enrolledOn" format="datetime">
+        <name>Enroll Date</name>
+    </col>   
+    <col key="created_at" format="datetime">
+        <name>Registration Date</name>
+    </col>
+    
+
+
+    <!--<action key="delete" js="deleteEventParticipant" >-->
+        <!--<icon>fas fa-trash</icon>-->
+        <!--<text>Delete</text>-->
+    <!--</action>-->
+
+</report>

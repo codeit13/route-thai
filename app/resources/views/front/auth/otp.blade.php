@@ -34,9 +34,8 @@
                               <input type="hidden" name="email" value="{{ $request->email }}">
                               <input type="hidden" name="mobile" value="{{ $request->mobile }}">
                               <input type="hidden" name="password" value="{{ $request->password }}">
-                              <input type="hidden" id="session_id" name="session" value="{{ json_decode($data)->Details }}">
+                              <input type="hidden" id="session_id" name="session" value="{{ $data['session_id'] }}">
 							</form>
-							
 							<p class="not_m text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<label id="timer"></label>
 							</b></p>
 							<ul>

@@ -68,12 +68,12 @@
                                             name="password">
                                             <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                             </div>
-                                            <div class="form-group">
+                                            {{-- <div class="form-group">
                                                 <label for="exampleInputEmail1">Phone Number</label>
                                                 <input type="tel" value="{{ old('mobile')}}" class="form-control" id="mobile_no"
                                                     aria-describedby="emailHelp" required placeholder="Enter mobile No" name="mobile">
                                                 <label id="mobile-no-err"></label>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
@@ -107,62 +107,62 @@
 @endsection
 @section('page_scripts')
 <script>
-        $('#mobile_no').on('keyup',function(){
-            var dis = $(this);
-            if(dis.val().length == 10){
-                $.ajax({
-                    url: "{{ route('send.otp')}}",
-                    
-                    headers: {
-                       'X-CSRF-Token': "{{ csrf_token() }}"
-                    },
-                    method: "POST",
-                    async: true,
-                    cache: false,
+    // $('#mobile_no').on('keyup',function(){
+    //     var dis = $(this);
+    //     if(dis.val().length == 10){
+    //         $.ajax({
+    //             url: "{{ route('send.otp')}}",
+                
+    //             headers: {
+    //                 'X-CSRF-Token': "{{ csrf_token() }}"
+    //             },
+    //             method: "POST",
+    //             async: true,
+    //             cache: false,
 
-                    data: { _token: "{{ csrf_token() }}", mobile: dis.val() },
-                    dataType: "json",
-                    success: function (data) {
-                        
-                        $('#session_id').val(data.Details);
-                        setTimeout( function() { $('.otp').show(); }, 800); 
-                    },
-                    error: function (event) { 
-                        
-                    },
-                });
-                    } else
-                return false;
-        });
-        
-        $(document).find('#otp').on('change',function(){
-            var dis = $(this);
-            console.log('started');
-            if(dis.val().length == 6){
-                $.ajax({
-                    url: "{{ route('verify.otp')}}",
-                    method: "POST",
-                    headers: {
-                       'X-CSRF-Token': "{{ csrf_token() }}"
-                    },
-                    data: { _token: "{{ csrf_token() }}", code: dis.val(), sessionid:$('#session_id').val(), mobile: $('#mobile_no').val() },
-                    dataType: "json",
-                    async: true,
-                    cache: false,
-                    success: function (data) {
-                        $('.submit-login').attr('disabled',false);
-                    },
-                    error: function (event) { 
-                        
-                    },
-                });
-            }
-            else {
-                console.log('errors');
-                return false; 
-            }
-        });
-    </script>
+    //             data: { _token: "{{ csrf_token() }}", mobile: dis.val() },
+    //             dataType: "json",
+    //             success: function (data) {
+                    
+    //                 $('#session_id').val(data.Details);
+    //                 setTimeout( function() { $('.otp').show(); }, 800); 
+    //             },
+    //             error: function (event) { 
+                    
+    //             },
+    //         });
+    //             } else
+    //         return false;
+    // });
+    
+    $(document).find('#otp').on('change',function(){
+        var dis = $(this);
+        console.log('started');
+        if(dis.val().length == 6){
+            $.ajax({
+                url: "{{ route('verify.otp')}}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-Token': "{{ csrf_token() }}"
+                },
+                data: { _token: "{{ csrf_token() }}", code: dis.val(), sessionid:$('#session_id').val(), mobile: $('#mobile_no').val() },
+                dataType: "json",
+                async: true,
+                cache: false,
+                success: function (data) {
+                    $('.submit-login').attr('disabled',false);
+                },
+                error: function (event) { 
+                    
+                },
+            });
+        }
+        else {
+            console.log('errors');
+            return false; 
+        }
+    });
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.14/js/utils.js"></script>
 <script src="{{ asset('front/js/intlTelInput.js')}}"></script>
 <script src="{{ asset('front/js/jquery.flagstrap.js')}}"></script>
