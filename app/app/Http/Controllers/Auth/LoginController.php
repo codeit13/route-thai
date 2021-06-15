@@ -103,8 +103,8 @@ class LoginController extends Controller
     }
 
     private function sendTelegramNotification($user){
-        $location = Auth::user()->authentications->first();
-        $welcomeMessage = $user->name . " You currently logged in! \n";
+        $location =  Authentication_log::where('authenticatable_id',$user->id)->orderBy('id','DESC')->first();
+        $welcomeMessage = "Hi, ".$user->name . ", You currently logged in! \n";
         $welcomeMessage .= "Location: ".$location->city.", ".$location->region_name.", ".$location->country_name."\n";
         $welcomeMessage .= "IP Address: ".$location->ip_address;
         $user->notify(new LaravelTelegramNotification([
