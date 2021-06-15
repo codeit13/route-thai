@@ -3,8 +3,9 @@
 
 ## Implement Telegram Notifications
 In your ***Controller*** follow the following Steps
-1. ``` use App\Notifications\LaravelTelegramNotification;
-2. ``` php 
+1. ``` php
+2.      use App\Notifications\LaravelTelegramNotification;
+3. ``` php 
         if($user->telegram_notification) {
             $user->notify(new LaravelTelegramNotification([
                 'text' => "Your Message here ",
