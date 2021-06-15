@@ -33,7 +33,7 @@ class Transaction extends Model
      */
     public function getTransAmountAttribute($value)
     {
-        return number_format((float)$value, 5, '.', '');
+        return number_format((float)$value, 2, '.', '');
     }
 
     public function currency()

@@ -115,6 +115,7 @@ Route::middleware('auth')->group(function(){
         //sell crypt
         Route::prefix('sell')->group(function(){
             Route::get('create','SellController@create')->name('sell.create');
+            Route::get('{trans_id}/destroy','SellController@destroy')->name('sell.destroy');
             Route::post('create-sell','SellController@saveSell')->name('sell.save_sell');
         	Route::post('create-sell/confirm','SellController@confirmSell')->name('sell.confirm_sell');
             Route::get('{trans_id}/buy-request','SellController@buyRequest')->name('sell.buyer_request');
@@ -122,6 +123,9 @@ Route::middleware('auth')->group(function(){
             Route::get('{trans_id}/confirm-receipt','SellController@confirmReceipt')->name('sell.confirm_receipt');
         	Route::get('{trans_id}/success','SellController@orderSuccess')->name('sell.order_success');
         });
+
+        Route::post('message','MessageController@index')->name('message.index');
+        Route::post('message/store','MessageController@store')->name('message.store');
 
         Route::get('buyer/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
         Route::get('buyer/payment/{transaction}/cancel',[App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.order.cancel');
@@ -139,13 +143,25 @@ Route::middleware('auth')->group(function(){
 
     Route::get('request',[App\Http\Controllers\LoanController::class, 'create'])->name('loan.create');
 
-    Route::get('request/{id}/detail',[App\Http\Controllers\LoanController::class, 'show'])->name('loan.request.detail');
+    Route::post('request/loan/initialize',[App\Http\Controllers\LoanController::class, 'initialize'])->name('loan.initialize');
 
-    Route::get('{id}/detail',[App\Http\Controllers\LoanController::class, 'edit'])->name('loan.show.detail');
+    Route::post('request/loan/store',[App\Http\Controllers\LoanController::class, 'store'])->name('loan.store');
+
+
+
+    Route::get('request/detail',[App\Http\Controllers\LoanController::class, 'show'])->name('loan.request.detail');
+
+    Route::get('{loan}/detail',[App\Http\Controllers\LoanController::class, 'edit'])->name('loan.show.detail');
 
     Route::get('{id}/status',[App\Http\Controllers\LoanController::class, 'status'])->name('loan.status');
 
     Route::get('history',[App\Http\Controllers\LoanController::class, 'index'])->name('loan.history');
+
+    Route::get('{id}/repay',[App\Http\Controllers\LoanController::class, 'repay'])->name('loan.repay');
+
+    Route::get('{id}/close',[App\Http\Controllers\LoanController::class, 'close'])->name('loan.close');
+
+
 
 
   });

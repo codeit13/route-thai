@@ -53,7 +53,9 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 			<div class="row">
 				<div class="col-lg-12  col-sm-12 col-12">
 					<div class="white-box" style="">
-						<ul class="janral-head">
+						<div class="row">
+							<div class="white-box" style="background:none; box-shadow:none; margin: 0px 0px; padding: 0px 15px;">
+                              <ul class="janral-head">
 
 
 						@foreach($currency_types as $index => $currency_type)
@@ -76,12 +78,15 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 						<li class="last"><a href="#"><img src="{{asset('front/img/icon-13.png')}}" alt=""/></a></li>
 					</ul>
 
+						</div>
+					</div>
+
 						<div class="head-xs visible-xs">
 							<form id="filterForm1" action="{{route('wallet.request.history',array('type'=>$walletType->id??'','typename'=>$walletType->type??''))}}" method="GET" >
 
 								<input type="hidden" name="type">
 							<div class="row">
-								<div class="col-7">
+								<div class="col-xs-12">
 									<div class="row">
 										<div class="col-12">
 											<label>{{__('Date')}}</label>
@@ -97,7 +102,7 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 										</div>
 									</div>
 								</div>
-								<div class="col-5 sp-left">
+								<div class="col-xs-12 sp-left">
 									<div class="row">
 										<div class="col-12">
 											<label>{{__('Types of Currency')}}</label>
@@ -143,35 +148,13 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 
                       @endforeach
 
+                      @if(!$currentCurrency)
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All
+                                                </button>
+                                                @endif
+
                       
-                    @if(!$currentCurrency)
-
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-
-                      	 @if(isset($filters[0]))
-                        
-                      @if($filters[0]->currency->hasMedia('icon'))
-    
-                                      
-
-                      <img style="max-width: 28px;" src="{{$filters[0]->currency->firstMedia('icon')->getUrl()}}" alt="{{__($filters[0]->currency->name)}}"/> 
-
-                      @endif
-
-                      {{__($filters[0]->currency->short_name)}} <span>{{__($filters[0]->currency->name)}}</span>
-
-                      @else
-
-                      <span>Not available</span>
-
-                      @endif
-                      </button>
-
-
-
-                    @endif
-
+  
 
 
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -219,12 +202,14 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 									</div>
 								</div>
 							</div>
-							<div class="col-12 flush">
-								<label>Status</label>
-							</div>
+							 <div class="row">
+                            <div class="col-xs-12 flush">
+                                <label>{{__("Status")}}</label>
+                            </div>
+                        </div>
 							<div class="row">
 								<div class="col-4">
-								<select name="status" class="filter-type ">
+								<select name="status" class="filter-type">
 
 									<option value="">All</option>
 
@@ -233,14 +218,19 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 													<option value="rejected" @if($request->status=='rejected') selected @endif>{{__('Rejected')}}</option>
 												</select>
 								</div>
-								<div class="col-8">
+								<div class="col-8 xs-flush-right">
 									<input class="coin" name="search" value="{{$request->search??''}}" type="search" placeholder="Search Coin Name" />
 								</div>
 							</div>	
 						</form>
 						</div>	
+
+
+
+
 						<div class="row hidden-xs">
 							<form id="filterForm" action="{{route('wallet.request.history',array('type'=>$walletType->id??'','typename'=>$walletType->type??''))}}" method="GET" >
+
 							<div class="col-lg-12 col-sm-12 col-12">
 								
 								<table class="order-history-table">
@@ -262,7 +252,7 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 
 												<input type="date" id="reportdate" name="start_date" value="{{$request->start_date??''}}">
 											<td><input type="date" id="reportdate" name="end_date" value="{{$request->end_date??''}}"></td>
-											<td style="width:180px; display:inline-block;">
+											<td style="width:250px; display:inline-block;">
 												<div class="dropdown currency_two three_coins crypto currencyDropdown">
 
 
@@ -302,43 +292,25 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 
                       @endforeach
 
-                      
-                    @if(!$currentCurrency)
-
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">
-
-                      	@if(isset($filters[0]))
-                        
-                      @if($filters[0]->currency->hasMedia('icon'))
-    
-                                      
-
-                      <img style="max-width: 28px;" src="{{$filters[0]->currency->firstMedia('icon')->getUrl()}}" alt="{{__($filters[0]->currency->name)}}"/> 
-
-                     
-                      @endif
-
-                      {{__($filters[0]->currency->short_name)}} <span>{{__($filters[0]->currency->name)}}</span>
-
-                      @else
-
-                      <span>Not available</span>
-
-                       @endif
-
-
-
-                      </button>
+                        @if(!$currentCurrency)
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All</span>
+                                                </button>
+                                                @endif
 
                       
-
-
-
-                    @endif
+      
 
 
 
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      	    <a class="dropdown-item" data-id="" href="#">
+
+
+                   All <span></span>
+
+
+
+                            </a>
 
                          @foreach($filters as $cIndex=> $trans_row)
 													     @php
@@ -389,19 +361,19 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 
 													<option value="withdraw" @if($request->type=='withdraw') selected @endif>{{__('Withdraw')}}</option>
 
-											
+												
 
 												</select>
 											</td>
 											<td>
-												<select name="status" class="filter-type ">
+												<select name="status" class="filter-type">
 													<option value="">All</option>
 													<option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
 													<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
 													<option value="rejected" @if($request->status=='rejected') selected @endif>{{__('Rejected')}}</option>
 												</select>
 											</td>
-											<td><input class="coin" value="{{$request->search??''}}" name="search" type="search" placeholder="Search Coin Name" /></td>
+											<td><input  class="coin ml-0" value="{{$request->search??''}}" name="search" type="search" placeholder="Search Coin Name" /></td>
 										</tr>
 									</tbody>
 								</table>
@@ -409,8 +381,8 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 							</div>
 							</form>
 						</div>
-						<div class="row hidden-xs">
-							<div class="col-lg-12 history-details with-history view-c  col-sm-12 col-12">
+						<div class="row">
+							<div class="col-lg-12 history-details with-history hidden-xs view-c  col-sm-12 col-12">
 								<table>
 									<thead>
 										<tr>
@@ -552,8 +524,8 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 								</table>	
 							</div>
 						</div>
-						<div class="row  hidden-xs">
-						<div class="col-lg-12 text-center nav-pagi col-sm-12 col-12">
+						<div class="row">
+						<div class="col-lg-12 text-center nav-pagi hidden-xs col-sm-12 col-12">
 
 							{{ $transactions->links('front._inc._paginator') }}
 						
@@ -713,7 +685,7 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
   	}
   })
 
-  $('.options li').on('click',function()
+   $('.options li').on('click',function()
   {
 
   	submitform();

@@ -233,11 +233,18 @@ $(document).ready(function(){
 
     collateral_quantity=parseFloat($(this).val());
 
-    $(this).parents('.multi_form').eq(0).next('.validateError').remove();
+    $(this).parents('.multi_form').eq(0).parent('div').find('.validateError').remove();
   
     transferSelectedCurrencyBalance=parseFloat(transferSelectedCurrencyBalance);
 
     if(transferSelectedCurrencyBalance < collateral_quantity && $('.backend-is-wallet').prop('checked')==true)
+    {
+      
+
+      $(this).parents('.multi_form').eq(0).after('<p class="text-danger text-bold validateError">{{__("Loan quantity should be less than available balance.")}}</p>');
+    }
+
+    if(transferSelectedCurrencyBalance < collateral_quantity && $('.backend-is-wallet-mobile').prop('checked')==true && $('.backend-is-wallet-mobile').css('display')!='none')
     {
       
 
@@ -255,10 +262,16 @@ $(document).ready(function(){
 		$('#collateral_quantity').keyup();
 	})
 
+	$(document).on('click','.backend-is-wallet-mobile',function()
+	{
+		
+		$('#collateral_quantity').keyup();
+	})
+
 	$(document).on('keyup','#backend-close-price',function()
 	{
 
-		 $(this).parents('form').eq(0).next('.validateError').remove();
+		 $(this).parents('formL').eq(0).next('.validateError').remove();
 		 var minimum_price=(parseFloat(usdPrice)-parseFloat(usdPrice*parseFloat(set_price_min)/100)).toFixed(2);
 
 
@@ -272,7 +285,7 @@ $(document).ready(function(){
 
 		    if(close_price > maximum_price || close_price < minimum_price)
 		    {
-		    	$(this).parents('form').eq(0).after('<p class="text-danger text-bold validateError">{{__("The close price must be between minimum and maximum price.")}}</p>');
+		    	$(this).parents('formL').eq(0).after('<p class="text-danger text-bold validateError">{{__("The close price must be between minimum and maximum price.")}}</p>');
 		    }
 		   
 	})

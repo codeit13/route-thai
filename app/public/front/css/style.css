@@ -41,6 +41,7 @@
     --transfer_popup_field: #f5f5f5;
 
     --new_dropdown_bg: #FAFAFA;
+    --light_dark_border: #00000014;
 }
 
 .dark-mode {
@@ -85,6 +86,7 @@
     --transfer_popup_field: rgb(233 233 233 / 15%);
 
     --new_dropdown_bg: #21242e;
+    --light_dark_border: #ffffff14;
 }
 
 @font-face {
@@ -1929,7 +1931,7 @@ th.res_po {
 }
 .dropdown.currency_two.three_coins.crypto button#dropdownMenuButton span {
     color: #b2b2b2 !important;
-    font-size: 14px;
+    font-size: 14px !important;
 }
 .dropdown.currency_two.three_coins.crypto .dropdown-menu.show a span{
     color: #b2b2b2;
@@ -2612,8 +2614,9 @@ img.header_img {
     margin-right: 5px;
 }
 .content_dashboard .card a.green_btn:hover {
-    background: #000;
-    color: #ffffff;
+    background-color: rgb(6 177 127);
+    border-color: rgb(6 177 127);
+    color: rgb(255, 255, 255);
 }
 .content_dashboard .card a.white_btn {
     border:1px solid #9B9B9B;
@@ -3362,6 +3365,7 @@ span.rt_span i.fa-trash-alt {
     transform: translateX(100%);
     will-change: transform;
     z-index: 99999;
+    display: none;
 }
 .site-menu ul {
   padding: 0;
@@ -3378,6 +3382,7 @@ span.rt_span i.fa-trash-alt {
 }
 #site-menu-trigger:checked ~ .site-menu {
   transform: translateX(0%);
+  display: flex;
 }
 #site-menu-trigger:checked ~ label[for=site-menu-trigger] {
   transform: translateX(-8px) scale(1.05);
@@ -3448,6 +3453,7 @@ span.rt_span i.fa-trash-alt {
     display: inline-block;
     text-align: left;
     border-radius: 0;
+    word-break: break-all;
 }
 .site-menu ul li label {
     color: #00c98e;
@@ -4257,7 +4263,7 @@ span.active {
 #loans-deshboard-new .close-price .b-right {
     border-right:1px solid #e6e6e6;
 }
-#loans-deshboard-new .close-price label form {
+#loans-deshboard-new .close-price label formL {
     display: inline-block;
     margin-left: 15px;
     background: var(--acordian);
@@ -4277,23 +4283,24 @@ span.active {
 #loans-deshboard-new .close-price p.pull-right {
     float:right !important;
 }
-#loans-deshboard-new .close-price label form input::-webkit-input-placeholder {
+#loans-deshboard-new .close-price label formL input::-webkit-input-placeholder {
     text-transform:uppercase;
     background-color: var(--acordian);
 }
-#loans-deshboard-new .close-price label form input {
+#loans-deshboard-new .close-price label formL input {
     border:none;
     height:36px;
     background-color: var(--acordian);
     color: var(--white-black-text);
 }
-#loans-deshboard-new .close-price label form button {
+#loans-deshboard-new .close-price label formL button {
     background:none;
     border:none;
     line-height:36px;
     padding:0px 15px;
     color: var(--white-black-text);
     border-left:1px solid #e6e6e6;
+    cursor: pointer;
 }
 #loans-deshboard-new .close-price p {
     font-size:14px;
@@ -4420,8 +4427,7 @@ span.active {
     font-size:16px;
     font-weight:600;
 }
-<<<<<<< HEAD
-    img.black-logo.onlymobile.sidemenu.visible-xs {
+img.black-logo.onlymobile.sidemenu.visible-xs {
         width: 32%;
         float: left;
         margin-left: 24px;
@@ -4836,15 +4842,13 @@ span.active {
         margin-bottom: 10px;
         border-radius: 4px;
     }
-    /**
+    /**/
 #main-content .bx-wrapper {
     width: 100% !important;
     max-width: 100% !important;
-=======
 #loans-deshboard-new .my-loan-history tbody td:first-child span {
     color:#797979;
     font-size:12px;
->>>>>>> origin/sumit
 }
 #loans-deshboard-new .my-loan-history tbody td a {
     color:#00c98e;
@@ -4929,6 +4933,7 @@ ul.loan_code li i.fa {
 .multi_form .dropdown.currency_two.three_coins .dropdown-menu.show a {
     padding: 0px 15px;
     color: var(--text-color);
+    line-height: 37px;
 }
 .multi_form .dropdown.currency_two .dropdown-menu.show a {
     padding-right: 0px !important;
@@ -4961,7 +4966,7 @@ ul.loan_code li i.fa {
     width:100%;
     padding:0px;
     text-align:center;
-    line-height:50px;
+    line-height:50px; 
     border:1px solid #00c98e;
 }
 #loans-deshboard-new .how-to-start {
@@ -5401,7 +5406,7 @@ section#loans-deshboard-new {
     width:100%;
     background:#fff;
     border-radius:8px;
-        box-shadow: 0px 1px 6px 1px #dadada;
+    box-shadow: 0px 1px 6px 1px #dadada;
     margin-top:40px;
     z-index: 9999;
     position: relative;
@@ -5668,20 +5673,20 @@ section#loans-deshboard-new {
 #wallet-content.withdraw-asset .step-h {
     float:left;
     width:100%;
-    padding-top:15px;
+    padding-top:10px;
 }
 #wallet-content.withdraw-asset .step-h ul li {
     padding-bottom:70px;
     position:relative;
 }
 #wallet-content.withdraw-asset .step-h ul li:before {
-    content:'';
-    position:absolute;
-        left: 6px;
-    top: 36px;
-    background:#00c98e;
-    height:60%;
-    width:2px;
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 28px;
+    background: #00c98e;
+    height: 77%;
+    width: 2px;
 }
 #wallet-content.withdraw-asset .step-h ul li:last-child:before {
     display:none;
@@ -5824,9 +5829,11 @@ section#loans-deshboard-new {
     padding-left:15px;
     color: var(--white-black-text);
 }
-#wallet-content.request.order-history  input.coin {
-    width:350px !important;
-    outline:0;
+#wallet-content.request.order-history input.coin {
+    width: 250px !important;
+    outline: 0;
+    /* float: right; */
+    margin-left: 27%;
 }
 #wallet-content.order-history .history-details th {
     background:none;
@@ -5845,9 +5852,9 @@ section#loans-deshboard-new {
     margin-right:5px;
 }
 #wallet-content.order-history .history-details  tbody {
-    background:var(--new-card-bg);
+    /*background:var(--new-card-bg);
     border-radius:5px;
-    box-shadow: 1px 1px 12px rgb(0 0 0 / 8%);
+    box-shadow: 1px 1px 12px rgb(0 0 0 / 8%);*/
 }
 #wallet-content.order-history td.buy h2 {
     font-size:18px;
@@ -5878,9 +5885,9 @@ section#loans-deshboard-new {
     font-size:12px;
 }
 #wallet-content.order-history .history-details tbody tr {
-    background:var(--new-card-bg);
-    border-bottom:1px solid #dbe5ed;
-    background:var(--new-card-bg);
+    /*background:var(--new-card-bg);*/
+    border-bottom:1px solid var(--light_dark_border);
+    /*background:var(--new-card-bg);*/
 }
 #wallet-content.order-history .history-details tbody tr:nth-of-type(odd) {
     background:var(--new-card-bg);
@@ -6080,7 +6087,7 @@ section#loans-deshboard-new {
 #wallet-content.request .field {
     float: left;
     width: 100%;
-    padding: 15px 0px;
+    padding: 10px 0px;
 }
 #wallet-content.request span.total {
     color: #b2b2b2;
@@ -6249,12 +6256,14 @@ section#loans-deshboard-new {
     text-decoration: none;
     border-radius: 6px;
     font-size: 16px;
+    cursor: pointer;
     color: #ffffff;
     padding: 0px 26px;
 }
 #wallet-content a.btn-primary:hover {
-    background-color: #05ca90;
-    color: #fff;
+    background-color: rgb(6 177 127);
+    border-color: rgb(6 177 127);
+    color: rgb(255, 255, 255);
 }
 #wallet-content a.btn-success {
     background: #adadad;
@@ -6266,6 +6275,7 @@ section#loans-deshboard-new {
     color: #ffffff;
     padding: 0px 26px;
     margin-left: 10px;
+    cursor: pointer;
 }
 #wallet-content a.btn-success:hover {
     background-color: #969090;
@@ -6359,8 +6369,8 @@ section#loans-deshboard-new {
 }
 #wallet-content .white-box td .btn-success,
 #wallet-content .white-box td .btn-primary {
-    padding: 0px 10px;
-    font-size: 14px;
+    padding: 0px 7px;
+    font-size: 13px;
     margin: 0px !important;
 }
 #wallet-content .white-box td .btn-success {
@@ -6467,7 +6477,49 @@ a.bell span {
 }
 
 /***** Unknown Css *****/
-
+.css-11nldkw {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    cursor: pointer;
+    position: relative;
+}
+.css-jac2fa {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    visibility: hidden;
+    position: absolute;
+    padding: 16px;
+    background-color: rgb(255, 255, 255);
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: rgb(0 0 0 / 8%) 0px 0px 30px;
+}
+.css-ghsb4z {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    border-width: 10px;
+    border-style: solid;
+    border-image: initial;
+    border-color: transparent rgb(255, 255, 255) transparent transparent;
+    position: absolute;
+    transform: translateX(-50%) rotate(
+-90deg
+);
+    bottom: -20px;
+    left: 50%;
+}
+.css-11nldkw:hover .QrCode {
+    visibility: visible;
+}
+#wallet-content .white-box td.center_small {
+    padding: 23px 0px;
+    display: inline-block;
+    /*width: 200px;*/
+}
 #main-heading {
     box-shadow: 0px 1px 3px rgb(0 0 0 / 16%);
     padding: 30px 0px;
@@ -7406,14 +7458,14 @@ h4.suborder span {
     font-size: 24px;
     margin-left: 10px;
 }
-#content.padning-payment {
+#content.padning-payment { 
     padding-top: 0px;
 }
 #content.padning-payment .card.padding-0 {
     padding: 0px;
 }
 #content.padning-payment .created-time {
-    background: var(--card-heder);
+    background: var(--card-heder); 
     border-bottom: 1px solid #ADADAD;
     border-radius: 8px 8px 0px 0px;
     padding: 0px 15px 15px 15px;
@@ -7499,7 +7551,9 @@ p.untext-2 {
     border-bottom: 1px solid #939393;
     background: none;
     padding: 10px 15px;
-    vertical-align: middle;
+    vertical
+  
+  -align: middle;
 }
 #content.padning-payment .card.p-payment a {
     padding: 0px 0px !important;
@@ -8110,7 +8164,9 @@ a.btn-info {
     margin-top: 50px;
 }
 a.btn-info:hover {
-    background: #000;
+    background-color: rgb(6 177 127);
+    border-color: rgb(6 177 127);
+    color: rgb(255, 255, 255);
 }
 #locked_staking thead th {
     font-size: 14px;
@@ -8185,8 +8241,9 @@ a.btn-info:hover {
     border: none;
 }
 #locked_staking table tr td a.table_btn:hover {
-    background-color: #000;
-    color: #fff;
+    background-color: rgb(6 177 127);
+    border-color: rgb(6 177 127);
+    color: rgb(255, 255, 255);
 }
 #locked_staking tbody {
     background: var(--new-card-bg);
@@ -8209,26 +8266,27 @@ a.btn-info:hover {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /********** Responsive Css **********/
 
 /* Landscape phones and portrait tablets */
 
 @media (max-width: 767px) {
+    .dropdown.currency_two.three_coins.new_select_b.crypto.currencyDropdown.show .dropdown-menu.show {
+        
+    }
+    .col-xs-12.sp-left {
+        display: inline-block;
+        width: 100%;
+    }
+    #loans-deshboard-new .dropdown.currency_two.three_coins .dropdown-toggle::after {
+        top: -3px;
+    }
+    #dashboard .content_dashboard {
+        padding: 0px 30px;
+    }
+    #wallet-content.request ul.janral-head li {
+        padding: 0px 15px;
+    }
     .multi_form .dropdown.currency_two.three_coins .dropdown-menu.show a {
         padding: 0px 15px !important;
         color: var(--text-color);
@@ -8594,7 +8652,7 @@ a.btn-info:hover {
         margin-top: 5px;
         margin-right: 5px;
     }
-    #loans-deshboard-new .close-price label form {
+    #loans-deshboard-new .close-price label formL {
         margin-left: 0px;
     }
     #loans-deshboard-new .final-loan h3 {
@@ -8679,27 +8737,35 @@ a.btn-info:hover {
         top: 85% !important;
         left: 0 !important;
     }
-    #wallet-content .white-box button#dropdownMenuButton {
+    /*#wallet-content .white-box button#dropdownMenuButton {
         line-height: 27px !important;
         font-size: 10px !important;
-    }
+    }*/
     #wallet-content.request.crypto ul.janral-head {
         margin-bottom: 0px !important;
     }
     #exampleModalnew.modal-open {
         padding-left: 0px;
     }
+    .dropdown.currency_two.three_coins .dropdown-menu.show a.some_padding {
+        padding: 9px 12px !important;
+    }
     .dropdown.currency_two.three_coins .dropdown-menu.show a {
-        padding: 9px 16px !important;
+        padding: 2px 10px !important;
         color: var(--text-color);
     }
     .select {
-        height: 29px;
-        width: 100px;
+        float: left;
+        margin: 0;
+        width: auto;
+        position: absolute;
+        left: 0;
     }
     .styledSelect {
         font-size: 13px;
-        line-height: 30px;
+    }
+    .xs-flush-right {
+        padding-right: 0px !important;
     }
     .options li {
         font-size: 13px;
@@ -8721,9 +8787,9 @@ a.btn-info:hover {
     #header.p2p-wallet nav#navigation a.bell {
         margin-right: 45px;
     }
-    body {
+/*    body {
         overflow-x: hidden;
-    }
+    }*/
     .iverify ul {
         width: 85%;
     }
@@ -8813,7 +8879,7 @@ a.btn-info:hover {
         line-height: 30px;
         font-size: 13px;
         padding: 0px 10px;
-        margin-right: 5px;
+        margin-right: 0px;
     }
     .content_dashboard .card h2 {
         font-size: 13px;
@@ -8838,7 +8904,7 @@ a.btn-info:hover {
     #wallet-content .white-box .dropdown-menu.show a {
         background-color: var(--new-card-bg);
         color: var(--white-black-text);
-        padding: 0px 0px;
+        padding: 8px 10px !important;
         font-size: 14px;
         text-align: left;
         padding-left: 15px;
@@ -8846,14 +8912,14 @@ a.btn-info:hover {
     }
     #wallet-content .white-box .dropdown-menu.show {
         top: 30px !important;
-        left: -40px !important;
+        left: 0px !important;
         width: 100% !important;
         transform: translate3d(0px, 6px, 0px) !important;
         background-color: var(--new-card-bg);
     }
     #wallet-content .white-box button#dropdownMenuButton span {
         color: #b2b2b2;
-        font-size: 9px;
+        font-size: 14px;
     }
     #content.sellers {
         background: var(--body-bg-2) !important;
@@ -8980,7 +9046,7 @@ a.btn-info:hover {
         text-align: left;
         font-size: 15px;
         display: inline-block;
-        padding: 14px 0px !important;
+        padding: 2px 0px !important;
     }
     .dark-light span.visible-xs {
         display: inline-block !important;
@@ -9450,6 +9516,9 @@ a.btn-info:hover {
     .visible-xs {
         display: block !important;
     }
+    .no_more {
+        display: inline-block !important;
+    }
     .visible-xs h3 {
         font-size: 24px;
         font-weight: bold;
@@ -9778,21 +9847,48 @@ a.btn-info:hover {
     ul.main_tool {
         margin-top: 11px;
     }
-    #filter {
+    /*#filter {
         display: none;
+    }*/
+    #filter ul.search_bar li {
+        width: 100%;
+    }
+    #filter ul.search_bar li .dropdown.currency_two.three_coins {
+        width: 100% !important;
+    }
+    #filter ul.search_bar li label {
+        margin-top: 10px;
+    }
+    #filter ul.search_bar li .dropdown.currency_two.three_coins button#dropdownMenuButton {
+        width: 100% !important;
+    }
+    #filter a.refresh {
+        margin-top: 15px;
+        width: 100%;
+        text-align: center;
+    }
+    #filter ul.search_bar li .dropdown-menu.show {
+        top: -2px !important;
+        width: 100% !important;
+        left: 0 !important;
+    }
+    #filter ul.search_bar li .dropdown-menu.show a {
+        padding: 8px 10px !important;
     }
     #wallet-content {
         padding-top: 0px !important;
     }
     #wallet-content .white-box {
-        padding: 7px;
-        margin-top: 15px;
+        padding: 0px 9%;
+        margin-top: 0px;
     }
     #wallet-content .white-box thead {
         display: none;
     }
     #wallet-content .white-box td {
-        /*width:50%;*/
+        font-size: 16px;
+        font-weight: 400;
+        padding: 5px 0px;
         display: inline-block;
     }
     #wallet-content .white-box td:last-child {
@@ -9801,9 +9897,30 @@ a.btn-info:hover {
     #wallet-content .white-box td:nth-child(2n) {
         text-align: right;
         float: right;
+        padding-top: 21px;
     }
-    #wallet-content .white-box td:nth-child(3n) {
+    #wallet-content .white-box td:nth-child(3n), #wallet-content .white-box td:nth-child(4n) {
         display: none;
+    }
+    #wallet-content .white-box td:nth-child(5n) {
+        /*display: inline-block;
+        text-align: left;
+        padding-top: 0px;
+        padding-bottom: 5px;*/
+        display: none;
+    }
+    #wallet-content .white-box.show_two_button td:nth-child(3n){
+        display: none;
+    }
+    /*#wallet-content .white-box.show_two_button td:nth-child(3n) {
+        display: inline-block;
+        text-align: left;
+        padding-top: 0px;
+        padding-bottom: 5px;
+    }*/
+    #wallet-content .white-box tbody tr {
+        width: 100%;
+        display: inline-block;
     }
     #wallet-content .white-box tbody {
         width: 100%;
@@ -9814,16 +9931,24 @@ a.btn-info:hover {
         margin-right: 0px !important;
         margin-left: 0px !important;
     }
-    #wallet-content a.btn-success,
-    #wallet-content a.btn-primary {
+    #wallet-content a.btn-success, #wallet-content a.btn-primary {
         font-size: 13px !important;
-        width: 49%!important;
+        width: 32%!important;
         text-align: center;
         padding: 0px;
+        margin-left: 0px !important;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
-    #wallet-content .white-box td .btn-primary {
-        float: left;
+    #wallet-content .white-box td .btn-primary, #wallet-content .white-box td .btn-success {
+        
+        padding: 0px 9px !important;
+        width: auto !important;
+        margin-right: 6px !important;
     }
+    /*td.center_small {
+        text-align: center;
+    }*/
     a.load-more {
         background: none;
         color: #212121;
@@ -9836,8 +9961,11 @@ a.btn-info:hover {
         padding: 0px;
     }
     #wallet-content.request .p-text {
-        padding: 0px 15px !important;
-        margin-top: 47px;
+        padding: 0px 35px !important;
+        margin-top: 0;
+    }
+    .white-box.deposite_second_sec {
+        padding: 10px 30px !important;
     }
     #wallet-content.request ul.janral-head {
         margin-bottom: 10px;
@@ -9852,7 +9980,7 @@ a.btn-info:hover {
     }
     #wallet-content.request .white-box {
         box-shadow: none;
-        padding: 0px 20px;
+        padding: 0px 0px;
     }
     #wallet-content.request ul.janral-head li a {
         color: #fff !important;
@@ -10077,6 +10205,7 @@ a.btn-info:hover {
     }
     #content.padning-payment {
         padding-bottom: 15px;
+        padding-top: 15px;
     }
     #exampleModal2 .modal-content {
         background: none !important;
@@ -10240,7 +10369,9 @@ a.btn-info:hover {
         font-size: 20px !important;
     }
     #content.sellers .white-box {
-        margin-top: 20px;
+        margin-top: 0px;
+        padding: 0px 1px;
+        box-shadow: none;
     }
     #Available {
         text-align: left !important;
@@ -10318,15 +10449,26 @@ a.btn-info:hover {
         padding-right: 4px;
     }
     .head-xs .sp-left {
-        padding-left: 4px;
+        
+        display: inline-block;
+        width: 100%;
     }
     .head-xs input {
-        height: 29px !important;
+        height: 35px !important;
         font-size: 12px;
         padding: 5px!important;
     }
+    #wallet-content .white-box button#dropdownMenuButton {
+        padding: 0;
+        line-height: 35px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .dropdown.currency_two.three_coins .dropdown-toggle::after {
+        margin-top: 16px;
+    }
     .head-xs select {
-        height: 29px !important;
+        height: 35px !important;
         font-size: 12px;
         padding: 5px!important;
         border: 1px solid #b7b7b7;
@@ -10357,6 +10499,7 @@ a.btn-info:hover {
     }
     #wallet-content.request.order-history .head-xs input.coin {
         width: 100% !important;
+        margin-left: 0%;
     }
     #wallet-content.request.crypto .white-box .history-details table {
         margin-top: 25px !important;
@@ -10445,8 +10588,7 @@ a.btn-info:hover {
     }
 }
 
-<<<<<<< HEAD
-#wallet-content.order-history ul.btc li.init img {
+ #wallet-content.order-history ul.btc li.init img {
     margin-top: 4.5px;
     margin-right: 10px;
     height: 20px;
@@ -10570,50 +10712,7 @@ a.btn-info:hover {
     padding:0px 20px !important;
     background:#eeeeee !important;  
 }
-/**===== loader =====*/
-.loader { 
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    background: var(--loader-bg);
-}
-#bars {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  height: 50px;
-  width: 50px;
-  margin: -25px 0 0 -25px;
-}
 
-#bars span {
-  position: absolute;
-  display: block;
-  bottom: 10px;
-  width: 9px;
-  height: 5px;
-  background: rgba(0, 0, 0, 0.25);
-  -webkit-animation: bars 1.5s  infinite ease-in-out;
-          animation: bars 1.5s  infinite ease-in-out;
-}
-
-#bars span:nth-child(2) {
-  left: 11px;
-  -webkit-animation-delay: 0.2s;
-          animation-delay: 0.2s;
-=======
-@media (min-width: 320px) and (max-width: 374px) {
-    #wallet-content.withdraw-asset .step-h ul li:before {
-        height: 46% !important;
-        left: 10% !important;
-        margin-left: -7px!important;
-    }
->>>>>>> origin/sumit
-}
 
 @media (min-width: 375px) and (max-width: 413px) {
     #wallet-content.withdraw-asset .step-h ul li:before {
@@ -10689,70 +10788,17 @@ a.btn-info:hover {
         line-height: 42px !important;
         font-size: 13px!important;
     }
+    .dh_padding {
+        padding: 0px 20px;
+    }
+    .head-xs.visible-xs {
+        padding: 0px 15px;
+    }
+    .dropdown.currency_two.three_coins.new_select_b button#dropdownMenuButton {
+        padding: .375rem .75rem !important;
+    }
 }
 
-<<<<<<< HEAD
-@keyframes bars {
-  0% {
-    height: 5px;
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-    background: rgba(0, 0, 0, 0.25);
-  }
-  25% {
-    height: 30px;
-    -webkit-transform: translateY(15px);
-            transform: translateY(15px);
-    -webkit-transform: translateY(15px);
-            transform: translateY(15px);
-    background: var(--loader-bar);
-  }
-  50% {
-    height: 5px;
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-    background: rgba(0, 0, 0, 0.25);
-  }
-  100% {
-    height: 5px;
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-    background: rgba(0, 0, 0, 0.25);
-  }
-}
-@-webkit-keyframes bars {
-  0% {
-    height: 5px;
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-    background: rgba(0, 0, 0, 0.25);
-  }
-  25% {
-    height: 30px;
-    -webkit-transform: translateY(15px);
-            transform: translateY(15px);
-    background:var(--loader-bar);
-  }
-  50% {
-    height: 5px;
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-    background: rgba(0, 0, 0, 0.25);
-  }
-  100% {
-    height: 5px;
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-    background: rgba(0, 0, 0, 0.25);
-  }
-}
-/**===== loader =====*/
 .security {
     float:left;
     width:100%;
@@ -10910,6 +10956,13 @@ padding:30px 20px;
 
 .account-security h3 {
 font-weight:normal;
+@media (min-width: 320px) and (max-width: 374px) {
+    #wallet-content.withdraw-asset .step-h ul li:before {
+        height: 73% !important;
+        left: 10% !important;
+        margin-left: -5px!important;
+        top: 29px;
+    }
 }
 
 .account-security h3 span {
@@ -11056,6 +11109,14 @@ margin-top:10px;
 @media (max-width: 767px) {
     .account-security .fa-box-white .field label img {
         margin-bottom: 2px;
+     }
+}
+  @media (min-width: 768px) and (max-width: 991px) {
+
+    .navbar-toggler:not(:disabled):not(.disabled) {
+        cursor: pointer;
+        z-index: 99999;
+        position: relative;
     }
     
     
@@ -11251,9 +11312,7 @@ span.active {
     vertical-align: middle;
     background: rgb(0 201 142);
 }
-=======
 @media (min-width: 992px) and (max-width: 1169px) {} .tooltip {
     position:relative;
     z-index:99999999;
 }
->>>>>>> origin/sumit

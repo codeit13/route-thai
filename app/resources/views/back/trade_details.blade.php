@@ -70,9 +70,17 @@
                 <div class="card inner-tabs">
                     <h2 class="text-left">Buyer Details</h2>
                     <ul class="details nospace">
-                        <li>Buyer Username : <b>{{ $trans->receiver->name }}</b></li>
-                        <li>Mobile Number: <b>{{ $trans->receiver->mobile}}</b></li>
-                        <li>Line ID: <b>{{ $trans->receiver->line_number}}</b></li>
+                        @if(isset($trans->receiver) and $trans->receiver != '')
+                            <li>Buyer Username : <b>{{ $trans->receiver->name }}</b></li>
+                            <li>Mobile Number: <b>{{ $trans->receiver->mobile}}</b></li>
+                            <li>Line ID: <b>{{ $trans->receiver->line_number}}</b></li>
+                        @else
+                            @if($trans->buyer_requests->first() != null)
+                                <li>Buyer Username : <b>{{ $trans->buyer_requests->first()->name }}</b></li>
+                                <li>Mobile Number: <b>{{ $trans->buyer_requests->first()->mobile}}</b></li>
+                                <li>Line ID: <b>{{ $trans->buyer_requests->first()->line_number}}</b></li>
+                            @endif
+                        @endif
                     </ul>
                 </div>
             </div>

@@ -13,6 +13,11 @@ Route: P2P Trading Platform
 @section('header-bar')
 <div class="container">
     <div class="row">
+        <div class="progress-section visible-xs">
+            <h2>P2P Exchange</h2>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-lg-12 col-sm-12 col-xs-12 flush">
             <ul class="mini_links">
                 <li class="active"><a href="{{ route('p2p.exchange') }}">Buy</a>
@@ -102,7 +107,7 @@ Route: P2P Trading Platform
 <section id="content" class="p2p">
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="col xs-flush">
                 <div class="card">
                     <div class="main_data_dable">
                         <table class="table table-striped table-hover">

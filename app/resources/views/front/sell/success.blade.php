@@ -157,46 +157,19 @@ Route: P2P Trading Platform - sell crypto
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-6 hidden-xs visible-sm col-sm-6 col-12">
-				<div class="card chat  p-payment">
-					<div class="chat_box">
-						<h2 class="head_box bit"><img src="img/bitcoin.png" alt=""/> ⚡ OrianyellaB ⚡</h2>
-						<div class="chat_body">
-							<div class="alert">ATTEBTION! DO NOT - release crypto before confirming the money (availble balance) has arrived in your payment account. DO NOT trust anyone claims to be customer support in this chat	<a href="#">Less</a>
-							</div>
-						</div>
-						<div class="chat_footer">
-							<form>
-								<div class="form-group">
-									<div class="row">
-										<div class="col-lg-1 flush text-center col-sm-2 col-2">
-											<a href="#">
-												<img src="img/paperclip.png">
-											</a>
-										</div>
-										<div class="col-lg-10 flush col-sm-7 col-8">
-											<input type="text" name="" placeholder="Enter your message here">
-										</div>
-										<div class="col-lg-1 col-sm-3 col-2 xs-center xs-flush">
-											<div class="send_box">
-												<button>
-													<img src="img/icon-green.png">
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
+			@include('front.sell.chat')
 		</div>
 	</div>
 </section>
 @include('front.sell.tips')
 @stop
 @section('page_scripts')
+	<script type="text/javascript">
+	    var message_url = '{{ route('message.index') }}';
+	    var message_save_url = '{{ route('message.store') }}';
+	    var token = "{{ csrf_token() }}";
+	</script>
+	<script type="text/javascript" src="{{asset('front/js/chat.js')}}"></script>
 	<script>
 		$(".MethodPayment").click(function(){
 			$("#PaymentImps").toggle();

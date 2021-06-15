@@ -49,7 +49,31 @@ export const coinsList = [
   'HBAR',
   'CHZ',
   'MKR',
+  // newly added
+  'ZIL',
+  'MANA',
+  'OMG',
+  'CVC',
+  'ZRX',
+  'BAT',
+  'BAND',
+  'COMP',
+  // no image data
   'ZEC',
+  'ZEN',
+  'ETC',
+  'WRX',
+  'LPT',
+  'DODO',
+  'ONT',
+  'SC',
+  'GNT',
+  'SUSHI',
+  'BAKE',
+  'BURGER',
+  'INJ',
+  'YFI',
+  'BAL',
 ];
 
 // export const exchangeList = ['BINANCE', 'COINBASE', 'BITKUB', 'GEMINI', 'BITHUMB', 'UPBIT', 'HUOBI', 'KRAKEN'];
@@ -125,9 +149,49 @@ export const exchangeList = [
     'P2PB2B',
     'CROSSTOWER',
     'BHEX',
+    // 'LATOKEN',
+    // 'FINEXBOX',
+    // 'BILAXY',
+    'COINJAR',
+    'LBANK',
+    'DCOIN',
+    // 'OCEANEX',
+    'BTCALPHA',
 ];
 
 export const exchangeDetails = {
+  "BTCALPHA": {
+      "img": "front/arbitrageimg/228.png",
+      "name": "BTC-Alpha"
+  },
+  "OCEANEX": {
+      "img": "front/arbitrageimg/468.png",
+      "name": "OceanEx"
+  },
+  "DCOIN": {
+      "img": "front/arbitrageimg/479.png",
+      "name": "Dcoin"
+  },
+  "LBANK": {
+      "img": "front/arbitrageimg/333.png",
+      "name": "LBank"
+  },
+  "COINJAR": {
+      "img": "front/arbitrageimg/657.png",
+      "name": "CoinJar"
+  },
+  "BILAXY": {
+      "img": "front/arbitrageimg/415.png",
+      "name": "Bilaxy"
+  },
+  "FINEXBOX": {
+      "img": "front/arbitrageimg/514.png",
+      "name": "Finexbox"
+  },
+  "LATOKEN": {
+      "img": "front/arbitrageimg/380.png",
+      "name": "LATOKEN"
+  },
   "BHEX": {
       "img": "front/arbitrageimg/478.png",
       "name": "HBTC"
@@ -430,27 +494,27 @@ export const currencySymbols = {
 export const currencyDetails = {
   unitedstatesdollar: {
     name: 'United States Dollar',
-    img: 'front/arbitrageimg/USD.svg',
+    img: 'front/img/USD_Dollar.png',
     sname: 'USD',
   },
   koreanwon: {
     name: 'Korean Won',
-    img: 'front/arbitrageimg/KRW.svg',
+    img: 'front/img/Korean_Won.png',
     sname: 'KRW',
   },
   indianrupee: {
     name: 'Indian Rupee',
-    img: 'front/arbitrageimg/inr.svg',
+    img: 'front/img/Indian_Rupee.png',
     sname: 'INR',
   },
   thaibaht: {
     name: 'Thai Baht',
-    img: 'front/arbitrageimg/thb.svg',
+    img: 'front/img/Thai_Baht.png',
     sname: 'THB',
   },
   japaneseyen: {
     name: 'Japanese Yen',
-    img: 'front/arbitrageimg/jp.svg',
+    img: 'front/img/Japanese_Yuan.svg',
     sname: 'JPY',
   },
   try: {
@@ -473,166 +537,63 @@ export const currencyDetails = {
 export const currencyList = ['USD', 'KRW', 'INR', 'THB', 'JPY', 'RUB', 'TRY', 'EUR', 'IDR', 'AUD', 'TWD','BRL'];
 export const quoteCoinsList = ['BTC', 'ETH'];
 
-// export const coinsAlertsList = {
-//   'BTC': {
-//     img: 'front/arbitrageimg/1.png',
-//     name: 'Bitcoin',
-//   },
-//   'ETH': {
-//     img: 'front/arbitrageimg/1027.png',
-//     name: 'Ethereum',
-//   },
-//   'BNB': {
-//     img: 'front/arbitrageimg/1839.png',
-//     name: 'Binance Coin',
-//   },
-//   'ADA': {
-//     img: 'front/arbitrageimg/2010.png',
-//     name: 'Cardano',
-//   },
-//   'DOT': {
-//     img: 'front/arbitrageimg/coin_12.svg',
-//     name: 'Polkadot',
-//   },
-//   'XRP': {
-//     img: 'front/arbitrageimg/coin_35.svg',
-//     name: 'Ripple',
-//   },
-//   'BCH': {
-//     img: 'front/arbitrageimg/coin_6.svg',
-//     name: 'Bitcoin cash',
-//   },
-//   'DOGE': {
-//     img: 'front/arbitrageimg/coin_11.png',
-//     name: 'Dogecoin',
-//   },
-//   'UNI': {
-//     img: 'front/arbitrageimg/3602.png',
-//     name: 'Uniswap',
-//   },
-//   'LTC': {
-//     img: 'front/arbitrageimg/coin_22.svg',
-//     name: 'Litecoin',
-//   },
-//   'ABT': {
-//     img: 'front/arbitrageimg/coin_2.png',
-//     name: 'ArcBlock',
-//   },
-//   'BAND': {
-//     img: 'front/arbitrageimg/coin_4.png',
-//     name: 'BAND',
-//   },
-//   'BAT': {
-//     img: 'front/arbitrageimg/coin_5.png',
-//     name: 'BAT',
-//   },
-//   'BSV': {
-//     img: 'front/arbitrageimg/3602.png',
-//     name: 'Bitcoin SV',
-//   },
-//   'CVC': {
-//     img: 'front/arbitrageimg/coin_9.png',
-//     name: 'Civic',
-//   },
-//   'DAI': {
-//     img: 'front/arbitrageimg/coin_10.png',
-//     name: 'Dai',
-//   },
-//   'EVX': {
-//     img: 'front/arbitrageimg/coin_14.png',
-//     name: 'Everex',
-//   },
-//   'GLM': {
-//     img: 'front/arbitrageimg/coin_15.png',
-//     name: 'Golem',
-//   },
-//   'INF': {
-//     img: 'front/arbitrageimg/coin_16.png',
-//     name: 'Infinitus',
-//   },
-//   'IOST': {
-//     img: 'front/arbitrageimg/coin_17.png',
-//     name: 'IOST',
-//   },
-//   'JFIN': {
-//     img: 'front/arbitrageimg/coin_18.png',
-//     name: 'Jfin',
-//   },
-//   'KNC': {
-//     img: 'front/arbitrageimg/coin_19.png',
-//     name: 'Kyber Network Crystals',
-//   },
-//   'KSM': {
-//     img: 'front/arbitrageimg/coin_20.png',
-//     name: 'Kusama',
-//   },
-//   'LINK': {
-//     img: 'front/arbitrageimg/coin_21.svg',
-//     name: 'Chainlink',
-//   },
-//   'MANA': {
-//     img: 'front/arbitrageimg/coin_23.png',
-//     name: 'Mana',
-//   },
-//   'NEAR': {
-//     img: 'front/arbitrageimg/coin_24.png',
-//     name: 'NEAR',
-//   },
-//   'OMG': {
-//     img: 'front/arbitrageimg/coin_25.png',
-//     name: 'OMG',
-//   },
-//   'POW': {
-//     img: 'front/arbitrageimg/coin_26.png',
-//     name: 'POW',
-//   },
-//   'RDN': {
-//     img: 'front/arbitrageimg/coin_27.png',
-//     name: 'RDN',
-//   },
-//   'SCRT': {
-//     img: 'front/arbitrageimg/coin_28.png',
-//     name: 'Secret Network',
-//   },
-//   'SIX': {
-//     img: 'front/arbitrageimg/coin_29.png',
-//     name: 'SIX',
-//   },
-//   'SNT': {
-//     img: 'front/arbitrageimg/coin_30.png',
-//     name: 'SNT',
-//   },
-//   'USDC': {
-//     img: 'front/arbitrageimg/coin_31.svg',
-//     name: 'USDC',
-//   },
-//   'USDT': {
-//     img: 'front/arbitrageimg/coin_32.png',
-//     name: 'USDT',
-//   },
-//   'WAN': {
-//     img: 'front/arbitrageimg/coin_33.png',
-//     name: 'Wanchain',
-//   },
-//   'XLM': {
-//     img: 'front/arbitrageimg/coin_34.svg',
-//     name: 'Stellar',
-//   },
-//   'ZIL': {
-//     img: 'front/arbitrageimg/coin_36.png',
-//     name: 'Zilliqa',
-//   },
-//   'ZRX': {
-//     img: 'front/arbitrageimg/coin_37.png',
-//     name: 'ZRX',
-//   },
-//   'default' : {
-//     img: 'front/arbitrageimg/coin_23.png',
-//     name: 'NOT FOUND',
-//   }
-// };
-
 export const coinsAlertsList = {
+  'BAL': {
+    img: 'front/arbitrageimg/5728.png',
+    name: 'Balancer'
+  },
+  'YFI': {
+    img: 'front/arbitrageimg/5864.png',
+    name: 'Yearn Finance'
+  },
+  'INJ': {
+    img: 'front/arbitrageimg/7226.png',
+    name: 'Injective Protocol'
+  },
+  'BURGER': {
+    img: 'front/arbitrageimg/7158.png',
+    name: 'Burger swap'
+  },
+  'BAKE': {
+    img: 'front/arbitrageimg/7064.png',
+    name: 'Bakery token'
+  },
+  'GNT': {
+    img: 'front/arbitrageimg/9533.png',
+    name: 'GreenTrust'
+  },
+  'SC': {
+    img: 'front/arbitrageimg/1042.png',
+    name: 'Siacoin'
+  },
+  'ONT': {
+    img: 'front/arbitrageimg/2566.png',
+    name: 'Ontology'
+  },
+  'DODO': {
+    img: 'front/arbitrageimg/7224.png',
+    name: 'DODO'
+  },
+  'LPT': {
+    img: 'front/arbitrageimg/3640.png',
+    name: 'Livepeer'
+  },
+  'WRX': {
+    img: 'front/arbitrageimg/5161.png',
+    name: 'WazirX'
+  },
+  'ETC': {
+    img: 'front/arbitrageimg/1321.png',
+    name: 'Ethereum classic'
+  },
+  'ZEN': {
+    img: 'front/arbitrageimg/1698.png',
+    name: 'Horizen'
+  },
+  'MANA': {
+      img: 'front/arbitrageimg/coin_23.png',
+      name: 'Mana',
+    },
     "BTC": {
         "img": "front/arbitrageimg/1.png",
         "name": "Bitcoin"
@@ -898,7 +859,23 @@ export const coinsAlertsList = {
         "name": "Ravencoin"
     },
     'IOST': {
-      img: 'front/arbitrageimg/coin_17.png',
-      name: 'IOST',
+      'img': 'front/arbitrageimg/coin_17.png',
+      'name': 'IOST',
+    },
+    'OMG': {
+      img: 'front/arbitrageimg/coin_25.png',
+      name: 'OMG',
+    },
+    'CVC': {
+      img: 'front/arbitrageimg/coin_9.png',
+      name: 'Civic',
+    },
+    'ZRX': {
+      img: 'front/arbitrageimg/coin_37.png',
+      name: 'ZRX',
+    },
+    'BAND': {
+      img: 'front/arbitrageimg/coin_4.png',
+      name: 'BAND',
     },
 };
