@@ -24,7 +24,24 @@ class UserController extends Controller
     public function line_bot() {
         return view('front.line-bot');
     }
- 
+    public function security(){
+        return view('front.user.account');
+    } 
+
+    public function notifications(){
+        return view('front.user.notification');
+    } 
+
+    public function updateEmail(){
+        return view('front.user.update-email');
+    } 
+    public function confimrUpdateEmail(){
+        return view('front.user.confirm-update-email');
+    } 
+
+    public function deviceManagement(){
+        return view('front.user.deviceManagement');
+    }     
     public function isUsernameExist(Request $request){
         $status = User::where('name',$request->name)->count() == 0 ? 'OK': 'NOT OK';
         $message = $status == 'OK' ? 'Congrats! Username: '.$request->name.' is available' :'Sorry ! This Username is not available.';
@@ -96,5 +113,22 @@ class UserController extends Controller
             $user->save();
             return response()->json(['status'=>'OK','message'=> __('The language settings has been updated.') ]);
         }
+    }
+
+    public function addGoogle2fa(){
+        $google2fa = app('pragmarx.google2fa');
+        $qrcode =  $google2fa->generateSecretKey();
+        $QR_Image = $google2fa->getQRCodeInline(
+            "Route Thai",
+            Auth::user()->email,
+            $qrcode
+        );
+        return view('front.user.addGoogle2fa',compact('QR_Image','qrcode'));
+    }
+    public function saveGoogle2fa(Request $request){
+        $user = Auth::user();
+        $user->google2fa_secret = $request->secret;
+        $user->save();
+        return redirect()->route('user.security');
     }
 }

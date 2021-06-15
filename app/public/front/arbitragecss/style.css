@@ -92,7 +92,7 @@ button {
 	outline:0;
 }
 
-::-webkit-input-placeholder {}
+/* ::-webkit-input-placeholder {} */
 
 .panel {
 	float:left;
@@ -465,7 +465,7 @@ form.form-inline input {
 }
 
 .live {
-    display: inline-block;
+    /* display: inline-block; */
     width: 100%;
     text-align: right;
     float: right;
@@ -822,6 +822,7 @@ input:checked + .slider:before {
 
 .alert_body::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3) ;
 }
 
 .alert_body::-webkit-scrollbar-thumb {
@@ -997,9 +998,9 @@ a.btn.btn-primary:hover {
 	border: 1px solid #f4f4f4;
 }
 
-ul.side_inner {
+/* ul.side_inner {
 
-}
+} */
 
 ul.side_inner li {
 	display: inline-block;
@@ -1008,7 +1009,7 @@ ul.side_inner li {
 
 label.style {
 	font-size: 13px;
-	display: inline-block;
+	/* display: inline-block; */
 	text-transform: capitalize;
 	text-align: left;
 	float: left;
@@ -1418,7 +1419,7 @@ th.res_po {
 }
 
 .dropdown.currency_two.three_coins .dropdown-toggle::after {
-    display: inline-block;
+    /* display: inline-block; */
     width: 0;
     height: 0;
     margin-left: .255em;
@@ -1494,7 +1495,7 @@ button#dropdownMenuButton img {
     width: auto !important;
     font-size: 13px;
     left: 35px !important;
-    display: inline-block !important;
+    /* display: inline-block !important; */
     padding: 0px 0px !important;
     float: left !important;
     text-align: left !important;
@@ -1590,9 +1591,9 @@ span#thb_ada_volume, span#thb_btc_volume, span#thb_doge_volume, span#thb_eth_vol
     z-index: -1;
 }
 
-.login_forms form {
+/* .login_forms form {
 
-}
+} */
 
 .login_forms form input[type="email"], .login_forms form input[type="password"] , .login_forms form input[type="text"] {
     font-size: 16px;
@@ -2038,10 +2039,10 @@ ul.main_ul li.hd_small {
     display: none;
 }
 
-
+/* 
 ul.main_ul {
 
-}
+} */
 
 ul.main_ul li {
     display: inline-block;
@@ -2227,8 +2228,8 @@ button.navbar-toggler i.fa {
     padding: 10px 30px;
 }
 
-#main-content p {
-}
+/* #main-content p {
+} */
 
 }
 /* Portrait tablets and small desktops */

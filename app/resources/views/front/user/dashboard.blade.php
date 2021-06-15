@@ -111,7 +111,7 @@
                               </div>
                             </div>
                             <label>Language</label>
-                        <div class="dropdown currency_two three_coins crypto">
+                            <div class="dropdown currency_two three_coins crypto">
                               @php 
                               $languages = \App\Models\Language::all();
                               $default_language = !empty(Auth::user()->default_language) ? \App\Models\Language::find(Auth::user()->default_language) : \App\Models\Language::where('is_default',1)->first();
@@ -179,7 +179,7 @@
                                  @foreach (auth()->user()->authentications as $item)
                                  <div class="coll_one">
                                      <div class="left_call">
-                                        <h6>Web</h6>
+                                        <h6>{{ $item->user_agent }}</h6>
                                         <p>{{ $item->login_at}}</p>
                                      </div>
                                      <div class="right_call">
@@ -455,8 +455,6 @@
             url:"{{ route('user.update.notification') }}",
             data:{ mode : mode, _token: "{{ csrf_token() }}" },
             success:function(data) {
-               console.log(mode);
-               console.log(aria_pressed);
                if((mode == "telegram_notification") && (aria_pressed == 'false')) {
                   $("<a>").prop({
                         target: "_blank",

@@ -12,7 +12,7 @@
             <div class="card text-center trade two">
                 <ul>
                     <li style="float: left;">
-                        <h2 class="text-left">Transactions </h2>
+                        <h2 class="text-left">Buyer List</h2>
                     </li>
                     <!-- <li class="last text-right" style="float: right; padding-right: 20px;"><a href="#" class="text-red text-right"><b><i class="fa fa-trash-o" aria-hidden="true"></i> Delete All</b></a></li> -->
                 </ul>
@@ -22,7 +22,6 @@
                     <div class="table-responsive red-scrollbar">
                         <!-- Projects table -->
                         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                            
                             <div class="row">
                                 <div class="col-sm-12">
                                     <table id="example" class="datatables table table-striped table-bordered text-left no-footer dtr-inline" style="width:100%">
@@ -38,17 +37,113 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($sell as $item)
-                                            <tr onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">
-                                                <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
-                                                <td>{{ $item->trans_id }}</td>
-                                                <td>{{ ucfirst($item->user->name) }}</td>
-                                                <td>{{ ucfirst($item->buyer_trans->user->name) }}</td>
-                                                <td>{{ ucfirst($item->status) }}</td>
-                                                <td>{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
-                                            </tr>
+                                                @if($item->buyer_trans == null)
+                                                    <tr onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">
+                                                        <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
+                                                        <td>{{ $item->trans_id }}</td>
+                                                        <td>{{ ucfirst($item->user->name) }}</td>
+                                                        <td>@if($item->buyer_trans != null){{ ucfirst($item->buyer_trans->first()->user->name) }}@else No-Buyer @endif</td>
+                                                        <td>{{ ucfirst($item->status) }}</td>
+                                                        <td>{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
+                                                    </tr>
+                                                @endif
                                             @endforeach
                                         </tbody>
                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card text-center trade two">
+                <ul>
+                    <li style="float: left;">
+                        <h2 class="text-left">In process</h2>
+                    </li>
+                    <!-- <li class="last text-right" style="float: right; padding-right: 20px;"><a href="#" class="text-red text-right"><b><i class="fa fa-trash-o" aria-hidden="true"></i> Delete All</b></a></li> -->
+                </ul>
+                <form action="delete-multiple-buyer.php" method="post">
+                    <br><button type="submit" class="btn btn-danger" id="bulk-delete" style="display:none"><i
+                            class="fa fa-trash" aria-hidden="true"></i> delete</button>
+                    <div class="table-responsive red-scrollbar">
+                        <!-- Projects table -->
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="example" class="datatables table table-striped table-bordered text-left no-footer dtr-inline" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
+                                                <th>TRANS. ID</th>
+                                                <th>Seller</th>
+                                                <th>Buyer</th>
+                                                <th>Status</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($sell as $item)
+                                                @if($item->buyer_trans != null and $item->status != 'approved')
+                                                    <tr onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">
+                                                        <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
+                                                        <td>{{ $item->trans_id }}</td>
+                                                        <td>{{ ucfirst($item->user->name) }}</td>
+                                                        <td>@if($item->buyer_trans != null){{ ucfirst($item->buyer_trans->first()->user->name) }}@else No-Buyer @endif</td>
+                                                        <td>{{ ucfirst($item->status) }}</td>
+                                                        <td>{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card text-center trade two">
+                <ul>
+                    <li style="float: left;">
+                        <h2 class="text-left">Approved</h2>
+                    </li>
+                    <!-- <li class="last text-right" style="float: right; padding-right: 20px;"><a href="#" class="text-red text-right"><b><i class="fa fa-trash-o" aria-hidden="true"></i> Delete All</b></a></li> -->
+                </ul>
+                <form action="delete-multiple-buyer.php" method="post">
+                    <br><button type="submit" class="btn btn-danger" id="bulk-delete" style="display:none"><i
+                            class="fa fa-trash" aria-hidden="true"></i> delete</button>
+                    <div class="table-responsive red-scrollbar">
+                        <!-- Projects table -->
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="example" class="datatables table table-striped table-bordered text-left no-footer dtr-inline" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
+                                                <th>TRANS. ID</th>
+                                                <th>Seller</th>
+                                                <th>Buyer</th>
+                                                <th>Status</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($sell as $item)
+                                                @if($item->status == 'approved')
+                                                    <tr onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">
+                                                        <th scope="col"><input type="checkbox" id="selectall" class="checked" /></th>
+                                                        <td>{{ $item->trans_id }}</td>
+                                                        <td>{{ ucfirst($item->user->name) }}</td>
+                                                        <td>@if($item->buyer_trans != null){{ ucfirst($item->buyer_trans->first()->user->name) }}@else No-Buyer @endif</td>
+                                                        <td>{{ ucfirst($item->status) }}</td>
+                                                        <td>{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>

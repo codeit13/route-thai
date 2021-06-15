@@ -19,14 +19,17 @@ class SellController extends Controller
      */
     public function create(Request $request){
     	$step = $request->get('step');
-    	$crypto_currencies = Currency::where('type_id',1)->get();
+        $trans_id = $request->get('trans_id');
+
+        $transcation =  Transaction::where('trans_id',$trans_id)
+                                        ->where('status','pending')
+                                        ->first();
+
+    	$crypto_currencies = Currency::where('is_tradable',1)->where('type_id',1)->get();
     	$fiat_currencies = Currency::where('type_id',2)->get();
         $crypto_ids = $crypto_currencies->pluck('id');
 
-        $current_balance = Wallet::where('wallet_type',3)
-                                    ->where('user_id',auth()->user()->id)
-                                    ->pluck('coin','currency_id');
-
+        $current_balance = Wallet::toOptionList(['wallet_type'=>3,'user_id'=>auth()->user()->id]);
         $default_fiat_currency = (auth()->user()->default_currency != '')?Currency::find(auth()->user()->default_currency):Currency::where('type_id',2)->first();
     	
     	if ($step == 2) {
@@ -44,14 +47,18 @@ class SellController extends Controller
                 'selected_currency',
                 'selected_fiat_currency',
                 'user_payment_methods',
-                'current_balance'
+                'current_balance',
+                'transcation',
+                'trans_id'
             ));
     	}else{
 	    	return view('front.sell.index',compact(
 	    		'crypto_currencies',
                 'default_fiat_currency',
 	    		'fiat_currencies',
-                'current_balance'
+                'current_balance',
+                'transcation',
+                'trans_id'
 	    	));
     	}
     }
@@ -81,7 +88,6 @@ class SellController extends Controller
     	$redirect_url = route('sell.create',['step'=>2]);
 		return response()->json(['success'=>true,'redirect_url'=>$redirect_url]);
     }
-
     /**
      * Store a newly created sell in session.
      *
@@ -90,18 +96,22 @@ class SellController extends Controller
      */
     public function confirmSell(Request $request){
         $data = $request->session()->get('sell_data');
-        $trans_id = $this->generateID();
+        $trans_id = $data['trans_id']; 
+        if ($data['trans_id'] == '') {
+            $trans_id = $this->generateID();
+        }
         $selected_currency = Currency::find($data['currency_id']);
         $selected_fiat_currency = Currency::find($data['fiat_currency_id']);
 
         $save_sell = Transaction::firstOrNew(['trans_id'=>$trans_id]);
         $save_sell->fill($data);
+        $save_sell->trans_id = $trans_id;
         $save_sell->user_id = auth()->user()->id;
         $save_sell->user_payment_method_id = auth()->user()->user_payment_method()->value('id');
         $save_sell->type = 'sell';
         $save_sell->timer = 30;
         $save_sell->save();
-        
+        $request->session()->forget('sell_data');
         $response_data = [
             'currency_image' => $selected_currency->getMedia('icon')->first()->getUrl(),
             'currency_name'  => $selected_currency->name,
@@ -120,10 +130,14 @@ class SellController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function buyRequest($trans_id){
-        $transcation = Transaction::with('buyer_requests')
+        $transcation = Transaction::with(['buyer_requests'=>function($query){
+                                            $query->where('status','!=','cancel');
+                                        }])
                                         ->with('currency')
                                         ->with('fiat_currency')
-                                        ->withCount('buyer_requests')
+                                        ->withCount(['buyer_requests'=>function($query){
+                                            $query->where('status','!=','cancel');
+                                        }])
                                         ->where('trans_id',$trans_id)->first();
         
         if ($transcation->buyer_requests_count >0) {
@@ -234,5 +248,24 @@ class SellController extends Controller
         }
 
         return redirect()->route('home');
+    }
+
+    //delete sell
+    public function destroy($trans_id){
+        $user_id = auth()->user()->id;
+
+        $transcation = Transaction::where('trans_id',$trans_id)
+                                        ->where('status','pending')
+                                        ->where('user_id',$user_id)
+                                        ->first();                           
+
+        if ($transcation) {
+            $transcation->delete();
+            return redirect()->back()->with('message_type','success')
+                                        ->with('message','Ad removed successfully');
+        }
+
+        return redirect()->back()->with('message_type','danger')
+                                        ->with('message','Something went wrong');
     }
 }

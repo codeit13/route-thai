@@ -24,7 +24,7 @@
                             <a class="not-c" href="{{ route('user.dashboard') }}">{{ ucfirst(Auth::user()->name) }}<br><label><i class="fa fa-diamond" aria-hidden="true"></i> VIP <span>Verified</span></label></a>
                             </li>
                             @endif
-                            <li><a href="#">Security</a></li>
+                            <li><a href="{{ route('user.security') }}">Security</a></li>
                             <li><a href="#">Identification</a></li>
                             <li><a href="#">API Management</a></li>
                             <li><a href="#">Reward Center</a></li>
@@ -36,10 +36,13 @@
                         </div>
                       </nav>
                     </header>
+                    @if(Auth::check())
                     <li class="onsubmenu visible-xs"><a class="bell" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i> <span>05</span></a></li>
+                    @endif
                     <a class="mobile_logo visible-xs" href="{{ route('home') }}">
                        <img src="{{ asset('front/img/logo.png') }}" class="white_logo" alt="">
                     </a>
+                    
                  </div>
                 <div class="nav-menus-wrapper" style="transition-property: none;">
                     @if (!Auth::check())
@@ -65,7 +68,6 @@
                         
                     </ul>
                     <div class="right_side  my-2 my-lg-0">
-
                         <ul class="main_ul">
                             @if (!Auth::check())<li class="hd_small"><a class="" href="{{ route('login') }}">Log In</a></li>
                             <li class="hd_small"><a class="btn btn-primary" href="{{ route('register') }}">Register</a></li>
@@ -275,7 +277,7 @@
                                               </div>
                                           </li>
                                           <li class="footer bg-dark text-center">
-                                            <a href="" class="text-light">View All</a>
+                                            <a href="{{ route('user.notification')}}" class="text-light">View All</a>
                                           </li>
                                     </ul>
                                 </div>

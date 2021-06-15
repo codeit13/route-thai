@@ -31,6 +31,9 @@ Route::get('/createstoragelink', function () {
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
+Route::get('/sendMail', [App\Http\Controllers\HomeController::class, 'sendMail'])->name('testmail');
+
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes(['verify'=>true,'request'=>true]);
 Route::group(['middleware' => ['web']], function () {
@@ -52,13 +55,22 @@ Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class
 // LINE
 Route::get('line-bot', [App\Http\Controllers\UserController::class, 'line_bot'])->name('line-bot');
 
-Route::middleware('auth')->group(function(){
 
-    
+Route::middleware('auth')->group(function(){    
     // Profile
-    Route::prefix('user')->name('user.')->group(function(){ 
+    Route::prefix('user')->name('user.')->group(function(){         
         Route::get('dashboard',[App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
         Route::get('profile',[App\Http\Controllers\UserController::class, 'profile'])->name('profile');
+        Route::get('deviceManagement',[App\Http\Controllers\UserController::class, 'deviceManagement'])->name('deviceManagement');
+        Route::get('security',[App\Http\Controllers\UserController::class, 'security'])->name('security');
+        Route::get('notifications',[App\Http\Controllers\UserController::class, 'notifications'])->name('notification');
+        Route::get('security/update-email',[App\Http\Controllers\UserController::class, 'updateEmail'])->name('updateEmail');
+        Route::post('security/update-email/verify',[App\Http\Controllers\UserController::class, 'confimrUpdateEmail'])->name('updateEmail.verify');
+    
+        //2fa 
+        Route::get('security/2fa/google',[App\Http\Controllers\UserController::class, 'addGoogle2fa'])->name('security.2fa.google.add');
+        Route::post('security/2fa/google/save',[App\Http\Controllers\UserController::class, 'saveGoogle2fa'])->name('security.2fa.google.save');
+        
         Route::get('payments',[App\Http\Controllers\UserPaymentMethodsController::class, 'index'])->name('payments');
         Route::get('payment/mode/edit/{id}',[App\Http\Controllers\UserPaymentMethodsController::class, 'edit'])->name('payment.edit');
         Route::get('payment/mode/add/{mode}',[App\Http\Controllers\UserPaymentMethodsController::class, 'create'])->name('payment.add');
@@ -71,6 +83,9 @@ Route::middleware('auth')->group(function(){
         Route::get('update-telegram-user-id/{telegram_user_id}',[App\Http\Controllers\UserController::class, 'updateTelegramUserIdSettings'])->name('update.telegram-user-id');
         Route::post('update-line-user-id',[App\Http\Controllers\UserController::class, 'updateLineUserIdSettings'])->name('update.line-user-id');
         Route::post('update-currency',[App\Http\Controllers\UserController::class, 'updateCurrencySettings'])->name('update.currency');
+        
+       
+        
         Route::post('update-language',[App\Http\Controllers\UserController::class, 'updateLanguageSettings'])->name('update.language');
 
         // LINE
@@ -107,6 +122,7 @@ Route::middleware('auth')->group(function(){
         //sell crypt
         Route::prefix('sell')->group(function(){
             Route::get('create','SellController@create')->name('sell.create');
+            Route::get('{trans_id}/destroy','SellController@destroy')->name('sell.destroy');
             Route::post('create-sell','SellController@saveSell')->name('sell.save_sell');
         	Route::post('create-sell/confirm','SellController@confirmSell')->name('sell.confirm_sell');
             Route::get('{trans_id}/buy-request','SellController@buyRequest')->name('sell.buyer_request');
@@ -114,6 +130,9 @@ Route::middleware('auth')->group(function(){
             Route::get('{trans_id}/confirm-receipt','SellController@confirmReceipt')->name('sell.confirm_receipt');
         	Route::get('{trans_id}/success','SellController@orderSuccess')->name('sell.order_success');
         });
+
+        Route::post('message','MessageController@index')->name('message.index');
+        Route::post('message/store','MessageController@store')->name('message.store');
 
         Route::get('buyer/payment/{transaction}/request',[App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
         Route::get('buyer/payment/{transaction}/cancel',[App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.order.cancel');
@@ -131,13 +150,25 @@ Route::middleware('auth')->group(function(){
 
     Route::get('request',[App\Http\Controllers\LoanController::class, 'create'])->name('loan.create');
 
-    Route::get('request/{id}/detail',[App\Http\Controllers\LoanController::class, 'show'])->name('loan.request.detail');
+    Route::post('request/loan/initialize',[App\Http\Controllers\LoanController::class, 'initialize'])->name('loan.initialize');
 
-    Route::get('{id}/detail',[App\Http\Controllers\LoanController::class, 'edit'])->name('loan.show.detail');
+    Route::post('request/loan/store',[App\Http\Controllers\LoanController::class, 'store'])->name('loan.store');
+
+
+
+    Route::get('request/detail',[App\Http\Controllers\LoanController::class, 'show'])->name('loan.request.detail');
+
+    Route::get('{loan}/detail',[App\Http\Controllers\LoanController::class, 'edit'])->name('loan.show.detail');
 
     Route::get('{id}/status',[App\Http\Controllers\LoanController::class, 'status'])->name('loan.status');
 
     Route::get('history',[App\Http\Controllers\LoanController::class, 'index'])->name('loan.history');
+
+    Route::get('{id}/repay',[App\Http\Controllers\LoanController::class, 'repay'])->name('loan.repay');
+
+    Route::get('{id}/close',[App\Http\Controllers\LoanController::class, 'close'])->name('loan.close');
+
+
 
 
   });

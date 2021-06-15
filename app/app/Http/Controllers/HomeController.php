@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\SMSService;
-
 use App\Http\Requests\SendOTPRequest;
 use App\Http\Requests\VerifyOTPRequest;
 use App\Http\Requests\SendOTPonLogin;
@@ -24,8 +23,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->service = new SMSService();
-        
-    }
+       }
 
     /**
      * Show the application dashboard.
@@ -37,6 +35,10 @@ class HomeController extends Controller
         return view('front.home');
     }
 
+    public function twofactorauth(){
+        return view('front.auth.twoFactor');  
+    }
+   
     public function sendOTP(SendOTPRequest $request)
     {   
         return $this->service->sendOtpSms($request->mobile);
