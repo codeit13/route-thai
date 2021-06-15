@@ -13,6 +13,7 @@ use Auth;
 use App\Models\Authentication_log; 
 
 use App\Notifications\LaravelTelegramNotification;
+use LINE;
 
 class LoginController extends Controller
 {
@@ -74,6 +75,12 @@ class LoginController extends Controller
             $this->auth_locationlog($request);
             if($user->telegram_notification) {
                 $this->sendTelegramNotification($user);
+            }
+            if($user->line_notification) {
+                LINE::pushmessage(
+                    $user->line_user_id,
+                    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($user->name . " You currently logged in!")
+                );
             }
             return redirect('/home')->withCookie(Cookie::make('logged_in', $user->remember_token, 43200));
         }

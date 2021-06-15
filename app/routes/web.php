@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,8 @@ Route::post('/verify/register',[App\Http\Controllers\Auth\RegisterController::cl
 Route::post('/mobile/otp/send',[App\Http\Controllers\HomeController::class, 'sendOTP'])->name('send.otp');
 Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
 Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class, 'sendOTPOnLogin'])->name('send.otp.login');
+// LINE
+Route::get('line-bot', [App\Http\Controllers\UserController::class, 'line_bot'])->name('line-bot');
 
 
 Route::middleware('auth')->group(function(){    
@@ -84,6 +87,10 @@ Route::middleware('auth')->group(function(){
        
         
         Route::post('update-language',[App\Http\Controllers\UserController::class, 'updateLanguageSettings'])->name('update.language');
+
+        // LINE
+        Route::get('linelogin', [SocialiteController::class, 'linelogin'])->name('linelogin');
+        Route::get('callback', [SocialiteController::class, 'callback'])->name('callback');
     });
     //Wallet
     Route::prefix('wallet')->group(function(){

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 use App\Notifications\LaravelTelegramNotification;
 
-// use Phattarachai\LineNotify\Facade\Line;
+use LINE;
 
 class UserController extends Controller
 {
@@ -20,6 +20,9 @@ class UserController extends Controller
     }
     public function profile(){
         return view('front.user.profile');
+    }
+    public function line_bot() {
+        return view('front.line-bot');
     }
     public function security(){
         return view('front.user.account');
@@ -38,8 +41,7 @@ class UserController extends Controller
 
     public function deviceManagement(){
         return view('front.user.deviceManagement');
-    }    
- 
+    }     
     public function isUsernameExist(Request $request){
         $status = User::where('name',$request->name)->count() == 0 ? 'OK': 'NOT OK';
         $message = $status == 'OK' ? 'Congrats! Username: '.$request->name.' is available' :'Sorry ! This Username is not available.';
@@ -50,9 +52,9 @@ class UserController extends Controller
         if($request->mode == 'sms_notification'){
             $user->sms_notification = $request->mode == 'sms_notification' ? ($user->sms_notification == true ? false : true ) :$user->sms_notification ;
         } else if($request->mode == 'line_notification'){
-            $user->line_notification = $request->mode == 'line_notification' ? ($user->line_notification == true ? false : true ) :$user->line_notification ;
+            $user->line_notification = $request->mode == 'line_notification' ? (false ) :$user->line_notification ;
         } else if($request->mode == 'telegram_notification'){
-            $user->telegram_notification = $request->mode == 'telegram_notification' ? ($user->telegram_notification == true ? false : true ) :$user->telegram_notification ;
+            $user->telegram_notification = $request->mode == 'telegram_notification' ? ( false ) :$user->telegram_notification ;
         }
         $user->save();
         return response()->json(['status'=>'OK','message'=> __('The settings has been updated') ]);
@@ -60,10 +62,8 @@ class UserController extends Controller
     public function updateTelegramUserIdSettings(Request $request){
             $user = Auth::user();
             $user->telegram_user_id = $request->telegram_user_id ;
+            $user->telegram_notification = true;
             $user->save();
-            // Line::send('Hello bro!');
-            // $profile = \LINEBot::getProfile('Ucbe288cc1c5ccfb8a80368c56a9918ce');
-            // Log::info(json_encode($profile));
             if($user->telegram_notification) {
             $user->notify(new LaravelTelegramNotification([
                 'text' => "Welcome to the application " . $user->name . "!",
@@ -73,10 +73,19 @@ class UserController extends Controller
             // return response()->json(['status'=>'OK','message'=> __('The telegram user id settings has been updated') ]);
             return redirect()->route('user.dashboard');
     }
-    public function updateLineUserIdSettings(Request $request){
+    public static function updateLineUserIdSettings($request){
         $user = Auth::user();
-        $user->line_user_id = $request->line_user_id ;
+        $user->line_user_id = $request['line_user_id'];
+        $user->line_name = $request['line_name'] ;
+        $user->line_avatar = $request['line_avatar'] ;
+        $user->line_access_token = $request['line_access_token'] ;
+        $user->line_refresh_token = $request['line_refresh_token'] ;
+        $user->line_notification = true;
         $user->save();
+        LINE::pushmessage(
+            $user->line_user_id,
+            new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Your Line Notifications have been turned ON.')
+        );
         return response()->json(['status'=>'OK','message'=> __('The line user id settings has been updated') ]);
 }
     public function updateUsername(Request $request){

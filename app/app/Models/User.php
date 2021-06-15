@@ -100,6 +100,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->telegram_user_id;
     }
+    public function routeNotificationForLineNotify($notification)
+    {
+        return $this->notify_token;
 
     public function setGoogle2faSecretAttribute($value)
     {
