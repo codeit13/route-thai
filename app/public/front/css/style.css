@@ -7881,6 +7881,10 @@ a.btn-info:hover {
         top: 6px !important;
         margin-left: -76px;
     }
+    #filter ul.search_bar li.full_li .dropdown-menu.show {
+        top: 0px !important;
+        margin-left: 0;
+    }
     #filter.main {
         display: inline-block !important;
     }
