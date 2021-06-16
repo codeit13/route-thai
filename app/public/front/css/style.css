@@ -7855,16 +7855,7 @@ a.btn-info:hover {
     background: var(--card-bg);
     color: var(--white-black-text);
 }
-
-
-
-
-
-
-
-
-
-
+ 
 /********** Responsive Css **********/
 
 /* Landscape phones and portrait tablets */
@@ -9281,11 +9272,11 @@ a.btn-info:hover {
         overflow: inherit;
         margin-top: 0px;
     }
-    .main_data_dable table thead tr th:last-child,
+    /* .main_data_dable table thead tr th:last-child,
     .main_data_dable table tr td:last-child,
     .main_data_dable table tr td:nth-child(4n) {
-        /*display: none;*/
-    }
+        /*display: none;* /
+    } */
     .main_data_dable table thead tr th {
         background-color: rgb(66 66 66 / 5%) !important;
         padding: 0px 0px;
@@ -9639,7 +9630,7 @@ a.btn-info:hover {
         font-size: 13px;
     }
     #wallet-content.request ul.janral-head li.last {
-        display: inline-block !important;
+        /* display: inline-block !important; */
         float: right !important;
         padding-right: 0px;
     }
@@ -10313,7 +10304,9 @@ a.btn-info:hover {
     }
 }
 
-@media (min-width: 992px) and (max-width: 1169px) {} .tooltip {
-    position:relative;
-    z-index:99999999;
+@media (min-width: 992px) and (max-width: 1169px) {} 
+    .tooltip {
+        position:relative;
+        z-index:99999999;
+    }
 }

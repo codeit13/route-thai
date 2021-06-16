@@ -6,6 +6,9 @@
     width: 100%;
 }
 </style>
+@section('title')
+    Register
+@endsection
 @section('content')
     <section id="main-content" class="login_page">
         <div class="container-fluid">
@@ -47,7 +50,7 @@
                                     </div>
                                 @endif
                                 <p class="error msg"></p>
-                                <form method="POST" id="loginform" action="{{ route('otp.register') }}">
+                                <form method="POST" id="loginform" action="{{ route('register') }}">
                                     @csrf
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home" role="tabpanel"
@@ -68,23 +71,26 @@
                                             name="password">
                                             <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                             </div>
-                                            {{-- <div class="form-group">
-                                                <label for="exampleInputEmail1">Phone Number</label>
-                                                <input type="tel" value="{{ old('mobile')}}" class="form-control" id="mobile_no"
-                                                    aria-describedby="emailHelp" required placeholder="Enter mobile No" name="mobile">
-                                                <label id="mobile-no-err"></label>
-                                            </div> --}}
+                                            <div class="form-group otp" style="display: none">
+                                                <label for="exampleInputEmail1">OTP</label>
+                                                <input type="text" class="form-control" id="otp"
+                                                    aria-describedby="emailHelp" placeholder="Enter OTP" name="otp">
+                                                <input type="hidden" id="session_id" value="">    
+                                                <p class="not_m mb-0 resend-btn text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<label id="timer"></label>
+                                                <p class="otp-msg mb-0 text-left"></p>
+                                            </div>
 
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
                                                 <label class="form-check-label" for="exampleCheck1">I have read and agree to
                                                     the Terms of Service. Routes Terms</label>
                                             </div>
-                                            <button type="submit"  class="btn btn-primary">Create
-                                                Account</button>
+                                            <button type="submit" id="send-otp" class="btn btn-primary" >Send OTP</button>
+                                            <button type="submit"  id="register" class="btn btn-primary" style="display: none">Create Account</button>
                                     </div>
                                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <button type="button" class="btn btn-primary submit-login" disabled>Create Account</button>
+                                        <button type="button" class="btn btn-primary submit-login">Send OTP</button>
+                                        <button type="button" class="btn btn-primary submit-login" >Create Account</button>
                                     </div>
                                 </form>
                             </div>
@@ -107,37 +113,44 @@
 @endsection
 @section('page_scripts')
 <script>
-    // $('#mobile_no').on('keyup',function(){
-    //     var dis = $(this);
-    //     if(dis.val().length == 10){
-    //         $.ajax({
-    //             url: "{{ route('send.otp')}}",
-                
-    //             headers: {
-    //                 'X-CSRF-Token': "{{ csrf_token() }}"
-    //             },
-    //             method: "POST",
-    //             async: true,
-    //             cache: false,
-
-    //             data: { _token: "{{ csrf_token() }}", mobile: dis.val() },
-    //             dataType: "json",
-    //             success: function (data) {
-                    
-    //                 $('#session_id').val(data.Details);
-    //                 setTimeout( function() { $('.otp').show(); }, 800); 
-    //             },
-    //             error: function (event) { 
-                    
-    //             },
-    //         });
-    //             } else
-    //         return false;
-    // });
-    
-    $(document).find('#otp').on('change',function(){
+    var defaultCount = 300;
+var count=defaultCount;
+var send = 1;
+var counter = null;
+     $('#send-otp').click(function(e) {
+        e.preventDefault();
+        var dis = $('#email');
+        if($('#password-field').val() != '') {
+            $.ajax({
+                url: "{{ route('send.otp.register')}}",
+                headers: {
+                    'X-CSRF-Token': "{{ csrf_token() }}"
+                },
+                method: "POST",
+                async: true,
+                cache: false,
+                data: { _token: "{{ csrf_token() }}", email: dis.val() },
+                dataType: "json",
+                success: function (data) {    
+                    $('#session_id').val(data.session_id);
+                    $('#send-otp').hide().attr('type','button');
+                    $('.otp').show();
+                    $('#register').show();
+                    counter = setInterval(timer, 1000);
+                },
+                error: function (data) {
+                    response = JSON.parse(data.responseText);
+                    $(response.errors).each(function(index,value){
+                        $('p.msg').html(value.email);
+                        $('p.msg').fadeOut(3000)
+                    })
+                },
+            }); 
+        }
+    }); 
+        
+    $(document).find('#otp').on('change keyup',function(){
         var dis = $(this);
-        console.log('started');
         if(dis.val().length == 6){
             $.ajax({
                 url: "{{ route('verify.otp')}}",
@@ -145,12 +158,22 @@
                 headers: {
                     'X-CSRF-Token': "{{ csrf_token() }}"
                 },
-                data: { _token: "{{ csrf_token() }}", code: dis.val(), sessionid:$('#session_id').val(), mobile: $('#mobile_no').val() },
+                data: { _token: "{{ csrf_token() }}", code: dis.val(), sessionid:$('#session_id').val(), email: $('#email').val() },
                 dataType: "json",
                 async: true,
                 cache: false,
+                beforeSend:function(){
+                    $('.otp-msg').html("Checking...");
+                },
                 success: function (data) {
-                    $('.submit-login').attr('disabled',false);
+                if(data.code == 1) {
+                    $('#send-otp').hide();
+                    $('.otp-msg').html("The OTP is verified successfully.").addClass('text-green');
+                    $('.resend-btn').hide();
+                    $('#register').attr('disabled',false).trigger('click');
+                } else {
+                    $('.otp-msg').html("The OTP is Invalid.").addClass('text-danger').removeClass('text-green');
+                }
                 },
                 error: function (event) { 
                     
@@ -162,6 +185,81 @@
             return false; 
         }
     });
+
+    function timer()
+    {
+        count = count-1;
+        if (count <= 0)
+        {
+            clearInterval(counter);
+            $('.time a').attr('onclick',"sendOTP()")
+            $("#timer").html('');
+            return;
+        }
+        var minutes = Math.floor(count / 60);
+        var seconds = count - minutes * 60;
+        var html = "in ";
+        if(minutes > 0 ) html = html + minutes + " mins ";
+        if(seconds > 0 ) html = html + seconds + " secs ";
+        $("#timer").html(html);
+
+    }
+
+
+    function sendOTP(){
+        var dis = $('#email');
+        $.ajax({
+            url: "{{ route('send.otp.login')}}",
+            headers: {
+                'X-CSRF-Token': "{{ csrf_token() }}"
+            },
+            method: "POST",
+            async: true,
+            cache: false,
+            data: { _token: "{{ csrf_token() }}", email: dis.val() },
+            dataType: "json",
+            success: function (data) {
+                $('#session_id').val(data.Details);
+                send++;
+                count = defaultCount * send;
+                setInterval(timer, 500*send);
+                $('.msg').html("The OTP has been sent.");
+                $('.time a').attr('onclick',"")
+                setTimeout( function() { $('.msg').html("") }, 3500); 
+            },
+            error: function (event) { 
+                
+            },
+        }); 
+    }
+    
+    // $(document).find('#otp').on('change',function(){
+    //     var dis = $(this);
+    //     console.log('started');
+    //     if(dis.val().length == 6){
+    //         $.ajax({
+    //             url: "{{ route('verify.otp')}}",
+    //             method: "POST",
+    //             headers: {
+    //                 'X-CSRF-Token': "{{ csrf_token() }}"
+    //             },
+    //             data: { _token: "{{ csrf_token() }}", code: dis.val(), sessionid:$('#session_id').val(), mobile: $('#mobile_no').val() },
+    //             dataType: "json",
+    //             async: true,
+    //             cache: false,
+    //             success: function (data) {
+    //                 $('.submit-login').attr('disabled',false);
+    //             },
+    //             error: function (event) { 
+                    
+    //             },
+    //         });
+    //     }
+    //     else {
+    //         console.log('errors');
+    //         return false; 
+    //     }
+    // });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.14/js/utils.js"></script>
 <script src="{{ asset('front/js/intlTelInput.js')}}"></script>
@@ -174,57 +272,57 @@ $(document).ready(function() {
     $("#show").click(function() {
         $(".alertbox").show();
     });
-    var input = document.querySelector("#mobile_no");
-    let iti = intlTelInput(input, {
-        dropdownContainer: document.body,
-        geoIpLookup: function(callback) {
-        $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-            var countryCode = (resp && resp.country) ? resp.country : "";
-            callback(countryCode);
-        });
-        },
-        initialCountry: "th",
-        utilsScript: "{{ asset('front/js/utils.js')}}",
-    });
-    $('#mobile_no').on("keyup", function() {
-        var dis = $(this);
-            let mobileNo = iti.getNumber();
-            let phone_Validity;
-            $(this).val(mobileNo);
-            if(dis.val().length > 10){
-              jQuery.ajax({
-                type: 'POST',
-                url: "{{ route('mobile-check') }}",
-                data: {
-                  action: "mobile-no-check",
-                  mobile: mobileNo,
-                  _token: "{{ csrf_token() }}"
-                },
-                success: function(res) {
-                  cls = '';
-                  if (res.status == 'OK') {
-                    phone_Validity = false;
-                    cls  = 'text-success';
-                  } else if (res.status == 'NOT OK') {
-                    phone_Validity = true;
-                    cls  = 'text-danger';
-                  }
-                  if (!phone_Validity) {
-                    $('#phone').removeClass('is-valid');
-                    $('#phone').addClass('is-invalid');                    
-                  } else {
-                    $('#phone').removeClass('is-invalid');
-                    $('#phone').addClass('is-valid');
-                  }
-                  $('#mobile-no-err').html("<label class='"+ cls +"'>"+res.message+"</label>");
+    // var input = document.querySelector("#mobile_no");
+    // let iti = intlTelInput(input, {
+    //     dropdownContainer: document.body,
+    //     geoIpLookup: function(callback) {
+    //     $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+    //         var countryCode = (resp && resp.country) ? resp.country : "";
+    //         callback(countryCode);
+    //     });
+    //     },
+    //     initialCountry: "th",
+    //     utilsScript: "{{ asset('front/js/utils.js')}}",
+    // });
+    // $('#mobile_no').on("keyup", function() {
+    //     var dis = $(this);
+    //         let mobileNo = iti.getNumber();
+    //         let phone_Validity;
+    //         $(this).val(mobileNo);
+    //         if(dis.val().length > 10){
+    //           jQuery.ajax({
+    //             type: 'POST',
+    //             url: "{{ route('mobile-check') }}",
+    //             data: {
+    //               action: "mobile-no-check",
+    //               mobile: mobileNo,
+    //               _token: "{{ csrf_token() }}"
+    //             },
+    //             success: function(res) {
+    //               cls = '';
+    //               if (res.status == 'OK') {
+    //                 phone_Validity = false;
+    //                 cls  = 'text-success';
+    //               } else if (res.status == 'NOT OK') {
+    //                 phone_Validity = true;
+    //                 cls  = 'text-danger';
+    //               }
+    //               if (!phone_Validity) {
+    //                 $('#phone').removeClass('is-valid');
+    //                 $('#phone').addClass('is-invalid');                    
+    //               } else {
+    //                 $('#phone').removeClass('is-invalid');
+    //                 $('#phone').addClass('is-valid');
+    //               }
+    //               $('#mobile-no-err').html("<label class='"+ cls +"'>"+res.message+"</label>");
 
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                  console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                }
-            });
-        } else $('#mobile-no-err').html("");
-    });
+    //             },
+    //             error: function(xhr, ajaxOptions, thrownError) {
+    //               console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    //             }
+    //         });
+    //     } else $('#mobile-no-err').html("");
+    // });
     $('#email').on("keyup", function() {
         var dis = $(this);
             let email_Validity;

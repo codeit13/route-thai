@@ -27,7 +27,7 @@ class OTPService
         
         $q = $this->otp->where(['to'=>$to, 'value'=>$otp, 'id' => $id, 'expired'=>0]);
         if($q->count() > 0){
-            $q =  $q->first();
+            $q = $q->first();
             $q->expired = 1;
             return ['code'=>1, 'msg'=>'The OTP is verified.'];
         }
