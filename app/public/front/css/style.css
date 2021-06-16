@@ -7845,7 +7845,7 @@ a.btn-info:hover {
     padding-top: 15px;
 }
 .visible-xs {
-    display: none;
+    display: none !important;
 }
 
 .iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
@@ -7870,6 +7870,74 @@ a.btn-info:hover {
 /* Landscape phones and portrait tablets */
 
 @media (max-width: 767px) {
+    button.show_filter {
+        background: transparent;
+        color: #ADADAD;
+        border: none;
+        font-size: 18px;
+        outline: none;
+    }
+    ul.mini_links li:last-child {
+        float: right;
+        display: inline-block;
+        padding: 0;
+        margin-right: 15px;
+        margin-top: 16px;
+    }
+    #filter ul.search_bar li .dropdown-menu.show {
+        top: 6px !important;
+        margin-left: -76px;
+    }
+    #filter ul.search_bar li.full_li .dropdown-menu.show {
+        top: 0px !important;
+        margin-left: 0;
+    }
+    #filter.main {
+        display: inline-block !important;
+    }
+    #filter ul.search_bar li {
+        width: 49%;    
+    }
+    #filter ul.search_bar li input  {
+        width: 100%;
+        height: 30px;
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+    #filter ul.search_bar li .dropdown.currency_two.three_coins .dropdown-toggle::after {
+        margin-top: 7px;
+    }
+    #filter ul.search_bar li .dropdown.currency_two.three_coins button#dropdownMenuButton span {
+        font-size: 11px;
+    }
+    #filter ul.search_bar li label {
+        margin-top: 10px;
+    }
+    #filter ul.search_bar li.full_li {
+        width: 100%;
+        text-align: right;
+    }
+    #filter ul.search_bar li label {
+        margin-top: 10px;
+        text-align: left;
+        float: left;
+        width: 100%;
+    }
+    #filter ul.search_bar li.full_li a {
+        margin-top: 21px;
+        padding: 4px 10px;
+        font-size: 13px;
+    }
+    #filter ul.search_bar li .dropdown.currency_two.three_coins button#dropdownMenuButton, #filter ul.search_bar li .dropdown.currency_two.three_coins {
+        width: 100% !important;
+        height: 30px;
+        font-size: 13px;
+    }
+    #filter ul.search_bar li .dropdown.currency_two.three_coins button#dropdownMenuButton img {
+        width: 14px;
+        margin-right: 2px;
+        margin-top: -7px;
+    }
     .dropdown.currency_two.three_coins.new_select_b.crypto.currencyDropdown.show .dropdown-menu.show {
         
     }
