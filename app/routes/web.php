@@ -30,11 +30,11 @@ Route::get('/createstoragelink', function () {
 });
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'arbitrage'])->name('homepage');
 Route::get('/sendMail', [App\Http\Controllers\HomeController::class, 'sendMail'])->name('testmail');
 
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'arbitrage'])->name('home');
 Auth::routes(['verify'=>true,'request'=>true]);
 Route::group(['middleware' => ['web']], function () {
     Route::get('language',function($request){
