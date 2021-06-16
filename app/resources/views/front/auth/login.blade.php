@@ -164,53 +164,53 @@ var counter = null;
             return false; 
         }
     });
- 
-function timer()
-{
-    count = count-1;
-    if (count <= 0)
+
+    function timer()
     {
-        clearInterval(counter);
-        $('.time a').attr('onclick',"sendOTP()")
-        $("#timer").html('');
-        return;
+        count = count-1;
+        if (count <= 0)
+        {
+            clearInterval(counter);
+            $('.time a').attr('onclick',"sendOTP()")
+            $("#timer").html('');
+            return;
+        }
+        var minutes = Math.floor(count / 60);
+        var seconds = count - minutes * 60;
+        var html = "in ";
+        if(minutes > 0 ) html = html + minutes + " mins ";
+        if(seconds > 0 ) html = html + seconds + " secs ";
+        $("#timer").html(html);
+
     }
-    var minutes = Math.floor(count / 60);
-    var seconds = count - minutes * 60;
-    var html = "in ";
-    if(minutes > 0 ) html = html + minutes + " mins ";
-    if(seconds > 0 ) html = html + seconds + " secs ";
-    $("#timer").html(html);
-
-}
 
 
-function sendOTP(){
-    var dis = $('#email');
-	$.ajax({
-        url: "{{ route('send.otp.login')}}",
-        headers: {
-            'X-CSRF-Token': "{{ csrf_token() }}"
-        },
-        method: "POST",
-        async: true,
-        cache: false,
-        data: { _token: "{{ csrf_token() }}", email: dis.val() },
-		dataType: "json",
-		success: function (data) {
-			$('#session_id').val(data.Details);
-			send++;
-			count = defaultCount * send;
-			setInterval(timer, 500*send);
-			$('.msg').html("The OTP has been sent.");
-			$('.time a').attr('onclick',"")
-			setTimeout( function() { $('.msg').html("") }, 3500); 
-		},
-		error: function (event) { 
-			
-		},
-	}); 
-}
+    function sendOTP(){
+        var dis = $('#email');
+        $.ajax({
+            url: "{{ route('send.otp.login')}}",
+            headers: {
+                'X-CSRF-Token': "{{ csrf_token() }}"
+            },
+            method: "POST",
+            async: true,
+            cache: false,
+            data: { _token: "{{ csrf_token() }}", email: dis.val() },
+            dataType: "json",
+            success: function (data) {
+                $('#session_id').val(data.Details);
+                send++;
+                count = defaultCount * send;
+                setInterval(timer, 500*send);
+                $('.msg').html("The OTP has been sent.");
+                $('.time a').attr('onclick',"")
+                setTimeout( function() { $('.msg').html("") }, 3500); 
+            },
+            error: function (event) { 
+                
+            },
+        }); 
+    }
 
 $(".toggle-password").click(function() {
 

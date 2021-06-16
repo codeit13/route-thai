@@ -7869,8 +7869,6 @@ a.btn-info:hover {
 
 
 
-<<<<<<< HEAD
-=======
 
 
 
@@ -7878,7 +7876,6 @@ a.btn-info:hover {
 
 
 
->>>>>>> MJ-BACKEND-DEVELOPMENT
 /********** Responsive Css **********/
 
 /* Landscape phones and portrait tablets */
@@ -7891,8 +7888,6 @@ a.btn-info:hover {
         font-size: 18px;
         outline: none;
     }
-<<<<<<< HEAD
-=======
     ul.mini_links li:last-child {
         float: right;
         display: inline-block;
@@ -7953,7 +7948,6 @@ a.btn-info:hover {
     .dropdown.currency_two.three_coins.new_select_b.crypto.currencyDropdown.show .dropdown-menu.show {
         
     }
->>>>>>> MJ-BACKEND-DEVELOPMENT
     #dashboard .content_dashboard {
         padding: 0px 30px;
     }
@@ -9294,11 +9288,11 @@ a.btn-info:hover {
         overflow: inherit;
         margin-top: 0px;
     }
-    .main_data_dable table thead tr th:last-child,
+    /* .main_data_dable table thead tr th:last-child,
     .main_data_dable table tr td:last-child,
     .main_data_dable table tr td:nth-child(4n) {
-        /*display: none;*/
-    }
+        /*display: none;* /
+    } */
     .main_data_dable table thead tr th {
         background-color: rgb(66 66 66 / 5%) !important;
         padding: 0px 0px;
@@ -9652,7 +9646,7 @@ a.btn-info:hover {
         font-size: 13px;
     }
     #wallet-content.request ul.janral-head li.last {
-        display: inline-block !important;
+        /* display: inline-block !important; */
         float: right !important;
         padding-right: 0px;
     }
@@ -10248,15 +10242,6 @@ a.btn-info:hover {
         margin-left: -5px!important;
         top: 29px;
     }
-<<<<<<< HEAD
-}
-=======
-<<<<<<< Updated upstream
-} 
-=======
-}
->>>>>>> Stashed changes
->>>>>>> MJ-BACKEND-DEVELOPMENT
 
 @media (min-width: 375px) and (max-width: 413px) {
     #wallet-content.withdraw-asset .step-h ul li:before {
@@ -10334,7 +10319,9 @@ a.btn-info:hover {
     }
 }
 
-@media (min-width: 992px) and (max-width: 1169px) {} .tooltip {
-    position:relative;
-    z-index:99999999;
+@media (min-width: 992px) and (max-width: 1169px) {} 
+    .tooltip {
+        position:relative;
+        z-index:99999999;
+    }
 }

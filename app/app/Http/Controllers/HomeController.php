@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\SMSService;
+use App\Services\OTPService;
 use App\Http\Requests\SendOTPRequest;
 use App\Http\Requests\VerifyOTPRequest;
 use App\Http\Requests\SendOTPonLogin;
+use App\Http\Requests\SendOTPonRegister;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Auth;
@@ -19,10 +21,13 @@ class HomeController extends Controller
      * @return void
      */
     private $service;
+    private $otpervice;
 
     public function __construct()
     {
         $this->service = new SMSService();
+        $this->otpservice = new OTPService();
+        
        }
 
     /**
@@ -46,7 +51,7 @@ class HomeController extends Controller
 
     public function verifyOTP(VerifyOTPRequest $request)
     {   
-        return $this->service->verifyOtpSms($request->mobile, $request->code, $request->sessionid);
+        return $this->otpservice->verifyOTP($request->email, $request->code, $request->sessionid);
     }
 
     public function sendOTPOnLogin(SendOTPonLogin $request)
@@ -54,6 +59,15 @@ class HomeController extends Controller
         $user = User::select('mobile')->where('email',$request->email)->first();
         return $this->service->sendOtpSms($user->mobile);
     }
+
+    public function sendOTPOnRegister(SendOTPonRegister $request)
+    {   
+        $data = $this->otpservice->sendOTP($request->email, 'email');
+        return response()->json($data);
+    }
+
+
+    
     public function updatePassword(Request $request){
         return view('front.auth.update_password',compact('request'));
     }

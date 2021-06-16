@@ -50,8 +50,10 @@ Route::post('password/reset', [App\Http\Controllers\HomeController::class, 'rese
 Route::post('/verify/register',[App\Http\Controllers\Auth\RegisterController::class, 'showOTPForm'])->name('otp.register');
 // OTP
 Route::post('/mobile/otp/send',[App\Http\Controllers\HomeController::class, 'sendOTP'])->name('send.otp');
-Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
+// Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
 Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class, 'sendOTPOnLogin'])->name('send.otp.login');
+Route::post('/email/otp/send/register',[App\Http\Controllers\HomeController::class, 'sendOTPOnRegister'])->name('send.otp.register');
+Route::post('/email/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
 // LINE
 Route::get('line-bot', [App\Http\Controllers\UserController::class, 'line_bot'])->name('line-bot');
 
