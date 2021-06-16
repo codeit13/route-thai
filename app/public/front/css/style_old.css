@@ -6051,24 +6051,6 @@ a.bell span {
     top: 0px;
 }
 
-.sapret_alert {
-    background-color: var(--alert);
-    border-radius: 3px;
-    border: 1px solid #FFE3B8;
-    padding: 20px 20px !important;
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-.sapret_alert .alert {
-    padding: 0px;
-}
-.ca_btn {
-    float: right;
-    width: auto !important;
-    padding: 0px 20px;
-}
-
 /***** Unknown Css *****/
 .css-11nldkw {
     box-sizing: border-box;
@@ -7855,6 +7837,13 @@ a.btn-info:hover {
     background: var(--card-bg);
     color: var(--white-black-text);
 }
+
+
+
+
+
+
+
 
 
 
@@ -10167,7 +10156,11 @@ a.btn-info:hover {
         margin-left: -5px!important;
         top: 29px;
     }
+<<<<<<< Updated upstream
+} 
+=======
 }
+>>>>>>> Stashed changes
 
 @media (min-width: 375px) and (max-width: 413px) {
     #wallet-content.withdraw-asset .step-h ul li:before {

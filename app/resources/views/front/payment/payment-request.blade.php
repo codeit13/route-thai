@@ -102,9 +102,9 @@ Route: P2P Trading Platform
                                     </div>
                                     <div class="col-lg-12 text-left xs-right col-sm-12 col-5">
                                         @foreach($transaction->user->user_payment_method as $payment_method)
-                                        @if($payment_method->hasMedia('icon'))
+                                        @if($payment_method->payment_methods->hasMedia('icon'))
                                         <a href="#">
-                                        <img src="{{$payment_method->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_method->name)}}"/>
+                                        <img src="{{$payment_method->payment_methods->getMedia('icon')->first()->getUrl()}}" alt="{{__($payment_method->payment_methods->name)}}"/>
                                         </a> 
                                         @endif
                                         @endforeach
@@ -128,10 +128,10 @@ Route: P2P Trading Platform
                 </div>
                 <div class="col-lg-12 flush  space-xs col-sm-12 col-12">
                     <div class="row">
-                        <div class="col-lg-9 col-sm-9 col-8">	<a href="#" data-toggle="modal" data-target="#exampleModal3" class="btn-success">{{__('Transferred, Next')}}</a>
+                        <div class="col-lg-12 col-sm-12 col-12">	<a href="#" data-toggle="modal" data-target="#exampleModal3" class="btn-success">{{__('Transferred, Next')}}</a>
                         </div>
-                        <div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',['transaction'=>$transaction->trans_id])}}" class="btn-success cancel">Cancel</a>
-                        </div>
+                        {{-- <div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',['transaction'=>$transaction->trans_id])}}" class="btn-success cancel">Cancel</a>
+                        </div> --}}
                     </div>
                     <div class="row">
                         <div class="col-lg-12 hidden-xs col-sm-12 col-12">
@@ -169,10 +169,10 @@ Route: P2P Trading Platform
                     @foreach($transaction->user->user_payment_method as $payment_method)
                     <div class="col-lg-4 border-right-one col-sm-4 col-12">
                         <h4 class="xs-left text-center">
-                            @if($payment_method->hasMedia('icon'))
-                            <img src="{{$payment_method->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_method->name??'')}}"/>
+                            @if($payment_method->payment_methods->hasMedia('icon'))
+                            <img src="{{$payment_method->payment_methods->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_methods->name??'')}}"/>
                             @endif
-                            <br>{{__($payment_method->payment_method->name??"")}}
+                            <br>{{__($payment_method->payment_methods->name??"")}}
                         </h4>
                         <div class="row">
                             <div class="col-lg-12 xs-left text-center col-sm-12 col-6">
@@ -203,10 +203,10 @@ Route: P2P Trading Platform
                 </div>
                 <div class="col-lg-8 offset-lg-2 top-space col-sm-8 offset-sm-2 col-12">
                     <div class="row">
-                        <div class="col-lg-9 col-sm-9 col-8">	<a href="{{route('payment.order.release',$transaction->trans_id)}}" class="btn-success">{{__('Transferred, Next')}}</a>
+                        <div class="col-lg-12 col-sm-12 col-12">	<a href="{{route('payment.order.release',$transaction->trans_id)}}" class="btn-success">{{__('Transferred, Next')}}</a>
                         </div>
-                        <div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',$transaction->trans_id)}}" class="btn-success cancel">{{__('Cancel')}}</a>
-                        </div>
+                        {{-- <div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',$transaction->trans_id)}}" class="btn-success cancel">{{__('Cancel')}}</a>
+                        </div> --}}
                     </div>
                 </div>
             </div>
