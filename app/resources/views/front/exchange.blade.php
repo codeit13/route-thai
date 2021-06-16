@@ -24,6 +24,7 @@ Route: P2P Trading Platform
                 </li>
                 <li><a href="{{ route('sell.create') }}">Sell</a>
                 </li>
+                <li class="visible-xs"><button class="show_filter"><i class="far fa-filter"></i></button></li>
             </ul>
         </div>
     </div>
@@ -67,7 +68,7 @@ Route: P2P Trading Platform
                                 </div>
                             </div>
                         </li>
-                        <li>
+                        <li class="full_li">
                             <label>Fiat Currency</label>
                             <br/>
                             <div class="dropdown currency_two three_coins" style="width: 259px">
@@ -92,7 +93,7 @@ Route: P2P Trading Platform
                                 </div>
                             </div>
                         </li>
-                        <li>
+                        <li class="full_li">
                             <a href="javascript::void(0)" onclick="searchForm()" class="refresh">
                             <img src="{{asset('front/img/refresh.png')}}">Refresh</a>
                         </li>
