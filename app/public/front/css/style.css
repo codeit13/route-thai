@@ -6070,10 +6070,6 @@ a.bell span {
 }
 
 /***** Unknown Css *****/
-#wallet-content.request.order-history input.coin {
-    width: 280px !important;
-    outline: 0;
-}
 .css-11nldkw {
     box-sizing: border-box;
     margin: 0px;
@@ -7859,23 +7855,7 @@ a.btn-info:hover {
     background: var(--card-bg);
     color: var(--white-black-text);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 /********** Responsive Css **********/
 
 /* Landscape phones and portrait tablets */
@@ -7898,6 +7878,10 @@ a.btn-info:hover {
     #filter ul.search_bar li .dropdown-menu.show {
         top: 6px !important;
         margin-left: -76px;
+    }
+    #filter ul.search_bar li.full_li .dropdown-menu.show {
+        top: 0px !important;
+        margin-left: 0;
     }
     #filter.main {
         display: inline-block !important;
@@ -10242,6 +10226,7 @@ a.btn-info:hover {
         margin-left: -5px!important;
         top: 29px;
     }
+}
 
 @media (min-width: 375px) and (max-width: 413px) {
     #wallet-content.withdraw-asset .step-h ul li:before {

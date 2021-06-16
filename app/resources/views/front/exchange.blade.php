@@ -117,6 +117,7 @@ Route: P2P Trading Platform
                                     <th scope="col" class="res_po">Advertisers</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Limit/Available</th>
+                                    <th scope="col">Payment</th>
                                     <th scope="col" class="text-center">Trade <span>0 Fee</span>
                                     </th>
                                 </tr>
@@ -137,6 +138,7 @@ Route: P2P Trading Platform
                                                 <td class="text-center">
                                                     <span id="bm_btc">Available <span>{{ $single_transaction->quantity }} {{ $single_transaction->currency->short_name }}</span>
                                                 </td>
+                                                <td><span data-bs-toggle="tooltip" data-bs-placement="top" title="" data-original-title="Bank Transfer" class="payment_tooltip">Bank Transfer</span></td>
                                                 <td class="text-center">
                                                     <a href="{{ route('payment.show',['transaction'=>$single_transaction->trans_id]) }}" class="table_btn">Buy {{ $single_transaction->currency->short_name }}</a>
                                                 </td>
