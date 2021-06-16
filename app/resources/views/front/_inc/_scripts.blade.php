@@ -88,6 +88,13 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 })
 </script>
 <script type="text/javascript">
+$(document).ready(function(){
+  $("button.show_filter").click(function(){
+    $("#filter").toggleClass("main");
+  });
+});
+</script>
+<script type="text/javascript">
     // Iterate over each select element
 $('select:not(.form-control)').each(function () {
 
