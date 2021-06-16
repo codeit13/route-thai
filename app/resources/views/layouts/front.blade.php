@@ -7,7 +7,7 @@
     @include('front._inc._styles')
     @yield('page_styles')
  </head>
- <body>
+ <body class="dark-mode">
   <div class="loader">
       <div id="bars">
          <span></span>
