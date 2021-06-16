@@ -77,7 +77,7 @@ class LoginController extends Controller
                 $this->sendTelegramNotification($user);
             }
             if($user->line_notification) {
-                $this->sendLineNotification($user)
+                $this->sendLineNotification($user);
             }
             return redirect('/home')->withCookie(Cookie::make('logged_in', $user->remember_token, 43200));
         }
@@ -100,7 +100,7 @@ class LoginController extends Controller
     }
 
     private function sendTelegramNotification($user){
-        $location =  Authentication_log::where('authenticatable_id',$user->id)->orderBy('id','DESC')->first();
+        $location =  Authentication_log::whereNotNull('continent_code')->where('authenticatable_id',$user->id)->orderBy('id','DESC')->first();
         $welcomeMessage = "Hi, ".$user->name . ", You currently logged in! \n";
         $welcomeMessage .= "Location: ".$location->city.", ".$location->region_name.", ".$location->country_name."\n";
         $welcomeMessage .= "IP Address: ".$location->ip_address;
