@@ -105,9 +105,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->notify_token;
     }
 
+
     public function setGoogle2faSecretAttribute($value)
     {
-         $this->attributes['google2fa_secret'] = encrypt($value);
+        $this->attributes['google2fa_secret'] = encrypt($value);
     }
 
     /**

@@ -22,7 +22,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 col-sm-12 col-xs-12">
-						<h4>{{__('You successfully Purchased')}}&nbsp; {{$transaction->trans_amount}}&nbsp; {{$transaction->currency->short_name}}<a class="visible-xs" href="#" data-toggle="modal" data-target="#exampleModal2"><img src="img/icon-26.png" alt=""></a></h4>
+						<h4>{{__('You successfully Purchased')}}&nbsp; {{$transaction->quantity}}&nbsp; {{$transaction->currency->short_name}}<a class="visible-xs" href="#" data-toggle="modal" data-target="#exampleModal2"><img src="img/icon-26.png" alt=""></a></h4>
 					</div>
 				</div>
 			</div>
@@ -73,7 +73,7 @@
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->amount}}&nbsp; {{$transaction->currency->short_name}}</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}}&nbsp; {{$transaction->currency->short_name}}</span>
 												</div>
 											</div>
 										</div>

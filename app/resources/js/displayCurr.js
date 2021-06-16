@@ -14,25 +14,28 @@ $(function () {
   localStorage.setItem('favState', false);
 
   const base_exchange_button = $('#modalBaseExchange');
-  const base_currency_button = $('#dropdownBaseCurrency');
+  let base_currency_button;
 
   let localbasecurrency = localStorage.getItem('localbasecurrency');
   if (localbasecurrency === null) {
     localStorage.setItem('localbasecurrency', 'unitedstatesdollar');
     localbasecurrency = 'unitedstatesdollar';
   }
-  base_currency_button.empty();
-  base_currency_button.val(localbasecurrency);
-  const buttoncontent = $('<img>', { src: currencyDetails[localbasecurrency]['img'] });
-  base_currency_button.append(buttoncontent);
-  // base_currency_button.append('<span>' + currencyDetails[localbasecurrency]['name'] + '</span>');
-  base_currency_button.append(' ' + currencyDetails[localbasecurrency]['sname']);
+  if ($('#dropdownBaseCurrency').length > 0) {
+    base_currency_button = $('#dropdownBaseCurrency');
+    base_currency_button.empty();
+    base_currency_button.val(localbasecurrency);
+    const buttoncontent = $('<img>', { src: currencyDetails[localbasecurrency]['img'] });
+    base_currency_button.append(buttoncontent);
+    base_currency_button.append('<span>' + currencyDetails[localbasecurrency]['name'] + '</span>');
+    base_currency_button.append(' ' + currencyDetails[localbasecurrency]['sname']);
+  }
 
   $('#tablesearchinput').prop('disabled', false);
   // const maxrows = $('.features select').val();
 
   let baseexchangename = base_exchange_button.val().toLowerCase();
-  let basecurrencyname = base_currency_button.val().toLowerCase();
+  let basecurrencyname = base_currency_button ? base_currency_button.val().toLowerCase() : localbasecurrency;
   let currentForexData;
   // console.log($('.features select'));
   $('.features select').on('change', () => {
@@ -87,6 +90,10 @@ coinsList.forEach((coin) => {
 $(document).ready(function() {
   //Exchange Filter
   $('input[type=checkbox][name=exchangecheckbox]').change(function() {
+    if (isLoggedIn !== 1) {
+      window.location.href = '/login';
+      return;
+    }
     const checkboxes = document.querySelectorAll(`input[name="exchangecheckbox"]:checked`);
     let values = [];
     checkboxes.forEach((checkbox) => {
@@ -108,6 +115,10 @@ $(document).ready(function() {
 
   //Coin Filter
   $('input[type=checkbox][name=coincheckbox]').change(function() {
+    if (isLoggedIn !== 1) {
+      window.location.href = '/login';
+      return;
+    }
     const checkboxes = document.querySelectorAll(`input[name="coincheckbox"]:checked`);
     let values = [];
     checkboxes.forEach((checkbox) => {
@@ -268,6 +279,10 @@ $(document).ready(function() {
 
   $('#ex-select-menu a').click((e) => {
     e.preventDefault();
+    if (isLoggedIn !== 1) {
+      window.location.href = '/login';
+      return;
+    }
     const elem = $(e.currentTarget);
     $('#exchangeCenter').modal('hide');
     const imgelem = elem.html();
@@ -494,6 +509,10 @@ $(document).ready(function() {
   var color = [];
 
   $('#change-color').click((e)=>{
+    if (isLoggedIn !== 1) {
+      window.location.href = '/login';
+      return;
+    }
     e.preventDefault();
     var clist = document.getElementsByClassName('addrange');
     for (let i = 0; i < clist.length; i++) {

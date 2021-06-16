@@ -205,22 +205,12 @@ Route: P2P Trading Platform
                             <i class="fa fa-star-o"></i>
                           </button>
                         </div>
-                      </div>
-                </form>
-              </div>
-              <div class="col-lg-4 ml-auto text-right">
-                <div class="row table-row">
-                  <div class="col-12">
-                    <div class="row ">
-                  <div class="col-6">
-                    <div class="features">
-                      <p>show rows</p>
-                      <select id="numrowselector">
-                        <option value="all">All</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                      </select>
+                        <div class="col-4 pr-0">
+                    <!-- Button trigger coin filter modal -->
+                    <button type="button" class="btn btn-secondary mr-1 btn-block" data-toggle="modal" data-target="#coinSelectCenter">
+                        Crypto
+                        <i class="fa fa-star-o"></i>
+                      </button>
                     </div>
                     <div class="col-1">
                       <a id='show' class="float"><i style="color:white !important;" class="fa fa-bell my-float"></i></a>
@@ -277,15 +267,10 @@ Route: P2P Trading Platform
                           </select> -->
                     <!-- </div> -->
 
-
                   </div>
                   </div>
                   </div>
                 </div>
-                </div>
-                </div>
-
-
               </div>
             </div>
 
@@ -429,6 +414,7 @@ Route: P2P Trading Platform
 @section('page_scripts')
 <script src="{{ asset('js/index.js') }}"></script>
 <script type="text/javascript">
+    var isLoggedIn = {{ Auth::check() ? Auth::check() : 0 }};
     $('#footer,#copy').hide();
     $(document).ready(function(){
               $('.bxslider').bxSlider({

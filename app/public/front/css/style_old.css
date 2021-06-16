@@ -6051,33 +6051,7 @@ a.bell span {
     top: 0px;
 }
 
-.sapret_alert {
-    background-color: var(--alert);
-    border-radius: 3px;
-    border: 1px solid #FFE3B8;
-    padding: 20px 20px !important;
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-.sapret_alert .alert {
-    padding: 0px;
-}
-.ca_btn {
-    float: right;
-    width: auto !important;
-    padding: 0px 20px;
-}
-
 /***** Unknown Css *****/
-span.payment_tooltip {
-    text-align: center;
-    background: #00c98e24;
-    border-radius: 50px;
-    padding: 2px 8px;
-    font-size: 13px;
-    font-weight: 500;
-}
 .css-11nldkw {
     box-sizing: border-box;
     margin: 0px;
@@ -7853,7 +7827,7 @@ a.btn-info:hover {
     padding-top: 15px;
 }
 .visible-xs {
-    display: none !important;
+    display: none;
 }
 
 .iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
@@ -7863,7 +7837,6 @@ a.btn-info:hover {
     background: var(--card-bg);
     color: var(--white-black-text);
 }
-<<<<<<< HEAD
 
 
 
@@ -7881,88 +7854,14 @@ a.btn-info:hover {
 
 
 
-=======
- 
->>>>>>> f52916e4ba669b92b74c35626368f82081278306
 /********** Responsive Css **********/
 
 /* Landscape phones and portrait tablets */
 
 @media (max-width: 767px) {
-    button.show_filter {
-        background: transparent;
-        color: #ADADAD;
-        border: none;
-        font-size: 18px;
-        outline: none;
-    }
-<<<<<<< HEAD
-=======
-    ul.mini_links li:last-child {
-        float: right;
-        display: inline-block;
-        padding: 0;
-        margin-right: 15px;
-        margin-top: 16px;
-    }
-    #filter ul.search_bar li .dropdown-menu.show {
-        top: 6px !important;
-        margin-left: -76px;
-    }
-    #filter ul.search_bar li.full_li .dropdown-menu.show {
-        top: 0px !important;
-        margin-left: 0;
-    }
-    #filter.main {
-        display: inline-block !important;
-    }
-    #filter ul.search_bar li {
-        width: 49%;    
-    }
-    #filter ul.search_bar li input  {
-        width: 100%;
-        height: 30px;
-        font-size: 13px;
-        padding: 5px 10px;
-    }
-    #filter ul.search_bar li .dropdown.currency_two.three_coins .dropdown-toggle::after {
-        margin-top: 7px;
-    }
-    #filter ul.search_bar li .dropdown.currency_two.three_coins button#dropdownMenuButton span {
-        font-size: 11px;
-    }
-    #filter ul.search_bar li label {
-        margin-top: 10px;
-    }
-    #filter ul.search_bar li.full_li {
-        width: 100%;
-        text-align: right;
-    }
-    #filter ul.search_bar li label {
-        margin-top: 10px;
-        text-align: left;
-        float: left;
-        width: 100%;
-    }
-    #filter ul.search_bar li.full_li a {
-        margin-top: 21px;
-        padding: 4px 10px;
-        font-size: 13px;
-    }
-    #filter ul.search_bar li .dropdown.currency_two.three_coins button#dropdownMenuButton, #filter ul.search_bar li .dropdown.currency_two.three_coins {
-        width: 100% !important;
-        height: 30px;
-        font-size: 13px;
-    }
-    #filter ul.search_bar li .dropdown.currency_two.three_coins button#dropdownMenuButton img {
-        width: 14px;
-        margin-right: 2px;
-        margin-top: -7px;
-    }
     .dropdown.currency_two.three_coins.new_select_b.crypto.currencyDropdown.show .dropdown-menu.show {
         
     }
->>>>>>> f52916e4ba669b92b74c35626368f82081278306
     #dashboard .content_dashboard {
         padding: 0px 30px;
     }
@@ -9303,11 +9202,11 @@ a.btn-info:hover {
         overflow: inherit;
         margin-top: 0px;
     }
-    /* .main_data_dable table thead tr th:last-child,
+    .main_data_dable table thead tr th:last-child,
     .main_data_dable table tr td:last-child,
     .main_data_dable table tr td:nth-child(4n) {
-        /*display: none;* /
-    } */
+        /*display: none;*/
+    }
     .main_data_dable table thead tr th {
         background-color: rgb(66 66 66 / 5%) !important;
         padding: 0px 0px;
@@ -9661,7 +9560,7 @@ a.btn-info:hover {
         font-size: 13px;
     }
     #wallet-content.request ul.janral-head li.last {
-        /* display: inline-block !important; */
+        display: inline-block !important;
         float: right !important;
         padding-right: 0px;
     }
@@ -10257,15 +10156,11 @@ a.btn-info:hover {
         margin-left: -5px!important;
         top: 29px;
     }
-<<<<<<< HEAD
 <<<<<<< Updated upstream
 } 
 =======
 }
 >>>>>>> Stashed changes
-=======
-}
->>>>>>> f52916e4ba669b92b74c35626368f82081278306
 
 @media (min-width: 375px) and (max-width: 413px) {
     #wallet-content.withdraw-asset .step-h ul li:before {
@@ -10343,15 +10238,7 @@ a.btn-info:hover {
     }
 }
 
-<<<<<<< HEAD
 @media (min-width: 992px) and (max-width: 1169px) {} .tooltip {
     position:relative;
     z-index:99999999;
-=======
-@media (min-width: 992px) and (max-width: 1169px) {} 
-    .tooltip {
-        position:relative;
-        z-index:99999999;
-    }
->>>>>>> f52916e4ba669b92b74c35626368f82081278306
 }

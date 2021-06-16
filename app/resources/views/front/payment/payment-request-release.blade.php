@@ -78,7 +78,7 @@
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}}&nbsp; {{$transaction->currency->short_name}}</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->quantity}}</span>
 												</div>
 											</div>
 										</div>
@@ -90,7 +90,7 @@
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{number_format($transaction->quantity,2)}} &nbsp;{{$transaction->fiat_currency->short_name}}</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}} &nbsp;{{$transaction->fiat_currency->short_name}}</span>
 												</div>
 											</div>
 										</div>
@@ -111,11 +111,11 @@
 												@foreach($transaction->user->user_payment_method as $payment_method)
 
 
-													@if($payment_method->hasMedia('icon'))
+													@if($payment_method->payment_methods->hasMedia('icon'))
     
                                            <a href="#">
 
-											<img src="{{$payment_method->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_method->name)}}"/>
+											<img src="{{$payment_method->payment_methods->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_methods->name)}}"/>
 
 											</a> 
 
@@ -138,11 +138,11 @@
 										<div class="payment-line @if(count($transaction->user->user_payment_method)-1==$pindex) b-last-none @endif ">
 											<div class="row">
 												<div class="col-lg-12 col-sm-12 col-12">
-													<h3> <a href="#">@if($payment_method->hasMedia('icon'))
+													<h3> <a href="#">@if($payment_method->payment_methods->hasMedia('icon'))
     
                                           
 
-											<img src="{{$payment_method->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_method->name)}}"/>
+											<img src="{{$payment_method->payment_methods->firstMedia('icon')->getUrl()}}" alt="{{__($payment_method->payment_methods->name)}}"/>
 
 									
 											@endif</a>{{__($payment_method->payment_methods->name)}}</h3>
@@ -212,7 +212,7 @@
 						</div>
 						<div class="col-lg-12 flush  space-xs col-sm-12 col-12">
 							<div class="row">
-								<div class="col-lg-9 col-sm-9 col-8">	<a href="#" class="btn-success Appeal">Appeal</a>
+								<div class="col-lg-12 col-sm-12 col-12">	<a href="#" class="btn-success Appeal">Appeal</a>
 								</div>
 								{{-- <div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',$transaction->trans_id)}}" class="btn-success cancel">Cancel</a>
 								</div> --}}

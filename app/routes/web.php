@@ -30,11 +30,11 @@ Route::get('/createstoragelink', function () {
 });
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'arbitrage'])->name('homepage');
 Route::get('/sendMail', [App\Http\Controllers\HomeController::class, 'sendMail'])->name('testmail');
 
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'arbitrage'])->name('home');
 Auth::routes(['verify'=>true,'request'=>true]);
 Route::group(['middleware' => ['web']], function () {
     Route::get('language',function($request){
@@ -50,8 +50,10 @@ Route::post('password/reset', [App\Http\Controllers\HomeController::class, 'rese
 Route::post('/verify/register',[App\Http\Controllers\Auth\RegisterController::class, 'showOTPForm'])->name('otp.register');
 // OTP
 Route::post('/mobile/otp/send',[App\Http\Controllers\HomeController::class, 'sendOTP'])->name('send.otp');
-Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
+// Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
 Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class, 'sendOTPOnLogin'])->name('send.otp.login');
+Route::post('/email/otp/send/register',[App\Http\Controllers\HomeController::class, 'sendOTPOnRegister'])->name('send.otp.register');
+Route::post('/email/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
 // LINE
 Route::get('line-bot', [App\Http\Controllers\UserController::class, 'line_bot'])->name('line-bot');
 
