@@ -170,7 +170,10 @@ Route::middleware('auth')->group(function(){
 
     Route::get('{id}/close',[App\Http\Controllers\LoanController::class, 'close'])->name('loan.close');
 
+    Route::post('{id}/close',[App\Http\Controllers\LoanController::class, 'closeRequest'])->name('loan.close.request');
 
+
+    
 
 
   });

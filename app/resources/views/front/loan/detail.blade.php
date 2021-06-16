@@ -3,7 +3,7 @@
     Route: P2P Trading Platform
 @endsection
 @section('page_styles')
-	<link type="text/css" rel="stylesheet" href="{{asset('front/css/datepicker.css')}}" />
+
 
 	<style type="text/css">
 		#your-application span.rejected
