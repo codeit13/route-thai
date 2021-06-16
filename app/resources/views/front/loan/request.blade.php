@@ -135,6 +135,8 @@ $loan_variables=(object)$loan_variables;
 
 												  <input type="hidden" name="currency_id" id="coin_id" value="{{$currencies[0]->id??''}}">
 												</div>
+
+												
 												<input type="text" name="collateral_amount" id="collateral_quantity" value="">
 											</div>
 

@@ -40,7 +40,7 @@
 				<div class="col-lg-7 col-sm-12 col-12">
 					<div class="row">
 						<div class="col-lg-6 col-sm-6 col-6">
-							<label>Order Date:Date:{{$loan->created_at->isoFormat('Do-MMMM-Y')}}<span>|</span> {{$loan->created_at->isoFormat('h:mm a')}}</label>
+							<label>Order Date:{{$loan->created_at->isoFormat('Do-MMMM-Y')}}<span>|</span> {{$loan->created_at->isoFormat('h:mm a')}}</label>
 						</div>
 						<div class="col-lg-6 text-right col-sm-6 col-6">
 							<label>Order Number: {{$loan->loan_id}}</label>
