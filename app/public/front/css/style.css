@@ -7831,7 +7831,7 @@ a.btn-info:hover {
     padding-top: 15px;
 }
 .visible-xs {
-    display: none;
+    display: none !important;
 }
 
 .iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
