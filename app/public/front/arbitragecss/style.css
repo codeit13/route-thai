@@ -1253,7 +1253,7 @@ button.btn.dropdown-toggle.btn-light {
 
 .main_data_dable table tr th.first {
     font-size: 13px;
-    /* width: 150px; */
+    width: 90px !important;
     line-height: 23px;
 }
 
@@ -1942,6 +1942,16 @@ th.res_po, th.first {
 /* Landscape phones and portrait tablets */
 @media (max-width: 767px){
 
+    .main_data_dable table thead tr th {
+    padding: 10px 10px;
+    }
+    .main_data_dable table tr th.first {
+        font-size: 13px;
+        width: 90px !important;
+        line-height: 23px;
+        padding: 7px 0 7px 20px;
+        margin-left: 2px;
+    }
 .table-row {margin-top: 10px;}
 
 #header .right_side {
@@ -1957,13 +1967,13 @@ th.res_po, th.first {
     font-weight: 600;
     color: var(--table-text);
     text-align: right;
-    padding: 3px 0px;
+    padding: 0px 0px;
     vertical-align: middle;
 }
 
 .main_data_dable table tr td:first-child {
     text-align: left;
-    padding: 0px 3px;
+    padding: 0px 0px;
     font-size:10px;
 }
 
