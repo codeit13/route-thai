@@ -202,7 +202,6 @@ class SellController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function confirmReceipt($trans_id){
-        $user = Auth::user();
         $transcation = Transaction::with('buyer_requests')
                                         ->with('buyer_trans')
                                         ->with('currency')
@@ -215,18 +214,6 @@ class SellController extends Controller
                                                         ->where('user_id',auth()->user()->id)
                                                         ->where('status','active')
                                                         ->get();                                        
-        if($user->telegram_notification) {
-            $user->notify(new LaravelTelegramNotification([
-                'text' => "Seller Controller:: Confirm Reciept",
-                'telegram_user_id' => $user->telegram_user_id,
-                ]));
-            }
-        if($user->line_notification) {
-            LINE::pushmessage(
-                $user->line_user_id,
-                new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Seller Controller:: Confirm Reciept.')
-            );
-        }
         return view('front.sell.confrim_receipt',compact(
             'transcation',
             'user_payment_methods'
