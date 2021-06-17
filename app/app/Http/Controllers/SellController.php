@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Auth;
+
 use Illuminate\Http\Request;
 use App\Models\Currency;
 use App\Models\Wallet;

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\User;
+use Auth;
+
 use App\Notifications\LaravelTelegramNotification;
 use LINE;
 
