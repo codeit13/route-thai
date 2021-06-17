@@ -127,17 +127,18 @@ class SellController extends Controller
             'created_at'     => date('Y-m-d H:i:s',strtotime($save_sell->created_at))
         ];
         $request->session()->forget('sell_data');
-
+        
+        $sellMessage = "You Sell Ad has been placed Successfully";
         if($user->telegram_notification) {
             $user->notify(new LaravelTelegramNotification([
-                'text' => "Seller Controller:: Confirm Sell",
+                'text' => $sellMessage,
                 'telegram_user_id' => $user->telegram_user_id,
                 ]));
             }
         if($user->line_notification) {
             LINE::pushmessage(
                 $user->line_user_id,
-                new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Seller Controller:: Confirm Sell.')
+                new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($sellMessage)
             );
         }
 
@@ -151,6 +152,7 @@ class SellController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function buyRequest($trans_id){
+        $user = Auth::user();
         $transcation = Transaction::with(['buyer_requests'=>function($query){
                                             $query->where('status','!=','cancel');
                                         }])

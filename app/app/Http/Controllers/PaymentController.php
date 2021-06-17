@@ -106,6 +106,20 @@ class PaymentController extends Controller
                 $transaction->sendMessage([$transaction->user->mobile],'Your ad has been matched and its pending payment');
                 $buyer_request=$transaction->checkBuyerRequest();
 
+                $Message = "You Ad has been matched and its pending payment.\n Transaction ID: " . $transaction->id;
+                if($user->telegram_notification) {
+                    $user->notify(new LaravelTelegramNotification([
+                        'text' => $Message,
+                        'telegram_user_id' => $user->telegram_user_id,
+                        ]));
+                    }
+                if($user->line_notification) {
+                    LINE::pushmessage(
+                        $user->line_user_id,
+                        new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($Message)
+                    );
+                }
+
             }
             elseif($buyer_request=='exists')
             {
