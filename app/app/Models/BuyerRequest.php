@@ -13,23 +13,23 @@ class BuyerRequest extends Model
 
 
     public function getExpiryTimeAttribute()
-{
-	        $expiry= new \stdclass();
+    {
+        $expiry= new \stdclass();
+        $init= ($this->transaction->timer*60)-$this->transaction->getRequestTime($this->updated_at);
+        $expiry->hours = floor($init / 3600);
+        $expiry->minutes = floor(($init / 60) % 60);
+        $expiry->seconds = $init % 60;
+        return $expiry;
+    }
 
-	        $init= ($this->transaction->timer*60)-$this->transaction->getRequestTime($this->updated_at);
+    public function transaction()
+    {
+    	return $this->belongsTo('App\Models\Transaction','transaction_id','id');
+    }
 
-
-            $expiry->hours = floor($init / 3600);
-            $expiry->minutes = floor(($init / 60) % 60);
-            $expiry->seconds = $init % 60;
-
-            return $expiry;
-
-}
-
-public function transaction()
-{
-	return $this->belongsTo('App\Models\Transaction','transaction_id','id');
-}
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User','user_id','id');
+    }
 
 }

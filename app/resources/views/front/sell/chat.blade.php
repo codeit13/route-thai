@@ -3,7 +3,7 @@
 <div class="col-lg-6 hidden-xs visible-sm col-sm-6 col-12">
     <div class="card chat  p-payment">
         <div class="chat_box">
-            <h2 class="head_box bit"><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> ⚡ OrianyellaB ⚡</h2>
+            <h2 class="head_box bit"><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> ⚡ @if(isset($transaction)) {{ $transaction->user->name }} @else {{ $transcation->buyer_requests->first()->user->name }} @endif ⚡</h2>
             <div class="chat_body">
                 <div class="alert">ATTEBTION! DO NOT - release crypto before confirming the money (availble balance) has arrived in your payment account. DO NOT trust anyone claims to be customer support in this chat	<a href="#">Less</a>
                 </div>

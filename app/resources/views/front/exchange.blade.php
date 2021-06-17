@@ -24,6 +24,7 @@ Route: P2P Trading Platform
                 </li>
                 <li><a href="{{ route('sell.create') }}">Sell</a>
                 </li>
+                <li class="visible-xs"><button class="show_filter"><i class="far fa-filter"></i></button></li>
             </ul>
         </div>
     </div>
@@ -67,7 +68,7 @@ Route: P2P Trading Platform
                                 </div>
                             </div>
                         </li>
-                        <li>
+                        <li class="full_li">
                             <label>Fiat Currency</label>
                             <br/>
                             <div class="dropdown currency_two three_coins" style="width: 259px">
@@ -92,7 +93,7 @@ Route: P2P Trading Platform
                                 </div>
                             </div>
                         </li>
-                        <li>
+                        <li class="full_li">
                             <a href="javascript::void(0)" onclick="searchForm()" class="refresh">
                             <img src="{{asset('front/img/refresh.png')}}">Refresh</a>
                         </li>
@@ -116,6 +117,7 @@ Route: P2P Trading Platform
                                     <th scope="col" class="res_po">Advertisers</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Limit/Available</th>
+                                    <th scope="col">Payment</th>
                                     <th scope="col" class="text-center">Trade <span>0 Fee</span>
                                     </th>
                                 </tr>
@@ -136,6 +138,7 @@ Route: P2P Trading Platform
                                                 <td class="text-center">
                                                     <span id="bm_btc">Available <span>{{ $single_transaction->quantity }} {{ $single_transaction->currency->short_name }}</span>
                                                 </td>
+                                                <td class="text-center"><span data-bs-toggle="tooltip" data-bs-placement="top" title="" data-original-title="Payment Modes" class="payment_tooltip"><i class="fal fa-university"></i> Bank Transfer</span></td>
                                                 <td class="text-center">
                                                     <a href="{{ route('payment.show',['transaction'=>$single_transaction->trans_id]) }}" class="table_btn">Buy {{ $single_transaction->currency->short_name }}</a>
                                                 </td>

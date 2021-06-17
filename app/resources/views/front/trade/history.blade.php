@@ -171,7 +171,6 @@ Route: P2P Trading Platform
                                         </td>
                                         <td>
                                         <select name="type" class="filter-type">
-                                            <option value="">Select</option>
                                             <option value="all" @if($request->type=='' or $request->type=='all') selected @endif>All</option>
                                             <option value="sell" @if($request->type=='sell') selected @endif >{{__('Sell')}}</option>
                                             <option value="buy" @if($request->type=='buy') selected @endif>{{__('Buy')}}</option>
@@ -179,7 +178,6 @@ Route: P2P Trading Platform
                                         </td>
                                         <td>
                                         <select name="status" class="filter-type">
-                                            <option value=""> select </option>
                                             <option value="all" @if($request->status=='' or $request->status=='all') selected @endif>All</option>
                                             <option value="pending" @if($request->status=='pending') selected @endif>{{__('In Progress')}}</option>
                                             <option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
@@ -224,9 +222,9 @@ Route: P2P Trading Platform
                                             @endif
                                             <label class="visible-xs">{{__($transaction->currency->short_name)}} <span>{{__($transaction->currency->name)}}</span></label>
                                         </td>
-                                        <td class="size-t"><label class="hidden-xs">{{$transaction->quantity}} {{__($transaction->fiat_currency->short_name)}}</label> <label class="visible-xs">{{__("Quantity")}} <span>{{$transaction->trans_amount}}</span></label></td>
-                                        <td class="hidden-xs">{{$transaction->quantity/$transaction->trans_amount}}/{{$transaction->currency->short_name}}</td>
-                                        <td class="hidden-xs">{{$transaction->trans_amount}}&nbsp;{{__($transaction->currency->short_name)}}</td>
+                                        <td class="size-t"><label class="hidden-xs">{{$transaction->trans_amount}} {{__($transaction->fiat_currency->short_name)}}</label> <label class="visible-xs">{{__("Quantity")}} <span>{{$transaction->trans_amount}}</span></label></td>
+                                        <td class="hidden-xs">{{number_format((float)$transaction->quantity/$transaction->trans_amount, 5, '.', '')}}/{{$transaction->currency->short_name}}</td>
+                                        <td class="hidden-xs">{{$transaction->quantity}}&nbsp;{{__($transaction->currency->short_name)}}</td>
                                         <td class="light"><label class="hidden-xs">{{$transaction->receiver->name??''}}</label> 
                                             <a class="file visible-xs" href="#">View File</a>
                                         </td>

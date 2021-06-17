@@ -10,6 +10,8 @@ use App\Http\Traits\UniqueLoanIDTrait;
 class LoanController extends Controller
 {
     use UniqueLoanIDTrait;
+
+    public $crypto_exchange_rates;
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +19,7 @@ class LoanController extends Controller
      */
     public function index()
     {
-        $loans=auth()->user()->loans;
+        $loans=auth()->user()->loans()->where('request_type','opening')->get();
 
         return view('front.loan.history',compact('loans'));
     }
@@ -127,6 +129,7 @@ class LoanController extends Controller
                              'has_close_price'=>$loan_detail->set_close_price??0,
                              'close_price'=>$loan_detail->close_price,
                              'is_agree'=>$request->agree,
+                             'loan_currency_rate'=>$loan_detail->loan_currency_rate,
                         );
         }
 
@@ -207,7 +210,7 @@ class LoanController extends Controller
 
 
 
-        $loans=auth()->user()->loans()->latest()->limit(5)->get();
+        $loans=auth()->user()->loans()->where('request_type','opening')->latest()->limit(5)->get();
 
 
         return view('front.loan.detail',compact('loan','loans'));
@@ -244,20 +247,76 @@ class LoanController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * close request the specified resource from storage.
      *
-     * @param  \App\Models\LoanRequest  $loanRequest
+     * @param  \App\Models\Loan  $loan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Loan $loan)
+    public function closeRequest(Request $request,$loan)
     {
-        //
+        //echo '<pre>';print_r($request->all());die;
+
+        $request->validate(['currency_id'=>'required','loan_amount'=>'required','loan_repayment_amount'=>'required']);
+
+        $loan=\App\Models\Loan::whereLoanId($loan)->first();
+
+        if($loan){
+
+        $close_request=array('loan_opening_id'=>$loan->id,'currency_id'=>$loan->currency_id,'loan_currency_id'=>$request->currency_id,'collateral_amount'=>$loan->collateral_amount,'loan_amount'=>$request->loan_amount,'loan_repayment_amount'=>$request->loan_repayment_amount,'term_id'=>$loan->term_id,'request_type'=>'closing','crypto_wallet_address'=>$request->crypto_wallet_address);
+
+        if($request->payment_method=='wallet')
+        {
+            $close_request['on_wallet']=1;
+        }
+
+        $loan=auth()->user()->loans()->create($close_request);
+
+       
+
+        return redirect()->route('loan.history')->with('success','Your repayment request is created.Please wait for the approval.');
+    }
+    else
+    {
+        abort(404);
+    }
+
+
     }
 
 
     public function repay($loan)
     {
-          echo 'in-progress';
+          $loan=\App\Models\Loan::whereLoanId($loan)->first();
+
+          $repay_setting=\App\Models\Settings::where('setting_code','loan_repay_currency_type')->first()->setting_value??1;
+
+
+
+        if($loan){
+
+        $loan->current_value=$this->get_crypto_exchange_row($loan->collateral_currency)->lastPrice;
+
+        $crypto_exchange_rates=$this->crypto_exchange_rates;
+
+        if($repay_setting==1)
+        {
+            $currencies=\App\Models\Currency::where('id',$loan->loan_currency_id)->get();
+
+        }
+        else
+        {
+            $currencies=\App\Models\Currency::where('is_crypto',1)->get();
+        }
+
+           $wallets=auth()->user()->wallet;
+
+
+        return view('front.loan.repay',compact('loan','crypto_exchange_rates','repay_setting','currencies','wallets'));
+    }
+    else
+    {
+        abort(404);
+    }
     }
 
     public function close($loan)
@@ -288,6 +347,9 @@ class LoanController extends Controller
 
          $filteredCryptoExchangeRow=$this->get_crypto_exchange_row($loan_detail->collateral_currency);
 
+         $loanCrytoExchangeRow=$this->get_crypto_exchange_row($loan_detail->loan_currency);
+
+
     //console.log(filteredCryptoExchangeRow);return false;
 
         $usdtPrice=number_format((float)$filteredCryptoExchangeRow->lastPrice, 2, '.', '');
@@ -301,6 +363,8 @@ class LoanController extends Controller
         $loan_detail->price_down_value=number_format((float)($usdtPrice*((float)$loan_variables->loan_price_down_limit)/100),2,'.','');
 
         $loan_detail->usdt=$usdtPrice;
+
+        $loan_detail->loan_currency_rate=number_format((float)$loanCrytoExchangeRow->lastPrice, 2, '.', '');
 
 
 
@@ -410,7 +474,11 @@ class LoanController extends Controller
 {
     $ExchangeRatesService=new \App\Services\ExchangeRatesService;
 
+
+
      $crypto_rates=collect(json_decode($ExchangeRatesService->crypto_rates()));
+
+     $this->crypto_exchange_rates=$crypto_rates;
 
 
     $crypto_exchange_row= $crypto_rates->filter(function($row) use($cryptoRow){

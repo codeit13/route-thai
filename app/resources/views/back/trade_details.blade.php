@@ -44,9 +44,8 @@
                     <span>{{ date ('F d, Y: H:i:s A', strtotime($trans->created_at)) }}</span>
                     </div>
                     <ul class="details">
-                        <li>Quantity : <b>{{ $trans->quantity }}</b></li>
-                        {{-- <li>Currency for Transaction : <b>THB</b></li>
-                        <li>Character Value : <b>0 THB</b></li> --}}
+                        <li>Quantity: <b>{{ $trans->quantity }} {{ $trans->currency->short_name }}</b></li>
+                        <li>Amount: <b>{{ $trans->trans_amount }} {{ $trans->fiat_currency->short_name }}</b></li>
                     </ul>
                 </div>
             </div>
@@ -57,12 +56,9 @@
                     <h2 class="text-left">Seller Details</h2>
                     <ul class="details nospace">
                         <li>Seller Username : <b>{{ $trans->user->name }}</b></li>
-                        {{-- <li>Name: <b>3333</b></li> --}}
-                        <li>Mobile Number: <b>{{ $trans->user->mobile}}</b></li>
-                        <li>Line ID: <b>{{ $trans->user->line_number}}</b></li>
-                        <li>Account Name: <b>{{ $trans->user->payment_methods->where('id',$trans->user_payment_method_id)->first()->account_label }}</b></li>
-                        <li>Account No: <b>{{ $trans->user->payment_methods->where('id',$trans->user_payment_method_id)->first()->account_number}}</b></li>
-
+                        <li>Seller Email : <b>{{ $trans->user->email }}</b></li>
+                        <li>Mobile Number: <b>{{ ($trans->user->mobile)?$trans->user->mobile:"N/A" }}</b></li>
+                        <li>Line ID: <b>{{ ($trans->user->line_number)?$trans->user->line_number:"N/A" }}</b></li>
                     </ul>
                 </div>
             </div>
@@ -70,15 +66,17 @@
                 <div class="card inner-tabs">
                     <h2 class="text-left">Buyer Details</h2>
                     <ul class="details nospace">
-                        @if(isset($trans->receiver) and $trans->receiver != '')
-                            <li>Buyer Username : <b>{{ $trans->receiver->name }}</b></li>
-                            <li>Mobile Number: <b>{{ $trans->receiver->mobile}}</b></li>
-                            <li>Line ID: <b>{{ $trans->receiver->line_number}}</b></li>
+                        @if(isset($trans->buyer_trans) and $trans->buyer_trans != '')
+                            <li>Buyer Username : <b>{{ $trans->buyer_trans->user->name }}</b></li>
+                            <li>Buyer Email : <b>{{ $trans->buyer_trans->user->email }}</b></li>
+                            <li>Mobile Number: <b>{{ ($trans->buyer_trans->user->mobile)?$trans->buyer_trans->user->mobile:"N/A" }}</b></li>
+                            <li>Line ID: <b>{{ ($trans->buyer_trans->user->mobile)?$trans->buyer_trans->user->line_number:"N/A"}}</b></li>
                         @else
                             @if($trans->buyer_requests->first() != null)
-                                <li>Buyer Username : <b>{{ $trans->buyer_requests->first()->name }}</b></li>
-                                <li>Mobile Number: <b>{{ $trans->buyer_requests->first()->mobile}}</b></li>
-                                <li>Line ID: <b>{{ $trans->buyer_requests->first()->line_number}}</b></li>
+                                <li>Buyer Username : <b>{{ $trans->buyer_requests->first()->user->name }}</b></li>
+                                <li>Buyer Email : <b>{{ $trans->buyer_requests->first()->user->email }}</b></li>
+                                <li>Mobile Number: <b>{{ ($trans->buyer_requests->first()->user->mobile)?$trans->buyer_requests->first()->user->mobile:"N/A" }}</b></li>
+                                <li>Line ID: <b>{{ ($trans->buyer_requests->first()->user->mobile)?$trans->buyer_requests->first()->user->line_number:"N/A"}}</b></li>
                             @endif
                         @endif
                     </ul>
