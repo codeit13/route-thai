@@ -4261,7 +4261,7 @@ span.active {
 #loans-deshboard-new .close-price .b-right {
     border-right:1px solid #e6e6e6;
 }
-#loans-deshboard-new .close-price label form {
+#loans-deshboard-new .close-price label forml {
     display: inline-block;
     margin-left: 15px;
     background: var(--acordian);
@@ -4281,17 +4281,17 @@ span.active {
 #loans-deshboard-new .close-price p.pull-right {
     float:right !important;
 }
-#loans-deshboard-new .close-price label form input::-webkit-input-placeholder {
+#loans-deshboard-new .close-price label forml input::-webkit-input-placeholder {
     text-transform:uppercase;
     background-color: var(--acordian);
 }
-#loans-deshboard-new .close-price label form input {
+#loans-deshboard-new .close-price label forml input {
     border:none;
     height:36px;
     background-color: var(--acordian);
     color: var(--white-black-text);
 }
-#loans-deshboard-new .close-price label form button {
+#loans-deshboard-new .close-price label forml button {
     background:none;
     border:none;
     line-height:36px;
@@ -8252,7 +8252,11 @@ a.btn-info:hover {
         font-size: 14px;
     }
     #wallet-content.my-loan .white-box a.green-c {
-        font-size: 10px;
+        font-size: 9px;
+        padding: 4px 5px;
+    }
+    #loans-deshboard-new label.main {
+        font-size: 14px;
     }
     #loans-deshboard-new .final-loan.collateral .tb-x {
         padding-top: 8px;
@@ -8286,7 +8290,7 @@ a.btn-info:hover {
         float: left;
         width: 100%;
         margin-top: 15px;
-        margin-bottom: 25px;
+        margin-bottom: 10px;
     }
     #loans-deshboard-new .space-normal .xs-v label {
         line-height: 22px;
@@ -8297,7 +8301,13 @@ a.btn-info:hover {
         margin-right: 5px;
     }
     #loans-deshboard-new .space-normal .xs-top {
-        margin-top: 25px;
+        margin-top: 0;
+    }
+    #loans-deshboard-new .space-normal .dropdown.currency_two.three_coins button#dropdownMenuButton {
+        padding: 10px 5px;
+    }
+    #loans-deshboard-new .space-normal .dropdown.currency_two.three_coins.crypto button#dropdownMenuButton img {
+        margin-right: 0;
     }
     #loans-deshboard-new .loan-duration {
         margin-top: 15px;
@@ -8311,7 +8321,7 @@ a.btn-info:hover {
         margin-top: 5px;
         margin-right: 5px;
     }
-    #loans-deshboard-new .close-price label form {
+    #loans-deshboard-new .close-price label forml {
         margin-left: 0px;
     }
     #loans-deshboard-new .final-loan h3 {
