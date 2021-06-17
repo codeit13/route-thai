@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Notifications\LaravelTelegramNotification;
+use LINE;
+
 class PaymentController extends Controller
 {
 
@@ -147,7 +150,8 @@ class PaymentController extends Controller
     }
 
     public function cancel($transaction)
-    {
+    {   
+        $user = Auth::user();
         $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
         $buyer_request =$transaction->checkBuyerRequest(); 
         if(isset($buyer_request->is_expired))
@@ -156,11 +160,23 @@ class PaymentController extends Controller
             $buyer_request->status='cancel';
             $buyer_request->save();
         }
+        if($user->telegram_notification) {
+            $user->notify(new LaravelTelegramNotification([
+                'text' => "Buyer Controller:: Order Cancelled",
+                'telegram_user_id' => $user->telegram_user_id,
+                ]));
+            }
+        if($user->line_notification) {
+            LINE::pushmessage(
+                $user->line_user_id,
+                new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Buyer Controller:: Order Cancelled.')
+            );
+        }
         return view('front.payment.payment-request-cancel',compact('transaction'));
     }
 
     public function release($transaction)
-    {
+    {   $user = Auth::user();
         $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
         $buyer_request=$transaction->checkBuyerRequest();
         if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
@@ -176,14 +192,26 @@ class PaymentController extends Controller
             $buyer_request=$transaction->createBuyerTransaction();
 
              $transaction->sendMessage([$transaction->user->mobile],'Payment for your ad has been completed.');
-
+             if($user->telegram_notification) {
+                $user->notify(new LaravelTelegramNotification([
+                    'text' => "Buyer Controller:: Payment for your Ad has been completed.",
+                    'telegram_user_id' => $user->telegram_user_id,
+                    ]));
+                }
+            if($user->line_notification) {
+                LINE::pushmessage(
+                    $user->line_user_id,
+                    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Buyer Controller:: Payment for your Ad has been completed.')
+                );
+            }
             return view('front.payment.payment-request-release',compact('transaction','buyer_request'));
         }
         return view('front.payment.payment-request-release',compact('transaction','buyer_request'));
     }
 
     public function confirm($transaction)
-    {
+    {   
+        $user = Auth::user();
         $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
         $buyer_request=$transaction->checkBuyerRequest();
         if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
@@ -197,6 +225,18 @@ class PaymentController extends Controller
         elseif(!$buyer_request->is_expired && $buyer_request->status=='paid')
         {
            $buyer_request->delete();
+            if($user->telegram_notification) {
+                $user->notify(new LaravelTelegramNotification([
+                    'text' => "Buyer Controller:: Transaction completed.",
+                    'telegram_user_id' => $user->telegram_user_id,
+                    ]));
+                }
+            if($user->line_notification) {
+                LINE::pushmessage(
+                    $user->line_user_id,
+                    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Buyer Controller:: Transaction completed.')
+                );
+            }
            return view('front.payment.payment-request-success',compact('transaction'));
         }
         else
