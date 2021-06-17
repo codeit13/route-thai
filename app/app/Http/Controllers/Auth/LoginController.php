@@ -12,6 +12,7 @@ use Cookie;
 use Auth;
 use App\Models\Authentication_log; 
 
+use Illuminate\Support\Facades\Log;
 use App\Notifications\LaravelTelegramNotification;
 use LINE;
 
