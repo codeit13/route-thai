@@ -24,7 +24,7 @@
 						</div>
 						<div class="head-xs visible-xs">
 							<div class="row">
-								<div class="col-7">
+								<div class="col-lg-7 col-xs-12 xs-flush">
 									<div class="row">
 										<div class="col-12">
 											<label>Date</label>
@@ -39,7 +39,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-5 sp-left">
+								<div class="col-lg-5 col-xs-12 xs-flush sp-left">
 									<div class="row">
 										<div class="col-12">
 											<label>Types of Currency</label>
@@ -57,8 +57,10 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-12 flush">
-								<label>Status</label>
+							<div class="row">
+								<div class="col-12 flush">
+									<label>Status</label>
+								</div>
 							</div>
 							<div class="row">
 								<div class="col-4">
