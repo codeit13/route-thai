@@ -19,7 +19,7 @@ class LoanController extends Controller
      */
     public function index()
     {
-        $loans=auth()->user()->loans()->where('request_type','opening')->get();
+        $loans=auth()->user()->loans()->where('request_type','opening')->paginate(10);
 
         return view('front.loan.history',compact('loans'));
     }
