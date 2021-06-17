@@ -22,3 +22,8 @@ In your ***Controller*** follow the following Steps
                 new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Your Message here.')
             );
         }
+
+
+
+# Buyer Controller -> PaymentController.php
+# Seller COntroller -> SellController.php
