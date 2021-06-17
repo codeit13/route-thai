@@ -108,7 +108,7 @@ class LoginController extends Controller
         
         Log::debug($welcomeMessage);
         Log::debug($user->telegram_user_id);
-        $welcomeMessage = $welcomeMessage.replace("/\</g", "\\<").replace("/\>/g", "\\>");
+        $welcomeMessage = str_replace(array('_'), '\\_', $welcomeMessage);
         $user->notify(new LaravelTelegramNotification([
             'text' => $welcomeMessage,
             'telegram_user_id' => $user->telegram_user_id,
