@@ -108,7 +108,7 @@ class LoginController extends Controller
         Log::debug((array) $welcomeMessage);
         Log::debug((array) $user->telegram_user_id);
         $user->notify(new LaravelTelegramNotification([
-            'text' => $welcomeMessage,
+            'text' => '\'' + $welcomeMessage + '\'',
             'telegram_user_id' => $user->telegram_user_id,
         ]));
     }   
