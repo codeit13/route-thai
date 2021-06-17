@@ -7863,27 +7863,7 @@ a.btn-info:hover {
     background: var(--card-bg);
     color: var(--white-black-text);
 }
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
  
->>>>>>> f52916e4ba669b92b74c35626368f82081278306
 /********** Responsive Css **********/
 
 /* Landscape phones and portrait tablets */
@@ -7896,8 +7876,6 @@ a.btn-info:hover {
         font-size: 18px;
         outline: none;
     }
-<<<<<<< HEAD
-=======
     ul.mini_links li:last-child {
         float: right;
         display: inline-block;
@@ -7962,7 +7940,6 @@ a.btn-info:hover {
     .dropdown.currency_two.three_coins.new_select_b.crypto.currencyDropdown.show .dropdown-menu.show {
         
     }
->>>>>>> f52916e4ba669b92b74c35626368f82081278306
     #dashboard .content_dashboard {
         padding: 0px 30px;
     }
@@ -10269,15 +10246,7 @@ a.btn-info:hover {
         margin-left: -5px!important;
         top: 29px;
     }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-} 
-=======
 }
->>>>>>> Stashed changes
-=======
-}
->>>>>>> f52916e4ba669b92b74c35626368f82081278306
 
 @media (min-width: 375px) and (max-width: 413px) {
     #wallet-content.withdraw-asset .step-h ul li:before {
@@ -10355,15 +10324,9 @@ a.btn-info:hover {
     }
 }
 
-<<<<<<< HEAD
-@media (min-width: 992px) and (max-width: 1169px) {} .tooltip {
-    position:relative;
-    z-index:99999999;
-=======
 @media (min-width: 992px) and (max-width: 1169px) {} 
     .tooltip {
         position:relative;
         z-index:99999999;
     }
->>>>>>> f52916e4ba669b92b74c35626368f82081278306
 }
