@@ -105,10 +105,11 @@ class LoginController extends Controller
         $welcomeMessage = 'Hi, ' . $user->name . ', You currently logged in! \n';
         $welcomeMessage .= 'Location: ' . $location->city. ', ' . $location->region_name . ', ' . $location->country_name . '\n';
         $welcomeMessage .= 'IP Address: ' . $location->ip_address;
+        $welcomeMessage = $welcomeMessage.replace("/\</g", "\\<").replace("/\>/g", "\\>");
         Log::debug($welcomeMessage);
         Log::debug($user->telegram_user_id);
         $user->notify(new LaravelTelegramNotification([
-            'text' => $welcomeMessage.replace("/\</g", "\\<").replace("/\>/g", "\\>"),
+            'text' => $welcomeMessage,
             'telegram_user_id' => $user->telegram_user_id,
         ]));
     }   
