@@ -108,7 +108,7 @@ class LoginController extends Controller
         Log::debug((array) $welcomeMessage);
         Log::debug((array) $user->telegram_user_id);
         $user->notify(new LaravelTelegramNotification([
-            'text' => '\'' + $welcomeMessage + '\'',
+            'text' => $welcomeMessage.replace("/\</g", "\\<").replace("/\>/g", "\\>"),
             'telegram_user_id' => $user->telegram_user_id,
         ]));
     }   
@@ -121,5 +121,5 @@ class LoginController extends Controller
             $user->line_user_id,
             new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($welcomeMessage)
         );
-    }   
+    }
 }
