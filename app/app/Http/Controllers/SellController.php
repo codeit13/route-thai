@@ -152,7 +152,6 @@ class SellController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function buyRequest($trans_id){
-        $user = Auth::user();
         $transcation = Transaction::with(['buyer_requests'=>function($query){
                                             $query->where('status','!=','cancel');
                                         }])
@@ -169,18 +168,6 @@ class SellController extends Controller
                                                         ->where('user_id',auth()->user()->id)
                                                         ->where('status','active')
                                                         ->get();
-            if($user->telegram_notification) {
-                $user->notify(new LaravelTelegramNotification([
-                    'text' => "Seller Controller:: Buy Request",
-                    'telegram_user_id' => $user->telegram_user_id,
-                    ]));
-                }
-            if($user->line_notification) {
-                LINE::pushmessage(
-                    $user->line_user_id,
-                    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Seller Controller:: Buy Request.')
-                );
-            }
             return view('front.sell.buy_request',compact(
                 'user_payment_methods',
                 'transcation'
@@ -197,24 +184,11 @@ class SellController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function buyRequestConfrim($trans_id){
-        $user = Auth::user();
         $transcation = Transaction::where('trans_id',$trans_id)->first();
         $buyer_trans = $transcation->receiver_id;                                        
         
         if ($buyer_trans != '') {
             $url = route('sell.confirm_receipt',['trans_id'=>$trans_id]);
-            if($user->telegram_notification) {
-                $user->notify(new LaravelTelegramNotification([
-                    'text' => "Seller Controller:: Buy Request Confirm",
-                    'telegram_user_id' => $user->telegram_user_id,
-                    ]));
-                }
-            if($user->line_notification) {
-                LINE::pushmessage(
-                    $user->line_user_id,
-                    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Seller Controller:: Buy Request Confirm.')
-                );
-            }
             return response()->json(['success'=>true,'url'=>$url]);            
         }
 
