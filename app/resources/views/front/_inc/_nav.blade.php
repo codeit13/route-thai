@@ -113,6 +113,7 @@
                                     <ul>
                                         <li><a href="{{route('wallet.history')}}">{{__('Fiat and Spot')}}</a></li>
                                         <li><a href="{{route('wallet.p2p')}}">{{__('P2P')}}</a></li>
+                                         <li><a href="{{route('wallet.loan')}}">{{__('Loan')}}</a></li>
                                         <li><a href="{{route('wallet.deposit')}}">{{__('Deposit')}}</a></li>
                                         <li><a href="{{route('wallet.withdraw')}}">{{__('Withdraw')}}</a></li>
                                         <li><a href="{{route('wallet.request.history')}}">{{__('History ( Deposit & Withdraw ) ')}}</a></li>

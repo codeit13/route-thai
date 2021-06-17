@@ -17,11 +17,57 @@ class LoanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $loans=auth()->user()->loans()->where('request_type','opening')->paginate(10);
+        $loans=auth()->user()->loans()->where('request_type','opening');
 
-        return view('front.loan.history',compact('loans'));
+        $currentCurrency='';
+
+        $currencies=\App\Models\Currency::whereIn('id',auth()->user()->loans()->pluck('currency_id'))->get();
+
+         if($request->status)
+        {
+          $loans=$loans->where('status',$request->status);
+        }
+
+        if($request->start_date)
+        {
+            $start_date = date('Y-m-d',strtotime($request->start_date));
+
+         
+            $loans=$loans->whereDate('created_at', '>=', $start_date);
+        }
+
+        if($request->end_date)
+        {
+            $end_date = date('Y-m-d',strtotime($request->end_date));
+
+          //echo '<pre>';print_r($start_date);die;
+            $loans=$loans->whereDate('created_at', '<=', $end_date);
+        }
+
+        if($request->currency && !$request->search)
+        {
+          $loans=$loans->where('currency_id',$request->currency);
+
+          $currentCurrency=$request->currency;
+        }
+
+        if($request->search)
+        {
+          $loans=$loans->whereHas('collateral_currency', function ($query)use ($request) {
+                                          $query->where('name','like',$request->search.'%')->orWhere('short_name','like',$request->search.'%');
+
+                                        });
+
+        }
+
+
+              $loans=$loans->paginate(10);
+
+        //echo '<pre>';print_r($currencies->toArray());
+
+        return view('front.loan.history',compact('loans','currencies','currentCurrency','request'));
     }
 
     /**
@@ -141,7 +187,7 @@ class LoanController extends Controller
 
         if(isset($loan_detail->is_wallet))
         {
-            $wallet=$user->wallet()->where('currency_id',$loan_detail->currency_id)->where('wallet_type',1)->first();
+            $wallet=$user->wallet()->where('currency_id',$loan_detail->currency_id)->first();
 
             $wallet->coin=$wallet->coin-$loan_detail->collateral_amount;
 
@@ -152,6 +198,7 @@ class LoanController extends Controller
             if($loanWallet)
             {
                 $loanWallet->coin=$loanWallet->coin+$loan_detail->loan_amount;
+                $loanWallet->save();
             }
             else
             {
@@ -162,13 +209,16 @@ class LoanController extends Controller
                 $user->wallet()->create($newWallet);
             }
 
+            $loan->on_wallet=1;
+
             $loan->status='approved';
 
             $loan->save();
 
             $message='Your loan request is approved successfully.';
         }
-
+         
+          $request->session()->forget('loan_detail');
      
 
       return redirect()->route('loan.history')->with('success',$message);

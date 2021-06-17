@@ -51,6 +51,15 @@ class SettingsController extends Controller
         
            Currency::whereIn('short_name',$request->fiat)->update(['is_fiat' => 1]);
 
+        if(!$request->has('loan'))
+        {
+            $request->merge(['loan'=>[]]);
+        }
+           Currency::whereNotIn('short_name',$request->loan)->update(['is_loanable' => 0]);
+      
+        
+           Currency::whereIn('short_name',$request->loan)->update(['is_loanable' => 1]);
+
         return redirect()->route('admin.settings');
     }
 
@@ -128,6 +137,27 @@ class SettingsController extends Controller
             }
 
             $dropdowns['trade'][]=$row;
+        }
+
+        //end
+
+        // loan
+
+        if($currency->type_id==1 && $currency->is_crypto)
+        {
+             $row=array('id'=>$currency->id,'value'=>$currency->short_name,'selected'=>false);
+
+            if($currency->hasMedia('icon'))
+            {
+               $row['label']='<img src="'.$currency->firstMedia('icon')->getUrl().'" class="mr-2" style="height: 25px; width: 25px;">'.$currency->short_name;
+            }
+
+            if($currency->is_loanable)
+            {
+                $row['selected']=true;           
+            }
+
+            $dropdowns['loan'][]=$row;
         }
 
         //end

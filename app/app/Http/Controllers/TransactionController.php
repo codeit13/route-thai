@@ -467,6 +467,57 @@ class TransactionController extends Controller
     }
 
 
+    public function loanWallet(Request $request)
+    {
+         $user = Auth::user();
+
+
+
+         //$walletTypes=\App\Models\CurrencyType::where('id','!=',3)->get();
+
+
+            $currencies=new \App\Models\Currency;
+
+
+
+
+        $currencies=$currencies->select('currency.*')->leftJoin('wallet', function($join) {
+      $join->on('currency.id', '=', 'wallet.currency_id')->where('user_id',auth()->id())->where('wallet_type',4);
+    })->where('is_loanable',1);
+
+
+           if($request->coin)
+          {
+            $currencies=$currencies->orderBy('short_name',$request->coin);
+          }
+
+          $amount_order='desc';
+
+          if($request->amount)
+          {
+             $amount_order=$request->amount;
+          }
+
+
+
+
+          $currencies=$currencies->orderBy('wallet.coin',$amount_order)->paginate(10)->withQueryString();
+
+
+     
+
+       // $walletType = \App\Models\CurrencyType::find(4);
+
+        $wallets=\Auth::user()->wallet()->get();
+
+        $allCurrencies=$this->sortedCurrencies();
+
+
+ 
+        return view('front.wallet.loan-wallet',compact('currencies','wallets','allCurrencies','request'));
+    }
+
+
     public function sortedCurrencies()
     {
       

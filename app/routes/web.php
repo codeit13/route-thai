@@ -102,6 +102,9 @@ Route::middleware('auth')->group(function(){
 
         Route::get('p2p',[App\Http\Controllers\TransactionController::class, 'p2p'])->name('wallet.p2p');
 
+        Route::get('loan',[App\Http\Controllers\TransactionController::class, 'loanWallet'])->name('wallet.loan');
+
+
         
         Route::get('withdraw/history/{type?}/{typename?}',[App\Http\Controllers\TransactionController::class, 'withdraw_history'])->name('wallet.withdraw.history');
         Route::get('withdraw/{type?}/{typename?}/{currency?}/{currencyname?}',[App\Http\Controllers\TransactionController::class, 'create_withdraw'])->name('wallet.withdraw');
