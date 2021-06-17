@@ -54,8 +54,10 @@
                     <ul class="nav-menu">
                         <li class="nav-item {{\Route::is("p2p.exchange")?'active':''}}" > <a class="nav-link" href="{{route('p2p.exchange')}}"><span class="visible-xs"><i class="far fa-exchange-alt"></i></span>P2P Exchange</a>
                         </li>
-                        <li class="nav-item"> <a class="nav-link" href="#"><span class="visible-xs"><i class="fas fa-landmark"></i></span>Mortgage Loan</a>
+                        @if(auth()->user())
+                        <li class="nav-item"> <a class="nav-link" href="{{route('loan.history')}}"><span class="visible-xs"><i class="fas fa-landmark"></i></span>Collateral Loan</a>
                         </li>
+                        @endif
                         <li class="nav-item {{\Route::is("staking")?'active':''}}"> <a class="nav-link" href="{{route('staking')}}"><span class="visible-xs"><i class="far fa-plane-departure"></i></span>Staking</a>
                         </li>
                         <li class="nav-item"> <a class="nav-link" href="#"><span class="visible-xs"><i class="fas fa-magic"></i></span>Auto Trading</a>
