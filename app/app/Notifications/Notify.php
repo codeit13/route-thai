@@ -12,10 +12,10 @@ class Notify {
             // $this->service->send($mobile,$message);
 
             if($user['telegram_notification']) {
-                $user->notify(new LaravelTelegramNotification([
+                new LaravelTelegramNotification([
                     'telegram_user_id' => $user['telegram_user_id'],
                     'text' => $user['Message'],
-                    ]));
+                    ]);
                 }
 
             if($user['line_notification']) {
