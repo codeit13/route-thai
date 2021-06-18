@@ -262,7 +262,7 @@ class SellController extends Controller
                                                         ->get();     
                                  
             // Message for Seller
-            $Message = "Seller :: Your Order have been Completed.";
+            $Message = "Your Sell Order have been Completed Successfully.";
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
                 'mobile' => "mobile",
@@ -272,20 +272,6 @@ class SellController extends Controller
                 'line_user_id' => $user->line_user_id,
                 'email_notification' => $user->email_notification,
                 'email_id' => $user->email,
-                'Message' => $Message,
-            ]);
-
-            // Message for Buyer
-            $Message = 'Buyer :: Your Order have been Completed';
-            Notify::sendMessage([
-                'sms_notification' => $transaction->user->sms_notification,
-                'mobile' => "mobile",
-                'telegram_notification' => $transaction->user->telegram_notification,
-                'telegram_user_id' => $transaction->user->telegram_user_id,
-                'line_notification' => $transaction->user->line_notification,
-                'line_user_id' => $transaction->user->line_user_id,
-                'email_notification' => $transaction->user->email_notification,
-                'email_id' => $transaction->user->email,
                 'Message' => $Message,
             ]);
 

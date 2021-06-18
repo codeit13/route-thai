@@ -249,7 +249,7 @@ class PaymentController extends Controller
             ]);
             
             // Message for Seller
-            $Message = 'Payment for your Sell Order has been completed.';
+            $Message = 'Your Buyer have made the Payment. Please visit the website to confirm the payment.';
             Notify::sendMessage([
                 'sms_notification' => $transaction->user->sms_notification,
                 'mobile' => "mobile",
@@ -285,7 +285,7 @@ class PaymentController extends Controller
            $buyer_request->delete();
 
             // Message for Buyer
-            $Message = 'Payment is successful for your order. Wait for the Seller to confirm the payment.';
+            $Message = 'Your Buy Order has been Completed Successfully.';
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
                 'mobile' => "mobile",
@@ -298,19 +298,6 @@ class PaymentController extends Controller
                 'Message' => $Message,
             ]);
 
-            // Message for Seller
-            $Message = 'Your Buyer have made the Payment. Please visit the website to confirm the payment.';
-            Notify::sendMessage([
-                'sms_notification' => $transaction->user->sms_notification,
-                'mobile' => "mobile",
-                'telegram_notification' => $transaction->user->telegram_notification,
-                'telegram_user_id' => $transaction->user->telegram_user_id,
-                'line_notification' => $transaction->user->line_notification,
-                'line_user_id' => $transaction->user->line_user_id,
-                'email_notification' => $transaction->user->email_notification,
-                'email_id' => $transaction->user->email,
-                'Message' => $Message,
-            ]);
            return view('front.payment.payment-request-success',compact('transaction'));
         }
         else
