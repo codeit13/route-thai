@@ -1368,7 +1368,7 @@ td{
         font-size: 14px;
     }
     .main_data_dable table thead tr th {
-        padding: 0 10px;
+        padding: 0px 17px 0 1px;
         }
     .main_data_dable table tr td:first-child {
         text-align: left;
