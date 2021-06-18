@@ -91,6 +91,20 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
+                    <div class="form-group">
+                    <label class="form-control-label" for="loan_interest_rate">Interest Rate</label>
+                    <div class="input-group">
+                      <input type="text" id="loan_interest_rate" name="loan_interest_rate" class="form-control" placeholder="Interest Rate" value="{{ $settingValue['loan_interest_rate']??'' }}">
+                      <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                      </div>
+                    </div>
+                    @error('loan_interest_rate')
+                    <p class="invalid-value" role="alert">
+                        <strong>{{ __($message) }}</strong>
+                    </p>
+                    @enderror
+                  </div>
                 </div>
               </div>
               <div class="row">
