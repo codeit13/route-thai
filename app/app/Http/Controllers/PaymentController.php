@@ -103,21 +103,21 @@ class PaymentController extends Controller
                 $user->buyer_request()->create(['transaction_id'=>$transaction->id]);
 
                 // Message for Buyer
-                $Message = "You Ad has been matched and its pending payment.\n Transaction ID: " . $transaction->id;
-                Notify::sendMessage([
-                    'sms_notification' => $user->sms_notification,
-                    'mobile' => "mobile",
-                    'telegram_notification' => $user->telegram_notification,
-                    'telegram_user_id' => $user->telegram_user_id,
-                    'line_notification' => $user->line_notification,
-                    'line_user_id' => $user->line_user_id,
-                    'email_notification' => $user->email_notification,
-                    'email_id' => $user->email,
-                    'Message' => $Message,
-                ]);
+                // $Message = "Your Buying Order is pending it\'s payment.\n Transaction ID: " . $transaction->trans_id;
+                // Notify::sendMessage([
+                //     'sms_notification' => $user->sms_notification,
+                //     'mobile' => "mobile",
+                //     'telegram_notification' => $user->telegram_notification,
+                //     'telegram_user_id' => $user->telegram_user_id,
+                //     'line_notification' => $user->line_notification,
+                //     'line_user_id' => $user->line_user_id,
+                //     'email_notification' => $user->email_notification,
+                //     'email_id' => $user->email,
+                //     'Message' => $Message,
+                // ]);
 
                 // Message for Seller
-                $Message = "You Buying Order is pending it\'s payment.\n Transaction ID: " . $transaction->trans_id;
+                $Message = "[Route-Thai] P2P Order (Ending with " + substr($transaction->id, -4) + ") of " + $data['quantity'] + " " + $selected_currency->name + " has been successfully matched with a Buyer.";
                 Notify::sendMessage([
                     'sms_notification' => $transaction->user->sms_notification,
                     'mobile' => "mobile",
@@ -236,21 +236,21 @@ class PaymentController extends Controller
             $buyer_request=$transaction->createBuyerTransaction();
 
             //  Message for Buyer
-            $Message = 'Payment for your Buy Order has been completed.';
-            Notify::sendMessage([
-                'sms_notification' => $user->sms_notification,
-                'mobile' => "mobile",
-                'telegram_notification' => $user->telegram_notification,
-                'telegram_user_id' => $user->telegram_user_id,
-                'line_notification' => $user->line_notification,
-                'line_user_id' => $user->line_user_id,
-                'email_notification' => $user->email_notification,
-                'email_id' => $user->email,
-                'Message' => $Message,
-            ]);
+            // $Message = 'Payment for your Buy Order has been completed.';
+            // Notify::sendMessage([
+            //     'sms_notification' => $user->sms_notification,
+            //     'mobile' => "mobile",
+            //     'telegram_notification' => $user->telegram_notification,
+            //     'telegram_user_id' => $user->telegram_user_id,
+            //     'line_notification' => $user->line_notification,
+            //     'line_user_id' => $user->line_user_id,
+            //     'email_notification' => $user->email_notification,
+            //     'email_id' => $user->email,
+            //     'Message' => $Message,
+            // ]);
             
             // Message for Seller
-            $Message = 'Your Buyer have made the Payment. Please visit the website to confirm the payment.';
+            $Message = "[Route-Thai] The buyer has marked P2P ( Order " + substr($trans_id, -4) + " ) as paid. Please release the crypto ASAP after confirming that payment has been received.";
             Notify::sendMessage([
                 'sms_notification' => $transaction->user->sms_notification,
                 'mobile' => "mobile",
@@ -286,7 +286,7 @@ class PaymentController extends Controller
            $buyer_request->delete();
 
             // Message for Buyer
-            $Message = 'Your Buy Order has been Completed Successfully.';
+            $Message = "[Route-Thai] P2P Order (Ending with " + substr($trans_id, -4) + ") has been completed. The seller has released " + $data['quantity'] + " " + $selected_currency->name + " to your P2P wallet.";
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
                 'mobile' => "mobile",
