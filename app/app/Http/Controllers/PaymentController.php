@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\User;
 use Auth;
 
-use App\Notifications\LaravelTelegramNotification;
-use LINE;
+use Illuminate\Http\Request;
+use App\Notifications\Notify;
 
 class PaymentController extends Controller
 {
@@ -103,23 +101,35 @@ class PaymentController extends Controller
                 
                 $user=\Auth::user();
                 $user->buyer_request()->create(['transaction_id'=>$transaction->id]);
-                $transaction->sendMessage([$transaction->user->mobile],'Your ad has been matched and its pending payment');
-                $buyer_request=$transaction->checkBuyerRequest();
 
+                // Message for Buyer
                 $Message = "You Ad has been matched and its pending payment.\n Transaction ID: " . $transaction->id;
-                if($user->telegram_notification) {
-                    $user->notify(new LaravelTelegramNotification([
-                        'text' => $Message,
-                        'telegram_user_id' => $user->telegram_user_id,
-                        ]));
-                    }
-                if($user->line_notification) {
-                    LINE::pushmessage(
-                        $user->line_user_id,
-                        new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($Message)
-                    );
-                }
+                Notify::sendMessage([
+                    'sms_notification' => $user->sms_notification,
+                    'mobile' => "mobile",
+                    'telegram_notification' => $user->telegram_notification,
+                    'telegram_user_id' => $user->telegram_user_id,
+                    'line_notification' => $user->line_notification,
+                    'line_user_id' => $user->line_user_id,
+                    'email_notification' => $user->email_notification,
+                    'email_id' => $user->email,
+                    'Message' => $Message,
+                ]);
 
+                // Message for Seller
+                Notify::sendMessage([
+                    'sms_notification' => $transaction->user->sms_notification,
+                    'mobile' => "mobile",
+                    'telegram_notification' => $transaction->user->telegram_notification,
+                    'telegram_user_id' => $transaction->user->telegram_user_id,
+                    'line_notification' => $transaction->user->line_notification,
+                    'line_user_id' => $transaction->user->line_user_id,
+                    'email_notification' => $transaction->user->email_notification,
+                    'email_id' => $transaction->user->email,
+                    'Message' => $Message,
+                ]);
+
+                $buyer_request=$transaction->checkBuyerRequest();
             }
             elseif($buyer_request=='exists')
             {
@@ -177,18 +187,34 @@ class PaymentController extends Controller
             $buyer_request->status='cancel';
             $buyer_request->save();
         }
-        if($user->telegram_notification) {
-            $user->notify(new LaravelTelegramNotification([
-                'text' => "Buyer Controller:: Order Cancelled",
-                'telegram_user_id' => $user->telegram_user_id,
-                ]));
-            }
-        if($user->line_notification) {
-            LINE::pushmessage(
-                $user->line_user_id,
-                new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Buyer Controller:: Order Cancelled.')
-            );
-        }
+        $Message = "Order has been Cancelled";
+
+        // Message for Buyer
+        Notify::sendMessage([
+            'sms_notification' => $user->sms_notification,
+            'mobile' => "mobile",
+            'telegram_notification' => $user->telegram_notification,
+            'telegram_user_id' => $user->telegram_user_id,
+            'line_notification' => $user->line_notification,
+            'line_user_id' => $user->line_user_id,
+            'email_notification' => $user->email_notification,
+            'email_id' => $user->email,
+            'Message' => $Message,
+        ]);
+
+        // Message for Seller
+        Notify::sendMessage([
+            'sms_notification' => $transaction->user->sms_notification,
+            'mobile' => "mobile",
+            'telegram_notification' => $transaction->user->telegram_notification,
+            'telegram_user_id' => $transaction->user->telegram_user_id,
+            'line_notification' => $transaction->user->line_notification,
+            'line_user_id' => $transaction->user->line_user_id,
+            'email_notification' => $transaction->user->email_notification,
+            'email_id' => $transaction->user->email,
+            'Message' => $Message,
+        ]);
+
         return view('front.payment.payment-request-cancel',compact('transaction'));
     }
 
@@ -208,19 +234,34 @@ class PaymentController extends Controller
         {
             $buyer_request=$transaction->createBuyerTransaction();
 
-             $transaction->sendMessage([$transaction->user->mobile],'Payment for your ad has been completed.');
-             if($user->telegram_notification) {
-                $user->notify(new LaravelTelegramNotification([
-                    'text' => "Buyer Controller:: Payment for your Ad has been completed.",
-                    'telegram_user_id' => $user->telegram_user_id,
-                    ]));
-                }
-            if($user->line_notification) {
-                LINE::pushmessage(
-                    $user->line_user_id,
-                    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Buyer Controller:: Payment for your Ad has been completed.')
-                );
-            }
+            //  Message for Buyer
+            $Message = 'Payment for your Buy Order has been completed.';
+            Notify::sendMessage([
+                'sms_notification' => $user->sms_notification,
+                'mobile' => "mobile",
+                'telegram_notification' => $user->telegram_notification,
+                'telegram_user_id' => $user->telegram_user_id,
+                'line_notification' => $user->line_notification,
+                'line_user_id' => $user->line_user_id,
+                'email_notification' => $user->email_notification,
+                'email_id' => $user->email,
+                'Message' => $Message,
+            ]);
+            
+            // Message for Seller
+            $Message = 'Payment for your Sell Order has been completed.';
+            Notify::sendMessage([
+                'sms_notification' => $transaction->user->sms_notification,
+                'mobile' => "mobile",
+                'telegram_notification' => $transaction->user->telegram_notification,
+                'telegram_user_id' => $transaction->user->telegram_user_id,
+                'line_notification' => $transaction->user->line_notification,
+                'line_user_id' => $transaction->user->line_user_id,
+                'email_notification' => $transaction->user->email_notification,
+                'email_id' => $transaction->user->email,
+                'Message' => $Message,
+            ]);
+            
             return view('front.payment.payment-request-release',compact('transaction','buyer_request'));
         }
         return view('front.payment.payment-request-release',compact('transaction','buyer_request'));
@@ -242,18 +283,34 @@ class PaymentController extends Controller
         elseif(!$buyer_request->is_expired && $buyer_request->status=='paid')
         {
            $buyer_request->delete();
-            if($user->telegram_notification) {
-                $user->notify(new LaravelTelegramNotification([
-                    'text' => "Buyer Controller:: Transaction completed.",
-                    'telegram_user_id' => $user->telegram_user_id,
-                    ]));
-                }
-            if($user->line_notification) {
-                LINE::pushmessage(
-                    $user->line_user_id,
-                    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Buyer Controller:: Transaction completed.')
-                );
-            }
+
+            // Message for Buyer
+            $Message = 'Payment is successful for your order. Wait for the Seller to confirm the payment.';
+            Notify::sendMessage([
+                'sms_notification' => $user->sms_notification,
+                'mobile' => "mobile",
+                'telegram_notification' => $user->telegram_notification,
+                'telegram_user_id' => $user->telegram_user_id,
+                'line_notification' => $user->line_notification,
+                'line_user_id' => $user->line_user_id,
+                'email_notification' => $user->email_notification,
+                'email_id' => $user->email,
+                'Message' => $Message,
+            ]);
+
+            // Message for Seller
+            $Message = 'Your Buyer have made the Payment. Please visit the website to confirm the payment.';
+            Notify::sendMessage([
+                'sms_notification' => $transaction->user->sms_notification,
+                'mobile' => "mobile",
+                'telegram_notification' => $transaction->user->telegram_notification,
+                'telegram_user_id' => $transaction->user->telegram_user_id,
+                'line_notification' => $transaction->user->line_notification,
+                'line_user_id' => $transaction->user->line_user_id,
+                'email_notification' => $transaction->user->email_notification,
+                'email_id' => $transaction->user->email,
+                'Message' => $Message,
+            ]);
            return view('front.payment.payment-request-success',compact('transaction'));
         }
         else

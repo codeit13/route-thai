@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Auth;
-
 use Illuminate\Http\Request;
 use App\Models\Currency;
 use App\Models\Wallet;
@@ -12,8 +9,10 @@ use App\Models\Transaction;
 use App\Models\UserPaymentMethod;
 use App\Http\Traits\GenerateTransIDTrait;
 
-use App\Notifications\LaravelTelegramNotification;
-use LINE;
+use App\Models\User;
+use Auth;
+
+use App\Notifications\Notify;
 
 class SellController extends Controller
 {
@@ -128,19 +127,19 @@ class SellController extends Controller
         ];
         $request->session()->forget('sell_data');
         
-        $sellMessage = "You Sell Ad has been placed Successfully";
-        if($user->telegram_notification) {
-            $user->notify(new LaravelTelegramNotification([
-                'text' => $sellMessage,
-                'telegram_user_id' => $user->telegram_user_id,
-                ]));
-            }
-        if($user->line_notification) {
-            LINE::pushmessage(
-                $user->line_user_id,
-                new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($sellMessage)
-            );
-        }
+        $user = Auth::user();
+        $Message = "You Sell Ad has been placed Successfully";
+        Notify::sendMessage([
+            'sms_notification' => $user->sms_notification,
+            'mobile' => "mobile",
+            'telegram_notification' => $user->telegram_notification,
+            'telegram_user_id' => $user->telegram_user_id,
+            'line_notification' => $user->line_notification,
+            'line_user_id' => $user->line_user_id,
+            'email_notification' => $user->email_notification,
+            'email_id' => $user->email,
+            'Message' => $Message,
+        ]);
 
         return response()->json(['success'=>true,'data'=>$response_data],200);
     }
@@ -261,18 +260,35 @@ class SellController extends Controller
                                                         ->where('user_id',auth()->user()->id)
                                                         ->where('status','active')
                                                         ->get();     
-            if($user->telegram_notification) {
-                $user->notify(new LaravelTelegramNotification([
-                    'text' => "Seller Controller:: Order Success",
-                    'telegram_user_id' => $user->telegram_user_id,
-                    ]));
-                }
-            if($user->line_notification) {
-                LINE::pushmessage(
-                    $user->line_user_id,
-                    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Seller Controller:: Order Success.')
-                );
-            }
+                                 
+            // Message for Seller
+            $Message = "Seller :: Your Order have been Completed.";
+            Notify::sendMessage([
+                'sms_notification' => $user->sms_notification,
+                'mobile' => "mobile",
+                'telegram_notification' => $user->telegram_notification,
+                'telegram_user_id' => $user->telegram_user_id,
+                'line_notification' => $user->line_notification,
+                'line_user_id' => $user->line_user_id,
+                'email_notification' => $user->email_notification,
+                'email_id' => $user->email,
+                'Message' => $Message,
+            ]);
+
+            // Message for Buyer
+            $Message = 'Buyer :: Your Order have been Completed';
+            Notify::sendMessage([
+                'sms_notification' => $transaction->user->sms_notification,
+                'mobile' => "mobile",
+                'telegram_notification' => $transaction->user->telegram_notification,
+                'telegram_user_id' => $transaction->user->telegram_user_id,
+                'line_notification' => $transaction->user->line_notification,
+                'line_user_id' => $transaction->user->line_user_id,
+                'email_notification' => $transaction->user->email_notification,
+                'email_id' => $transaction->user->email,
+                'Message' => $Message,
+            ]);
+
             return view('front.sell.success',compact(
                 'transcation',
                 'user_payment_methods'
@@ -294,18 +310,20 @@ class SellController extends Controller
 
         if ($transcation) {
             $transcation->delete();
-            if($user->telegram_notification) {
-                $user->notify(new LaravelTelegramNotification([
-                    'text' => "Seller Controller:: Order Deleted",
-                    'telegram_user_id' => $user->telegram_user_id,
-                    ]));
-                }
-            if($user->line_notification) {
-                LINE::pushmessage(
-                    $user->line_user_id,
-                    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Seller Controller:: Order Deleted.')
-                );
-            }
+
+            $Message = "Order Deleted";
+            Notify::sendMessage([
+                'sms_notification' => $user->sms_notification,
+                'mobile' => "mobile",
+                'telegram_notification' => $user->telegram_notification,
+                'telegram_user_id' => $user->telegram_user_id,
+                'line_notification' => $user->line_notification,
+                'line_user_id' => $user->line_user_id,
+                'email_notification' => $user->email_notification,
+                'email_id' => $user->email,
+                'Message' => $Message,
+            ]);
+
             return redirect()->back()->with('message_type','success')
                                         ->with('message','Ad removed successfully');
         }
