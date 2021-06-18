@@ -13,8 +13,7 @@ use Auth;
 use App\Models\Authentication_log; 
 
 use Illuminate\Support\Facades\Log;
-use App\Notifications\LaravelTelegramNotification;
-use LINE;
+use App\Notifications\Notify;
 
 class LoginController extends Controller
 {
@@ -74,12 +73,23 @@ class LoginController extends Controller
             $user = User::where(["email" => $credential['email']])->first();
             Auth::login($user, $remember_me);
             $this->auth_locationlog($request);
-            if($user->telegram_notification) {
-                $this->sendTelegramNotification($user);
-            }
-            if($user->line_notification) {
-                $this->sendLineNotification($user); 
-            }
+
+            $location =  Authentication_log::whereNotNull('continent_code')->where('authenticatable_id',$user->id)->orderBy('id','DESC')->first();
+            $welcomeMessage = "Hi, ".$user->name . ", You currently logged in! \n";
+            $welcomeMessage .= "Location: ".$location->city.", ".$location->region_name.", ".$location->country_name."\n";
+            $welcomeMessage .= "IP Address: ".$location->ip_address;
+            Notify::sendMessage([
+                'sms_notification' => $user->sms_notification,
+                'mobile' => $user->mobile,
+                'telegram_notification' => $user->telegram_notification,
+                'telegram_user_id' => $user->telegram_user_id,
+                'line_notification' => $user->line_notification,
+                'line_user_id' => $user->line_user_id,
+                'email_notification' => $user->email_notification,
+                'email_id' => $user->email,
+                'Message' => $Message,
+            ]);
+
             return redirect('/home')->withCookie(Cookie::make('logged_in', $user->remember_token, 43200));
         }
        return back()->withInput($request->only('email', 'remember'));
@@ -100,28 +110,28 @@ class LoginController extends Controller
         return true;
     }
 
-    private function sendTelegramNotification($user){
-        $location =  Authentication_log::whereNotNull('continent_code')->where('authenticatable_id',$user->id)->orderBy('id','DESC')->first();
-        $welcomeMessage = 'Hi, ' . $user->name . ', You currently logged in! \n';
-        $welcomeMessage .= 'Location: ' . $location->city. ', ' . $location->region_name . ', ' . $location->country_name . '\n';
-        $welcomeMessage .= 'IP Address: ' . $location->ip_address;
+    // private function sendTelegramNotification($user){
+    //     $location =  Authentication_log::whereNotNull('continent_code')->where('authenticatable_id',$user->id)->orderBy('id','DESC')->first();
+    //     $welcomeMessage = 'Hi, ' . $user->name . ', You currently logged in! \n';
+    //     $welcomeMessage .= 'Location: ' . $location->city. ', ' . $location->region_name . ', ' . $location->country_name . '\n';
+    //     $welcomeMessage .= 'IP Address: ' . $location->ip_address;
         
-        Log::debug($welcomeMessage);
-        Log::debug($user->telegram_user_id);
-        $welcomeMessage = str_replace(array('_'), '\\_', $welcomeMessage);
-        $user->notify(new LaravelTelegramNotification([
-            'text' => $welcomeMessage,
-            'telegram_user_id' => $user->telegram_user_id,
-        ]));
-    }   
-    private function sendLineNotification($user){
-        $location =  Authentication_log::whereNotNull('continent_code')->where('authenticatable_id',$user->id)->orderBy('id','DESC')->first();
-        $welcomeMessage = "Hi, ".$user->name . ", You currently logged in! \n";
-        $welcomeMessage .= "Location: ".$location->city.", ".$location->region_name.", ".$location->country_name."\n";
-        $welcomeMessage .= "IP Address: ".$location->ip_address;
-        LINE::pushmessage(
-            $user->line_user_id,
-            new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($welcomeMessage)
-        );
-    }
+    //     Log::debug($welcomeMessage);
+    //     Log::debug($user->telegram_user_id);
+    //     $welcomeMessage = str_replace(array('_'), '\\_', $welcomeMessage);
+    //     $user->notify(new LaravelTelegramNotification([
+    //         'text' => $welcomeMessage,
+    //         'telegram_user_id' => $user->telegram_user_id,
+    //     ]));
+    // }   
+    // private function sendLineNotification($user){
+    //     $location =  Authentication_log::whereNotNull('continent_code')->where('authenticatable_id',$user->id)->orderBy('id','DESC')->first();
+    //     $welcomeMessage = "Hi, ".$user->name . ", You currently logged in! \n";
+    //     $welcomeMessage .= "Location: ".$location->city.", ".$location->region_name.", ".$location->country_name."\n";
+    //     $welcomeMessage .= "IP Address: ".$location->ip_address;
+    //     LINE::pushmessage(
+    //         $user->line_user_id,
+    //         new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($welcomeMessage)
+    //     );
+    // }
 }

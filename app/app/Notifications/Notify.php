@@ -2,6 +2,7 @@
 namespace App\Notifications;
 
 use App\Notifications\LaravelTelegramNotification;
+use NotificationChannels\Telegram\TelegramChannel;
 use LINE;
 
 class Notify {
@@ -12,10 +13,22 @@ class Notify {
             // $this->service->send($mobile,$message);
 
             if($user['telegram_notification']) {
-                new LaravelTelegramNotification([
-                    'telegram_user_id' => $user['telegram_user_id'],
-                    'text' => $user['Message'],
-                    ]);
+
+                Notification::route(
+                    'telegram', $user['telegram_user_id']
+                    )->notify(
+                        new LaravelTelegramNotification(
+                            [
+                                    'telegram_user_id' => $user['telegram_user_id'],
+                                    'text' => str_replace(array('_'), '\\_', $user['Message']),
+                                    ]
+                        )
+                    );
+            
+                // LaravelTelegramNotification([
+                //     'telegram_user_id' => ,
+                //     'text' => $user['Message'],
+                //     ]);
                 }
 
             if($user['line_notification']) {
