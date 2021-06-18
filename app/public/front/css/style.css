@@ -5684,6 +5684,11 @@ section#loans-deshboard-new {
     border-radius: 5px;
     cursor: pointer;
 }
+#wallet-content.request .field button:hover {
+    background-color: rgb(6 177 127);
+    border-color: rgb(6 177 127);
+    color: rgb(255, 255, 255);
+}
 /*#wallet-content.request .field button:hover {
     background-color: #000;
     color: #fff;
@@ -7884,18 +7889,16 @@ a.btn-info:hover {
         margin-top: 16px;
     }
     #filter ul.search_bar li .dropdown-menu.show {
-        top: 6px !important;
-        margin-left: -76px;
+        top: -2px !important;
+        margin-left: -19px;
     }
     #filter ul.search_bar li.full_li .dropdown-menu.show {
         top: 0px !important;
         margin-left: 0;
     }
-    #filter.main {
-        display: inline-block !important;
-    }
     #filter ul.search_bar li {
         width: 49%;    
+        padding-right: 0px;
     }
     #filter ul.search_bar li input  {
         width: 100%;
@@ -7929,7 +7932,6 @@ a.btn-info:hover {
     }
     #filter ul.search_bar li .dropdown.currency_two.three_coins button#dropdownMenuButton, #filter ul.search_bar li .dropdown.currency_two.three_coins {
         width: 100% !important;
-        height: 30px;
         font-size: 13px;
     }
     #filter ul.search_bar li .dropdown.currency_two.three_coins button#dropdownMenuButton img {
@@ -9517,7 +9519,9 @@ a.btn-info:hover {
         margin-top: 11px;
     }
     #filter {
-        display: none;
+        display: inline-block;
+        padding: 0px 0px;
+        padding-bottom: 20px;
     }
     #wallet-content {
         padding-top: 0px !important;
@@ -10292,9 +10296,6 @@ a.btn-info:hover {
         float: left;
         margin-top: 5px;
         margin-bottom: 15px;
-    }
-    .hidden-xs {
-        display: none !important;
     }
     #news-add h2 {
         font-size: 45px;
