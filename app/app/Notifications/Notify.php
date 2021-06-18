@@ -2,8 +2,10 @@
 namespace App\Notifications;
 
 use App\Notifications\LaravelTelegramNotification;
-use NotificationChannels\Telegram\TelegramChannel;
 use LINE;
+
+use NotificationChannels\Telegram\TelegramChannel;
+use Illuminate\Notifications\Notification;
 
 class Notify {
     public static function sendMessage($user) {
