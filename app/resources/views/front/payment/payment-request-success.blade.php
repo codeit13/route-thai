@@ -6,7 +6,7 @@
 <div class="progress-section visible-xs">
 				<h2><img src="{{asset('front/img/check.png')}}" alt=""/> {{__('Order Completed')}} </h2>
 			</div>
-			@include('front.sell.sub_header')
+			@include('front.sell.sub_header_buy')
 @endsection
 @section('content')
 	<section id="main-heading" class="panding-payment hidden-xs">

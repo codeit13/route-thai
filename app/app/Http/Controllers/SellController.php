@@ -52,6 +52,7 @@ class SellController extends Controller
                 'trans_id'
             ));
     	}else{
+            // dd($crypto_currencies);
 	    	return view('front.sell.index',compact(
 	    		'crypto_currencies',
                 'default_fiat_currency',

@@ -170,10 +170,12 @@ Route: P2P Trading Platform
                                             </div>
                                         </td>
                                         <td>
-                                        <select name="type" class="filter-type">
+                                        <select name="type" class="filter-type order_type">
                                             <option value="all" @if($request->type=='' or $request->type=='all') selected @endif>All</option>
                                             <option value="sell" @if($request->type=='sell') selected @endif >{{__('Sell')}}</option>
                                             <option value="buy" @if($request->type=='buy') selected @endif>{{__('Buy')}}</option>
+
+                                            <input type="hidden" name="order_type" class="order_type_class" id="order_type_id" value=""/>
                                         </select>
                                         </td>
                                         <td>
@@ -212,7 +214,8 @@ Route: P2P Trading Platform
                                             <h2>{{__(ucwords($transaction->type))}}</h2>
                                         </td>
                                         <td class="hidden-xs" colspan="2"><span>{{__("Order number")}}</span>{{$transaction->trans_id}}</td>
-                                        <td class="xs-full" colspan="2"><span>{{__("Created time")}}</span>{{$transaction->created_at}}</td>
+                                        <!-- <td colspan="0.3" class="xs-full">&nbsp;</td> -->
+                                        <td class="xs-full" colspan="2" style="padding-left: 90px;"><span>{{__("Created time")}}</span>{{$transaction->created_at}}</td>
                                         <td class="hidden-xs"></td>
                                     </tr>
                                     <tr>
@@ -356,21 +359,34 @@ Route: P2P Trading Platform
         $('.currencyDropdown .dropdown-toggle').html($(this).html());
         submitform();
     });
+
+    $('.order_type').change(function(e){
+
+        var currency_id = $('.dropdown-item').attr('data-id');
+        
+    })
     
+
+    // name="order_type" class="order_type_class" id="order_type_id"
+
+
     function submitform()
     {
         if($('#filterForm1').parent('.head-xs').css('display') !='none')
         {
+            // console.log('if');
             document.getElementById("filterForm1").submit();    
         }
         else
+            // console.log('else');
         {
             document.getElementById("filterForm").submit();    
         }
     }
     
-    $(document).on('change','.filter-type',function()
+    $(".options li").on('click',function()
     {
+        console.log('hi');
         submitform();
     })
     
