@@ -117,6 +117,7 @@ class PaymentController extends Controller
                 ]);
 
                 // Message for Seller
+                $Message = "You Buying Order is pending it\'s payment.\n Transaction ID: " . $transaction->trans_id;
                 Notify::sendMessage([
                     'sms_notification' => $transaction->user->sms_notification,
                     'mobile' => "mobile",
