@@ -51,6 +51,15 @@ class SettingsController extends Controller
         
            Currency::whereIn('short_name',$request->fiat)->update(['is_fiat' => 1]);
 
+        if(!$request->has('loan'))
+        {
+            $request->merge(['loan'=>[]]);
+        }
+           Currency::whereNotIn('short_name',$request->loan)->update(['is_loanable' => 0]);
+      
+        
+           Currency::whereIn('short_name',$request->loan)->update(['is_loanable' => 1]);
+
         return redirect()->route('admin.settings');
     }
 
@@ -132,6 +141,27 @@ class SettingsController extends Controller
 
         //end
 
+        // loan
+
+        if($currency->type_id==1 && $currency->is_crypto)
+        {
+             $row=array('id'=>$currency->id,'value'=>$currency->short_name,'selected'=>false);
+
+            if($currency->hasMedia('icon'))
+            {
+               $row['label']='<img src="'.$currency->firstMedia('icon')->getUrl().'" class="mr-2" style="height: 25px; width: 25px;">'.$currency->short_name;
+            }
+
+            if($currency->is_loanable)
+            {
+                $row['selected']=true;           
+            }
+
+            $dropdowns['loan'][]=$row;
+        }
+
+        //end
+
 
 
 
@@ -146,7 +176,7 @@ class SettingsController extends Controller
 
     // Loan Setting Page
     public function loan_settings(Request $request) {
-        $loanSettings=Settings::whereIn("setting_code",["loan_price_down_limit","loan_min_percentage","loan_max_percentage","loan_repay_currency_type"])->get();
+        $loanSettings=Settings::whereIn("setting_code",["loan_price_down_limit","loan_min_percentage","loan_max_percentage","loan_repay_currency_type","loan_interest_rate"])->get();
 
         $settingValue = [];
         foreach ($loanSettings as $key => $value) {
@@ -180,6 +210,7 @@ class SettingsController extends Controller
           $rules['loan_price_down_limit']='required|numeric|min:1|max:100';
           $rules['loan_min_percentage']='required|numeric|min:1|max:100';
           $rules['loan_max_percentage']='required|numeric|gt:loan_min_percentage|min:1|max:100';
+          $rules['loan_interest_rate']='required|numeric|gt:0';
 
           $request->validate($rules);
 
@@ -195,6 +226,7 @@ class SettingsController extends Controller
           Settings::where("setting_code","loan_price_down_limit")->update(["setting_value"=>$request->loan_price_down_limit,"updated_by"=>$adminId]);
           Settings::where("setting_code","loan_min_percentage")->update(["setting_value"=>$request->loan_min_percentage,"updated_by"=>$adminId]);
           Settings::where("setting_code","loan_max_percentage")->update(["setting_value"=>$request->loan_max_percentage,"updated_by"=>$adminId]);
+          Settings::updateOrCreate(["setting_code"=>"loan_interest_rate"],["setting_value"=>$request->loan_interest_rate,"updated_by"=>$adminId,'setting_title'=>'Loan Interest Rate']);
           
           foreach($request->get('terms') as $key => $val) {
             LoanTerms::where("id",$key)->update(["terms_percentage"=>$val['percentage'],"no_of_duration"=>$val['duration'],"duration_type"=>$val['type']]);

@@ -81,6 +81,38 @@ class Currency extends Model
 
         return $wallet;
     }
+
+    public function getUserLoanBalanceAttribute()
+    {
+        $user = \Auth::user();
+        $wallet = $user->wallet()->where('currency_id',$this->id)->where('wallet_type',4)->first();
+        if($wallet)
+        {
+            $wallet=$wallet->current_balance;
+        }
+        else
+        {
+            $wallet='0.00000';
+        }
+
+        return $wallet;
+    }
+
+    public function getUserLoanTotalAttribute()
+    {
+        $user=\Auth::user();
+        $wallet = $user->wallet()->where('currency_id',$this->id)->where('wallet_type',4)->first();
+        if($wallet)
+        {
+            $wallet=$wallet->coin;
+        }
+        else
+        {
+            $wallet='0.00000';
+        }
+
+        return $wallet;
+    }
     
 
 }

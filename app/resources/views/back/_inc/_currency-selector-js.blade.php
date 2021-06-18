@@ -59,6 +59,15 @@ $(document).ready(function(){
     choices: @json($dropdowns['trade']),
     }); 
 
+    var LoanCurrencyList = new Choices('#loan-list', {
+    removeItemButton: true,
+    maxItemCount:100,
+    searchResultLimit:8,
+    renderChoiceLimit:100,
+    items: [],
+    choices: @json($dropdowns['loan']),
+    }); 
+
 
 
    

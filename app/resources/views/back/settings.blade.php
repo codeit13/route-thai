@@ -76,6 +76,13 @@ text-decoration: none !important; }
                 <select id="trade-list" name="trade[]" placeholder="Select currencies" class="custom-select" multiple></select>
             </div>
         </div>
+
+        <div class=" mt-3">
+            <div class="">
+                <label class="text-dark">Loan Wallet</label>
+                <select id="loan-list" name="loan[]" placeholder="Select currencies" class="custom-select" multiple></select>
+            </div>
+        </div>
         <!--Exchange select with ddslick-->
 
         <!-- <div class=" mt-3">
