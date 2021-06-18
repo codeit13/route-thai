@@ -1,5 +1,5 @@
 <?php
-namespace App\Notify;
+namespace App\Notifications\Notify;
 
 use App\Notifications\LaravelTelegramNotification;
 use LINE;
