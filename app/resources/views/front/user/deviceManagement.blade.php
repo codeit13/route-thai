@@ -28,7 +28,7 @@ Device Management - Route: P2P Trading Platform
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (auth()->user()->authentications as $item) 
+                                @foreach ($authentications as $item) 
                                 <tr>
                                     <td>{{ $item->user_agent }}</td>
                                     <td>{{ $item->login_at }}</td>
@@ -39,7 +39,19 @@ Device Management - Route: P2P Trading Platform
                                 @endforeach
                             </tbody>
                         </table>
+                        
                     </div>
+                    @if( Auth::user()->authentications->count() > $perpage)
+                    <div class="pagination">
+                        <ul> 
+                            @php $total = ceil(Auth::user()->authentications->count() / $perpage) @endphp 
+                            @for($i =1; $i<= $total; $i++)
+                                <li @if($page == $i) class="active" @endif> <a href="{{ route('user.deviceManagement') }}?page={{$i}}"> {{ $i }} </a></li>    
+                            @endfor
+                            
+                        </ul>
+                    </div>
+                    @endif
                     <div class="col-lg-12  xs-center visible-xs col-sm-12 col-12">
                         @foreach (auth()->user()->authentications as $item) 
                         <div class="head-table">

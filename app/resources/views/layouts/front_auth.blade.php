@@ -3,10 +3,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>Welcome</title>
+    <title>@yield('title') {!! env("APP_NAME") !!}</title>
     @include('front._inc._styles')
  </head>
- <body>
+ <body class="dark-mode">
    <div class="loader">
       <div id="bars">
          <span></span>

@@ -10325,7 +10325,7 @@ a.btn-info:hover {
     }
 }
 
-@media (min-width: 992px) and (max-width: 1169px) {} 
+@media (min-width: 992px) and (max-width: 1169px) { 
     .tooltip {
         position:relative;
         z-index:99999999;

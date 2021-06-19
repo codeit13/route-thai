@@ -17,11 +17,14 @@
                                     <span>Set up your two factor authentication by scanning the barcode below. Alternatively, you can use the code {{ $qrcode }}</span>
                                     <div> <img src="{{ $QR_Image }}"> </div>
                                     <span>You must set up your Google Authenticator app before continuing. You will be unable to login otherwise</span>
-                                    <div class="pt-2">
+                                    
+                                    <div class="pt-2 text-center">
                                         <form action="{{ route('user.security.2fa.google.save')}}" method="post">
                                             @csrf()
+                                            <label>Enter Verification Code</label>
+                                            <input style="text-align: center; margin: 15px auto;"  name="key" type="text" class="w-25 form-control">
                                             <input name="secret" type="hidden" value="{{ $qrcode }}">
-                                            <button type="submit" class="btn btn-primary">Complete Registration</button>
+                                            <button type="submit" class="btn btn-primary">Complete 2FA Authentication </button>
                                         </form>
                                     </div>
                                 </div>
