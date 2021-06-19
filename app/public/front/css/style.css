@@ -6680,7 +6680,7 @@ span#thb_eth_volume {
 
 #content.sellers .white-box input {
     width:100%;
-    height: 44px;
+    height: 38px;
     border-radius: 5px;
     color: var(--white-black-text);
     background-color: var(--card-bg);
@@ -6708,11 +6708,11 @@ span#thb_eth_volume {
     text-align: center;
     position: absolute;
     color: #00c98e;
-    top: -42px;
+    top: -39px;
     width: 100%;
     float: right;
     cursor: pointer;
-    right: -340px;
+    right: -365px;
 }
 
 #content.padning-payment a.btn-success.sell {
@@ -10156,6 +10156,24 @@ a.btn-info:hover {
     #wallet-content.order-history .history-details td {
         padding: 15px 10px !important;
     }
+    #wallet-content.order-history .history-details td.center_small.sub_buttons {
+        padding: 0px 0px !important;
+        display: inline-block;
+        /* text-align: center; */
+    }
+    #wallet-content.request.crypto .white-box td.show_on:nth-child(3n) {
+        display: inline-block !important;
+        padding: 0px 10px !important;
+        text-align: revert;
+    }
+    #wallet-content.order-history .history-details td.center_small.sub_buttons a.btn-primary, 
+    #wallet-content.order-history .history-details td.center_small.sub_buttons a.btn-success {
+        padding: 5px 0px !important;
+        border-radius: 50px;
+        width: 40% !important;
+        margin-bottom: 15px !important;
+        margin-right: 10px !important;
+    }
     #wallet-content.order-history .history-details td img.top-xs-m {
         margin-top: 5px !important;
     }
@@ -10230,7 +10248,7 @@ a.btn-info:hover {
         padding: 0px 0px;
     }
     #content.sellers .white-box span.size a {
-        right: -135px;
+        right: -161px;
     }
     .dh_padding {
         padding: 0px 20px;
@@ -10241,6 +10259,9 @@ a.btn-info:hover {
     .dropdown.currency_two.three_coins.new_select_b button#dropdownMenuButton {
         padding: .375rem .75rem !important;
     }
+    ul.mini_links li.active:last-child {
+        float: none;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 374px) {
@@ -10250,6 +10271,7 @@ a.btn-info:hover {
         margin-left: -5px!important;
         top: 29px;
     }
+
 }
 
 @media (min-width: 375px) and (max-width: 413px) {
@@ -10258,6 +10280,7 @@ a.btn-info:hover {
         margin-left: -3px!important;
         height: 48%!important;
     }
+
 }
 
 @media (min-width: 414px) and (max-width: 768px) {
@@ -10266,6 +10289,9 @@ a.btn-info:hover {
         margin-left: -1px!important;
         height: 48%!important;
     }
+    form#filterForm {
+    overflow: scroll;
+}
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
