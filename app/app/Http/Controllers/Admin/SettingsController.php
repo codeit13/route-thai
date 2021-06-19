@@ -185,7 +185,7 @@ class SettingsController extends Controller
         $dropdowns=$this->currenciesForDropDown();
         $lornTerms = LoanTerms::get();
         $cruptoCurrencies=\App\Models\Currency::where('is_crypto',1)->get();
-        $collateralCruptoCurrencies=\App\Models\Currency::with('collateral_address')->where('is_collateral',1)->get();
+        $collateralCruptoCurrencies=\App\Models\Currency::with(['collateral_address'])->where('is_collateral',1)->orderBy('updated_at','asc')->get();
         $loanRepay=LoanRepayCurrency::with('currency')->get();
 
         $actionName = $request->route()->getName();
@@ -231,6 +231,11 @@ class SettingsController extends Controller
           foreach($request->get('terms') as $key => $val) {
             LoanTerms::where("id",$key)->update(["terms_percentage"=>$val['percentage'],"no_of_duration"=>$val['duration'],"duration_type"=>$val['type']]);
           }
+
+          if($request->has('collateral_crypto_rows'))
+          {
+            $this->collateral_update($request);
+          }
           return redirect()->back()->with('success','Loan application setting updated successfully');
         } else if($request->btn_action=="new_record") {
           $request->validate([
@@ -258,7 +263,7 @@ class SettingsController extends Controller
           return redirect()->back()->with('success','Loan currency type update successfully');
         }else if($request->btn_action=="new_record") {
           $request->validate(['currency_id'=>'required','crypto_wallet_address'=>'required']);
-          LoanRepayCurrency::updateOrCreate(['currency_id'=>$request->currency_id],["currency_id"=>$request->currency_id,"crypto_wallet_address"=>$request->crypto_wallet_address,"updated_by"=>$adminId]);
+          LoanRepayCurrency::updateOrCreate(['currency_id'=>$request->currency_id],["currency_id"=>$request->currency_id,"crypto_wallet_address"=>$request->crypto_wallet_address,'crypto_wallet_memo'=>$request->crypto_wallet_memo,"updated_by"=>$adminId]);
 
           return redirect()->back()->with('success','Loan currency added successfully');
         } else {
@@ -283,6 +288,7 @@ class SettingsController extends Controller
         // dd("Yes");
         // $loanCurData->currency_id = $request->currency_id;
         $loanCurData->crypto_wallet_address = $request->crypto_wallet_address;
+        $loanCurData->crypto_wallet_memo=$request->crypto_wallet_memo;
         $loanCurData->update();
         return redirect()->route("admin.settings.loan")->with('success','Loan currency updated successfully');
       } else {
@@ -290,11 +296,29 @@ class SettingsController extends Controller
       }
     }
 
-    public function collateral_address_update(Request $request) {
+    // public function collateral_address_update(Request $request) {
+    //   $adminId = Auth::user()->id;
+    //   foreach ($request->crypto_wallet_address as $key => $value) {
+    //     CollateralAddress::updateOrCreate(['currency_id'=>$key],["currency_id"=>$key,"crypto_wallet_address"=>$value,"updated_by"=>$adminId]);
+    //   }
+    //   return redirect()->back()->with('success','Collateral address attached successfully');
+    // }
+
+
+     public function collateral_update($request) {
       $adminId = Auth::user()->id;
-      foreach ($request->crypto_wallet_address as $key => $value) {
-        CollateralAddress::updateOrCreate(['currency_id'=>$key],["currency_id"=>$key,"crypto_wallet_address"=>$value,"updated_by"=>$adminId]);
+
+      
+  // echo '<pre';print_r($request->collateral_crypto_rows);die;
+      foreach ($request->collateral_crypto_rows as $key => $value) {
+
+        $value['crypto_address']=$value['crypto_address']?$value['crypto_address']:'';
+
+   //      $newvalue=(object)$value;
+   // echo '<pre>';print_r($newvalue->currency_id);die;
+
+        CollateralAddress::updateOrCreate(['currency_id'=>$value['currency_id']],["currency_id"=>$value['currency_id'],"crypto_wallet_address"=>$value['crypto_address'],'crypto_memo'=>$value['crypto_memo'],"updated_by"=>$adminId]);
       }
-      return redirect()->back()->with('success','Collateral address attached successfully');
+    
     }
 }

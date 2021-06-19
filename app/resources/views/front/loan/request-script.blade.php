@@ -162,7 +162,9 @@ function showCurrencyRate()
 
          //console.log(timeDuration);
 
-		var Interest=(newUpdateLoanPrice*2.1*(timeDuration/30)/100);
+         
+
+		var Interest=(newUpdateLoanPrice*loan_interest_rate*(timeDuration/30)/100);
 
 
 

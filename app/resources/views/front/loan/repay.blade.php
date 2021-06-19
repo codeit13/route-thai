@@ -29,6 +29,8 @@
 
 $loanUsdt=$loan->loan_currency_rate;
 
+
+
 @endphp
 
   <section id="banner_search" class="loans-deshboard desh-2 visible-xs">
@@ -241,7 +243,9 @@ $loanUsdt=$loan->loan_currency_rate;
 												  </div>
 
 												  <input type="hidden" name="currency_id" class="backend-coin-class"  value="{{$loan->loan_currency_id??''}}">
+
 												</div>
+
 											</div>	
 
 
@@ -249,7 +253,13 @@ $loanUsdt=$loan->loan_currency_rate;
 											 {{$loan->loan_repayment_amount}}
 											</div>
 										</div>	
+
 									</div>
+									@error('loan_repayment_amount')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
 								</div>
 								<div class="wallet-b">
 									<p class="backend-wallet-balance">Wallet Blance: <b>{{$loan->loan_currency->user_balance??0.00000}}</b> {{$loan->loan_currency->short_name}}</p>
@@ -526,6 +536,7 @@ $loanUsdt=$loan->loan_currency_rate;
     return currency;
     }
 
+wallet_balance();
 
 		function updateBalance()
 		{
@@ -537,8 +548,7 @@ $loanUsdt=$loan->loan_currency_rate;
 
 		//	wallet_balance();
 
-   	//console.log(filteredCryptoExchangeRow);return false;
-
+   	//console.log(cryptoRow);
            usdtPrice=parseFloat(filteredCryptoExchangeRow.lastPrice);
 
            var loan_amount=parseFloat('{{$loan->loan_amount}}');
@@ -547,7 +557,7 @@ $loanUsdt=$loan->loan_currency_rate;
 
            var newUsdt=usdtPrice/parseFloat('{{$loanUsdt}}');
 
-        //   console.log(newUsdt,usdtPrice);
+           console.log(newUsdt,usdtPrice);
 
            var only_loan_amount=(loan_amount/newUsdt).toFixed(5);
 
@@ -585,7 +595,7 @@ $loanUsdt=$loan->loan_currency_rate;
 
 
 
-
+         wallet_balance();
 
 
 		}
@@ -652,7 +662,7 @@ function wallet_balance()
 
     currencyRow=currencyRow[0];
 
-    balance=balance+' '+currencyRow.short_name;
+   // balance=balance+' '+currencyRow.short_name;
 
     if( balanceRow && typeof balanceRow.coin !='undefined')
     {
@@ -660,6 +670,8 @@ function wallet_balance()
 
        
     }
+
+    console.log(balance);
 
     $('.backend-wallet-balance').html('Wallet Blance:<b>'+balance+'</b>'+currencyRow.short_name);
 }

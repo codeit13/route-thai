@@ -56,7 +56,7 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="collateral_currency">Collateral Currency  <a href="#" data-toggle="modal" data-target="#collateralAddressModal"><u>Assign Address</u></a></label>
+                    <label class="form-control-label" for="collateral_currency">Collateral Currency </label>
                     <select class="form-control select2" name="collateral_currency[]" id="collateral_currency" multiple="multiple">
                       @foreach($cruptoCurrencies as $record)
                         <option value="{{ $record->id }}" @if($record->is_collateral == "1") selected="" @endif>{{ $record->name }}</option>
@@ -68,9 +68,56 @@
                     </p>
                     @enderror
                   </div>
+             <div class="form-group">
+               <!--  <hr class="my-4"> -->
+                 <label class="form-control-label" for="collateral_currency">Collateral Currency Address</label>
+                <div class="">
+                    @foreach($collateralCruptoCurrencies as $key=>$record)
+
+                    
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-2">
+                              <div class="form-group">
+                                <select class="form-control" name="collateral_crypto_rows[{{$key}}][currency_id]">
+                                  <option value="{{$record->id}}">{{ $record->name }}</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-lg-5">
+                              <div class="form-group">
+                                <input type="text" class="form-control"  name="collateral_crypto_rows[{{$key}}][crypto_address]" placeholder="Crypto Address" value="{{ $record->collateral_address->crypto_wallet_address??'' }}">
+                              </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="crypto_memo" name="collateral_crypto_rows[{{$key}}][crypto_memo]" placeholder="Crypto Memo" value="{{$record->collateral_address->crypto_memo??''}}">
+                            @error('crypto_memo')
+                            <p class="invalid-value" role="alert">
+                                <strong>{{ __($message) }}</strong>
+                            </p>
+                            @enderror
+                          </div>
+                        </div>
+                           
+                        </div>
+
+                    
+
+                    
+                    @endforeach
+                    
+                </div>
+            </div>
+
                 </div>
               </div>
+
+
+
             </div>
+
             <hr class="my-4">
             <div class="pl-lg-4">
               <div class="row">
@@ -231,9 +278,11 @@
           </div>
         </div>
       </form>
+   
       <!-- Collateral Address Attach Modal -->
-      <div class="modal fade" id="collateralAddressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form action="{{ route('admin.settings.loan.collateral') }}" method="POST">
+    {{--  <div class="modal fade" id="collateralAddressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <form action="{{ route('admin.settings.loan.collateral') }}" method="POST">
+     
         @csrf()
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -268,7 +317,7 @@
           </div>
         </div>
         </form>
-      </div>
+      </div> --}}
 
 <!-- Loan Repay Setting -->
 @if($actionName=="admin.settings.loan.repay.edit")
@@ -321,32 +370,43 @@
                     @foreach($loanRepay as $key=>$record)
                         @if($record->id==$editId) @php $editData=$record; continue; @endphp @endif
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-2">
                               <div class="form-group">
                                 <select class="form-control" name="" disabled="">
                                   <option>{{ $record->currency->name }}</option>
                                 </select>
                               </div>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-4">
                               <div class="form-group">
                                 <input type="text" class="form-control" id="crypto_wallet_address" name="crypto_wallet_address" placeholder="Crypto Wallet Address" value="{{ $record->crypto_wallet_address }}" disabled="">
                               </div>
                             </div>
-                            <div class="col-lg-4" >
+
+                            <div class="col-lg-4">
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="crypto_wallet_memo" name="crypto_wallet_memo" placeholder="Crypto Wallet Memo" value="{{$record->crypto_wallet_memo}}" disabled="">
+                            @error('crypto_wallet_memo')
+                            <p class="invalid-value" role="alert">
+                                <strong>{{ __($message) }}</strong>
+                            </p>
+                            @enderror
+                          </div>
+                        </div>
+                            <div class="col-lg-2" >
                                 @if($actionName!="admin.settings.loan.repay.edit")
                                 <a href="{{route('admin.settings.loan.repay.edit',$record->id)}}">
-                                    <button type="button" class="btn btn-success" value="new_record" name="btn_action">Edit</button>
+                                    <button type="button" class="btn btn-success" value="new_record" name="btn_action"><i class="fa fa-edit"></i></button>
                                 </a>
 
-                                <button type="submit" class="btn btn-danger" value="{{ $record->id }}" name="btn_action">Delete</button>
+                                <button type="submit" class="btn btn-danger" value="{{ $record->id }}" name="btn_action"><i class="fa fa-trash"></i></button>
                                 @endif
                             </div>
                         </div>
                     @endforeach
                     @if($actionName=="admin.settings.loan.repay.edit" && $editData) 
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                           <div class="form-group">
                             <select class="form-control" name="currency_id" disabled="">
                               @foreach($cruptoCurrencies as $record)
@@ -355,7 +415,7 @@
                             </select>
                           </div>
                         </div>
-                        <div class="col-lg-5">
+                        <div class="col-lg-4">
                           <div class="form-group">
                             <input type="text" class="form-control" id="crypto_wallet_address" name="crypto_wallet_address" placeholder="Crypto Wallet Address" value="{{$editData->crypto_wallet_address}}">
                             @error('crypto_wallet_address')
@@ -366,16 +426,26 @@
                           </div>
                         </div>
                         <div class="col-lg-4">
-                          <button type="submit" class="btn btn-success" value="update_record" name="btn_action">Update</button>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="crypto_wallet_memo" name="crypto_wallet_memo" value="{{$editData->crypto_wallet_memo}}" placeholder="Crypto Wallet Memo">
+                            @error('crypto_wallet_memo')
+                            <p class="invalid-value" role="alert">
+                                <strong>{{ __($message) }}</strong>
+                            </p>
+                            @enderror
+                          </div>
+                        </div>
+                        <div class="col-lg-2">
+                          <button type="submit" class="btn btn-success" value="update_record" name="btn_action"><i class="fa fa-save"></i></button>
                           <a href="{{route('admin.settings.loan')}}">
-                            <button type="button" class="btn btn-info">Cancel</button>
+                            <button type="button" class="btn btn-info"><i class="fa fa-close"></i></button>
                           </a>
                           
                         </div>
                     </div>
                     @else
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                           <div class="form-group">
                             <select class="form-control" name="currency_id">
                               @foreach($cruptoCurrencies as $record)
@@ -384,7 +454,7 @@
                             </select>
                           </div>
                         </div>
-                        <div class="col-lg-5">
+                        <div class="col-lg-4">
                           <div class="form-group">
                             <input type="text" class="form-control" id="crypto_wallet_address" name="crypto_wallet_address" placeholder="Crypto Wallet Address">
                             @error('crypto_wallet_address')
@@ -394,13 +464,26 @@
                             @enderror
                           </div>
                         </div>
+
                         <div class="col-lg-4">
-                          <button type="submit" class="btn btn-success" value="new_record" name="btn_action">New Record</button>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="crypto_wallet_memo" name="crypto_wallet_memo" placeholder="Crypto Wallet Memo">
+                            @error('crypto_wallet_memo')
+                            <p class="invalid-value" role="alert">
+                                <strong>{{ __($message) }}</strong>
+                            </p>
+                            @enderror
+                          </div>
+                        </div>
+                        <div class="col-lg-2">
+                          <button type="submit" class="btn btn-success" value="new_record" name="btn_action">Add</button>
                         </div>
                     </div>
                     @endif
                 </div>
             </div>
+
+
           </div>
         </div>
       </form>

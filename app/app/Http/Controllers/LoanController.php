@@ -63,7 +63,7 @@ class LoanController extends Controller
         }
 
 
-              $loans=$loans->paginate(10);
+              $loans=$loans->orderBy('created_at','desc')->paginate(10);
 
         //echo '<pre>';print_r($currencies->toArray());
 
@@ -80,6 +80,10 @@ class LoanController extends Controller
 
         $currencies=\App\Models\Currency::where('is_crypto',1)->get();
 
+        $loanable_currencies=\App\Models\Currency::where('is_loanable',1)->get();
+
+        $collateral_currencies=\App\Models\Currency::where('is_collateral',1)->get();
+
        // $fiat_currencies=\App\Models\Currency::where('is_fiat',1)->get();
 
         $ExchangeRatesService=new \App\Services\ExchangeRatesService;
@@ -90,13 +94,13 @@ class LoanController extends Controller
 
         $terms=\App\Models\LoanTerms::all();
 
-        $loanSettings=\App\Models\Settings::whereIn('setting_code',['loan_price_down_limit','loan_max_percentage','loan_min_percentage'])->get();
+        $loanSettings=\App\Models\Settings::whereIn('setting_code',['loan_price_down_limit','loan_max_percentage','loan_min_percentage','loan_interest_rate'])->get();
 
       //  $price_down=(object)(['percentage'=>5]);
         
 
 
-        $wallets=auth()->user()->wallet;
+         $wallets=auth()->user()->wallet()->where('wallet_type',1)->get();
 
         
 
@@ -104,15 +108,23 @@ class LoanController extends Controller
 
         
 
-        return view('front.loan.request',compact('currencies','wallets','crypto_rates','terms','loanSettings'));
+        return view('front.loan.request',compact('currencies','wallets','crypto_rates','terms','loanSettings','loanable_currencies','collateral_currencies'));
     }
 
 
     public function initialize(Request $request)
     {
         $rules=['collateral_amount'=>'required|numeric','currency_id'=>'required|integer','loan_currency'=>'required|integer','term'=>'required|integer'];
+
+
+
+
+
         if($request->has('is_wallet'))
         {
+        
+        //echo '<pre>';print_r($request->all());die;
+
             $rules['collateral_amount']=['required',new \App\Rules\CheckWalletBalance($request)];
         }
 
@@ -122,7 +134,7 @@ class LoanController extends Controller
         }
 
 
-
+         $request->validate($rules);
        
         
        
@@ -167,7 +179,7 @@ class LoanController extends Controller
                              'duration_type'=>$loan_detail->term_detail->duration_type,
                              'min_price'=>$loan_detail->min_price,
                              'max_price'=>$loan_detail->max_price,
-                             'interest_value'=>2.1,
+                             'interest_value'=>$loan_detail->settings->loan_interest_rate??'',
                              'price_down_percentage'=>$loan_detail->price_down_value,
                              'term_percentage'=>$loan_detail->term_detail->terms_percentage,
                              'term_id'=>$loan_detail->term_detail->id,
@@ -304,22 +316,59 @@ class LoanController extends Controller
      */
     public function closeRequest(Request $request,$loan)
     {
-        //echo '<pre>';print_r($request->all());die;
 
-        $request->validate(['currency_id'=>'required','loan_amount'=>'required','loan_repayment_amount'=>'required']);
+      //  echo '<pre>';print_r($request->all());die;
+       
+
+        $rules=['currency_id'=>'required','loan_amount'=>'required','loan_repayment_amount'=>'required'];
+
+        if($request->has('payment_method') && $request->payment_method=='wallet')
+        {
+            $rules['loan_repayment_amount']=['required',new \App\Rules\CheckWalletBalance($request,1)];
+        }
+
+        $request->validate($rules);
 
         $loan=\App\Models\Loan::whereLoanId($loan)->first();
+
+
 
         if($loan){
 
         $close_request=array('loan_opening_id'=>$loan->id,'currency_id'=>$loan->currency_id,'loan_currency_id'=>$request->currency_id,'collateral_amount'=>$loan->collateral_amount,'loan_amount'=>$request->loan_amount,'loan_repayment_amount'=>$request->loan_repayment_amount,'term_id'=>$loan->term_id,'request_type'=>'closing','crypto_wallet_address'=>$request->crypto_wallet_address);
 
+        $loan_close_request=auth()->user()->loans()->create($close_request);
+
+
         if($request->payment_method=='wallet')
         {
             $close_request['on_wallet']=1;
+
+            $user=auth()->user();
+
+            $wallet=$user->wallet->where('currency_id',$request->currency_id)->where('wallet_type',1)->first();
+
+            $wallet->coin=$wallet->coin-(float)$request->loan_repayment_amount;
+
+            $wallet->save();
+
+            $loan->status='paid';
+
+            $loan->save();
+
+            $loan_close_request->status=='approved';
+
+            $loan_close_request->save();
+
+
+
+
+
+            return redirect()->route('loan.history')->with('success','Your repayment is debit from your wallet.');
+
+
         }
 
-        $loan=auth()->user()->loans()->create($close_request);
 
        
 
@@ -350,7 +399,7 @@ class LoanController extends Controller
 
         if($repay_setting==1)
         {
-            $currencies=\App\Models\Currency::where('id',$loan->loan_currency_id)->get();
+            $currencies=\App\Models\Currency::where('id',$loan->loan_currency_id)->with('loan_repay_currency')->get();
 
         }
         else
@@ -358,7 +407,9 @@ class LoanController extends Controller
             $currencies=\App\Models\Currency::where('is_crypto',1)->get();
         }
 
-           $wallets=auth()->user()->wallet;
+           $wallets=auth()->user()->wallet()->where('wallet_type',1)->get();
+
+
 
 
         return view('front.loan.repay',compact('loan','crypto_exchange_rates','repay_setting','currencies','wallets'));
@@ -409,6 +460,8 @@ class LoanController extends Controller
         $loan_variables=$this->loan_settings();
 
         $loan_detail->settings=$loan_variables;
+
+        //echo '<pre>';print_r($loan_detail->settings);die;
 
         $loan_detail->price_down_value=number_format((float)($usdtPrice*((float)$loan_variables->loan_price_down_limit)/100),2,'.','');
 
@@ -480,7 +533,7 @@ class LoanController extends Controller
 
          //console.log(timeDuration);
 
-        $Interest=($newUpdateLoanPrice*2.1*($timeDuration/30)/100);
+        $Interest=($newUpdateLoanPrice*(float)$loan_detail->settings->loan_interest_rate*($timeDuration/30)/100);
 
 
 
@@ -501,7 +554,7 @@ class LoanController extends Controller
     public function loan_settings()
     {
 
-        $loanSettings=\App\Models\Settings::whereIn('setting_code',['loan_price_down_limit','loan_max_percentage','loan_min_percentage'])->get();
+        $loanSettings=\App\Models\Settings::whereIn('setting_code',['loan_price_down_limit','loan_max_percentage','loan_min_percentage','loan_interest_rate'])->get();
 
 
         $loan_variables=[];
