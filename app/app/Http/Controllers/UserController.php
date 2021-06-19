@@ -171,9 +171,28 @@ class UserController extends Controller
         return view('front.user.addGoogle2fa',compact('QR_Image','qrcode'));
     }
     public function saveGoogle2fa(Request $request){
+        $request->validate([
+            'key' => ['required'] 
+        ]);
+        $user = Auth::user();
+        $google2fa = app('pragmarx.google2fa');
+        $secret = $request->input('key');
+        $valid = $google2fa->verifyKey($request->secret, $secret);
+
+        if($valid) {
+            $user->google2fa_secret = $request->secret;
+            $user->save();
+            return redirect()->route('user.security');
+        } else {
+            return redirect()->route('user.security.2fa.google.add')->with('message','Entered key is invalid. Please try again.');
+        }
+    }
+    public function verifyGoogle2fa(Request $request){
         $user = Auth::user();
         $user->google2fa_secret = $request->secret;
         $user->save();
         return redirect()->route('user.security');
     }
+
+   
 }
