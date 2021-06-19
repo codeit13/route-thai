@@ -58,6 +58,10 @@ class HomeController extends Controller
     {   
         return $this->otpservice->verifyOTP($request->email, $request->code, $request->sessionid);
     }
+    public function verifyOTPMobile(VerifyOTPRequest $request)
+    {   
+        return $this->service->verifyOtpSms($request->mobile, $request->code, $request->sessionid);
+    }
 
     public function sendOTPOnLogin(SendOTPonLogin $request)
     {   

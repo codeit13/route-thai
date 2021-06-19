@@ -1,4 +1,8 @@
 @extends('layouts.front_auth')
+
+@section('title')
+    Register | Route: P2P Trading Platform
+@endsection
 <link href="{{ asset('front/css/flags.css')}}" rel="stylesheet" />
 <link href="{{ asset('front/css/intlTelInput.css')}}" rel="stylesheet" />
 <style>    
@@ -78,6 +82,7 @@
                                                 <input type="hidden" id="session_id" value="">    
                                                 <p class="not_m mb-0 resend-btn text-left"><b class="time"><a href="javascript:void(0)" disabled> Resend OTP </a> &nbsp;<label id="timer"></label>
                                                 <p class="otp-msg mb-0 text-left"></p>
+                                                <p class="email-msg mb-0 text-left"></p>
                                             </div>
 
                                             <div class="form-check">
@@ -88,6 +93,7 @@
                                             <button type="submit" id="send-otp" class="btn btn-primary" >Send OTP</button>
                                             <button type="submit"  id="register" class="btn btn-primary" style="display: none">Create Account</button>
                                     </div>
+                                    
                                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                         <button type="button" class="btn btn-primary submit-login">Send OTP</button>
                                         <button type="button" class="btn btn-primary submit-login" >Create Account</button>
@@ -135,6 +141,7 @@ var counter = null;
                     $('#session_id').val(data.session_id);
                     $('#send-otp').hide().attr('type','button');
                     $('.otp').show();
+                    $('.email-msg').text("OTP has been sent. Kindly check your email. In case you don't find mail in inbox, kindly check spam or junk box.")
                     $('#register').show();
                     counter = setInterval(timer, 1000);
                 },

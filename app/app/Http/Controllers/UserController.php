@@ -5,15 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
-
+use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Log;
-
 use App\Notifications\LaravelTelegramNotification;
-
+use App\Services\OTPService;
 use LINE;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('guest');
+        $this->service = new OTPService();
+    }
     
     public function dashboard(){
         return view('front.user.dashboard');
@@ -35,12 +40,53 @@ class UserController extends Controller
     public function updateEmail(){
         return view('front.user.update-email');
     } 
-    public function confimrUpdateEmail(){
-        return view('front.user.confirm-update-email');
+
+    public function updateMobile(Request $request){
+        $request->validate([
+            'mobile' => ['required', 'unique:users,mobile'],
+        ]);
+        $user = Auth::user();
+        $user->mobile = $request->mobile;
+        $user->sms_auth = 1;
+        $user->save();
+        Auth::logout();
+        return redirect()->route('login')->with('message','Your mobile has been updated. Please login again.');
+    }
+    public function confimrUpdateEmail(Request $request){
+
+        $request->validate([
+            'password' => ['required', new MatchOldPassword],
+            'new_email' => ['required','unique:users,email'],
+            'new_confirm_email' => ['same:new_email'],
+        ]);
+        $data = $this->service->sendOTP(Auth::user()->email, 'email');
+        return view('front.user.confirm-update-email',compact('request','data'));
+    } 
+    public function  verifyEmailCode(Request $request){
+
+        $request->validate([
+            'code' => ['required'],
+            'session_id' => ['required'],
+        ]);
+        
+        $response = $this->service->verifyOTP(Auth::user()->email, $request->code, $request->session_id);
+        if($response['code'] == 1) { 
+            $user = Auth::user();
+            $user->email = $request->email;
+            $user->save();
+            Auth::logout();
+	        return redirect()->route('login')->with('message','Your email has been updated. Please login with your new email address.');
+            
+        } else{
+            return redirect()->route('user.updateEmail');
+        }
     } 
 
-    public function deviceManagement(){
-        return view('front.user.deviceManagement');
+    public function deviceManagement(Request  $request){
+        $perpage = 15;
+        $authentications = Auth::user()->authentications->forPage($request->page, $perpage);
+        $page = $request->page;
+        return view('front.user.deviceManagement',compact('authentications','perpage','page'));
     }     
     public function isUsernameExist(Request $request){
         $status = User::where('name',$request->name)->count() == 0 ? 'OK': 'NOT OK';
@@ -70,7 +116,6 @@ class UserController extends Controller
                 'telegram_user_id' => $user->telegram_user_id,
                 ]));
             }
-            // return response()->json(['status'=>'OK','message'=> __('The telegram user id settings has been updated') ]);
             return redirect()->route('user.dashboard');
     }
     public static function updateLineUserIdSettings($request){
