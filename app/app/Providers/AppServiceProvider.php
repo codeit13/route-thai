@@ -17,9 +17,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
-        //$this->app->singleton(WebhookHandler::class, WebhookLogHandler::class);
-    }
+        Notification::resolved(function (ChannelManager $service) {
+            $service->extend('sms', function ($app) {
+                return new SmsChannel(
+                    new SnsClient([
+                        'version' => '2010-03-31',
+                        'credentials' => new Credentials(
+                            config('services.sns.key'),
+                            config('services.sns.secret')
+                        ),
+                        'region' => config('services.sns.region'),
+                    ])
+                );
+            });
+        });
 
     /**
      * Bootstrap any application services.
