@@ -117,7 +117,7 @@ class PaymentController extends Controller
                 // ]);
 
                 // Message for Seller
-                $Message = "[Route-Thai] P2P Order (Ending with " + substr($transaction->id, -4) + ") of " + $data['quantity'] + " " + $selected_currency->name + " has been successfully matched with a Buyer.";
+                $Message = "[Route-Thai] P2P Order (Ending with " . substr($transaction->id, -4) . ") of " . $data['quantity'] . " " + $selected_currency->name . " has been successfully matched with a Buyer.";
                 Notify::sendMessage([
                     'sms_notification' => $transaction->user->sms_notification,
                     'mobile' => "mobile",
@@ -250,7 +250,7 @@ class PaymentController extends Controller
             // ]);
             
             // Message for Seller
-            $Message = "[Route-Thai] The buyer has marked P2P ( Order " + substr($trans_id, -4) + " ) as paid. Please release the crypto ASAP after confirming that payment has been received.";
+            $Message = "[Route-Thai] The buyer has marked P2P ( Order " . substr($trans_id, -4) . " ) as paid. Please release the crypto ASAP after confirming that payment has been received.";
             Notify::sendMessage([
                 'sms_notification' => $transaction->user->sms_notification,
                 'mobile' => "mobile",
@@ -286,7 +286,7 @@ class PaymentController extends Controller
            $buyer_request->delete();
 
             // Message for Buyer
-            $Message = "[Route-Thai] P2P Order (Ending with " + substr($trans_id, -4) + ") has been completed. The seller has released " + $data['quantity'] + " " + $selected_currency->name + " to your P2P wallet.";
+            $Message = "[Route-Thai] P2P Order (Ending with " . substr($trans_id, -4) . ") has been completed. The seller has released " . $data['quantity'] . " " . $selected_currency->name . " to your P2P wallet.";
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
                 'mobile' => "mobile",
