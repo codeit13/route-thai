@@ -239,6 +239,8 @@ return [
 
         'LINE' => Revolution\Line\Facades\Bot::class,
 
+        'AmazonSNS' => App\Notifications\AmazonSNS::class,
+
     ],
 
 ];

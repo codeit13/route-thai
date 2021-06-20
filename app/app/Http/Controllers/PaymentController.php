@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Auth;
+
 use Illuminate\Http\Request;
+use App\Notifications\Notify;
 
 class PaymentController extends Controller
 {
@@ -97,9 +101,36 @@ class PaymentController extends Controller
                 
                 $user=\Auth::user();
                 $user->buyer_request()->create(['transaction_id'=>$transaction->id]);
-                $transaction->sendMessage([$transaction->user->mobile],'Your ad has been matched and its pending payment');
-                $buyer_request=$transaction->checkBuyerRequest();
 
+                // Message for Buyer
+                // $Message = "Your Buying Order is pending it\'s payment.\n Transaction ID: " . $transaction->trans_id;
+                // Notify::sendMessage([
+                //     'sms_notification' => $user->sms_notification,
+                //     'mobile' => "mobile",
+                //     'telegram_notification' => $user->telegram_notification,
+                //     'telegram_user_id' => $user->telegram_user_id,
+                //     'line_notification' => $user->line_notification,
+                //     'line_user_id' => $user->line_user_id,
+                //     'email_notification' => $user->email_notification,
+                //     'email_id' => $user->email,
+                //     'Message' => $Message,
+                // ]);
+
+                // Message for Seller
+                $Message = "[Route-Thai] P2P Order (Ending with " . substr($transaction->id, -4) . ") of " . $data['quantity'] . " " + $selected_currency->name . " has been successfully matched with a Buyer.";
+                Notify::sendMessage([
+                    'sms_notification' => $transaction->user->sms_notification,
+                    'mobile' => "mobile",
+                    'telegram_notification' => $transaction->user->telegram_notification,
+                    'telegram_user_id' => $transaction->user->telegram_user_id,
+                    'line_notification' => $transaction->user->line_notification,
+                    'line_user_id' => $transaction->user->line_user_id,
+                    'email_notification' => $transaction->user->email_notification,
+                    'email_id' => $transaction->user->email,
+                    'Message' => $Message,
+                ]);
+
+                $buyer_request=$transaction->checkBuyerRequest();
             }
             elseif($buyer_request=='exists')
             {
@@ -147,7 +178,8 @@ class PaymentController extends Controller
     }
 
     public function cancel($transaction)
-    {
+    {   
+        $user = Auth::user();
         $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
         $buyer_request =$transaction->checkBuyerRequest(); 
         if(isset($buyer_request->is_expired))
@@ -156,11 +188,39 @@ class PaymentController extends Controller
             $buyer_request->status='cancel';
             $buyer_request->save();
         }
+        $Message = "Order has been Cancelled";
+
+        // Message for Buyer
+        Notify::sendMessage([
+            'sms_notification' => $user->sms_notification,
+            'mobile' => "mobile",
+            'telegram_notification' => $user->telegram_notification,
+            'telegram_user_id' => $user->telegram_user_id,
+            'line_notification' => $user->line_notification,
+            'line_user_id' => $user->line_user_id,
+            'email_notification' => $user->email_notification,
+            'email_id' => $user->email,
+            'Message' => $Message,
+        ]);
+
+        // Message for Seller
+        Notify::sendMessage([
+            'sms_notification' => $transaction->user->sms_notification,
+            'mobile' => "mobile",
+            'telegram_notification' => $transaction->user->telegram_notification,
+            'telegram_user_id' => $transaction->user->telegram_user_id,
+            'line_notification' => $transaction->user->line_notification,
+            'line_user_id' => $transaction->user->line_user_id,
+            'email_notification' => $transaction->user->email_notification,
+            'email_id' => $transaction->user->email,
+            'Message' => $Message,
+        ]);
+
         return view('front.payment.payment-request-cancel',compact('transaction'));
     }
 
     public function release($transaction)
-    {
+    {   $user = Auth::user();
         $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
         $buyer_request=$transaction->checkBuyerRequest();
         if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
@@ -175,15 +235,42 @@ class PaymentController extends Controller
         {
             $buyer_request=$transaction->createBuyerTransaction();
 
-             $transaction->sendMessage([$transaction->user->mobile],'Payment for your ad has been completed.');
-
+            //  Message for Buyer
+            // $Message = 'Payment for your Buy Order has been completed.';
+            // Notify::sendMessage([
+            //     'sms_notification' => $user->sms_notification,
+            //     'mobile' => "mobile",
+            //     'telegram_notification' => $user->telegram_notification,
+            //     'telegram_user_id' => $user->telegram_user_id,
+            //     'line_notification' => $user->line_notification,
+            //     'line_user_id' => $user->line_user_id,
+            //     'email_notification' => $user->email_notification,
+            //     'email_id' => $user->email,
+            //     'Message' => $Message,
+            // ]);
+            
+            // Message for Seller
+            $Message = "[Route-Thai] The buyer has marked P2P ( Order " . substr($trans_id, -4) . " ) as paid. Please release the crypto ASAP after confirming that payment has been received.";
+            Notify::sendMessage([
+                'sms_notification' => $transaction->user->sms_notification,
+                'mobile' => "mobile",
+                'telegram_notification' => $transaction->user->telegram_notification,
+                'telegram_user_id' => $transaction->user->telegram_user_id,
+                'line_notification' => $transaction->user->line_notification,
+                'line_user_id' => $transaction->user->line_user_id,
+                'email_notification' => $transaction->user->email_notification,
+                'email_id' => $transaction->user->email,
+                'Message' => $Message,
+            ]);
+            
             return view('front.payment.payment-request-release',compact('transaction','buyer_request'));
         }
         return view('front.payment.payment-request-release',compact('transaction','buyer_request'));
     }
 
     public function confirm($transaction)
-    {
+    {   
+        $user = Auth::user();
         $transaction=\App\Models\Transaction::where('trans_id',$transaction)->first();
         $buyer_request=$transaction->checkBuyerRequest();
         if(isset($buyer_request->is_expired) && $buyer_request->is_expired)
@@ -197,6 +284,21 @@ class PaymentController extends Controller
         elseif(!$buyer_request->is_expired && $buyer_request->status=='paid')
         {
            $buyer_request->delete();
+
+            // Message for Buyer
+            $Message = "[Route-Thai] P2P Order (Ending with " . substr($trans_id, -4) . ") has been completed. The seller has released " . $data['quantity'] . " " . $selected_currency->name . " to your P2P wallet.";
+            Notify::sendMessage([
+                'sms_notification' => $user->sms_notification,
+                'mobile' => "mobile",
+                'telegram_notification' => $user->telegram_notification,
+                'telegram_user_id' => $user->telegram_user_id,
+                'line_notification' => $user->line_notification,
+                'line_user_id' => $user->line_user_id,
+                'email_notification' => $user->email_notification,
+                'email_id' => $user->email,
+                'Message' => $Message,
+            ]);
+
            return view('front.payment.payment-request-success',compact('transaction'));
         }
         else

@@ -9,6 +9,11 @@ use App\Models\Transaction;
 use App\Models\UserPaymentMethod;
 use App\Http\Traits\GenerateTransIDTrait;
 
+use App\Models\User;
+use Auth;
+
+use App\Notifications\Notify;
+
 class SellController extends Controller
 {
 	use GenerateTransIDTrait;
@@ -95,6 +100,7 @@ class SellController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function confirmSell(Request $request){
+        $user = Auth::user();
         $data = $request->session()->get('sell_data');
         $trans_id = $data['trans_id']; 
         if ($data['trans_id'] == '') {
@@ -120,6 +126,21 @@ class SellController extends Controller
             'created_at'     => date('Y-m-d H:i:s',strtotime($save_sell->created_at))
         ];
         $request->session()->forget('sell_data');
+        
+        $user = Auth::user();
+        $Message = "[Route-Thai] P2P Order (Ending with " . substr($trans_id, -4) + ") of " . $data['quantity'] . " " + $selected_currency->name . " has been Successfully created. You will be notified when buyer gets matched.";
+        Notify::sendMessage([
+            'sms_notification' => $user->sms_notification,
+            'mobile' => "mobile",
+            'telegram_notification' => $user->telegram_notification,
+            'telegram_user_id' => $user->telegram_user_id,
+            'line_notification' => $user->line_notification,
+            'line_user_id' => $user->line_user_id,
+            'email_notification' => $user->email_notification,
+            'email_id' => $user->email,
+            'Message' => $Message,
+        ]);
+
         return response()->json(['success'=>true,'data'=>$response_data],200);
     }
 
@@ -146,7 +167,6 @@ class SellController extends Controller
                                                         ->where('user_id',auth()->user()->id)
                                                         ->where('status','active')
                                                         ->get();
-
             return view('front.sell.buy_request',compact(
                 'user_payment_methods',
                 'transcation'
@@ -193,7 +213,6 @@ class SellController extends Controller
                                                         ->where('user_id',auth()->user()->id)
                                                         ->where('status','active')
                                                         ->get();                                        
-
         return view('front.sell.confrim_receipt',compact(
             'transcation',
             'user_payment_methods'
@@ -213,6 +232,7 @@ class SellController extends Controller
                                         ->where('trans_id',$trans_id)->first();
             
         if ($transcation->buyer_requests_count > 0) {
+            $user = Auth::user();
             $transcation->update(['status'=>'approved']);
             $transcation->buyer_trans->update(['status'=>'approved']);
             $transcation->buyer_requests->first()->update(['status'=>'paid']);
@@ -240,6 +260,20 @@ class SellController extends Controller
                                                         ->where('user_id',auth()->user()->id)
                                                         ->where('status','active')
                                                         ->get();     
+                                 
+            // Message for Seller
+            $Message = "[Route-Thai] P2P Order (Ending with " . substr($trans_id, -4) . ") has been completed. You have released " . $data['quantity'] . " " . $selected_currency->name . " to the buyer.";
+            Notify::sendMessage([
+                'sms_notification' => $user->sms_notification,
+                'mobile' => "mobile",
+                'telegram_notification' => $user->telegram_notification,
+                'telegram_user_id' => $user->telegram_user_id,
+                'line_notification' => $user->line_notification,
+                'line_user_id' => $user->line_user_id,
+                'email_notification' => $user->email_notification,
+                'email_id' => $user->email,
+                'Message' => $Message,
+            ]);
 
             return view('front.sell.success',compact(
                 'transcation',
@@ -252,6 +286,7 @@ class SellController extends Controller
 
     //delete sell
     public function destroy($trans_id){
+        $user = Auth::user();
         $user_id = auth()->user()->id;
 
         $transcation = Transaction::where('trans_id',$trans_id)
@@ -261,6 +296,20 @@ class SellController extends Controller
 
         if ($transcation) {
             $transcation->delete();
+
+            $Message = "Order Deleted";
+            Notify::sendMessage([
+                'sms_notification' => $user->sms_notification,
+                'mobile' => "mobile",
+                'telegram_notification' => $user->telegram_notification,
+                'telegram_user_id' => $user->telegram_user_id,
+                'line_notification' => $user->line_notification,
+                'line_user_id' => $user->line_user_id,
+                'email_notification' => $user->email_notification,
+                'email_id' => $user->email,
+                'Message' => $Message,
+            ]);
+
             return redirect()->back()->with('message_type','success')
                                         ->with('message','Ad removed successfully');
         }
