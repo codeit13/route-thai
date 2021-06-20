@@ -17,7 +17,7 @@ class AmazonSNS extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($arr)
     {
         // $this->text = $arr['text'];
     }
