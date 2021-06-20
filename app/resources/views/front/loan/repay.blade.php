@@ -19,6 +19,25 @@
              border-radius: 18px;
              margin-top:43px;
 		}
+
+		.dropdown.currency_two.three_coins.crypto button#dropdownMenuButton img {
+    float: left !important;
+    width: 18px;
+    margin-right: 10px;
+    margin-top: 6px;
+}
+
+.dropdown.currency_two.three_coins button#dropdownMenuButton{
+	padding-top: 0;
+	background: #f6f6f6 !important;
+	border: none !important;
+}
+
+.dropdown.currency_two.three_coins button#dropdownMenuButton::after{
+	float: revert;
+}
+
+
 	</style>
 
 @endsection
@@ -28,6 +47,9 @@
 @php
 
 $loanUsdt=$loan->loan_currency_rate;
+$current_loan_currency=$loan->loan_currency_id;
+
+
 
 @endphp
 
@@ -101,19 +123,14 @@ $loanUsdt=$loan->loan_currency_rate;
 								<div class="row m-bottom">
 									<div class="col-lg-4 xs-flush-right col-sm-4 col-5">
 										<h6>My Collateral is</h6>
-										<h5><b>{{$loan->collateral_amount}}</b> &nbsp;{{__($loan->collateral_currency->short_name)}}&nbsp; @if($loan->collateral_currency->hasMedia('icon'))
-										 <img style="max-width:28px;" src="{{$loan->collateral_currency->firstMedia('icon')->getUrl()}}" alt="{{$loan->collateral_currency->short_name}}"/>
-
-										 @endif</h5>
+										<h5><b>{{$loan->collateral_amount}}</b> &nbsp;{{__($loan->collateral_currency->short_name)}}&nbsp; 
+										</h5>
 									</div>
 									<div class="col-lg-4 col-sm-4 col-7">
 										<h6>Current value</h6>
-											@if($loan->collateral_currency->hasMedia('icon'))
-										 <img style="max-width:28px;" src="{{$loan->collateral_currency->firstMedia('icon')->getUrl()}}" alt="{{$loan->collateral_currency->short_name}}"/>
+										
 
-										 @endif
-
-										 {{$loan->collateral_currency->short_name}}:<b>{{number_format($loan->current_value,2)}}</b> USDT <a href="#"><!-- +0.73%; --></a></p>
+										 {{$loan->collateral_currency->short_name}}: <b>{{number_format($loan->current_value,2)}}</b> USDT <a href="#"><!-- +0.73%; --></a></p>
 									</div>
 									<div class="col-lg-4 col-sm-4 col-6">
 										<h6>Loan Term Value</h6>
@@ -185,6 +202,16 @@ $loanUsdt=$loan->loan_currency_rate;
 
 													@if($currency->id== $loan->loan_currency_id)
 
+													@php 
+
+													$created_button=1;
+
+
+
+
+
+													@endphp
+
 												  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                                               @if($currency->hasMedia('icon'))
@@ -202,9 +229,41 @@ $loanUsdt=$loan->loan_currency_rate;
 												  @endforeach
 
 												  @if(count($currencies) < 0 )
-                                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                                              <span>Not available</span>
+
+													
+
+
+												  </button>
+
+												  @elseif(!(isset($created_button)))
+
+												  @php 
+
+													$current_loan_currency=$currencies[0]->id;
+
+
+												  @endphp
+
+											 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+  
+
+                                 @if($currencies[0]->hasMedia('icon'))
+    
+                                      
+
+                      <img src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
+
+                      @endif
+
+                      {{__($currencies[0]->short_name)}} 
+
+
+                            
+
 
 													
 
@@ -240,8 +299,10 @@ $loanUsdt=$loan->loan_currency_rate;
 
 												  </div>
 
-												  <input type="hidden" name="currency_id" class="backend-coin-class"  value="{{$loan->loan_currency_id??''}}">
+												  <input type="hidden" name="currency_id" class="backend-coin-class"  value="{{$current_loan_currency??''}}">
+
 												</div>
+
 											</div>	
 
 
@@ -249,7 +310,13 @@ $loanUsdt=$loan->loan_currency_rate;
 											 {{$loan->loan_repayment_amount}}
 											</div>
 										</div>	
+
 									</div>
+									@error('loan_repayment_amount')
+                                <p class="invalid-value text-danger" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
 								</div>
 								<div class="wallet-b">
 									<p class="backend-wallet-balance">Wallet Blance: <b>{{$loan->loan_currency->user_balance??0.00000}}</b> {{$loan->loan_currency->short_name}}</p>
@@ -312,9 +379,19 @@ $loanUsdt=$loan->loan_currency_rate;
 											<div class="col-lg-6 col-sm-6 col-6">
 													<div class="dropdown currencyDropdown currency_two three_coins crypto">
 
-													@foreach($currencies as $cIndex=> $currency)
+														@foreach($currencies as $cIndex=> $currency)
 
 													@if($currency->id== $loan->loan_currency_id)
+
+													@php 
+
+													$created_button=1;
+
+
+
+
+
+													@endphp
 
 												  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
@@ -333,9 +410,41 @@ $loanUsdt=$loan->loan_currency_rate;
 												  @endforeach
 
 												  @if(count($currencies) < 0 )
-                                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                                              <span>Not available</span>
+
+													
+
+
+												  </button>
+
+												  @elseif(!(isset($created_button)))
+
+												  @php 
+
+													$current_loan_currency=$currencies[0]->id;
+
+
+												  @endphp
+
+											 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+  
+
+                                 @if($currencies[0]->hasMedia('icon'))
+    
+                                      
+
+                      <img src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"/> 
+
+                      @endif
+
+                      {{__($currencies[0]->short_name)}} 
+
+
+                            
+
 
 													
 
@@ -371,7 +480,8 @@ $loanUsdt=$loan->loan_currency_rate;
 
 												  </div>
 
-												  <input type="hidden" name="currency_id" class="backend-coin-class"  value="{{$loan->loan_currency_id??''}}">
+												  <input type="hidden" name="currency_id" class="backend-coin-class"  value="{{$current_loan_currency??''}}">
+
 												</div>
 											</div>	
 											<div class="col-lg-6 text-right col-sm-6 col-6 backend-loan-repayment">
@@ -526,6 +636,7 @@ $loanUsdt=$loan->loan_currency_rate;
     return currency;
     }
 
+wallet_balance();
 
 		function updateBalance()
 		{
@@ -537,8 +648,7 @@ $loanUsdt=$loan->loan_currency_rate;
 
 		//	wallet_balance();
 
-   	//console.log(filteredCryptoExchangeRow);return false;
-
+   	//console.log(cryptoRow);
            usdtPrice=parseFloat(filteredCryptoExchangeRow.lastPrice);
 
            var loan_amount=parseFloat('{{$loan->loan_amount}}');
@@ -547,7 +657,7 @@ $loanUsdt=$loan->loan_currency_rate;
 
            var newUsdt=usdtPrice/parseFloat('{{$loanUsdt}}');
 
-        //   console.log(newUsdt,usdtPrice);
+           console.log(newUsdt,usdtPrice);
 
            var only_loan_amount=(loan_amount/newUsdt).toFixed(5);
 
@@ -585,7 +695,7 @@ $loanUsdt=$loan->loan_currency_rate;
 
 
 
-
+         wallet_balance();
 
 
 		}
@@ -652,7 +762,7 @@ function wallet_balance()
 
     currencyRow=currencyRow[0];
 
-    balance=balance+' '+currencyRow.short_name;
+   // balance=balance+' '+currencyRow.short_name;
 
     if( balanceRow && typeof balanceRow.coin !='undefined')
     {
@@ -660,6 +770,22 @@ function wallet_balance()
 
        
     }
+
+    var loan_repay_currency=currencyRow.loan_repay_currency;
+
+    var crypto_address='<div class="network-w"><div class="row"><div class="col-lg-6 b-right col-sm-6 col-12"> <label>Loan Repayment Address';
+
+    if(currencyRow.image_url.length)
+    {
+
+    crypto_address+='<img style="width:28px;" src="'+currencyRow.image_url+'" alt="'+currencyRow.short_name+'">';
+    }
+
+    crypto_address+='</label><p>Network Name: <b>'+currencyRow.short_name+'</b><br> Average arrival time: <b>1 minutes</b></p></div><div class="col-lg-6 col-sm-6 col-12"> <label>Address</label><div class="row top-n"><div class="col-lg-9 col-sm-9 col-9"><p>'+loan_repay_currency.crypto_wallet_address+'</p></div><div class="col-lg-3 col-sm-3 col-3 flush-left"> <img src="http://127.0.0.1:8000/front/img/icon-14.png" alt=""></div></div></div></div></div>';
+
+    $('.network-w').replaceWith(crypto_address);
+
+   // console.log(crypto_address);
 
     $('.backend-wallet-balance').html('Wallet Blance:<b>'+balance+'</b>'+currencyRow.short_name);
 }
