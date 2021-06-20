@@ -5,6 +5,13 @@
 @section('page_styles')
 	<link type="text/css" rel="stylesheet" href="{{asset('front/css/datepicker.css')}}" />
 
+	<style type="text/css">
+
+	
+		
+
+	</style>
+
 @endsection
 
 @section('content')
@@ -48,10 +55,18 @@ $loan_variables=(object)$loan_variables;
 			 <div class="col-lg-5 text-right col-sm-6 col-6">
 
 				<p>
-					<img src="{{asset('front/img/bitcoin.png')}}" alt=""/>
-					<img src="{{asset('front/img/icon-5.png')}}" alt=""/>
-					<img src="{{asset('front/img/icon-6.png')}}" alt=""/>
-					<img src="{{asset('front/img/icon-7.png')}}" alt=""/>
+
+					@foreach($collateral_currencies as $cl_currency)
+
+					@if($cl_currency->hasMedia('icon'))
+
+					<img style="width: 28px;" src="{{$cl_currency->firstMedia('icon')->getUrl()}}" alt="{{$cl_currency->short_name}}"/>
+
+					@endif
+
+
+					@endforeach
+					
 				</p>
 
             </div>
@@ -137,7 +152,7 @@ $loan_variables=(object)$loan_variables;
 												</div>
 
 												
-												<input type="text" name="collateral_amount" id="collateral_quantity" value="">
+												<input style="width:60%;" type="text" name="collateral_amount" id="collateral_quantity" value="">
 											</div>
 
 											  @error('collateral_amount')
@@ -206,7 +221,7 @@ $loan_variables=(object)$loan_variables;
                                             <input type="hidden" name="loan_currency" id="backend-fiat-coin-id" value="{{$loanable_currencies[0]->id??''}}">
 
 												</div>
-												<input style="width:65%;" type="text" name="loan_amount" readonly="" id="backend-loan-amount" value="">
+												<input style="width:60%;" type="text" name="loan_amount" readonly="" id="backend-loan-amount" value="">
 											</div>
 											  @error('loan_currency')
                                 <p class="invalid-value text-danger" role="alert">
@@ -269,7 +284,7 @@ $loan_variables=(object)$loan_variables;
 											</div>
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Price down limit</h5>
-												<h4 id="backend-price-down-limit">{{$loan_variables->loan_price_down_limit}}% or <plimit>35279.76 </plimit><span id="backend-limit-text">BTC/USDT</span></h4>
+												<h4 id="backend-price-down-limit">{{$loan_variables->loan_price_down_limit}}% or <plimit>35279.76 </plimit><span id="backend-limit-text"> USDT</span></h4>
 												<!-- <p>Add more collateral and extend PDL</p> -->
 											</div>
 											<div class="col-lg-4 col-sm-4 col-12">

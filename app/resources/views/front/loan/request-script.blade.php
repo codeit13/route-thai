@@ -100,7 +100,7 @@ function showCurrencyRate()
 
 	  $('plimit').html((usdPrice*parseFloat(price_down_limit)/100).toFixed(2));
 
-	  $('#backend-limit-text').html(cryptoRow.short_name+'/USDT');
+	 // $('#backend-limit-text').html('USDT');
 
 		$('#backend-current-usd-rate').html(newText);
 

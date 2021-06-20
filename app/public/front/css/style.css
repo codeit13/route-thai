@@ -4462,14 +4462,15 @@ span.active {
 }
 #loans-deshboard-new .space-normal .dropdown.currency_two.three_coins.crypto button#dropdownMenuButton img {
     margin-top: 4px;
+    margin-right:10px; 
     width:25px;
 }
 #loans-deshboard-new .dropdown.currency_two.three_coins .dropdown-toggle::after {
-    float:left;
+       float: right;
     position: relative;
-    left: 50px;
-    top: 2px;
-    color:#acacac;
+    margin-top: 13px;
+    color: #acacac;
+    margin-left: 10px;
 }
 #loans-deshboard-new.desh-2 {
     padding-top:40px;

@@ -27,10 +27,16 @@
             </div>
 			 <div class="col-lg-5 text-right col-sm-6 col-6">
 				<p>
-					<img src="{{asset('front/img/bitcoin.png')}}" alt=""/>
-					<img src="{{asset('front/img/icon-5.png')}}" alt=""/>
-					<img src="{{asset('front/img/icon-6.png')}}" alt=""/>
-					<img src="{{asset('front/img/icon-7.png')}}" alt=""/>
+					@foreach($collateral_currencies as $cl_currency)
+
+					@if($cl_currency->hasMedia('icon'))
+
+					<img style="width: 28px;" src="{{$cl_currency->firstMedia('icon')->getUrl()}}" alt="{{$cl_currency->short_name}}"/>
+
+					@endif
+
+
+					@endforeach
 				</p>
             </div>
          </div>
@@ -98,7 +104,7 @@
 											</div>
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Price down limit</h5>
-												<h4>{{$loan_detail->settings->loan_price_down_limit}}% or {{$loan_detail->price_down_value}} <span>{{__($loan_detail->collateral_currency->short_name)}}/USDT</span></h4>
+												<h4>{{$loan_detail->settings->loan_price_down_limit}}% or {{$loan_detail->price_down_value}} <span> USDT</span></h4>
 												<p>Add more collateral and extend PDL</p>
 											</div>
 											<div class="col-lg-4 col-sm-4 col-12">

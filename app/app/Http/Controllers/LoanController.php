@@ -63,7 +63,7 @@ class LoanController extends Controller
         }
 
 
-              $loans=$loans->orderBy('created_at','desc')->paginate(10);
+              $loans=$loans->orderBy('created_at','desc')->paginate(10)->withQueryString();
 
         //echo '<pre>';print_r($currencies->toArray());
 
@@ -247,13 +247,16 @@ class LoanController extends Controller
 
         $loan_detail=$this->loan_data($request);
 
+        $collateral_currencies=\App\Models\Currency::where('is_collateral',1)->get();
+
+
          //echo '<pre>';print_r($loan_detail);die;
 
 
 
 
 
-          return view('front.loan.request-detail',compact('loan_detail'));
+          return view('front.loan.request-detail',compact('loan_detail','collateral_currencies'));
     }
 
     /**
@@ -344,29 +347,6 @@ class LoanController extends Controller
         {
             $close_request['on_wallet']=1;
 
-            $user=auth()->user();
-
-            $wallet=$user->wallet->where('currency_id',$request->currency_id)->where('wallet_type',1)->first();
-
-            $wallet->coin=$wallet->coin-(float)$request->loan_repayment_amount;
-
-            $wallet->save();
-
-            $loan->status='paid';
-
-            $loan->save();
-
-            $loan_close_request->status=='approved';
-
-            $loan_close_request->save();
-
-
-
-
-
-            return redirect()->route('loan.history')->with('success','Your repayment is debit from your wallet.');
-
-
         }
 
 
@@ -404,8 +384,20 @@ class LoanController extends Controller
         }
         else
         {
-            $currencies=\App\Models\Currency::where('is_crypto',1)->get();
+            $currencies=\App\Models\Currency::with('loan_repay_currency')->has('loan_repay_currency')->get();
         }
+
+        $currencies->filter(function($value)
+        {
+            $value->image_url='';
+            if($value->hasMedia('icon'))
+            {
+                $value->image_url=$value->firstMedia('icon')->getUrl();
+            }
+
+        });
+
+        //echo '<pre>';print_r($currencies->toArray());die;
 
            $wallets=auth()->user()->wallet()->where('wallet_type',1)->get();
 
@@ -622,6 +614,11 @@ class LoanController extends Controller
 
 
     return $crypto_exchange_row;
+
+}
+
+public function repaid()
+{
 
 }
 
