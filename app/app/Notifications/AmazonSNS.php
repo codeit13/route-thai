@@ -44,7 +44,7 @@ class AmazonSNS extends Notification
         return SnsMessage::create()
             ->body($this->text)
             ->promotional()
-            ->sender('RoutethaiSMS');
+            ->sender('SUMITSNSTOPIC');
     }
 
     /**
