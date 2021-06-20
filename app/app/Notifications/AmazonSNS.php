@@ -39,12 +39,12 @@ class AmazonSNS extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toSns($notifiable)
+    public function toSNS($notifiable)
     {
-        return SnsMessage::create()
-            ->body($this->text)
-            ->transactional()
-            ->sender('SUMITSNSTOPIC');
+        return (new SNSMessage)
+                    ->message('This is a simple message')
+                    ->subject('This is subject')
+                    ->topicArn('arn:aws:sns:ap-southeast-1:500161245451:SUMITSNSTOPIC');
     }
 
     /**
