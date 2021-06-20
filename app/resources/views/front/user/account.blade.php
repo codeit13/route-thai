@@ -20,12 +20,18 @@ Account Secuirity - Route: P2P Trading Platform
                         <li>Turn-on withdrawal whitelist</li>
                     </ul>
                 </div>
+
+                @if(Session::has('message'))
+                <div class="alert alert-success">
+                    {{ Session::get('message') }}
+                </div>
+                @endif
                 <div class="col-lg-12  col-sm-12 col-12">
                     <div class="row">
                         <div class="col-lg-6 col-sm-6 col-12">
                             <div class="fa-box-white">
                                 <h5>2FA</h5>
-                                <div class="field">
+                                {{-- <div class="field">
                                     <div class="row">
                                         <div class="col-lg-9 col-sm-7 col-8">
                                             <label class="text">
@@ -38,7 +44,7 @@ Account Secuirity - Route: P2P Trading Platform
                                             <a href="#" class="btn-info">Set Up</a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="field">
                                     <div class="row">
                                         <div class="col-lg-9 col-sm-7 col-8">
@@ -69,9 +75,10 @@ Account Secuirity - Route: P2P Trading Platform
                                             </label>
                                         </div>
                                         <div class="col-lg-3 text-right col-sm-5 col-4">
-                                            <button type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                            {{-- <button type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
                                                 <div class="handle"></div>
-                                            </button>
+                                            </button> --}}
+                                            <a href="#" data-toggle="modal" data-target="#addMobileNo" class="btn-info">Set Up</a>
                                         </div>
                                     </div>
                                 </div>
@@ -90,6 +97,9 @@ Account Secuirity - Route: P2P Trading Platform
                                     </div>
                                 </div>
                             </div>
+                            
+                        </div>
+                        <div class="col-lg-6 xs-btn col-sm-6 col-12">
                             <div class="fa-box-white device">
                                 <div class="field">
                                     <div class="row">
@@ -103,10 +113,7 @@ Account Secuirity - Route: P2P Trading Platform
                                         </div>
                                     </div>
                                 </div>
-                            </div>	
-                        </div>
-                        <div class="col-lg-6 xs-btn col-sm-6 col-12">
-                            <div class="fa-box-white">
+                            </div>	 {{-- <div class="fa-box-white">
                                 <div class="field">
                                     <h4>Anti-phishing Code</h4>
                                     <p>By setting up an Anti-Phishing Code, you will be able to tell if your
@@ -124,7 +131,7 @@ Account Secuirity - Route: P2P Trading Platform
                                         <a href="#" class="btn-info change">More</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="fa-box-white device">
                                 <div class="field">
                                     <div class="row">
@@ -134,7 +141,7 @@ Account Secuirity - Route: P2P Trading Platform
                                             </label>
                                         </div>
                                         <div class="col-lg-3 text-right col-sm-5 col-4">
-                                            <a href="#" class="btn-info change">Change</a>
+                                            <a href="{{ route('user.change.password') }}" class="btn-info change">Change</a>
                                         </div>
                                     </div>
                                 </div>
@@ -147,4 +154,5 @@ Account Secuirity - Route: P2P Trading Platform
     </div>
 </div>
 </section>
+@include('front.user._addMobile')
 @endsection
