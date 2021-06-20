@@ -43,7 +43,7 @@ class AmazonSNS extends Notification
     {
         return SnsMessage::create()
             ->body($this->text)
-            ->promotional()
+            ->transactional()
             ->sender('SUMITSNSTOPIC');
     }
 
