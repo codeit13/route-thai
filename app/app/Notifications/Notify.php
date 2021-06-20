@@ -16,11 +16,11 @@ class Notify
         // $this->service = new \App\Services\SMSService();
         // $this->service->send($mobile,$message);
 
-        if ($user['sms_notification']) {
-            Auth::user()->notify(new AmazonSNS([
-                'text' => $user['Message'],
-            ]));
-        }
+        // if ($user['sms_notification']) {
+        //     Auth::user()->notify(new AmazonSNS([
+        //         'text' => $user['Message'],
+        //     ]));
+        // }
 
         if ($user['telegram_notification']) {
             Auth::user()->notify(new LaravelTelegramNotification([
