@@ -105,6 +105,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->notify_token;
     }
 
+    public function routeNotificationForSns($notification)
+    {
+        return $this->mobile;
+    }
 
     public function setGoogle2faSecretAttribute($value)
     {
