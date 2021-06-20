@@ -24,7 +24,7 @@ Route: P2P Trading Platform
                 </li>
                 <li><a href="{{ route('sell.create') }}">Sell</a>
                 </li>
-                <li class="visible-xs"><button class="show_filter"><i class="far fa-filter"></i></button></li>
+                <li class="visible-xs"><button class="show_filter"><img src="{{asset('front/img/refresh.png')}}"></button></li>
             </ul>
         </div>
     </div>
@@ -39,9 +39,19 @@ Route: P2P Trading Platform
                         <li>
                             <label>Amount</label>
                             <br/>
-                            <form class="form-inline">
-                                <input class="form-control mr-sm-2" name="search" placeholder="Enter amount" aria-label="Search">
-                            </form>
+                            <div class="dropdown currency_two three_coins">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Payments
+                                </button>
+                                <input type="hidden" name="currency_id" id="currency_id" value="{{ $crypto_currencies->first()->id }}">
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @foreach($crypto_currencies as $single_currency_id)
+                                        <a class="dropdown-item" href="#">
+                                            10,000
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
                         </li>
                         <li>
                             <label>Fiat</label>
@@ -93,7 +103,7 @@ Route: P2P Trading Platform
                                 </div>
                             </div>
                         </li>
-                        <li class="full_li">
+                        <li class="full_li hidden-xs">
                             <a href="javascript::void(0)" onclick="searchForm()" class="refresh">
                             <img src="{{asset('front/img/refresh.png')}}">Refresh</a>
                         </li>

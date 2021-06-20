@@ -86,14 +86,14 @@ var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
 })
-</script>
+</script><!-- 
 <script type="text/javascript">
 $(document).ready(function(){
   $("button.show_filter").click(function(){
     $("#filter").toggleClass("main");
   });
 });
-</script>
+</script> -->
 <script type="text/javascript">
     // Iterate over each select element
 $('select:not(.form-control)').each(function () {

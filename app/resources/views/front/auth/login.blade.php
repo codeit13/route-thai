@@ -1,4 +1,7 @@
 @extends('layouts.front_auth')
+@section('title')
+    Login | Route: P2P Trading Platform
+@endsection
 <style>
 .error{
     color:red !important;
@@ -28,7 +31,9 @@
 								</a>
                                 <h2>{{__("Welcome to Route")}}</h2>
                                 <p>{{__("Please sign-in to your account and start the adventure")}}</p>
-                               
+                                @if(session()->has('message'))
+                                    <p>{{__(session()->get('message'))}}</p>
+                                @endif
                                   <form method="POST"  id="loginform" action="{{ route('login') }}">
                                     @csrf
                                   <div class="tab-content" id="myTabContent">
@@ -213,14 +218,13 @@ var counter = null;
     }
 
 $(".toggle-password").click(function() {
-
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        var input = $($(this).attr("toggle"));
-        if (input.attr("type") == "password") {
-        input.attr("type", "text");
-        } else {
-        input.attr("type", "password");
-        }
+    $(this).toggleClass("fa-eye fa-eye-slash");
+    var input = $($(this).attr("toggle"));
+    if (input.attr("type") == "password") {
+    input.attr("type", "text");
+    } else {
+    input.attr("type", "password");
+    }
 });
 
 $('#email').on("keyup", function() {
@@ -266,34 +270,37 @@ $('#email').on("keyup", function() {
 });
 
 
-
-$('#password-field').on("keyup change", function() {
+$('#password-field').focusout(function() {
     var dis = $(this);
-    let email_Validity;
-        jQuery.ajax({
-        type: 'POST',
-        url: "{{ route('user-check') }}",
-        data: {
-            action: "user-check",
-            email:$('#email').val(),
-            password: dis.val(),
-            _token: "{{ csrf_token() }}"
-        },
-        success: function(res) {
-            cls = '';
-            if (res.status !== 'OK') {
-                $('#send-otp').attr('disabled', true);
-                $('#pswd-err').html("<label class='text-danger'>The entered password is wrong.</label>");
-            } 
-            else {
-                $('#send-otp').attr('disabled', false);
-                $('#pswd-err').html("");
+    if(dis.val() != '') {
+        let email_Validity;
+            jQuery.ajax({
+            type: 'POST',
+            url: "{{ route('user-check') }}",
+            data: {
+                action: "user-check",
+                email:$('#email').val(),
+                password: dis.val(),
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(res) {
+                cls = '';
+                if (res.status !== 'OK') {
+                    $('#send-otp').attr('disabled', true);
+                    $('#pswd-err').html("<label class='text-danger'>The entered password is wrong.</label>");
+                } 
+                else {
+                    $('#send-otp').attr('disabled', false);
+                    $('#pswd-err').html("");
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
+        });    
+    } else {
+        $('#pswd-err').html("");
+    }
 });
 </script>
 @endsection

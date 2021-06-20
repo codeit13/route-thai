@@ -424,7 +424,7 @@ button.btn.dropdown-toggle.btn-light {
 
 .main_data_dable table tr th.first {
     font-size: 13px;
-    /* width: 150px; */
+    width: 90px !important;
     line-height: 23px;
 }
 
@@ -538,7 +538,7 @@ th.res_po, th.first {
     border: 1px solid var(--arbitrage-border-color);
     padding: 13px 25px;
     text-align: left;
-    width: fit-content !important;
+    /* width: fit-content !important; */
 
     /* display: inline-block;
     width: 100%;
@@ -1084,10 +1084,11 @@ img.header_img {
         text-align: right;
         padding: 3px 0px;
         vertical-align: middle;
+        width: 75px !important;
     }
     .main_data_dable table tr td:first-child {
         text-align: left;
-        padding: 0px 3px;
+        padding: 0px 0px;
         font-size:10px;
     }
     .main_data_dable table thead tr th:first-child {
@@ -1137,7 +1138,7 @@ img.header_img {
 th.res_po, th.first {
     position: sticky;
     left: 0px;
-    width: fit-content !important;
+    /* width: fit-content !important; */
     background-color: var(--arbitrage-body-bg) !important;
 }
 
@@ -1366,5 +1367,21 @@ td{
     .big-modal-menu .ex-select .btn,.big-modal-menu .ex-select a{
         font-size: 14px;
     }
-    
+    .main_data_dable table thead tr th {
+        padding: 0px 17px 0 1px;
+        }
+    .main_data_dable table tr td:first-child {
+        text-align: left;
+        padding: 0px 0px;
+        font-size:10px;
+    }
+    .main_data_dable table tr th.first {
+        font-size: 13px;
+        width: 90px !important;
+        line-height: 23px;
+        padding: 7px 0 7px 20px;
+        margin-left: 2px;
+    }
+        
+        
 }
