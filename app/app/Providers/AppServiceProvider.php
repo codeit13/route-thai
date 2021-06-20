@@ -2,8 +2,16 @@
 
 namespace App\Providers;
 
+use Aws\Sns\SnsClient;
+use App\Channels\SmsChannel;
+use Aws\Credentials\Credentials;
+
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
+
+use Illuminate\Notifications\ChannelManager;
+use Illuminate\Support\Facades\Notification;
+
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Facades\Bot;
 use Revolution\Line\Messaging\Http\Actions\WebhookLogHandler;
