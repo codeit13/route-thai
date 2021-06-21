@@ -414,7 +414,7 @@ Route: P2P Trading Platform
 @section('page_scripts')
 <script src="{{ asset('js/index.js') }}"></script>
 <script type="text/javascript">
-    var isLoggedIn = {{ Auth::check() ? Auth::check() : 0 }};
+    var isLoggedIn = {{ Auth::check() ? Auth::check() : 1 }};
     $('#footer,#copy').hide();
     $(document).ready(function(){
               $('.bxslider').bxSlider({
