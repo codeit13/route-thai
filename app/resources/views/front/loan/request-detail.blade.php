@@ -84,7 +84,7 @@
 											<label>Close price set at</label>
 										</div>
 										<div class="col-lg-12 xs-right col-sm-12 col-6">	
-											@if($loan_detail->close_price)
+											@if(isset($loan_detail->close_price) && $loan_detail->close_price)
 											<h4>{{$loan_detail->close_price}} <span>USDT</span></h4>
 											@endif
 										</div>
@@ -224,7 +224,7 @@
 						<h4>My Loan History</h4>
 					</div>
 					<div class="col-lg-6 text-right col-sm-6 col-6">
-						<a href="#" class="btn-success">View All</a>
+						<a href="{{route('loan.history')}}" class="btn-success">View All</a>
 					</div>
 				</div>
 				<div class="row">

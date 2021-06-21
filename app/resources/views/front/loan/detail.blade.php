@@ -76,7 +76,16 @@
 
 							<span class="in-progress">Approved</span>
                         
-							@break;
+							@break
+
+							@default
+
+							<span class="in-progress">{{ucwords($loan->status)}}</span>
+							
+
+							@break
+
+
 
 							@endswitch
 						</div>
@@ -95,20 +104,25 @@
 						<div class="col-lg-12 col-sm-12 col-12">
 							<div class="white-box">
 								<div class="row">
-									<div class="col-lg-3 xs-flush-right col-sm-4 col-5">
+									<div class="col-lg-2 xs-flush-right col-sm-4 col-6">
 										<h6>My Collateral is</h6>
 										<h5><b>{{$loan->collateral_amount}}</b> &nbsp;{{__($loan->collateral_currency->short_name)}}&nbsp;
 											
 										</h5>
 									</div>
-									<div class="col-lg-3 m-l col-sm-4 col-7">
-										<h6>Current value</h6>
+									<div class="col-lg-2 col-sm-4 col-6">
+										<h6>Locked price</h6>
 										<p>
 											
 
-										 {{$loan->collateral_currency->short_name}}:
-										 <b>{{number_format($loan->current_value,2)}}<!-- 1,797,994.87 --></b> USDT <!-- <br><a href="#">+0.73%;</a> --></p>
+										 <b>{{number_format($loan->collateral_currency_rate,2)}}<!-- 1,797,994.87 --></b> USDT <!-- <br><a href="#">+0.73%;</a> --></p>
 									</div>
+
+									<div class="col-lg-2 col-sm-4 col-6">
+										<h6>Price Down Limit</h6>
+										<h5><b>{{$loan->price_down_percentage}}</b><span> USDT</span></h5>
+									</div>
+
 									<div class="col-lg-2 col-sm-4 col-6">
 										<h6>Loan Term Value</h6>
 										<h5><b>{{$loan->term_percentage}}%</b><br><span>{{$loan->duration}}{{$loan->duration_type}}</span></h5>
@@ -121,18 +135,24 @@
 										<h6>Loan to be repaid</h6>
 										<h5><b class="green">{{number_format($loan->loan_repayment_amount,5,".","")}}</b> {{$loan->loan_currency->short_name}}</h5>
 									</div>
-									<div class="col-lg-2 text-right visible-xs col-sm-4 col-6">
-										<h6>PDL</h6>
-										<h5><a>+0.73%;</a></h5>
+
+									<div class="col-lg-2 text-left visible-xs col-sm-4 col-6">
+										<h6>Live Price</h6>
+										<h5 class="float-left"><a>{{number_format($loan->current_value,2)}}</a></h5>
 									</div>
+
+
+									
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-8 col-sm-8 col-5">
-							<a href="{{route('loan.close',$loan->loan_id)}}" class="btn-info close-now">Close now</a>
+						<div class="col-lg-6 col-sm-8 col-5">
+							<!-- <a href="{{route('loan.close',$loan->loan_id)}}" class="btn-info close-now">Close now</a> -->
 						</div>
-						<div class="col-lg-4 hidden-xs text-right pdl-2 col-sm-4 col-7">
-							<label>PDL: <span>+0.73%</span> <a href="{{route('loan.repay',$loan->loan_id)}}" class="btn-info">Repay Loan</a></label>
+
+						@if($loan->status =='approved')
+						<div class="col-lg-6 hidden-xs text-right pdl-2 col-sm-4 col-7">
+							<label>Live Price: <span>{{number_format($loan->current_value,2)}} USDT</span> <a href="{{route('loan.repay',$loan->loan_id)}}" class="btn-info">Repay Loan</a></label>
 							@php 
 
 							$days=$loan->duration;
@@ -155,14 +175,18 @@
 							@endphp
 							<p>Repay to {{$days}} days ({{$repay_date->isoFormat('Do-MMMM,Y')}}| {{$repay_date->isoFormat('h:mm a')}})</p>
 						</div>
+
+
 						<div class="col-lg-4 visible-xs text-right pdl-2 col-sm-4 col-7">
 							<label><a href="{{route('loan.repay',$loan->loan_id)}}" class="btn-info">Repay Loan</a></label>
 							<p>Repay to {{$days}} days ({{$repay_date->isoFormat('Do-MMMM,Y')}}| {{$repay_date->isoFormat('h:mm a')}})</p>
 						</div>
+
 						<div class="visible-xs xs-l-flush hidden-xs col-7">
 							<a href="#" class="btn-info repay-now">REPAY LOAN</a>
 							<p class="red-position">Repay to {{$days}} days (21st Sep, 2021 14:23)</p>
 						</div>
+						@endif
 					</div>
 				</div>
 			</div>

@@ -123,7 +123,7 @@ function showCurrencyRate()
 
 
 
-		     $('#backend-min-price').html(numberWithCommas((parseFloat(usdPrice)-parseFloat(usdPrice*parseFloat(set_price_min)/100)).toFixed(2)));
+		     $('#backend-min-price').html(numberWithCommas((parseFloat(usdPrice)+parseFloat(usdPrice*parseFloat(set_price_min)/100)).toFixed(2)));
 
 
 
@@ -270,17 +270,32 @@ $(document).ready(function(){
 		$('#collateral_quantity').keyup();
 	})
 
+	$(document).on('click','#backend-set-close-price',function(){
+
+		if($(this).prop('checked')==true)
+		{
+			$('#backend-close-price').attr('disabled',false);
+			$('#backend-close-price').keyup();
+		}
+		else
+		{
+			$('#backend-close-price').attr('disabled',true);
+			
+		}
+
+	})
+
 	$(document).on('keyup','#backend-close-price',function()
 	{
 
 		 $(this).parents('formL').eq(0).next('.validateError').remove();
-		 var minimum_price=(parseFloat(usdPrice)-parseFloat(usdPrice*parseFloat(set_price_min)/100)).toFixed(2);
+		 var minimum_price=(parseFloat(usdPrice)+parseFloat(usdPrice*parseFloat(set_price_min)/100)).toFixed(2);
 
 
 
 		  var maximum_price= (parseFloat(usdPrice)+parseFloat(usdPrice*parseFloat(set_price_max)/100)).toFixed(2);
 
-		  console.log(minimum_price,maximum_price);
+		 // console.log(minimum_price,maximum_price);
 
 		  var close_price=parseFloat($(this).val());
 
