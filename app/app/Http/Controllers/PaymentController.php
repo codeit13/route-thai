@@ -250,7 +250,7 @@ class PaymentController extends Controller
             // ]);
             
             // Message for Seller
-            $Message = "[Route-Thai] The buyer has marked P2P ( Order " . substr($transcation->trans_id, -4) . " ) as paid. Please release the crypto ASAP after confirming that payment has been received.";
+            $Message = "[Route-Thai] The buyer has marked P2P ( Order " . substr($transaction->trans_id, -4) . " ) as paid. Please release the crypto ASAP after confirming that payment has been received.";
             Notify::sendMessage([
                 'sms_notification' => $transaction->user->sms_notification,
                 'mobile' => "mobile",
@@ -286,7 +286,7 @@ class PaymentController extends Controller
            $buyer_request->delete();
 
             // Message for Buyer
-            $Message = "[Route-Thai] P2P Order (Ending with " . substr($transcation->trans_id, -4) . ") has been completed. The seller has released " . $transaction->quantity . " " . $transcation->currency_id . " to your P2P wallet.";
+            $Message = "[Route-Thai] P2P Order (Ending with " . substr($transaction->trans_id, -4) . ") has been completed. The seller has released " . $transaction->quantity . " " . $transaction->currency_id . " to your P2P wallet.";
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
                 'mobile' => "mobile",
