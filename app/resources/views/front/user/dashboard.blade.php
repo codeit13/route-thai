@@ -456,10 +456,18 @@
             data:{ mode : mode, _token: "{{ csrf_token() }}" },
             success:function(data) {
                if((mode == "telegram_notification") && (aria_pressed == 'false')) {
-                  $("<a>").prop({
-                        target: "_blank",
-                        href: "https://t.me/{{env('TELEGRAM_BOT_USERNAME')}}"
-                  })[0].click();
+                  @if(Auth::user()->telegram_user_id == '') {
+                     $("<a>").prop({
+                           target: "_blank",
+                           href: "https://t.me/{{env('TELEGRAM_BOT_USERNAME')}}"
+                     })[0].click();
+                  }
+                  @else {
+                     $("<a>").prop({
+                           href: "{{ route('user.update.telegram-user-id' , Auth::user()->telegram_user_id) }}"
+                     })[0].click();
+                  }
+                  @endif
                }
                if((mode == "line_notification") && (aria_pressed == 'false')) {
                   $("<a>").prop({
