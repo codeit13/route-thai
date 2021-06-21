@@ -32,8 +32,8 @@ class ChangePasswordController extends Controller
     {
         $request->validate([
             'current_password' => ['required', new MatchOldPassword],
-            'new_email' => ['required'],
-            'new_confirm_email' => ['same:new_email'],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_email'],
         ]);
         // User::find(auth()->user()->id)->update(['email'=> Hash::make($request->new_email)]);
         return redirect()->route('user.security','request');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User; 
+use App\Models\Loan;
 
 class LoanController extends Controller
 {
@@ -15,9 +16,18 @@ class LoanController extends Controller
      */
     public function index()
     {
-        return view('back.loan.index');
+        $loans = Loan::with(['user','loan_currency','collateral_currency'])->paginate(15);
+        return view('back.loan.index',compact('loans'));
     }
 
+    public function updateStatus($id, $status){
+        if(!empty($status)) {
+            $loan = Loan::find($id);
+            $loan->status = trim($status);
+            $loan->save();
+            return redirect()->route('admin.loan.list');
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -89,12 +99,4 @@ class LoanController extends Controller
         return redirect()->route('admin.users')->with('message','The user has been deleted.');
     }
 
-    public function updateStatus(Request $request){
-        if($request->has('status') && !empty($request->status)) {
-            $user = User::find($request->id);
-            $user->status = trim($request->status);
-            $user->save();
-            return response()->json(['status'=>'OK','message'=> __('The statuas has been updated.') ]);
-        }
-    }
 }
