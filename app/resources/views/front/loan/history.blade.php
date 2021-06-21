@@ -5,6 +5,29 @@
 @section('page_styles')
 	<link type="text/css" rel="stylesheet" href="{{asset('front/css/datepicker.css')}}" />
 
+	<style type="text/css">
+		#loan_navbar .nav-pagi nav {
+    display: inline-block;
+    padding: 20px 0px;
+}
+#loan_navbar .nav-pagi nav a {
+    padding: 0px 15px;
+    color: var(--white-black-text);
+    font-size: 18px;
+    line-height: 30px;
+    display: inline-block;
+}
+#loan_navbar .nav-pagi nav li.active a {
+    background: #ebecf0;
+    border-radius: 5px;
+    color: #000;
+}
+#loan_navbar .nav-pagi nav span {
+    position: relative;
+    top: 4px;
+}
+	</style>
+
 @endsection
 
 @section('content')
@@ -315,7 +338,16 @@
 									
 										</tbody>
 									</table>
+
 								</div>	
+
+								<div class="row" id="loan_navbar">
+						<div class="col-lg-12 text-center nav-pagi col-sm-12 col-12">
+
+							{{ $loans->onEachSide(5)->links('front._inc._paginator') }}
+						
+						</div>
+					</div>
 							</div>
 							<div class="col-lg-12 visible-xs col-sm-12 col-12">
 								@foreach($loans as $loan)
@@ -361,6 +393,8 @@
 							<!-- -->
 							</div>
 						</div>
+
+						
 					</div>	
 				</div>
 			</div>

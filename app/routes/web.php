@@ -31,7 +31,6 @@ Route::get('/createstoragelink', function () {
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'arbitrage'])->name('homepage');
-Route::get('/sendMail', [App\Http\Controllers\HomeController::class, 'sendMail'])->name('testmail');
 
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'arbitrage'])->name('home');
@@ -50,7 +49,7 @@ Route::post('password/reset', [App\Http\Controllers\HomeController::class, 'rese
 Route::post('/verify/register',[App\Http\Controllers\Auth\RegisterController::class, 'showOTPForm'])->name('otp.register');
 // OTP
 Route::post('/mobile/otp/send',[App\Http\Controllers\HomeController::class, 'sendOTP'])->name('send.otp');
-// Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
+Route::post('/mobile/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTPMobile'])->name('verify.otp.mobile');
 Route::post('/mobile/otp/send/login',[App\Http\Controllers\HomeController::class, 'sendOTPOnLogin'])->name('send.otp.login');
 Route::post('/email/otp/send/register',[App\Http\Controllers\HomeController::class, 'sendOTPOnRegister'])->name('send.otp.register');
 Route::post('/email/otp/verify',[App\Http\Controllers\HomeController::class, 'verifyOTP'])->name('verify.otp');
@@ -66,13 +65,18 @@ Route::middleware('auth')->group(function(){
         Route::get('deviceManagement',[App\Http\Controllers\UserController::class, 'deviceManagement'])->name('deviceManagement');
         Route::get('security',[App\Http\Controllers\UserController::class, 'security'])->name('security');
         Route::get('notifications',[App\Http\Controllers\UserController::class, 'notifications'])->name('notification');
-        Route::get('security/update-email',[App\Http\Controllers\UserController::class, 'updateEmail'])->name('updateEmail');
-        Route::post('security/update-email/verify',[App\Http\Controllers\UserController::class, 'confimrUpdateEmail'])->name('updateEmail.verify');
-    
-        //2fa 
-        Route::get('security/2fa/google',[App\Http\Controllers\UserController::class, 'addGoogle2fa'])->name('security.2fa.google.add');
-        Route::post('security/2fa/google/save',[App\Http\Controllers\UserController::class, 'saveGoogle2fa'])->name('security.2fa.google.save');
         
+        // Secuirity
+        Route::prefix('security')->group(function(){         
+            Route::get('update-email',[App\Http\Controllers\UserController::class, 'updateEmail'])->name('updateEmail');
+            Route::post('update-mobile',[App\Http\Controllers\UserController::class, 'updateMobile'])->name('update.mobile');
+            Route::any('update-email/verify',[App\Http\Controllers\UserController::class, 'confimrUpdateEmail'])->name('updateEmail.verify');
+            Route::post('update-email/verify-code',[App\Http\Controllers\UserController::class, 'verifyEmailCode'])->name('updateEmail.verify.code');
+            Route::get('change-password', [App\Http\Controllers\ChangePasswordController::class,'index'])->name('change.password'); 
+            Route::post('change-password/save', [App\Http\Controllers\ChangePasswordController::class,'store'])->name('change.password.save');
+            Route::get('2fa/google',[App\Http\Controllers\UserController::class, 'addGoogle2fa'])->name('security.2fa.google.add');
+            Route::post('2fa/google/save',[App\Http\Controllers\UserController::class, 'saveGoogle2fa'])->name('security.2fa.google.save');
+        });
         Route::get('payments',[App\Http\Controllers\UserPaymentMethodsController::class, 'index'])->name('payments');
         Route::get('payment/mode/edit/{id}',[App\Http\Controllers\UserPaymentMethodsController::class, 'edit'])->name('payment.edit');
         Route::get('payment/mode/add/{mode}',[App\Http\Controllers\UserPaymentMethodsController::class, 'create'])->name('payment.add');
@@ -85,8 +89,6 @@ Route::middleware('auth')->group(function(){
         Route::get('update-telegram-user-id/{telegram_user_id}',[App\Http\Controllers\UserController::class, 'updateTelegramUserIdSettings'])->name('update.telegram-user-id');
         Route::post('update-line-user-id',[App\Http\Controllers\UserController::class, 'updateLineUserIdSettings'])->name('update.line-user-id');
         Route::post('update-currency',[App\Http\Controllers\UserController::class, 'updateCurrencySettings'])->name('update.currency');
-        
-       
         
         Route::post('update-language',[App\Http\Controllers\UserController::class, 'updateLanguageSettings'])->name('update.language');
 

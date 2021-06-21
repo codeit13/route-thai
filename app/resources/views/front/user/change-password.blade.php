@@ -10,13 +10,14 @@ Change Email Address - Route: P2P Trading Platform
         <div class="col-lg-10 col-xs-12 flush">
             <div class="security">
                 <div class="col-lg-12 flush xs-space col-sm-12 col-12">
-                    <p>Security <img src="{{ asset('front/img/cart-1.png') }}" alt=""/> Change Email Address </p>
+                    <p>Security <img src="{{ asset('front/img/cart-1.png') }}" alt=""/> Change Password </p>
                     <div class="col-lg-4 offset-lg-4 flush xs-center col-sm-6 offset-sm-3 col-12">
-                        <form method="post" action="{{ route('user.updateEmail.verify') }}"> 
+                       
+                        <form method="post" action="{{ route('user.change.password.save') }}"> 
                             @csrf()
                             <div class="row">
                                 <div class="col-lg-12 col-12  col-sm-12 flush">
-                                    <h3 class="text-center">Chagne Email Address</h3>
+                                    <h3 class="text-center mb-3">Chagne Password</h3>
                                     @if ($errors->any())
                                     <div class="alert alert-danger">
                                        <ul>
@@ -27,19 +28,18 @@ Change Email Address - Route: P2P Trading Platform
                                     </div>
                                     @endif 
                                     <div class="white-email change">
-                                        <div class="field">
-                                            <label>New Email</label>
-                                            <input name="new_email" class="form-control" type="email"/>
-                                        </div>
-                                        <div class="field">
-                                            <label>Confirm Email</label>
-                                            <input name="new_confirm_email" class="form-control" type="email"/>
-                                        </div>
-                                        <div class="field">
-                                            <label>Password</label>
-                                            <input id="password-field" type="password" class="form-control" name="password" value="">
-                                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                        </div>
+                                    <div class="field">
+                                        <label>Current Password</label>
+                                        <input type="password"  name="current_password" placeholder="Enter Current Password" autocomplete="werewrwer">
+                                     </div>
+                                     <div class="field">
+                                        <label>New Password</label>
+                                        <input type="password"  name="new_password" placeholder="Enter New Password" autocomplete="werewrwer">
+                                     </div>
+                                     <div class="field">
+                                        <label>Confirm Password</label>
+                                        <input type="text"  name="new_confirm_password"  placeholder="Confirm New Password" autocomplete="werewrwer">
+                                     </div>
                                     </div>
                                 </div>	
                             </div>	
@@ -56,17 +56,4 @@ Change Email Address - Route: P2P Trading Platform
     </div>
 </div>
 </section>
-@section('page_scripts')
-<script>
-$(".toggle-password").click(function() {
-    $(this).toggleClass("fa-eye fa-eye-slash");
-    var input = $($(this).attr("toggle"));
-    if (input.attr("type") == "password") {
-    input.attr("type", "text");
-    } else {
-    input.attr("type", "password");
-    }
-});
-</script>
-@endsection
 @endsection

@@ -28,6 +28,11 @@ class Currency extends Model
         return $this->hasOne('App\Models\CollateralAddress','currency_id','id');
     }
 
+    public function loan_repay_currency()
+    {
+        return $this->hasOne('App\Models\LoanRepayCurrency','currency_id','id');
+    }
+
     public function getUserTotalAttribute()
     {
 	    $user=\Auth::user();

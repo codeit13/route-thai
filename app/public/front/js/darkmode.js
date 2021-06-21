@@ -1,7 +1,7 @@
   const toggleButton = document.querySelector('li .dark-light');
   let theme = localStorage.getItem('theme');
   if (theme == null) {
-    localStorage.setItem('theme', 'light');
+    localStorage.setItem('theme', 'dark');
   } else if(theme == 'dark') {
     $('body').addClass('dark-mode');
       $('a.navbar-brand').addClass('light-logo');

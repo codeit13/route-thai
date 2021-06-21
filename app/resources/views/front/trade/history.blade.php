@@ -228,7 +228,7 @@ Route: P2P Trading Platform
                                         <td class="light"><label class="hidden-xs">{{$transaction->receiver->name??''}}</label> 
                                             <a class="file visible-xs" href="#">View File</a>
                                         </td>
-                                        <td class="hidden-xs">
+                                        <td class="hidden-xs show_on">
                                             @switch($transaction->status)
                                                 @case('pending')
                                                     <img src="{{asset('front/img/icon-27.png')}}" alt=""/>
@@ -247,7 +247,7 @@ Route: P2P Trading Platform
                                                 @break
                                             @endswitch
                                         </td>
-                                        <td class="center_small">
+                                        <td class="center_small sub_buttons">
                                             @if($transaction->status == 'pending')
                                                 <a class="btn-primary" href="{{ route('sell.create',['trans_id'=>$transaction->trans_id]) }}" style="padding: 6px;color: white;"><i class="fa fa-edit"></i></a> 
                                                 <a class="btn-success" href="{{ route('sell.destroy',['trans_id'=>$transaction->trans_id]) }}" style="padding: 7px;color: white;"><i class="fa fa-trash"></i></a> 

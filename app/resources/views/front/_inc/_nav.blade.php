@@ -55,7 +55,7 @@
                         <li class="nav-item {{\Route::is("p2p.exchange")?'active':''}}" > <a class="nav-link" href="{{route('p2p.exchange')}}"><span class="visible-xs"><i class="far fa-exchange-alt"></i></span>P2P Exchange</a>
                         </li>
                         @if(auth()->user())
-                        <li class="nav-item"> <a class="nav-link" href="{{route('loan.history')}}"><span class="visible-xs"><i class="fas fa-landmark"></i></span>Collateral Loan</a>
+                        <li class="nav-item"> <a class="nav-link" href="{{route('loan.create')}}"><span class="visible-xs"><i class="fas fa-landmark"></i></span>Collateral Loan</a>
                         </li>
                         @endif
                         <li class="nav-item {{\Route::is("staking")?'active':''}}"> <a class="nav-link" href="{{route('staking')}}"><span class="visible-xs"><i class="far fa-plane-departure"></i></span>Staking</a>
@@ -119,6 +119,7 @@
                                         <li><a href="{{route('wallet.deposit')}}">{{__('Deposit')}}</a></li>
                                         <li><a href="{{route('wallet.withdraw')}}">{{__('Withdraw')}}</a></li>
                                         <li><a href="{{route('wallet.request.history')}}">{{__('History ( Deposit & Withdraw ) ')}}</a></li>
+                                        <li><a href="{{route('loan.history')}}">{{__('Loan History ')}}</a></li>
                                         {{-- <li><a href="{{route('wallet.history')}}">{{__('Crypto and Fiat')}}</a></li>
                                         <li><a href="{{route('wallet.p2p')}}">{{__('P2P')}}</a></li>
                                         <li><a href="{{route('wallet.deposit')}}">{{__('Deposit')}}</a></li>

@@ -100,7 +100,7 @@ function showCurrencyRate()
 
 	  $('plimit').html((usdPrice*parseFloat(price_down_limit)/100).toFixed(2));
 
-	  $('#backend-limit-text').html(cryptoRow.short_name+'/USDT');
+	 // $('#backend-limit-text').html('USDT');
 
 		$('#backend-current-usd-rate').html(newText);
 
@@ -162,7 +162,9 @@ function showCurrencyRate()
 
          //console.log(timeDuration);
 
-		var Interest=(newUpdateLoanPrice*2.1*(timeDuration/30)/100);
+         
+
+		var Interest=(newUpdateLoanPrice*loan_interest_rate*(timeDuration/30)/100);
 
 
 

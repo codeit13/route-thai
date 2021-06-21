@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href=" {{ asset('front/css/chart.css') }}">
 
 <link href=" {{ asset('front/css/style.css') }}" rel="stylesheet" />
+<link href=" {{ asset('front/css/custom.css') }}" rel="stylesheet" />
 
 
 
