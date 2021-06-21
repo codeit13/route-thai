@@ -23,7 +23,7 @@ class Notify
 
             $sms->publish([
                 'Message' => 'Hello, This is just a test Message',
-                'PhoneNumber' => $phone_number,
+                'PhoneNumber' => $user['mobile'],
                 'MessageAttributes' => [
                     'AWS.SNS.SMS.SMSType'  => [
                         'DataType'    => 'String',
