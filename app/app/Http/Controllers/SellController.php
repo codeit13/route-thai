@@ -262,7 +262,7 @@ class SellController extends Controller
                                                         ->get();     
                                  
             // Message for Seller
-            $Message = "[Route-Thai] P2P Order (Ending with " . substr($transcation->trans_id, -4) . ") has been completed. You have released " . $transcation->quantity . " " . $transcation->currency_id . " to the buyer.";
+            $Message = "[Route-Thai] P2P Order (Ending with " . substr($transcation->trans_id, -4) . ") has been completed. You have released " . $transcation->quantity . " " . $transcation->currency_id->name . " to the buyer.";
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
                 'mobile' => "mobile",
