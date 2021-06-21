@@ -128,7 +128,7 @@ class SellController extends Controller
         $request->session()->forget('sell_data');
         
         $user = Auth::user();
-        $Message = "[Route-Thai] P2P Order (Ending with " . substr($trans_id, -4) + ") of " . $data['quantity'] . " " . $selected_currency->name . " has been Successfully created. You will be notified when buyer gets matched.";
+        $Message = "[Route-Thai] P2P Order (Ending with " . substr($trans_id, -4) . ") of " . $data['quantity'] . " " . $selected_currency->name . " has been Successfully created. You will be notified when buyer gets matched.";
         Notify::sendMessage([
             'sms_notification' => $user->sms_notification,
             'mobile' => "mobile",
