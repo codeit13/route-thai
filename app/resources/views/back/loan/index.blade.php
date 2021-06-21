@@ -84,14 +84,20 @@
                  </th>
                   <td>
                     <div class="dropdown">
-                      @if($item->status != 'approved')
+                      @if($item->status != 'approved' && $item->status != 'rejected')
                       <a class="btn btn-sm btn-icon-only text-success" href="{{ route('admin.loan.update.status',['id'=>$item->id, 'status'=>'approved'])}}">
                         Approve
                       </a> &nbsp;&nbsp;&nbsp; 
                       @endif
+                      @if($item->status != 'rejected')
                       <a class="btn btn-sm btn-icon-only text-danger" href="{{ route('admin.loan.update.status',['id'=>$item->id, 'status'=>'rejected'])}}">
                         Reject
-                      </a>                       
+                      </a>  
+                         
+                      @endif  
+                      @if($item->status == 'rejected')
+                       Rejected 
+                      @endif                
                   </td>
                 </tr>
                 @endforeach
