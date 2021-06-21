@@ -50,14 +50,15 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
         Route::post('settings/loan/collateral/{id}','SettingsController@collateral_address_update')->name('settings.loan.collateral');
 
         Route::resource('/loan', 'LoanController', [
-        'names' => [
-            'index' => 'loan.list',
-            'edit' => 'loan.edit',
-            'update' => 'loan.update',
-            'destroy' => 'loan.destroy',
-            'show' => 'loan.show'
-        ]
-    ]);
+            'names' => [
+                'index' => 'loan.list',
+                'edit' => 'loan.edit',
+                'update' => 'loan.update',
+                'destroy' => 'loan.destroy',
+                'show' => 'loan.show'
+            ]
+        ]);
+        Route::get('loan/update/{id}/status/{status}','LoanController@updateStatus')->name('loan.update.status');
         
     });
 
