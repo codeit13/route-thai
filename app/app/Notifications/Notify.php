@@ -1,11 +1,13 @@
 <?php
 namespace App\Notifications;
 
-use AmazonSNS;
 use App\Models\User;
 use App\Notifications\LaravelTelegramNotification;
 use Auth;
 use LINE;
+
+use Illuminate\Http\Request;
+use AWS;
 
 class Notify
 {
@@ -17,9 +19,18 @@ class Notify
         // $this->service->send($mobile,$message);
 
         if ($user['sms_notification']) {
-            Auth::user()->notify(new AmazonSNS([
-                'text' => $user['Message'],
-            ]));
+            $sms = AWS::createClient('sns');
+
+            $sms->publish([
+                'Message' => 'Hello, This is just a test Message',
+                'PhoneNumber' => $phone_number,
+                'MessageAttributes' => [
+                    'AWS.SNS.SMS.SMSType'  => [
+                        'DataType'    => 'String',
+                        'StringValue' => 'Transactional',
+                    ]
+                ],
+            ]);
         }
 
         if ($user['telegram_notification']) {
