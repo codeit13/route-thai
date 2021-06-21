@@ -55,6 +55,7 @@ class LoanController extends Controller
 
         if($request->search)
         {
+
           $loans=$loans->whereHas('collateral_currency', function ($query)use ($request) {
                                           $query->where('name','like',$request->search.'%')->orWhere('short_name','like',$request->search.'%');
 
@@ -185,7 +186,7 @@ class LoanController extends Controller
                              'term_id'=>$loan_detail->term_detail->id,
                              'on_wallet'=>$loan_detail->on_wallet??0,'collateral_currency_rate'=>$loan_detail->usdt,'loan_repayment_amount'=>$loan_detail->loan_repayment,
                              'has_close_price'=>$loan_detail->set_close_price??0,
-                             'close_price'=>$loan_detail->close_price,
+                             'close_price'=>$loan_detail->close_price??'',
                              'is_agree'=>$request->agree,
                              'loan_currency_rate'=>$loan_detail->loan_currency_rate,
                         );
@@ -250,8 +251,7 @@ class LoanController extends Controller
         $collateral_currencies=\App\Models\Currency::where('is_collateral',1)->get();
 
 
-         //echo '<pre>';print_r($loan_detail);die;
-
+         //echo '<pre>';print_r($loan_detail->toArray());die;
 
 
 
@@ -268,6 +268,11 @@ class LoanController extends Controller
     public function edit($loan)
     {
         $loan=\App\Models\Loan::whereLoanId($loan)->first();
+
+         if($loan->status=='pending')
+        {
+            return redirect()->route('loan.status',$loan->loan_id);
+        }
 
         if($loan){
 

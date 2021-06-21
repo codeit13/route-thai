@@ -300,7 +300,7 @@ $loan_variables=(object)$loan_variables;
 						<div class="close-price">
 							<div class="row">
 								<div class="col-lg-8 b-right col-sm-8 col-12">
-									<label><input type="checkbox" name="set_close_price" id="backend-set-close-price" /> Set close price at  <formL><input type="number" name="close_price" id="backend-close-price" placeholder="Enter amount"/><button type="button">USDT</button></formL>
+									<label><input type="checkbox" name="set_close_price" id="backend-set-close-price" /> Set close price at  <formL><input type="number" name="close_price" id="backend-close-price" disabled="" placeholder="Enter amount"/><button type="button">USDT</button></formL>
                                   
                                    @error('close_price')
                                 <p class="invalid-value text-danger" role="alert">
@@ -502,7 +502,7 @@ $loan_variables=(object)$loan_variables;
 							<ul>
 								<li>Borrower creates a loan request.</li>
 								<li>Transfer borrower’s Collateral Assets to our platform.</li>
-								<li>Borrower gets a loan from Binance.</li>
+								<li>Borrower gets a loan from Route.</li>
 								<li>Once loan and interest are repaid, crypto assets will
 								be returned to the borrower.</li>
 							</ul>
