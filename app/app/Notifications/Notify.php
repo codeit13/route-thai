@@ -22,7 +22,7 @@ class Notify
             $sms = AWS::createClient('sns');
 
             $sms->publish([
-                'Message' => 'Hello, This is just a test Message',
+                'Message' => $user['Message'],
                 'PhoneNumber' => $user['mobile'],
                 'MessageAttributes' => [
                     'AWS.SNS.SMS.SMSType'  => [
