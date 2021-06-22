@@ -298,9 +298,9 @@ $loan_variables=(object)$loan_variables;
 							</div>
 						</div>	
 						<div class="close-price">
-							<div class="row">
-								<div class="col-lg-8 b-right col-sm-8 col-12">
-									<label><input type="checkbox" name="set_close_price" id="backend-set-close-price" /> Set close price at  <formL><input type="number" name="close_price" id="backend-close-price" disabled="" placeholder="Enter amount"/><button type="button">USDT</button></formL>
+							<div class="row" style="min-height: 51px;">
+								<div class="col-lg-8  col-sm-8 col-12">
+									<label><al style="margin-top:11px;display: inline-block;"><input  type="checkbox" name="set_close_price" id="backend-set-close-price" /> Set close price at </al> <formL style="display: none"><input type="number" name="close_price" id="backend-close-price"  placeholder="Enter amount"/><button type="button">USDT</button></formL>
                                   
                                    @error('close_price')
                                 <p class="invalid-value text-danger" role="alert">
@@ -310,7 +310,7 @@ $loan_variables=(object)$loan_variables;
 
 									</label>
 								</div>
-								<div class="col-lg-4 col-sm-4 col-12">
+								<div class="col-lg-4 col-sm-4 col-12" style="display:none;">
 									<div class="row">
 										<div class="col-lg-12 text-right col-sm-12 col-12">
 											<p>Min: <span id="backend-min-price">1,797,994.87</span> USDT &nbsp;&nbsp; <mark>Max: <span id="backend-max-price">1,797,994.87</span> USDT</mark></p>
@@ -318,7 +318,7 @@ $loan_variables=(object)$loan_variables;
 									</div>	
 									<div class="row">
 										<div class="col-lg-12 text-right col-sm-12 col-12">
-											<p><a href="#">Know More</a></p>
+											<!-- <p><a href="#">Know More</a></p> -->
 										</div>
 									</div>	
 								</div>

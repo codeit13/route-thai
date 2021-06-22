@@ -156,7 +156,17 @@
 											<div class="col-lg-6 text-right col-sm-6 col-6">
 												<ul class="loan_code">
 													<li><a href="#"><i class="fa fa-clone" aria-hidden="true"></i></a></li>
-													<li><a href="#"><i class="fa fa-qrcode" aria-hidden="true"></i></a></li>
+													<!-- <li><a href="#"><i class="fa fa-qrcode" aria-hidden="true"></i></a></li> -->
+													<li class="css-11nldkw">
+																	<a href="#"><i class="fa fa-qrcode" aria-hidden="true"></i></a>
+																	<div class="QrCode css-jac2fa"><div class="css-ghsb4z"></div>
+																	@if(isset($loan_detail->collateral_currency->collateral_address) && $loan_detail->collateral_currency->collateral_address->hasMedia('qr_code'))
+
+																	<canvas height="120" width="120" style="height: 120px; width: 120px; background: url({{$loan_detail->collateral_currency->collateral_address->firstMedia('qr_code')->getUrl()}});"></canvas>
+
+																	@endif
+																</div>
+																</li>
 												</ul>
 											</div>
 										</div>

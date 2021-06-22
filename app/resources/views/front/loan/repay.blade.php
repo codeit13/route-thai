@@ -533,7 +533,20 @@ $current_loan_currency=$loan->loan_currency_id;
 														zZ94Nk9VLc4W3y</p>
 													</div>	
 													<div class="col-lg-3 col-sm-3 col-3 flush-left">
-														<img src="{{asset('front/img/icon-14.png')}}" alt=""/>
+														<!-- <img src="{{asset('front/img/icon-14.png')}}" alt=""/> -->
+														<ul style="display: flex;justify-content: space-between;">
+																<li><a class="text-dark" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" onclick="copyAddress('{{$currency->deposit_address->address??''}}')" title="Copy Address"><i class="fa fa-clone" aria-hidden="true"></i></a></li>
+																<li class="css-11nldkw">
+																	<a href="#" class="text-dark"><i class="fa fa-qrcode" aria-hidden="true"></i></a>
+																	<div class="QrCode css-jac2fa"><div class="css-ghsb4z"></div>
+																	@if(isset($currency->deposit_address) && $currency->deposit_address->hasMedia('qr_code'))
+
+																	<canvas height="120" width="120" style="height: 120px; width: 120px; background: url({{$currency->deposit_address->firstMedia('qr_code')->getUrl()}});"></canvas>
+
+																	@endif
+																</div>
+																</li>
+															</ul>
 													</div>	
 												</div>	
 											</div>
@@ -781,7 +794,23 @@ function wallet_balance()
     crypto_address+='<img style="width:28px;" src="'+currencyRow.image_url+'" alt="'+currencyRow.short_name+'">';
     }
 
-    crypto_address+='</label><p>Network Name: <b>'+currencyRow.short_name+'</b><br> Average arrival time: <b>1 minutes</b></p></div><div class="col-lg-6 col-sm-6 col-12"> <label>Address</label><div class="row top-n"><div class="col-lg-9 col-sm-9 col-9"><p>'+loan_repay_currency.crypto_wallet_address+'</p></div><div class="col-lg-3 col-sm-3 col-3 flush-left"> <img src="http://127.0.0.1:8000/front/img/icon-14.png" alt=""></div></div></div></div></div>';
+    crypto_address+='</label><p>Network Name: <b>'+currencyRow.short_name+'</b><br> Average arrival time: <b>1 minutes</b></p></div><div class="col-lg-6 col-sm-6 col-12"> <label>Address</label><div class="row top-n"><div class="col-lg-9 col-sm-9 col-9"><p>'+loan_repay_currency.crypto_wallet_address+'</p></div><div class="col-lg-3 col-sm-3 col-3 flush-left">';
+
+   //  <img src="http://127.0.0.1:8000/front/img/icon-14.png" alt="">
+
+    crypto_address+='<ul style="display: flex;justify-content: space-between;"><li><a class="text-dark" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top"  title="Copy Address"><i class="fa fa-clone" aria-hidden="true"></i></a></li><li class="css-11nldkw"> <a href="#" class="text-dark"><i class="fa fa-qrcode" aria-hidden="true"></i></a><div class="QrCode css-jac2fa"><div class="css-ghsb4z"></div>';
+
+    if(currencyRow.qr_code.length)
+    {
+       crypto_address+='<canvas height="120" width="120" style="height: 120px; width: 120px; background: url('+currencyRow.qr_code+');"></canvas>'
+    }
+
+  
+
+
+    
+
+     crypto_address+=' </div></li></ul></div></div></div></div></div>';
 
     $('.network-w').replaceWith(crypto_address);
 
