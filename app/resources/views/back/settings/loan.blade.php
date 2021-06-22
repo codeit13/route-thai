@@ -44,6 +44,45 @@ text-decoration: none !important; }
 </style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css" />
+<style>
+  .choices__list--multiple .choices__item{
+      background-color: white;
+      color: black;
+      border: 1px solid #00C98E;
+  }
+  .choices[data-type*=select-multiple] .choices__button{
+      color: black;
+      
+      background-image: url("assets/cancel.svg");
+  }
+  label.text-dark{
+      font-size: 24px;
+  }
+  #exchange-list .dd-option-image{
+      height: 25px;
+      width: 25px;
+  }
+  #exchange-list .dd-option{
+      display: inline-block;
+  }
+  #exchange-list .dd-option-text{
+      line-height: unset !important;
+  }
+  #exchange-list .dd-selected-image{
+      height: 25px;
+      width: 25px;
+  }
+  #exchange-list.dd-container,#exchange-list .dd-select{
+      width:auto !important;
+  }
+  .dd-options{
+      width: 100% !important;
+  }
+  .choices__list--dropdown .choices__item--selectable {
+    color: #161625;
+  }
+</style>
 <div class="container">
     @foreach (['danger', 'warning', 'success', 'info'] as $msg)
       @if(Session::has($msg))
@@ -80,13 +119,21 @@ text-decoration: none !important; }
                   <div class="form-group">
                     <label class="form-control-label" for="loanable_currency">Loanable Currency</label>
 
-                     <select id="loan-list" name="loanable_currency[]" placeholder="Select currencies" class="custom-select" multiple></select>
+                    {{-- <select class="form-control select2" name="loanable_currency[]" id="loanable_currency" multiple="multiple">
+                      @foreach($cruptoCurrencies as $record)
+                        <option value="{{ $record->id }}" @if($record->is_loanable == "1") selected="" @endif>{{ $record->name }}</option>
+                      @endforeach
+                    </select> --}}
+                    <select name="loanable_currency[]" id="loanable_currency" placeholder="Select Loanable Currencies" class="custom-select" multiple></select>
 
-                  {{--  <select class="form-control select2" name="loanable_currency[]" id="loanable_currency" multiple="multiple">
+                    {{--   <select id="loan-list" name="loanable_currency[]" placeholder="Select currencies" class="custom-select" multiple></select>
+
+                  <select class="form-control select2" name="loanable_currency[]" id="loanable_currency" multiple="multiple">
                                                           @foreach($cruptoCurrencies as $record)
                                                             <option value="{{ $record->id }}" @if($record->is_loanable == "1") selected="" @endif>{{ $record->name }}</option>
                                                           @endforeach
                                                         </select> --}}
+
                     @error('loanable_currency')
                     <p class="invalid-value" role="alert">
                         <strong>{{ __($message) }}</strong>
@@ -99,8 +146,16 @@ text-decoration: none !important; }
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label class="form-control-label" for="collateral_currency">Collateral Currency </label>
+
+                    {{-- <select class="form-control select2" name="collateral_currency[]" id="collateral_currency" multiple="multiple">
+                      @foreach($cruptoCurrencies as $record)
+                        <option value="{{ $record->id }}" @if($record->is_collateral == "1") selected="" @endif>{{ $record->name }}</option>
+                      @endforeach
+                    </select> --}}
+                    <select name="collateral_currency[]" id="collateral_currency" placeholder="Select Collateral Currencies" class="custom-select" multiple></select>
+{{-- 
                     <select id="collateral-list" name="collateral_currency[]" placeholder="Select currencies" class="custom-select" multiple></select>
-                 {{--   <select class="form-control select2" name="collateral_currency[]" id="collateral_currency" multiple="multiple">
+                   <select class="form-control select2" name="collateral_currency[]" id="collateral_currency" multiple="multiple">
                                                         @foreach($cruptoCurrencies as $record)
                                                           <option value="{{ $record->id }}" @if($record->is_collateral == "1") selected="" @endif>{{ $record->name }}</option>
                                                         @endforeach
@@ -116,8 +171,6 @@ text-decoration: none !important; }
                  <label class="form-control-label" for="collateral_currency">Collateral Currency Address</label>
                 <div class="">
                     @foreach($collateralCruptoCurrencies as $key=>$record)
-
-                    
                         @csrf
                         <div class="row">
                             <div class="col-lg-2">
@@ -599,6 +652,7 @@ text-decoration: none !important; }
 
 @section('page_scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>  -->
@@ -648,13 +702,32 @@ text-decoration: none !important; }
         }
     });
 
-    $('#collateral_currency').select2({
-      placeholder: "Select a currency",
-    });
+    // $('#collateral_currency').select2({
+    //   placeholder: "Select a currency",
+    // });
 
-    $('#loanable_currency').select2({
-      placeholder: "Select a currency",
-    });
+    // $('#loanable_currency').select2({
+    //   placeholder: "Select a currency",
+    // });
+    var collateralCurrencyList = new Choices('#collateral_currency', {
+        removeItemButton: true,
+        maxItemCount:100,
+        searchResultLimit:8,
+        renderChoiceLimit:100,
+        items: [],
+        choices: @json($cryptoCurrencies),
+    }); 
+    var loanCurrencyList = new Choices('#loanable_currency', {
+        removeItemButton: true,
+        maxItemCount:100,
+        searchResultLimit:8,
+        renderChoiceLimit:100,
+        items: [],
+        choices: @json($cryptoCurrencies),
+    }); 
+  //  $('#loanable_currency').select2({
+   //   placeholder: "Select a currency",
+    // });
 
     $(document).ready(function(){
 
@@ -689,7 +762,5 @@ text-decoration: none !important; }
     }); 
 
   });
-
-
 </script>
 @endsection
