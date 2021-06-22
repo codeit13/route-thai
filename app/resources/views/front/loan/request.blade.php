@@ -5,6 +5,13 @@
 @section('page_styles')
 	<link type="text/css" rel="stylesheet" href="{{asset('front/css/datepicker.css')}}" />
 
+	<style type="text/css">
+
+	
+		
+
+	</style>
+
 @endsection
 
 @section('content')
@@ -34,7 +41,7 @@ $loan_variables=(object)$loan_variables;
          </div>
       </div> 
    </section>
-   <section id="loans-deshboard-new">
+   <section id="loans-deshboard-new" class="instant">
       <div class="container">
          <div class="row tb-l">
             <div class="col-lg-7 col-sm-6 col-6">
@@ -48,10 +55,18 @@ $loan_variables=(object)$loan_variables;
 			 <div class="col-lg-5 text-right col-sm-6 col-6">
 
 				<p>
-					<img src="{{asset('front/img/bitcoin.png')}}" alt=""/>
-					<img src="{{asset('front/img/icon-5.png')}}" alt=""/>
-					<img src="{{asset('front/img/icon-6.png')}}" alt=""/>
-					<img src="{{asset('front/img/icon-7.png')}}" alt=""/>
+
+					@foreach($collateral_currencies as $cl_currency)
+
+					@if($cl_currency->hasMedia('icon'))
+
+					<img style="width: 28px;" src="{{$cl_currency->firstMedia('icon')->getUrl()}}" alt="{{$cl_currency->short_name}}"/>
+
+					@endif
+
+
+					@endforeach
+					
 				</p>
 
             </div>
@@ -73,7 +88,7 @@ $loan_variables=(object)$loan_variables;
 
          	@csrf
 			<div class="row">
-				<div class="col-lg-12 col-sm-12 col-12">
+				<div class="col-lg-12 col-sm-12 col-12 xs-flush">
 					<div class="white-box">
 						<div class="space-normal">
 							<div class="row">
@@ -93,9 +108,9 @@ $loan_variables=(object)$loan_variables;
 
 												  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                                              @if( isset($currencies[0]) && $currencies[0]->hasMedia('icon'))
+                                              @if( isset($collateral_currencies[0]) && $collateral_currencies[0]->hasMedia('icon'))
 
-													<img src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"> {{__($currencies[0]->short_name)}}
+													<img src="{{$collateral_currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($collateral_currencies[0]->name)}}"> {{__($collateral_currencies[0]->short_name)}}
 
 													@else
 
@@ -108,7 +123,7 @@ $loan_variables=(object)$loan_variables;
 												  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 47px, 0px); top: 0px; left: 0px; will-change: transform;">
 
 
-                           @foreach($currencies as $cIndex=> $currency)
+                           @foreach($collateral_currencies as $cIndex=> $currency)
 
 
                             <a class="dropdown-item" data-id="{{$currency->id}}" href="#">
@@ -133,11 +148,11 @@ $loan_variables=(object)$loan_variables;
 
 												  </div>
 
-												  <input type="hidden" name="currency_id" id="coin_id" value="{{$currencies[0]->id??''}}">
+												  <input type="hidden" name="currency_id" id="coin_id" value="{{$collateral_currencies[0]->id??''}}">
 												</div>
 
 												
-												<input type="text" name="collateral_amount" id="collateral_quantity" value="">
+												<input style="width:60%;" type="text" name="collateral_amount" id="collateral_quantity" value="">
 											</div>
 
 											  @error('collateral_amount')
@@ -169,9 +184,9 @@ $loan_variables=(object)$loan_variables;
 											<div class="multi_form">
 												<div class="backend-fiat-dropdown dropdown currency_two three_coins crypto">
 												  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												   @if( isset($currencies[0]) && $currencies[0]->hasMedia('icon'))
+												   @if( isset($loanable_currencies[0]) && $loanable_currencies[0]->hasMedia('icon'))
 
-													<img src="{{$currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($currencies[0]->name)}}"> {{__($currencies[0]->short_name)}}
+													<img src="{{$loanable_currencies[0]->firstMedia('icon')->getUrl()}}" alt="{{__($loanable_currencies[0]->name)}}"> {{__($loanable_currencies[0]->short_name)}}
 
 													@else
 
@@ -181,7 +196,7 @@ $loan_variables=(object)$loan_variables;
 												  </button>
 												  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 47px, 0px); top: 0px; left: 0px; will-change: transform;">
 
-												  	@foreach($currencies as $cIndex=> $currency)
+												  	@foreach($loanable_currencies as $cIndex=> $currency)
 
 
                             <a class="dropdown-item" data-id="{{$currency->id}}" href="#">
@@ -203,10 +218,10 @@ $loan_variables=(object)$loan_variables;
                             @endforeach
 											
 												  </div>
-                                            <input type="hidden" name="loan_currency" id="backend-fiat-coin-id" value="{{$currencies[0]->id??''}}">
+                                            <input type="hidden" name="loan_currency" id="backend-fiat-coin-id" value="{{$loanable_currencies[0]->id??''}}">
 
 												</div>
-												<input style="width:65%;" type="text" name="loan_amount" readonly="" id="backend-loan-amount" value="">
+												<input style="width:60%;" type="text" name="loan_amount" readonly="" id="backend-loan-amount" value="">
 											</div>
 											  @error('loan_currency')
                                 <p class="invalid-value text-danger" role="alert">
@@ -265,11 +280,11 @@ $loan_variables=(object)$loan_variables;
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Loan Duration</h5>
 												<h4 id="backend-term-days">{{$terms[0]->no_of_duration??30}} {{$terms[0]->duration_type}}</h4>
-												<p>The interest rate 2.1% will be charge on the loan amount.</p>
+												<p>The interest rate {{$loan_variables->loan_interest_rate}}% will be charge on the loan amount.</p>
 											</div>
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Price down limit</h5>
-												<h4 id="backend-price-down-limit">{{$loan_variables->loan_price_down_limit}}% or <plimit>35279.76 </plimit><span id="backend-limit-text">BTC/USDT</span></h4>
+												<h4 id="backend-price-down-limit">{{$loan_variables->loan_price_down_limit}}% or <plimit>35279.76 </plimit><span id="backend-limit-text"> USDT</span></h4>
 												<!-- <p>Add more collateral and extend PDL</p> -->
 											</div>
 											<div class="col-lg-4 col-sm-4 col-12">
@@ -285,7 +300,7 @@ $loan_variables=(object)$loan_variables;
 						<div class="close-price">
 							<div class="row">
 								<div class="col-lg-8 b-right col-sm-8 col-12">
-									<label><input type="checkbox" name="set_close_price" id="backend-set-close-price" /> Set close price at  <formL><input type="number" name="close_price" id="backend-close-price" placeholder="Enter amount"/><button type="button">USDT</button></formL>
+									<label><input type="checkbox" name="set_close_price" id="backend-set-close-price" /> Set close price at  <formL><input type="number" name="close_price" id="backend-close-price" disabled="" placeholder="Enter amount"/><button type="button">USDT</button></formL>
                                   
                                    @error('close_price')
                                 <p class="invalid-value text-danger" role="alert">
@@ -487,7 +502,7 @@ $loan_variables=(object)$loan_variables;
 							<ul>
 								<li>Borrower creates a loan request.</li>
 								<li>Transfer borrower’s Collateral Assets to our platform.</li>
-								<li>Borrower gets a loan from Binance.</li>
+								<li>Borrower gets a loan from Route.</li>
 								<li>Once loan and interest are repaid, crypto assets will
 								be returned to the borrower.</li>
 							</ul>
@@ -560,6 +575,8 @@ var price_down_limit='{{$loan_variables->loan_price_down_limit}}';
 var set_price_min='{{$loan_variables->loan_min_percentage}}';
 
 var set_price_max='{{$loan_variables->loan_max_percentage}}';
+
+var loan_interest_rate=parseFloat('{{$loan_variables->loan_interest_rate}}');
 
 
 // crypto_exchange_rates.forEach(function(v,i){

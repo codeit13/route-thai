@@ -45,17 +45,20 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
         Route::post('settings/loan/repay', 'SettingsController@loan_terms_repay_update')->name('settings.loan.repay');
         Route::get('settings/loan/{id}/edit','SettingsController@loan_settings')->name('settings.loan.repay.edit');
         Route::put('settings/loan/{id}/edit','SettingsController@loan_currency_update')->name('settings.loan.repay.edit.post');
-        Route::post('settings/loan/collateral','SettingsController@collateral_address_update')->name('settings.loan.collateral');
+        // Route::post('settings/loan/collateral','SettingsController@collateral_address_update')->name('settings.loan.collateral');
+
+        Route::post('settings/loan/collateral/{id}','SettingsController@collateral_address_update')->name('settings.loan.collateral');
 
         Route::resource('/loan', 'LoanController', [
-        'names' => [
-            'index' => 'loan.list',
-            'edit' => 'loan.edit',
-            'update' => 'loan.update',
-            'destroy' => 'loan.destroy',
-            'show' => 'loan.show'
-        ]
-    ]);
+            'names' => [
+                'index' => 'loan.list',
+                'edit' => 'loan.edit',
+                'update' => 'loan.update',
+                'destroy' => 'loan.destroy',
+                'show' => 'loan.show'
+            ]
+        ]);
+        Route::get('loan/update/{id}/status/{status}','LoanController@updateStatus')->name('loan.update.status');
         
     });
 

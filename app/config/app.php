@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Bangkok',
 
     /*
     |--------------------------------------------------------------------------
@@ -238,6 +238,8 @@ return [
         'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
 
         'LINE' => Revolution\Line\Facades\Bot::class,
+
+        'AmazonSNS' => App\Notifications\AmazonSNS::class,
 
     ],
 

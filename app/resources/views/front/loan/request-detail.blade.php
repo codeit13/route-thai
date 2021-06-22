@@ -18,7 +18,7 @@
          </div>
       </div> 
    </section>
-   <section id="loans-deshboard-new" class="desh-2">
+   <section id="loans-deshboard-new" class="desh-2 instant">
       <div class="container">
          <div class="row tb-l">
             <div class="col-lg-7 col-sm-6 col-6">
@@ -27,10 +27,16 @@
             </div>
 			 <div class="col-lg-5 text-right col-sm-6 col-6">
 				<p>
-					<img src="{{asset('front/img/bitcoin.png')}}" alt=""/>
-					<img src="{{asset('front/img/icon-5.png')}}" alt=""/>
-					<img src="{{asset('front/img/icon-6.png')}}" alt=""/>
-					<img src="{{asset('front/img/icon-7.png')}}" alt=""/>
+					@foreach($collateral_currencies as $cl_currency)
+
+					@if($cl_currency->hasMedia('icon'))
+
+					<img style="width: 28px;" src="{{$cl_currency->firstMedia('icon')->getUrl()}}" alt="{{$cl_currency->short_name}}"/>
+
+					@endif
+
+
+					@endforeach
 				</p>
             </div>
          </div>
@@ -78,7 +84,7 @@
 											<label>Close price set at</label>
 										</div>
 										<div class="col-lg-12 xs-right col-sm-12 col-6">	
-											@if($loan_detail->close_price)
+											@if(isset($loan_detail->close_price) && $loan_detail->close_price)
 											<h4>{{$loan_detail->close_price}} <span>USDT</span></h4>
 											@endif
 										</div>
@@ -88,17 +94,17 @@
 						</div>
 						<div class="space-normal">
 							<div class="row">
-								<div class="col-lg-12 col-sm-12 col-12">
+								<div class="col-lg-12 col-sm-12 col-12 xs-flush">
 									<div class="loan-duration">
 										<div class="row">
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Loan Duration</h5>
 												<h4>{{$loan_detail->term_detail->no_of_duration}} &nbsp;{{$loan_detail->term_detail->duration_type}}</h4>
-												<p>The interest rate 2.1% will be charge on the loan amount.</p>
+												<p>The interest rate {{$loan_detail->settings->loan_interest_rate}}% will be charge on the loan amount.</p>
 											</div>
 											<div class="col-lg-4 b-right col-sm-4 col-12">
 												<h5>Price down limit</h5>
-												<h4>{{$loan_detail->settings->loan_price_down_limit}}% or {{$loan_detail->price_down_value}} <span>{{__($loan_detail->collateral_currency->short_name)}}/USDT</span></h4>
+												<h4>{{$loan_detail->settings->loan_price_down_limit}}% or {{$loan_detail->price_down_value}} <span> USDT</span></h4>
 												<p>Add more collateral and extend PDL</p>
 											</div>
 											<div class="col-lg-4 col-sm-4 col-12">
@@ -111,7 +117,8 @@
 								</div>
 							</div>
 						</div>	
-						<div class="col-lg-12 col-sm-12 col-12">
+						<div class="col-lg-12 col-sm-12 col-12 xs-flush">
+							@if($loan_detail->collateral_currency->collateral_address->crypto_wallet_address && !(isset($loan_detail->is_wallet)))
 							<div class="collateral-deposit-details">
 								<div class="row">
 									<div class="col-lg-5 col-sm-5 col-12">
@@ -122,7 +129,7 @@
 										</div>
 										<div class="row">
 											<div class="col-lg-6 col-sm-6 col-6">
-												<p>Network Name: <b>Bitcoin(BTC)</b><br>
+												<p>Network Name: <b>{{$loan_detail->collateral_currency->name}}({{$loan_detail->collateral_currency->short_name}})</b><br>
 												Average arrival time: <b>1 minutes</b></p>
 											</div>
 											<div class="col-lg-6 text-right col-sm-6 col-6">
@@ -138,11 +145,11 @@
 										</div>
 										<div class="row">
 											<div class="col-lg-6 col-sm-6 col-6">
-												<p><b>1JFAe8qq9wshJRLkdia3zZ94Nk9VLc4W3y</b></p>
+												<p><b>{{$loan_detail->collateral_currency->collateral_address->crypto_wallet_address}}</b></p>
 												<div class="row">
 													<div class="col-lg-12 col-sm-12 col-12">
 														<label>Memo</label>
-														<p><b>1JFAe8qq9wshJRLkdia3zZ94Nk9VLc4W3y</b></p>
+														<p><b>{{$loan_detail->collateral_currency->collateral_address->crypto_memo}}</b></p>
 													</div>
 												</div>
 											</div>
@@ -156,6 +163,8 @@
 									</div>
 								</div>		
 							</div>
+
+							@endif
 						</div>
 						<!-- <div class="close-price hidden-xs">
 							<div class="row">
@@ -215,7 +224,7 @@
 						<h4>My Loan History</h4>
 					</div>
 					<div class="col-lg-6 text-right col-sm-6 col-6">
-						<a href="#" class="btn-success">View All</a>
+						<a href="{{route('loan.history')}}" class="btn-success">View All</a>
 					</div>
 				</div>
 				<div class="row">

@@ -151,8 +151,8 @@
                  </h6>
                  <ul class="navbar-nav mb-md-3">
                   <li class="nav-item">
-                    <!-- {{ route('admin.loan.list') }} -->
-                     <a class="nav-link" href="#"> <i class="ni ni-money-coins text-red" aria-hidden="true"></i>
+                    <!--  -->
+                     <a class="nav-link" href="{{ route('admin.loan.list') }}"> <i class="ni ni-money-coins text-red" aria-hidden="true"></i>
                      <span class="nav-link-text">Loan Requestes</span>
                      </a>
                   </li>

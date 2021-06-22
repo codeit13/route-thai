@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Plank\Mediable\Mediable;
 use App\Http\Traits\GenerateTransIDTrait;
 
+use App\Notifications\LaravelTelegramNotification;
+use LINE;
+
 class Transaction extends Model
 {
     use HasFactory,Mediable;
@@ -127,15 +130,5 @@ class Transaction extends Model
         }
         return $this->checkBuyerRequest();   
     }
-
-    public function sendMessage($mobile,$message)
-    {
-
-        //  echo '<pre>';print_r($mobile);print_r($message);die;
-          // $this->service = new \App\Services\SMSService();
-          // $this->service->send($mobile,$message);
-
-    }
-
 
 }

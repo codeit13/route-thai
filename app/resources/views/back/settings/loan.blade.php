@@ -3,6 +3,45 @@
     Settings |
 @endsection
 @section('content')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css" />
+<style type="text/css">
+  .choices__list--multiple .choices__item{
+    background-color: white;
+    color: black;
+    border: 1px solid #00C98E;
+}
+.choices[data-type*=select-multiple] .choices__button{
+    color: black;
+    
+    background-image: url("assets/cancel.svg");
+}
+label.text-dark{
+    font-size: 24px;
+}
+#exchange-list .dd-option-image{
+    height: 25px;
+    width: 25px;
+}
+#exchange-list .dd-option{
+    display: inline-block;
+}
+#exchange-list .dd-option-text{
+    line-height: unset !important;
+}
+#exchange-list .dd-selected-image{
+    height: 25px;
+    width: 25px;
+}
+#exchange-list.dd-container,#exchange-list .dd-select{
+    width:auto !important;
+}
+.dd-options{
+    width: 100% !important;
+}
+#exchange-list .dd-selected-text{line-height: unset !important;color: black;}
+#exchange-list .dd-selected{color: rgba(109, 108, 108, 0.692) !important;
+text-decoration: none !important; }
+</style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <div class="container">
@@ -40,11 +79,14 @@
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label class="form-control-label" for="loanable_currency">Loanable Currency</label>
-                    <select class="form-control select2" name="loanable_currency[]" id="loanable_currency" multiple="multiple">
-                      @foreach($cruptoCurrencies as $record)
-                        <option value="{{ $record->id }}" @if($record->is_loanable == "1") selected="" @endif>{{ $record->name }}</option>
-                      @endforeach
-                    </select>
+
+                     <select id="loan-list" name="loanable_currency[]" placeholder="Select currencies" class="custom-select" multiple></select>
+
+                  {{--  <select class="form-control select2" name="loanable_currency[]" id="loanable_currency" multiple="multiple">
+                                                          @foreach($cruptoCurrencies as $record)
+                                                            <option value="{{ $record->id }}" @if($record->is_loanable == "1") selected="" @endif>{{ $record->name }}</option>
+                                                          @endforeach
+                                                        </select> --}}
                     @error('loanable_currency')
                     <p class="invalid-value" role="alert">
                         <strong>{{ __($message) }}</strong>
@@ -56,21 +98,69 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="collateral_currency">Collateral Currency  <a href="#" data-toggle="modal" data-target="#collateralAddressModal"><u>Assign Address</u></a></label>
-                    <select class="form-control select2" name="collateral_currency[]" id="collateral_currency" multiple="multiple">
-                      @foreach($cruptoCurrencies as $record)
-                        <option value="{{ $record->id }}" @if($record->is_collateral == "1") selected="" @endif>{{ $record->name }}</option>
-                      @endforeach
-                    </select>
+                    <label class="form-control-label" for="collateral_currency">Collateral Currency </label>
+                    <select id="collateral-list" name="collateral_currency[]" placeholder="Select currencies" class="custom-select" multiple></select>
+                 {{--   <select class="form-control select2" name="collateral_currency[]" id="collateral_currency" multiple="multiple">
+                                                        @foreach($cruptoCurrencies as $record)
+                                                          <option value="{{ $record->id }}" @if($record->is_collateral == "1") selected="" @endif>{{ $record->name }}</option>
+                                                        @endforeach
+                                                      </select> --}}
                     @error('collateral_currency')
                     <p class="invalid-value" role="alert">
                         <strong>{{ __($message) }}</strong>
                     </p>
                     @enderror
                   </div>
+             <div class="form-group">
+               <!--  <hr class="my-4"> -->
+                 <label class="form-control-label" for="collateral_currency">Collateral Currency Address</label>
+                <div class="">
+                    @foreach($collateralCruptoCurrencies as $key=>$record)
+
+                    
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-2">
+                              <div class="form-group">
+                                <select class="form-control" name="collateral_crypto_rows[{{$key}}][currency_id]">
+                                  <option value="{{$record->id}}">{{ $record->name }}</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-lg-5">
+                              <div class="form-group">
+                                <input type="text" class="form-control"  name="collateral_crypto_rows[{{$key}}][crypto_address]" placeholder="Crypto Address" value="{{ $record->collateral_address->crypto_wallet_address??'' }}">
+                              </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="crypto_memo" name="collateral_crypto_rows[{{$key}}][crypto_memo]" placeholder="Crypto Memo" value="{{$record->collateral_address->crypto_memo??''}}">
+                            @error('crypto_memo')
+                            <p class="invalid-value" role="alert">
+                                <strong>{{ __($message) }}</strong>
+                            </p>
+                            @enderror
+                          </div>
+                        </div>
+                           
+                        </div>
+
+                    
+
+                    
+                    @endforeach
+                    
+                </div>
+            </div>
+
                 </div>
               </div>
+
+
+
             </div>
+
             <hr class="my-4">
             <div class="pl-lg-4">
               <div class="row">
@@ -231,9 +321,11 @@
           </div>
         </div>
       </form>
+   
       <!-- Collateral Address Attach Modal -->
-      <div class="modal fade" id="collateralAddressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form action="{{ route('admin.settings.loan.collateral') }}" method="POST">
+    {{--  <div class="modal fade" id="collateralAddressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <form action="{{ route('admin.settings.loan.collateral') }}" method="POST">
+     
         @csrf()
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -268,7 +360,7 @@
           </div>
         </div>
         </form>
-      </div>
+      </div> --}}
 
 <!-- Loan Repay Setting -->
 @if($actionName=="admin.settings.loan.repay.edit")
@@ -316,37 +408,49 @@
             </div>
             <div id="other_crypto_section" @if($settingValue["loan_repay_currency_type"]==1) style="display: none" @endif>
                 <hr class="my-4">
-                <h6 class="heading-small text-muted mb-4">Repayment Crypto Address</h6>
-                <div class="pl-lg-4">
+                <h6 class="heading-small text-muted mb-4">Repayment Crypto Currency</h6>
+
+             {{--   <div class="pl-lg-4">
                     @foreach($loanRepay as $key=>$record)
                         @if($record->id==$editId) @php $editData=$record; continue; @endphp @endif
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-2">
                               <div class="form-group">
                                 <select class="form-control" name="" disabled="">
                                   <option>{{ $record->currency->name }}</option>
                                 </select>
                               </div>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-4">
                               <div class="form-group">
                                 <input type="text" class="form-control" id="crypto_wallet_address" name="crypto_wallet_address" placeholder="Crypto Wallet Address" value="{{ $record->crypto_wallet_address }}" disabled="">
                               </div>
                             </div>
-                            <div class="col-lg-4" >
+
+                            <div class="col-lg-4">
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="crypto_wallet_memo" name="crypto_wallet_memo" placeholder="Crypto Wallet Memo" value="{{$record->crypto_wallet_memo}}" disabled="">
+                            @error('crypto_wallet_memo')
+                            <p class="invalid-value" role="alert">
+                                <strong>{{ __($message) }}</strong>
+                            </p>
+                            @enderror
+                          </div>
+                        </div>
+                            <div class="col-lg-2" >
                                 @if($actionName!="admin.settings.loan.repay.edit")
                                 <a href="{{route('admin.settings.loan.repay.edit',$record->id)}}">
-                                    <button type="button" class="btn btn-success" value="new_record" name="btn_action">Edit</button>
+                                    <button type="button" class="btn btn-success" value="new_record" name="btn_action"><i class="fa fa-edit"></i></button>
                                 </a>
 
-                                <button type="submit" class="btn btn-danger" value="{{ $record->id }}" name="btn_action">Delete</button>
+                                <button type="submit" class="btn btn-danger" value="{{ $record->id }}" name="btn_action"><i class="fa fa-trash"></i></button>
                                 @endif
                             </div>
                         </div>
                     @endforeach
                     @if($actionName=="admin.settings.loan.repay.edit" && $editData) 
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                           <div class="form-group">
                             <select class="form-control" name="currency_id" disabled="">
                               @foreach($cruptoCurrencies as $record)
@@ -355,7 +459,7 @@
                             </select>
                           </div>
                         </div>
-                        <div class="col-lg-5">
+                        <div class="col-lg-4">
                           <div class="form-group">
                             <input type="text" class="form-control" id="crypto_wallet_address" name="crypto_wallet_address" placeholder="Crypto Wallet Address" value="{{$editData->crypto_wallet_address}}">
                             @error('crypto_wallet_address')
@@ -366,16 +470,26 @@
                           </div>
                         </div>
                         <div class="col-lg-4">
-                          <button type="submit" class="btn btn-success" value="update_record" name="btn_action">Update</button>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="crypto_wallet_memo" name="crypto_wallet_memo" value="{{$editData->crypto_wallet_memo}}" placeholder="Crypto Wallet Memo">
+                            @error('crypto_wallet_memo')
+                            <p class="invalid-value" role="alert">
+                                <strong>{{ __($message) }}</strong>
+                            </p>
+                            @enderror
+                          </div>
+                        </div>
+                        <div class="col-lg-2">
+                          <button type="submit" class="btn btn-success" value="update_record" name="btn_action"><i class="fa fa-save"></i></button>
                           <a href="{{route('admin.settings.loan')}}">
-                            <button type="button" class="btn btn-info">Cancel</button>
+                            <button type="button" class="btn btn-info"><i class="fa fa-close"></i></button>
                           </a>
                           
                         </div>
                     </div>
                     @else
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                           <div class="form-group">
                             <select class="form-control" name="currency_id">
                               @foreach($cruptoCurrencies as $record)
@@ -384,7 +498,7 @@
                             </select>
                           </div>
                         </div>
-                        <div class="col-lg-5">
+                        <div class="col-lg-4">
                           <div class="form-group">
                             <input type="text" class="form-control" id="crypto_wallet_address" name="crypto_wallet_address" placeholder="Crypto Wallet Address">
                             @error('crypto_wallet_address')
@@ -394,13 +508,88 @@
                             @enderror
                           </div>
                         </div>
+
                         <div class="col-lg-4">
-                          <button type="submit" class="btn btn-success" value="new_record" name="btn_action">New Record</button>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="crypto_wallet_memo" name="crypto_wallet_memo" placeholder="Crypto Wallet Memo">
+                            @error('crypto_wallet_memo')
+                            <p class="invalid-value" role="alert">
+                                <strong>{{ __($message) }}</strong>
+                            </p>
+                            @enderror
+                          </div>
+                        </div>
+                        <div class="col-lg-2">
+                          <button type="submit" class="btn btn-success" value="new_record" name="btn_action">Add</button>
                         </div>
                     </div>
                     @endif
+                </div> --}}
+
+
+                 <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                  
+                    <select id="repayment-list" name="repayment_currencies[]" placeholder="Select currencies" class="custom-select" multiple></select>
+              
+                    @error('collateral_currency')
+                    <p class="invalid-value" role="alert">
+                        <strong>{{ __($message) }}</strong>
+                    </p>
+                    @enderror
+                  </div>
+             <div class="form-group">
+               <!--  <hr class="my-4"> -->
+                 <label class="form-control-label" for="collateral_currency">Repayment Crypto Address</label>
+
+                <div class="">
+                    @foreach($loanRepay as $key=>$record)
+
+                    
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-2">
+                              <div class="form-group">
+                                <select class="form-control" name="collateral_crypto_rows[{{$key}}][currency_id]">
+                                  <option value="{{$record->currency_id}}">{{ $record->currency->name }}</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-lg-5">
+                              <div class="form-group">
+                                <input type="text" class="form-control"  name="collateral_crypto_rows[{{$key}}][crypto_wallet_address]" placeholder="Crypto Address" value="{{ $record->crypto_wallet_address??'' }}">
+                              </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="crypto_memo" name="collateral_crypto_rows[{{$key}}][crypto_wallet_memo]" placeholder="Crypto Memo" value="{{$record->crypto_wallet_memo??''}}">
+                            @error('crypto_memo')
+                            <p class="invalid-value" role="alert">
+                                <strong>{{ __($message) }}</strong>
+                            </p>
+                            @enderror
+                          </div>
+                        </div>
+                           
+                        </div>
+
+                    
+
+                    
+                    @endforeach
+                    
                 </div>
             </div>
+
+                </div>
+              </div>
+
+
+            </div>
+
+
           </div>
         </div>
       </form>
@@ -411,6 +600,14 @@
 @section('page_scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>  -->
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/prashantchaudhary/ddslick/master/jquery.ddslick.min.js" ></script>
+
+
 <script type="text/javascript">
     $( function() {
       $( "#dialog" ).dialog();
@@ -458,5 +655,41 @@
     $('#loanable_currency').select2({
       placeholder: "Select a currency",
     });
+
+    $(document).ready(function(){
+
+    var LoanCurrencyList = new Choices('#loan-list', {
+    removeItemButton: true,
+    maxItemCount:100,
+    searchResultLimit:8,
+    renderChoiceLimit:100,
+    items: [],
+    choices:@json($dropdowns['loan']) ,
+   
+    });  
+
+    var CollateralCurrencyList = new Choices('#collateral-list', {
+    removeItemButton: true,
+    maxItemCount:100,
+    searchResultLimit:8,
+    renderChoiceLimit:100,
+    items: [],
+    choices:@json($dropdowns['collateral']) ,
+   
+    }); 
+
+    var RepaymentCurrecyList = new Choices('#repayment-list', {
+    removeItemButton: true,
+    maxItemCount:100,
+    searchResultLimit:8,
+    renderChoiceLimit:100,
+    items: [],
+    choices:@json($dropdowns['repayment_currencies']) ,
+   
+    }); 
+
+  });
+
+
 </script>
 @endsection

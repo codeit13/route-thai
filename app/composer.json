@@ -16,6 +16,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/notifications": "^8.46",
         "illuminate/support": "^7.0|^8.0",
+        "laravel-notification-channels/aws-sns": "^1.2",
         "laravel-notification-channels/telegram": "^0.5.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
@@ -23,8 +24,8 @@
         "laravelcollective/html": "^6.2",
         "linecorp/line-bot-sdk": "^7.0",
         "plank/laravel-mediable": "^5.1",
-        "revolution/laravel-line-sdk": "^1.3",
         "pragmarx/google2fa-laravel": "^1.4",
+        "revolution/laravel-line-sdk": "^1.3",
         "sendinblue/api-v3-sdk": "^7.4",
         "yadahan/laravel-authentication-log": "^1.4"
     },
