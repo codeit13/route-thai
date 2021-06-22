@@ -349,7 +349,7 @@
 						</div>
 					</div>
 							</div>
-							<div class="col-lg-12 visible-xs col-sm-12 col-12">
+							<div class="col-lg-12 visible-xs col-sm-12 col-12 xs-flush">
 								@foreach($loans as $loan)
 								<div class="table-responsive">
 									<table class="table">

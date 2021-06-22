@@ -223,8 +223,8 @@ Route: P2P Trading Platform
                                             <label class="visible-xs">{{__($transaction->currency->short_name)}} <span>{{__($transaction->currency->name)}}</span></label>
                                         </td>
                                         <td class="size-t"><label class="">{{$transaction->trans_amount}} {{__($transaction->fiat_currency->short_name)}}</label> <label class="visible-xs">{{__("Quantity")}} <span>{{$transaction->trans_amount}}</span></label></td>
-                                        <td class="">{{number_format((float)$transaction->quantity/$transaction->trans_amount, 5, '.', '')}}/{{$transaction->currency->short_name}}</td>
-                                        <td class="">{{$transaction->quantity}}&nbsp;{{__($transaction->currency->short_name)}}</td>
+                                        <td class="ftl_left">{{number_format((float)$transaction->quantity/$transaction->trans_amount, 5, '.', '')}}/{{$transaction->currency->short_name}}</td>
+                                        <td class="ftl_right">{{$transaction->quantity}}&nbsp;{{__($transaction->currency->short_name)}}</td>
                                         <td class="light"><label class="">{{$transaction->receiver->name??''}}</label> 
                                             <a class="file visible-xs hidden-xs" href="#">View File</a>
                                         </td>
