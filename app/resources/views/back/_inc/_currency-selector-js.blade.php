@@ -60,17 +60,15 @@ $(document).ready(function(){
     }); 
 
     var LoanCurrencyList = new Choices('#loan-list', {
-    removeItemButton: true,
-    maxItemCount:100,
-    searchResultLimit:8,
-    renderChoiceLimit:100,
-    items: [],
-    choices: @json($dropdowns['loan']),
+        removeItemButton: true,
+        maxItemCount:100,
+        searchResultLimit:8,
+        renderChoiceLimit:100,
+        items: [],
+        choices: @json($dropdowns['loan']),
     }); 
 
-
-
-   
+    
 });
 
 </script>

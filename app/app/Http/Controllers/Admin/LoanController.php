@@ -16,7 +16,7 @@ class LoanController extends Controller
      */
     public function index()
     {
-        $loans = Loan::with(['user','loan_currency','collateral_currency'])->paginate(15);
+        $loans = Loan::with(['user','loan_currency','collateral_currency'])->whereStatus('pending')->paginate(15);
         return view('back.loan.index',compact('loans'));
     }
 

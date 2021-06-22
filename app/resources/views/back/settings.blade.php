@@ -38,6 +38,9 @@ label.text-dark{
 .dd-options{
     width: 100% !important;
 }
+.choices__list--dropdown .choices__item--selectable {
+    color: #161625;
+  }
 #exchange-list .dd-selected-text{line-height: unset !important;color: black;}
 #exchange-list .dd-selected{color: rgba(109, 108, 108, 0.692) !important;
 text-decoration: none !important; }
