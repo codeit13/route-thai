@@ -16,7 +16,7 @@ class TradeController extends Controller
         $currency_types=\App\Models\CurrencyType::all();
         $currentCurrency='';
         $type='';
-        $user=\Auth::user();
+        $user= \Auth::user();
         $walletType=new \App\Models\CurrencyType;
         $transaction_type=$request->type??'';
 
@@ -42,7 +42,7 @@ class TradeController extends Controller
 
         if($request->status and $request->status != 'all')
         {
-            $transactions=$transactions->where('status',$request->status);
+            $transactions = $transactions->where('status',$request->status);
         }
 
         if($request->start_date)
@@ -71,7 +71,8 @@ class TradeController extends Controller
                                         });
 
         }
-        $transactions= $transactions->orderBy('created_at','desc')->paginate(10)->withQueryString();
+        $transactions= $transactions->orderBy('created_at','desc')
+                                        ->paginate(10)->withQueryString();
 
         return view('front.trade.history',compact('transactions','currencies','currency_types','walletType','currentCurrency','request'));
     }

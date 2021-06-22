@@ -6,7 +6,7 @@
 <div class="progress-section visible-xs">
 				<h2>{{__('Order Cancel')}}</h2>
 			</div>
-			@include('front.sell.sub_header')
+			@include('front.sell.sub_header_buy')
 @endsection
 @section('content')
 	<section id="main-heading" class="panding-payment hidden-xs csss">

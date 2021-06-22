@@ -122,8 +122,9 @@ class Transaction extends Model
         {
             $trans->trans_id= $this->generateID();
             $trans->type= 'buy';
+            $trans->receiver_id= $this->id;
             $trans->save();
-            $buyer_request->status='pending';
+            $buyer_request->status='open';
             $buyer_request->save();
 
             $this->update(['receiver_id'=>$trans->id]);
