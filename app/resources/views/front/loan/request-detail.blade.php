@@ -18,7 +18,7 @@
          </div>
       </div> 
    </section>
-   <section id="loans-deshboard-new" class="desh-2">
+   <section id="loans-deshboard-new" class="desh-2 instant">
       <div class="container">
          <div class="row tb-l">
             <div class="col-lg-7 col-sm-6 col-6">
@@ -84,7 +84,7 @@
 											<label>Close price set at</label>
 										</div>
 										<div class="col-lg-12 xs-right col-sm-12 col-6">	
-											@if($loan_detail->close_price)
+											@if(isset($loan_detail->close_price) && $loan_detail->close_price)
 											<h4>{{$loan_detail->close_price}} <span>USDT</span></h4>
 											@endif
 										</div>
@@ -94,7 +94,7 @@
 						</div>
 						<div class="space-normal">
 							<div class="row">
-								<div class="col-lg-12 col-sm-12 col-12">
+								<div class="col-lg-12 col-sm-12 col-12 xs-flush">
 									<div class="loan-duration">
 										<div class="row">
 											<div class="col-lg-4 b-right col-sm-4 col-12">
@@ -117,7 +117,7 @@
 								</div>
 							</div>
 						</div>	
-						<div class="col-lg-12 col-sm-12 col-12">
+						<div class="col-lg-12 col-sm-12 col-12 xs-flush">
 							@if($loan_detail->collateral_currency->collateral_address->crypto_wallet_address && !(isset($loan_detail->is_wallet)))
 							<div class="collateral-deposit-details">
 								<div class="row">
@@ -224,7 +224,7 @@
 						<h4>My Loan History</h4>
 					</div>
 					<div class="col-lg-6 text-right col-sm-6 col-6">
-						<a href="#" class="btn-success">View All</a>
+						<a href="{{route('loan.history')}}" class="btn-success">View All</a>
 					</div>
 				</div>
 				<div class="row">
