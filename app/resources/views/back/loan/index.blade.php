@@ -2,6 +2,16 @@
 @section('title')
     Settings |
 @endsection
+<style>
+  svg {
+    width: 10px;
+  }
+  .flex.justify-between.flex-1.sm\:hidden, a[rel="prev"],  a[rel="next"] , span[aria-label="&laquo; Previous"], span[aria-label="Next &raquo;"]
+  {
+    display: none;
+  }
+</style>
+
 @section('content')
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" rel="stylesheet">
@@ -33,35 +43,29 @@
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
+                  <th scope="col" class="sort" data-sort="name">#</th>
+                  <th scope="col" class="sort" data-sort="name">Order Number</th>
                   <th scope="col" class="sort" data-sort="name">User</th>
-                  <th scope="col" class="sort" data-sort="budget">Collateral</th>
-                  <th scope="col" class="sort" data-sort="status">Loan Applied</th>
-                  <th scope="col" class="sort" data-sort="status">Loan Term</th>
-                  <th scope="col" class="sort" data-sort="completion">Min Price</th>
-                  <th scope="col" class="sort" data-sort="completion">Max Price</th>
+                  <th scope="col" class="sort" data-sort="budget">Loan Amount</th>
+                  <th scope="col" class="sort" data-sort="status">Collateral</th>
+                  <th scope="col" class="sort" data-sort="completion">Loan Term</th>
+                  <th scope="col" class="sort" data-sort="completion">LTV</th>
+                  <th scope="col" class="sort" data-sort="status">Order date</th>
                   <th scope="col" class="sort" data-sort="completion">Action</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody class="list">
                 @if($loans->count() > 0)
-                @foreach ($loans as $item)
+                @foreach ($loans as $key =>$item)
                 <tr>
+                  <th>{{ $key +1 }}</th>
+                  <th>{{ $item->loan_id }}</th>
                   <th>
                     <div class="media-body">
                       <span class="name mb-0 text-sm">{{ $item->user->name }}</span>
                     </div>
                     <small class="text-muted">{{ $item->user->email }}</small>
-                  </th>
-                  <th scope="row">
-                    <div class="media align-items-center">
-                      <a href="#" class="rounded-circle mr-3">
-                        <img alt="Image placeholder" width="25" src="{{ $item->collateral_currency->hasMedia('icon') ? $item->collateral_currency->firstMedia('icon')->getUrl() : '' }}">
-                      </a>
-                      <div class="media-body">
-                      <span class="name mb-0 text-sm"> {{ $item->collateral_amount }}</span>
-                      </div>
-                    </div>
                   </th>
                   <th scope="row">
                     <div class="media align-items-center">
@@ -74,14 +78,26 @@
                     </div>
                   </th>
                   <th scope="row">
+                    <div class="media align-items-center">
+                      <a href="#" class="rounded-circle mr-3">
+                        <img alt="Image placeholder" width="25" src="{{ $item->collateral_currency->hasMedia('icon') ? $item->collateral_currency->firstMedia('icon')->getUrl() : '' }}">
+                      </a>
+                      <div class="media-body">
+                      <span class="name mb-0 text-sm"> {{ $item->collateral_amount }}</span>
+                      </div>
+                    </div>
+                  </th>
+                 
+                  <th scope="row">
                      {{ $item->duration ? $item->duration.' '.$item->duration_type : ''  }} 
                   </th>
                   <th scope="row">
-                    {{ $item->min_price }} 
+                    {{ $item->term_percentage }}
+                   </th>
+                  <th scope="row">
+                    {{ date('d-m-Y', strtotime($item->created_at)) }} 
                  </th>
-                 <th scope="row">
-                  {{ $item->max_price }}
-                 </th>
+                 
                   <td>
                     <div class="dropdown">
                       @if($item->status != 'approved' && $item->status != 'rejected')

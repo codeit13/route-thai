@@ -395,14 +395,24 @@ class LoanController extends Controller
         $currencies->filter(function($value)
         {
             $value->image_url='';
+            $value->qr_code='';
+
             if($value->hasMedia('icon'))
             {
                 $value->image_url=$value->firstMedia('icon')->getUrl();
+
             }
+            if($value->loan_repay_currency->hasMedia('qr_code'))
+            {
+                $value->qr_code=$value->loan_repay_currency->firstMedia('qr_code')->getUrl();
+
+            }
+
+          //  $loan_detail->collateral_currency->collateral_address
 
         });
 
-        //echo '<pre>';print_r($currencies->toArray());die;
+       // echo '<pre>';print_r($currencies->toArray());die;
 
            $wallets=auth()->user()->wallet()->where('wallet_type',1)->get();
 
@@ -460,7 +470,7 @@ class LoanController extends Controller
 
         //echo '<pre>';print_r($loan_detail->settings);die;
 
-        $loan_detail->price_down_value=number_format((float)($usdtPrice*((float)$loan_variables->loan_price_down_limit)/100),2,'.','');
+        $loan_detail->price_down_value=number_format((float)($usdtPrice-$usdtPrice*((float)$loan_variables->loan_price_down_limit)/100),2,'.','');
 
         $loan_detail->usdt=$usdtPrice;
 
