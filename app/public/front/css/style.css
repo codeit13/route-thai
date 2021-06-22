@@ -9597,6 +9597,35 @@ section#loans-deshboard-new.instant {
         padding-top: 0px;
         padding-bottom: 5px;
     }
+    .order_h td:nth-child(2n), .order_h td:nth-child(3n), .order_h td:nth-child(4n), .order_h td:nth-child(5n) {
+        display: inline-block !important;
+    }
+    #wallet-content.request.crypto .order_h td {
+        width: auto !important;
+        padding: 0 !important;
+        font-size: 12px !important;
+    }
+    #wallet-content.order-history .order_h tbody tr:nth-of-type(odd) {
+        background: transparent;
+        box-shadow: none;
+        padding-bottom: 10px !important;
+    }
+    #wallet-content.request.crypto .order_h tr {
+        background: transparent;
+        box-shadow: none;
+        position: relative;
+    }
+    #wallet-content.request.crypto .order_h td.sell {
+
+    }
+    #wallet-content.request.crypto .order_h td.sell h2 {
+        font-size: 15px;
+        color: #ce3030;
+        border-right: 2px solid #adadad;
+        font-weight: bold;
+        margin: 0px 0px;
+        padding-right: 5px;
+    }
     /*#wallet-content .white-box.show_two_button td:nth-child(3n){
         display: none;
     }*/
@@ -10197,23 +10226,36 @@ section#loans-deshboard-new.instant {
     #wallet-content.order-history .history-details td {
         padding: 15px 10px !important;
     }
-    #wallet-content.order-history .history-details td.center_small.sub_buttons {
+    #wallet-content.order-history .order_h td.center_small.sub_buttons {
         padding: 0px 0px !important;
         display: inline-block;
-        /* text-align: center; */
+        text-align: center;
+        width: 100% !important;
+        margin-top: 15px;
+    }
+    #wallet-content .white-box .order_h td label {
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 22px;
+        margin-bottom: 0px;
+        color: var(--white-black-text);
     }
     #wallet-content.request.crypto .white-box td.show_on:nth-child(3n) {
         display: inline-block !important;
         padding: 0px 10px !important;
-        text-align: revert;
+        text-align: right;
+        position: absolute;
+        left: 6px;
+        top: 67%;
     }
-    #wallet-content.order-history .history-details td.center_small.sub_buttons a.btn-primary, 
-    #wallet-content.order-history .history-details td.center_small.sub_buttons a.btn-success {
-        padding: 5px 0px !important;
+    #wallet-content.order-history .order_h td.center_small.sub_buttons a.btn-primary, 
+    #wallet-content.order-history .order_h td.center_small.sub_buttons a.btn-success {
+        padding: 6px 13px !important;
         border-radius: 50px;
-        width: 40% !important;
+        width: auto !important;
         margin-bottom: 15px !important;
         margin-right: 10px !important;
+        float: right;
     }
     #wallet-content.order-history .history-details td img.top-xs-m {
         margin-top: 5px !important;
