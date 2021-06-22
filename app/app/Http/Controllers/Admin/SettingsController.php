@@ -228,14 +228,22 @@ class SettingsController extends Controller
         $dropdowns=$this->currenciesForDropDown();
         $lornTerms = LoanTerms::get();
         $cruptoCurrencies=\App\Models\Currency::where('is_crypto',1)->get();
+        $cryptoCurrencies = [];
+        foreach ($cruptoCurrencies as $key => $currency) {
+          $row = array('id'=>$currency->id,'value'=>$currency->id,'selected'=>false);
+          if($currency->hasMedia('icon'))
+            {
+               $row['label']='<img src="'.$currency->firstMedia('icon')->getUrl().'" class="mr-2" style="height: 25px; width: 25px;">'.$currency->short_name;
+            }
+            $cryptoCurrencies[] = $row;
+        }
+        
         $collateralCruptoCurrencies=\App\Models\Currency::with(['collateral_address'])->where('is_collateral',1)->orderBy('updated_at','asc')->get();
         $loanRepay=LoanRepayCurrency::with('currency')->get();
 
         $actionName = $request->route()->getName();
         $editId = ($request->id)?$request->id:0;
-
-        //echo '<pre>';print_r($dropdowns);die;
-        return view('back.settings.loan',compact('settingValue','dropdowns','lornTerms','cruptoCurrencies','loanRepay','actionName','editId','collateralCruptoCurrencies','dropdowns'));
+        return view('back.settings.loan',compact('settingValue','dropdowns','lornTerms','cruptoCurrencies','cryptoCurrencies','loanRepay','actionName','editId','collateralCruptoCurrencies'));
     }
 
     // Application Loan Setting Save Method

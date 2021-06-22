@@ -7,7 +7,7 @@
        <div class="sidenav-header  align-items-center">
           <a class="navbar-brand" href="javascript:void(0)">
           <img src="{{ asset('front/img/logo.png') }}">
-          <img class="white" src="{{ asset('back/img/daytrade_logo_white.png') }}">
+          <img class="white" src="{{ asset('front/img/logo.png') }}">
           </a>
        </div>
        <div class="navbar-inner">

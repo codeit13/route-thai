@@ -34,7 +34,7 @@ class TransactionController extends Controller
       $transaction_type=$request->type??'deposit';
 
 
-      if($type)
+        if($type)
         {
 
           $walletType=$walletType->find($type);
@@ -57,8 +57,6 @@ class TransactionController extends Controller
         if($request->start_date)
         {
             $start_date = date('Y-m-d',strtotime($request->start_date));
-
-          //echo '<pre>';print_r($start_date);die;
             $transactions=$transactions->whereDate('created_at', '>=', $start_date);
         }
 

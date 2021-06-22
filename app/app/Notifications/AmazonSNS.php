@@ -5,8 +5,9 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\AwsSns\SnsChannel;
-use NotificationChannels\AwsSns\SnsMessage;
+
+use AWS;
+
 
 class AmazonSNS extends Notification
 {
