@@ -185,9 +185,10 @@ class SellController extends Controller
      */
     public function buyRequestConfrim($trans_id){
         $transcation = Transaction::where('trans_id',$trans_id)->first();
-        $buyer_trans = $transcation->receiver_id;                                        
-        
-        if ($buyer_trans != '') {
+        $buyer_trans = $transcation->receiver_id;
+        $check_paid = $transcation->buyer_requests->first();
+     
+        if ($buyer_trans != '' and $check_paid->status == 'pending') {
             $url = route('sell.confirm_receipt',['trans_id'=>$trans_id]);
             return response()->json(['success'=>true,'url'=>$url]);            
         }
@@ -235,7 +236,7 @@ class SellController extends Controller
         if ($transcation->buyer_requests_count > 0) {
             $user = Auth::user();
             $transcation->update(['status'=>'approved']);
-            $transcation->buyer_trans->update(['status'=>'approved']);
+            $transcation->buyer_trans->update(['status'=>'approved','receiver_id'=>$transcation->id]);
             $transcation->buyer_requests->first()->update(['status'=>'paid']);
             $amount = $transcation->quantity;
             $seller_wallet_update = Wallet::firstOrNew([
@@ -263,7 +264,7 @@ class SellController extends Controller
                                                         ->get();     
                                  
             // Message for Seller
-            $Message = "[Route-Thai] P2P Order (Ending with " . substr($transcation->trans_id, -4) . ") has been completed. You have released " . $transcation->quantity . " " . $transcation->currency_id->name . " to the buyer.";
+            $Message = "[Route-Thai] P2P Order (Ending with " . substr($transcation->trans_id, -4) . ") has been completed. You have released " . $transcation->quantity . " " . $transcation->currency->name . " to the buyer.";
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
                 'mobile' => "mobile",

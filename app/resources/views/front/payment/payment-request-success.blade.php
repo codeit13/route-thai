@@ -73,7 +73,7 @@
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}}&nbsp; {{$transaction->currency->short_name}}</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->quantity}}</span>
 												</div>
 											</div>
 										</div>
@@ -85,7 +85,7 @@
 												</div>
 											</div>
 											<div class="col-lg-12 xs-right col-sm-12 col-6">
-												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{number_format($transaction->trans_amount,2)}} &nbsp;{{$transaction->fiat_currency->short_name}}</span>
+												<div id="ID5522365196_BTC">	<span style="font-weight:normal;">{{$transaction->trans_amount}} &nbsp;{{$transaction->fiat_currency->short_name}}</span>
 												</div>
 											</div>
 										</div>

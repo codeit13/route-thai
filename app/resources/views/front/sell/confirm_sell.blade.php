@@ -186,7 +186,7 @@ Route: P2P Trading Platform - sell crypto
 		function confirmSell(){
 			var form_id = 'confirm_sell';
 			$('body').find('button').prop('disabled', true);
-
+			startLoader();
 			$('#'+form_id).ajaxSubmit({
 				url: '{{ route("sell.confirm_sell") }}',
 				type : 'POST',
@@ -211,6 +211,7 @@ Route: P2P Trading Platform - sell crypto
 						}, 2000);
 					}
 					$('body').find('button').prop('disabled', false);
+					stopLoader();
 				},
 				error:function(resobj){
 					$.each(resobj.responseJSON.errors, function(k,v){
@@ -218,6 +219,7 @@ Route: P2P Trading Platform - sell crypto
 						$('#'+id_arr[0]+'_error').text(v);
 					});
 					$('body').find('button').prop('disabled', false);
+					stopLoader();
 				}
 			});
 		}

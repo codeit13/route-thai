@@ -174,7 +174,6 @@ Route: P2P Trading Platform
                                             <option value="all" @if($request->type=='' or $request->type=='all') selected @endif>All</option>
                                             <option value="sell" @if($request->type=='sell') selected @endif >{{__('Sell')}}</option>
                                             <option value="buy" @if($request->type=='buy') selected @endif>{{__('Buy')}}</option>
-
                                             <input type="hidden" name="order_type" class="order_type_class" id="order_type_id" value=""/>
                                         </select>
                                         </td>
@@ -214,7 +213,6 @@ Route: P2P Trading Platform
                                             <h2>{{__(ucwords($transaction->type))}}</h2>
                                         </td>
                                         <td class="hidden-xs" colspan="2"><span>{{__("Order number")}}</span>{{$transaction->trans_id}}</td>
-                                        <!-- <td colspan="0.3" class="xs-full">&nbsp;</td> -->
                                         <td class="xs-full" colspan="2" style="padding-left: 90px;"><span>{{__("Created time")}}</span>{{$transaction->created_at}}</td>
                                         <td class="hidden-xs"></td>
                                     </tr>
@@ -225,35 +223,59 @@ Route: P2P Trading Platform
                                             @endif
                                             <label class="visible-xs">{{__($transaction->currency->short_name)}} <span>{{__($transaction->currency->name)}}</span></label>
                                         </td>
-                                        <td class="size-t"><label class="hidden-xs">{{$transaction->trans_amount}} {{__($transaction->fiat_currency->short_name)}}</label> <label class="visible-xs">{{__("Quantity")}} <span>{{$transaction->trans_amount}}</span></label></td>
+                                        <td class="size-t">
+                                            <label class="hidden-xs">{{$transaction->trans_amount}} {{__($transaction->fiat_currency->short_name)}}</label> <label class="visible-xs">{{__("Quantity")}} <span>{{$transaction->trans_amount}}</span></label></td>
                                         <td class="hidden-xs">{{number_format((float)$transaction->quantity/$transaction->trans_amount, 5, '.', '')}}/{{$transaction->currency->short_name}}</td>
                                         <td class="hidden-xs">{{$transaction->quantity}}&nbsp;{{__($transaction->currency->short_name)}}</td>
-                                        <td class="light"><label class="hidden-xs">{{$transaction->receiver->name??''}}</label> 
-                                            <a class="file visible-xs" href="#">View File</a>
+                                        <td class="light">
+                                            <label class="hidden-xs">
+                                                @if($transaction->type == 'sell')
+                                                    @if($transaction->status == 'approved')
+                                                        {{ $transaction->buyer_trans->user->name }}
+                                                    @elseif($transaction->status != 'approved' and $transaction->buyer_requests->count()>0)
+                                                        {{ $transaction->buyer_requests->first()->user->name }}
+                                                    @else
+                                                        NA
+                                                    @endif
+                                                @endif
+                                                @if($transaction->type == 'buy')
+                                                    @if($transaction->status == 'approved')
+                                                        {{ $transaction->buyer_trans->user->name }}
+                                                    @elseif($transaction->status != 'approved' and $transaction->buyer_requests->count()>0)
+                                                        {{ $transaction->buyer_requests->first()->user->name }}
+                                                    @else
+                                                        NA
+                                                    @endif
+                                                @endif
+                                            </label> 
+                                            {{-- <a class="file visible-xs" href="#">View File</a> --}}
                                         </td>
                                         <td class="hidden-xs show_on">
                                             @switch($transaction->status)
                                                 @case('pending')
                                                     <img src="{{asset('front/img/icon-27.png')}}" alt=""/>
                                                     {{__('In progress')}}
-                                                    <a class="hidden-xs" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif">{{__("Detail")}}</a>
+                                                    {{-- <a class="hidden-xs" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif">{{__("Detail")}}</a> --}}
                                                 @break
                                                 @case('approved')
                                                 <img src="{{asset('front/img/icon-28.png')}}" alt=""/>
                                                 {{__('Approved')}}
-                                                <a class="hidden-xs" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif">{{__("Detail")}}</a>
+                                                    {{-- <a class="hidden-xs" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif">{{__("Detail")}}</a> --}}
                                                 @break
                                                 @case('rejected')
                                                     <img src="{{asset('front/img/icon-29.png')}}" alt=""/>
                                                     {{__('Rejected')}}
-                                                    <a class="hidden-xs" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif">{{__("Detail")}}</a>
+                                                    {{-- <a class="hidden-xs" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif">{{__("Detail")}}</a> --}}
                                                 @break
                                             @endswitch
                                         </td>
                                         <td class="center_small sub_buttons">
-                                            @if($transaction->status == 'pending')
+                                            @if($transaction->status == 'pending' and $transaction->buyer_requests->count() == 0 and $transaction->type != 'buy')
                                                 <a class="btn-primary" href="{{ route('sell.create',['trans_id'=>$transaction->trans_id]) }}" style="padding: 6px;color: white;"><i class="fa fa-edit"></i></a> 
                                                 <a class="btn-success" href="{{ route('sell.destroy',['trans_id'=>$transaction->trans_id]) }}" style="padding: 7px;color: white;"><i class="fa fa-trash"></i></a> 
+                                            @endif
+                                            @if($transaction->status != 'approved')
+                                                <a class="btn-success" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif" style="padding: 7px;color: white;"><i class="fa fa-eye"></i></a> 
                                             @endif
                                         </td>
                                     </tr>
