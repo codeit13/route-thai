@@ -108,7 +108,7 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 											<label>{{__('Types of Currency')}}</label>
 										</div>
 									</div>
-									<div class="dropdown currency_two three_coins crypto currencyDropdown">
+									<div class="dropdown currency_two three_coins crypto currencyDropdown nerro_space">
 
 
 									
@@ -466,7 +466,7 @@ $existingCurrencies=$existingCurrencies2=$existingCurrencies3=$existingCurrencie
 										<tr class="first text-left">
 											<td>{{$transaction->created_at->format('d/m/Y')}}&nbsp;&nbsp;{{$transaction->created_at->format('h:i:s')}}</td>
 										</tr>
-										<tr>
+										<tr class="secont">
 											<td>
 												@if($transaction->currency->hasMedia('icon'))
     

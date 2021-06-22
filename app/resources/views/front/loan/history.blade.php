@@ -164,7 +164,7 @@
 
 									</select>
 								</div>
-								<div class="col-8">
+								<div class="col-8 xs-flush-right">
 									<input class="coin backend-filter-input" type="search" placeholder="Search Coin Name" value="{{$request->search??''}}" name="search" />
 								</div>
 							</div>	

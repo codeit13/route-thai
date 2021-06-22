@@ -63,7 +63,7 @@ Route: P2P Trading Platform
                                         <label>{{__('Types of Currency')}}</label>
                                     </div>
                                 </div>
-                                <div class="dropdown currency_two three_coins crypto currencyDropdown">
+                                <div class="dropdown currency_two three_coins crypto currencyDropdown nerro_space">
                                     @foreach($currencies as $cIndex=> $currency)
                                     @if($currency->id==$currentCurrency)
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
