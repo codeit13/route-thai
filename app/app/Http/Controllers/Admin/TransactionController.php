@@ -164,9 +164,30 @@ class TransactionController extends Controller
 
         if($status=='approved'){
             $this->updateUserWallet($transaction,$type);
-
+            // $type == "WITHDRAW";
 
         }
+        if(strtoupper($type)=="WITHDRAW" && $status=="approved") {
+            $Message = "Your Wihdraw request have been successfully approved.";
+        } else if(strtoupper($type)=="WITHDRAW" && $status=="rejected") {
+            $Message = "Your Wihdraw request have been rejected.";
+        } else if(strtoupper($type)=="DEPOSIT" && $status=="approved") {
+            $Message = "Your Deposit request have been successfully approved.";
+        } else if(strtoupper($type)=="DEPOSIT" && $status=="rejected") {
+            $Message = "Your Deposit request have been rejected.";
+        }
+
+        Notify::sendMessage([
+            'sms_notification' => $transaction->user->sms_notification,
+            'mobile' => $transaction->user->mobile,
+            'telegram_notification' => $transaction->user->telegram_notification,
+            'telegram_user_id' => $transaction->user->telegram_user_id,
+            'line_notification' => $transaction->user->line_notification,
+            'line_user_id' => $transaction->user->line_user_id,
+            'email_notification' => $transaction->user->email_notification,
+            'email_id' => $transaction->user->email,
+            'Message' => $Message,
+        ]);
          $transaction->status=$status;
 
          $transaction->save();
@@ -220,8 +241,6 @@ class TransactionController extends Controller
 
          //      $this->service = new \App\Services\SMSService();
          //      $res=$this->service->send(['+66630370558'],'RouteDWR',$sms_variables);
-
-              
 
 
 
