@@ -41,7 +41,7 @@ $loan_variables=(object)$loan_variables;
          </div>
       </div> 
    </section>
-   <section id="loans-deshboard-new">
+   <section id="loans-deshboard-new" class="instant">
       <div class="container">
          <div class="row tb-l">
             <div class="col-lg-7 col-sm-6 col-6">
@@ -88,7 +88,7 @@ $loan_variables=(object)$loan_variables;
 
          	@csrf
 			<div class="row">
-				<div class="col-lg-12 col-sm-12 col-12">
+				<div class="col-lg-12 col-sm-12 col-12 xs-flush">
 					<div class="white-box">
 						<div class="space-normal">
 							<div class="row">
