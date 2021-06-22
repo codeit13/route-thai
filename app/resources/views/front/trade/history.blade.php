@@ -242,7 +242,7 @@ Route: P2P Trading Platform
                                                     @if($transaction->status == 'approved')
                                                         {{ $transaction->buyer_trans->user->name }}
                                                     @elseif($transaction->status != 'approved' and $transaction->buyer_trans->buyer_requests->count()>0)
-                                                        {{ $transaction->buyer_requests->first()->user->name }}
+                                                        {{ $transaction->user->name }}
                                                     @else
                                                         NA
                                                     @endif
