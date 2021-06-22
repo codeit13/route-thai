@@ -165,6 +165,7 @@ Route: P2P Trading Platform - sell crypto
 			if (quantity > current_coin_balance) {
 				$('#quantity_error').text('You can only sell less than '+current_coin_text+'.')
 			}else{
+				startLoader();
 				var form_id = 'save_sell';
 				$('body').find('button').prop('disabled', true);
 
@@ -181,6 +182,7 @@ Route: P2P Trading Platform - sell crypto
 							$('#'+form_id)[0].reset();
 						}
 						$('body').find('button').prop('disabled', false);
+						stopLoader();
 					},
 					error:function(resobj){
 						console.log(resobj.responseJSON.message)
@@ -190,6 +192,7 @@ Route: P2P Trading Platform - sell crypto
 							$('#'+id_arr[0]+'_error').text(v);
 						});
 						$('body').find('button').prop('disabled', false);
+						stopLoader();
 					}
 				});
 			}

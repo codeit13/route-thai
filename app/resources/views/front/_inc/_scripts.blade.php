@@ -16,6 +16,12 @@
 $(window).load(function() {
     $(".loader").fadeOut(2000);
 });
+function startLoader(){
+    $('.loader').show();
+}
+function stopLoader(){
+    $('.loader').hide();
+}
 $(document).ready(function(){
         $("#footer ul li.Company:first-child").click(function(){
             $("ul.Company-main li").toggle();
