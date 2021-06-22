@@ -165,7 +165,7 @@ class TransactionController extends Controller
     {
 
     
-        $request->validate(['quantity' =>'required|numeric|gt:0','currency_id'=>'required|numeric','transaction_image'=>'required']);
+        $request->validate(['quantity' =>'required|numeric|gt:0','currency_id'=>'required|numeric','transaction_image'=>'required|image']);
 
 
         $fileName=time().'____'.$request->file('transaction_image')->getClientOriginalName();

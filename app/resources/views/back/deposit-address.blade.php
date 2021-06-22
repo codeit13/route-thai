@@ -21,7 +21,7 @@ if(isset($deposit_address->id))
 
 @endphp
 
-         <form action="{{$action}}" method="{{$method}}">
+         <form action="{{$action}}" method="{{$method}}" enctype="multipart/form-data">
 
           @if(isset($deposit_address->id))
 
@@ -30,21 +30,29 @@ if(isset($deposit_address->id))
           @endif
 
           @csrf
+
+          
+
+
   <div class="form-row">
-    <div class="col">
-      <textarea class="form-control" name="address" required="required" rows="4" placeholder="address">{{$deposit_address->address??''}}</textarea>
+
+    <div class="col-md-4">
+    <label for="exampleFormControlInput1">Address :</label>
+    <textarea class="form-control" name="address" required="required" rows="2" placeholder="address">{{$deposit_address->address??''}}</textarea>
         @error('address')
                                 <p class="invalid-value" role="alert">
                                     <strong>{{ __($message) }}</strong>
                                 </p>
                                 @enderror
+  </div>
 
 
+    <div class="col-md-3">
 
-    </div>
-    <div class="col-md-6">
+    <label for="exampleFormControlInput1">Currency :</label>
 
-      <div class="dropdown currency_two three_coins crypto currencyDropdown">
+
+      <div class="dropdown currency_two three_coins crypto currencyDropdown d-block">
                   
                                @foreach($currencies as $cIndex=> $currency)
 
@@ -126,11 +134,26 @@ if(isset($deposit_address->id))
                                 </p>
                                 @enderror
                   </div>
-                  <div class="col-md-12 ml-2 mt-3">
+                 
+                 
+    </div>
+
+    <div class="col-md-3">
+    <label for="exampleFormControlFile1">Qr Code :</label>
+    <input type="file" name="qr" class="form-control-file d-block" id="exampleFormControlFile1">
+     @error('qr')
+                                <p class="invalid-value" role="alert">
+                                    <strong>{{ __($message) }}</strong>
+                                </p>
+                                @enderror
+  </div>
+
+     <div class="col-md-2">
+       <div class="col-md-12 ml-2 mt-3">
 
                    <button class="btn btn-success">Attach Address</button>
                  </div>
-    </div>
+     </div>
     
   </div>
 </form>
@@ -160,6 +183,9 @@ if(isset($deposit_address->id))
                                     <th scope="col">{{__('Type')}}</th>
 
                                       <th scope="col">{{__('Address')}}</th>
+
+                                      <th scope="col">{{__('Qr Code')}}</th>
+
                                     <th scope="col">{{__('Action')}}</th>
                                    
                                  </tr>
@@ -178,6 +204,10 @@ if(isset($deposit_address->id))
                                        @endif {{__($address->currency->short_name)}}</td>
 
                                         <td class="sorting_1">{{__($address->address)}}</td>
+
+                                        <td>@if($address->hasMedia('qr_code'))
+                                             <img style="width: 50px;" src="{{$address->firstMedia('qr_code')->getUrl()}}"/>
+                                           @endif</td>
 
                                     <td>
                                       <a href="{{route('admin.deposit.address.edit',$address->id)}}"><i class="fa fa-edit" style="font-size: x-large;"></i></a>
