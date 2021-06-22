@@ -4148,7 +4148,7 @@ span.active {
 #loans-deshboard-new .white-box {
     float:left;
     width:100%;
-    background:var(--new-card-bg);
+    background:var(--body-bg-2);
     border-radius:7px;
     margin-bottom:60px;
     box-shadow: 0px 2px 12px rgb(0 0 0 / 16%);
@@ -4159,7 +4159,7 @@ span.active {
 }
 #loans-deshboard-new .white-box label.sm-size {
     font-size:14px;
-    color:rgba(0,0,0,0.3);
+    color:var(--white-black-text);
 }
 #loans-deshboard-new .white-box label.sm-size b {
     color:var(--white-black-text);
@@ -4583,9 +4583,9 @@ ul.loan_code li i.fa {
 body.dark-mode #loans-deshboard-new .how-to-start img.show_white {
     display: inline-block;
 }
-section#loans-deshboard-new {
+/*section#loans-deshboard-new {
     background-color: var(--wallet_bg_color) !important;
-}
+}*/
 
 /***** Your Application Css *****/
 
@@ -4942,16 +4942,17 @@ section#loans-deshboard-new {
     padding-bottom:100px;
 }
 .security p {
-    color:#333333;
+    color:var(--white-black-text);
     font-size:14px;
 }
 .security p img {
     position:relative;
     top:-2px;
+    filter: invert(1);
     margin:0px 5px;
 }
 .security h3 {
-    color:#333333;
+    color:var(--white-black-text);
     margin-top:20px;
 }
 .security p.gray {
@@ -4959,15 +4960,16 @@ section#loans-deshboard-new {
 }
 .security .table-responsive {
     margin-top:30px;
-    background:#fff;
+    background:var(--new-card-bg);
     border-radius:8px;
-    box-shadow:0px 0px 5px 2px #ebebeb;
+    box-shadow:0px 2px 12px rgb(0 0 0 / 3%);
 }
 .security .table-responsive th {
-    color:#b3b3b3;
-    font-size:14px;
-    font-weight:600;
-    background:#fbfbfb;
+    color: #b3b3b3;
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--new-card-bg);
+    padding: 15px 5px;
 }
 .security .table-responsive table {
     margin-bottom:0px;
@@ -4982,9 +4984,9 @@ section#loans-deshboard-new {
 .security .white-email {
     float:left;
     width:100%;
-    background:#fff;
+    background:var(--new-card-bg);
     border-radius:8px;
-        box-shadow: 0px 1px 6px 1px #dadada;
+        box-shadow: 0px 2px 12px rgb(0 0 0 / 3%);
     margin-top:40px;
     z-index: 9999;
     position: relative;
@@ -5035,10 +5037,11 @@ section#loans-deshboard-new {
 }
 .security .white-email.change input {
     height:36px;
-    color:#000;
+    color:var(--white-black-text);
     border-radius:5px;
     padding-left:10px;
-    position: relative;
+    position: relative; 
+    background: var(--card-bg);
 }
 .security .white-email input.password{
     background:url(../img/password.png) 98% 50% no-repeat !important;
@@ -5077,7 +5080,7 @@ section#loans-deshboard-new {
 .account-security .account-s ul li {
     list-style:none;
     display:inline-block;
-    color:#333333;
+    color:var(--white-black-text);
     font-size:14px;
     background:url(../img/tick-2.png) 0px 6px no-repeat;
     padding:0px 18px;
@@ -5088,16 +5091,16 @@ section#loans-deshboard-new {
 .account-security .fa-box-white {
     float:left;
     width:100%;
-    background:#fff;
+    background:var(--new-card-bg);
     border-radius:5px;
-    box-shadow:0px 1px 2px 1px #ebebeb;
+    box-shadow:0px 2px 12px rgb(0 0 0 / 3%);
     margin-bottom:25px;
 }
 .account-security .fa-box-white h5 {
     font-weight:600;
     font-size:18px;
     line-height:40px;
-    border:1px solid #dbe5ed;
+    border:1px solid var(--border-color);
     padding:0px 15px;
     border-radius:5px 5px 0px 0px;
 }
@@ -5125,10 +5128,10 @@ section#loans-deshboard-new {
     float:left;
     padding:15px 15px;
     width:100%;
-    border-bottom:1px solid #ebebeb;
+    border-bottom:1px solid var(--border-color);
 }
 .account-security .fa-box-white .field label.text {
-    color:#333333;
+    color:var(--white-black-text);
     font-size:14px;
     font-weight:600;
     width:100%;
@@ -5163,8 +5166,9 @@ section#loans-deshboard-new {
     border-color:#adadad;
 }
 .account-security .fa-box-white .field label img {
-    float:left;
-    margin-right:10px;
+    float: left;
+    margin-right: 10px;
+    filter: invert(1);
 }
 .account-security .fa-box-white.device label {
     font-size:18px;
@@ -7869,6 +7873,13 @@ a.btn-info:hover {
     background: var(--card-bg);
     color: var(--white-black-text);
 }
+section#loans-deshboard-new {
+    background: var(--wallet_bg_color) !important;
+}
+
+section#loans-deshboard-new.instant {
+    background: transparent !important;
+}
  
 /********** Responsive Css **********/
 
@@ -7952,6 +7963,7 @@ a.btn-info:hover {
     .multi_form .dropdown.currency_two.three_coins .dropdown-menu.show a {
         padding: 0px 15px !important;
         color: var(--text-color);
+        line-height: 40px;
     }
     .notification_page span {
         float: left;
@@ -8262,8 +8274,22 @@ a.btn-info:hover {
         font-size: 14px;
     }
     #loans-deshboard-new .final-loan.collateral .tb-x {
-        padding-top: 8px;
-        padding-bottom: 8px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    #loans-deshboard-new .final-loan.collateral h4 {
+        font-size: 14px !important;
+        display: inline-block;
+        width: 100%;
+    }
+    #loans-deshboard-new .final-loan.collateral h4 span {
+        color: #797979!important;
+        font-size: 13px!important;
+        font-weight: normal!important;
+        margin-left: 4px;
+    }
+    #loans-deshboard-new .space-normal {
+        padding-top: 0px;
     }
     .collateral-deposit-details p {
         word-break: break-all;
@@ -8308,16 +8334,22 @@ a.btn-info:hover {
     }
     #loans-deshboard-new .space-normal .dropdown.currency_two.three_coins button#dropdownMenuButton {
         padding: 10px 5px;
+        font-size: 13px;
     }
     #loans-deshboard-new .space-normal .dropdown.currency_two.three_coins.crypto button#dropdownMenuButton img {
-        margin-right: 0;
+        margin-right: 5px;
+        width: 20px;
+        margin-top: 6px;
     }
     #loans-deshboard-new .loan-duration {
         margin-top: 15px;
     }
     #loans-deshboard-new .close-price label {
         font-size: 14px !important;
-        color: #000;
+        
+    }
+    #loans-deshboard-new .white-box {
+        border-radius: 0px;
     }
     #loans-deshboard-new .close-price label input[type="checkbox"] {
         float: left;
@@ -8326,12 +8358,20 @@ a.btn-info:hover {
     }
     #loans-deshboard-new .close-price label forml {
         margin-left: 0px;
+        margin-top: 10px;
     }
     #loans-deshboard-new .final-loan h3 {
         margin-bottom: 15px;
     }
+    #loans-deshboard-new .final-loan.collateral {
+        margin-top: 0px;
+        padding: 0;
+    }
     #loans-deshboard-new .final-loan .btn-info {
         margin-top: 15px;
+        width: 100%;
+        text-align: center;
+        line-height: 45px;
     }
     #loans-deshboard-new .my-loan-history table thead {
         width: 50%;
@@ -8388,6 +8428,7 @@ a.btn-info:hover {
     }
     #loans-deshboard-new .tb-l img {
         margin-left: 2px;
+        width: 20px !important;
     }
     #loans-deshboard-new .xs-f h3 {
         font-size: 22px;
@@ -8519,7 +8560,6 @@ a.btn-info:hover {
         font-size: 18px;
     }
     #dashboard .sidebar {
-        background: #333333;
         padding: 0px 0px;
         overflow: auto;
         white-space: nowrap;
@@ -8537,7 +8577,7 @@ a.btn-info:hover {
     }
     #dashboard .sidebar ul li a {
         border-left: none;
-        border-bottom: 3px solid #333;
+        border-bottom: 3px solid var(--new-card-bg);
         padding: 8px 5px;
         margin: 0px;
         margin-left: 30px;

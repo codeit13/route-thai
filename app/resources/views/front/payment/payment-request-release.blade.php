@@ -8,7 +8,7 @@
 					<div id="app"></div>
 				</label>
 			</div>
-			@include('front.sell.sub_header')
+			@include('front.sell.sub_header_buy')
 @endsection
 @section('content')
 	<section id="main-heading" class="panding-payment hidden-xs">

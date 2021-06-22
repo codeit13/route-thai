@@ -158,7 +158,7 @@ $current_loan_currency=$loan->loan_currency_id;
 							</div>
 						</div>
 						<div class="col-lg-12 col-sm-12 col-5">
-							<a href="{{route('loan.close',$loan->loan_id)}}" class="btn-info close-now">Close now</a>
+						<!-- 	<a href="{{route('loan.close',$loan->loan_id)}}" class="btn-info close-now">Close now</a> -->
 						</div>
 						<!-- <div class="visible-xs xs-l-flush col-7">
 							<a href="#" class="btn-info repay-now">REPAY LOAN</a>

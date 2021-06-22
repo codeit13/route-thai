@@ -57,6 +57,7 @@ class SellController extends Controller
                 'trans_id'
             ));
     	}else{
+            // dd($crypto_currencies);
 	    	return view('front.sell.index',compact(
 	    		'crypto_currencies',
                 'default_fiat_currency',
@@ -128,10 +129,10 @@ class SellController extends Controller
         $request->session()->forget('sell_data');
         
         $user = Auth::user();
-        $Message = "[Route-Thai] P2P Order (Ending with " . substr($trans_id, -4) + ") of " . $data['quantity'] . " " + $selected_currency->name . " has been Successfully created. You will be notified when buyer gets matched.";
+        $Message = "[Route-Thai] P2P Order (Ending with " . substr($trans_id, -4) . ") of " . $data['quantity'] . " " . $selected_currency->name . " has been Successfully created. You will be notified when buyer gets matched.";
         Notify::sendMessage([
             'sms_notification' => $user->sms_notification,
-            'mobile' => "mobile",
+            'mobile' => $user->mobile,
             'telegram_notification' => $user->telegram_notification,
             'telegram_user_id' => $user->telegram_user_id,
             'line_notification' => $user->line_notification,
@@ -184,9 +185,10 @@ class SellController extends Controller
      */
     public function buyRequestConfrim($trans_id){
         $transcation = Transaction::where('trans_id',$trans_id)->first();
-        $buyer_trans = $transcation->receiver_id;                                        
-        
-        if ($buyer_trans != '') {
+        $buyer_trans = $transcation->receiver_id;
+        $check_paid = $transcation->buyer_requests->first();
+     
+        if ($buyer_trans != '' and $check_paid->status == 'pending') {
             $url = route('sell.confirm_receipt',['trans_id'=>$trans_id]);
             return response()->json(['success'=>true,'url'=>$url]);            
         }
@@ -234,7 +236,7 @@ class SellController extends Controller
         if ($transcation->buyer_requests_count > 0) {
             $user = Auth::user();
             $transcation->update(['status'=>'approved']);
-            $transcation->buyer_trans->update(['status'=>'approved']);
+            $transcation->buyer_trans->update(['status'=>'approved','receiver_id'=>$transcation->id]);
             $transcation->buyer_requests->first()->update(['status'=>'paid']);
             $amount = $transcation->quantity;
             $seller_wallet_update = Wallet::firstOrNew([
@@ -262,10 +264,10 @@ class SellController extends Controller
                                                         ->get();     
                                  
             // Message for Seller
-            $Message = "[Route-Thai] P2P Order (Ending with " . substr($trans_id, -4) . ") has been completed. You have released " . $data['quantity'] . " " . $selected_currency->name . " to the buyer.";
+            $Message = "[Route-Thai] P2P Order (Ending with " . substr($transcation->trans_id, -4) . ") has been completed. You have released " . $transcation->quantity . " " . $transcation->currency->name . " to the buyer.";
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
-                'mobile' => "mobile",
+                'mobile' => $user->mobile,
                 'telegram_notification' => $user->telegram_notification,
                 'telegram_user_id' => $user->telegram_user_id,
                 'line_notification' => $user->line_notification,
@@ -300,7 +302,7 @@ class SellController extends Controller
             $Message = "Order Deleted";
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
-                'mobile' => "mobile",
+                'mobile' => $user->mobile,
                 'telegram_notification' => $user->telegram_notification,
                 'telegram_user_id' => $user->telegram_user_id,
                 'line_notification' => $user->line_notification,

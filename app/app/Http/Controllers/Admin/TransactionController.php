@@ -17,6 +17,7 @@ class TransactionController extends Controller
     {
 
         $sell = Transaction::where('type','sell')->orderBy('created_at','DESC')->get();
+        // dd($sell);
         $buy = Transaction::where('type','buy')->orderBy('created_at','DESC')->get();
         return view('back.trades',compact(['sell','buy']));
     }

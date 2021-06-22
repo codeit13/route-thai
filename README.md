@@ -1,29 +1,19 @@
 # Route Crypto P2P Website
 > Join the world's largest crypto exchange. Designed for India
 
-## Implement Telegram Notifications
+## How to Implement Notifications
 In your ***Controller*** follow the following Steps
-1. `    use App\Notifications\LaravelTelegramNotification;`
+1. `    use App\Notifications\Notify;`
 2. ``` php 
-        if($user->telegram_notification) {
-            $user->notify(new LaravelTelegramNotification([
-                'text' => "Your Message here ",
-                'telegram_user_id' => $user->telegram_user_id,
-                ]));
-            }
-
-## Implement Line Notifications
-In your ***Controller*** follow the following Steps
-1. `    use LINE;`
-2. ``` php 
-        if($user->line_notification) {
-            LINE::pushmessage(
-                $user->line_user_id,
-                new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('Your Message here.')
-            );
-        }
-
-
-
-# Buyer Controller -> PaymentController.php
-# Seller COntroller -> SellController.php
+        $Message = "Your Message";
+        Notify::sendMessage([
+            'sms_notification' => $user->sms_notification,
+            'mobile' => $user->mobile,
+            'telegram_notification' => $user->telegram_notification,
+            'telegram_user_id' => $user->telegram_user_id,
+            'line_notification' => $user->line_notification,
+            'line_user_id' => $user->line_user_id,
+            'email_notification' => $user->email_notification,
+            'email_id' => $user->email,
+            'Message' => $Message,
+        ]);
