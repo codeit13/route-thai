@@ -106,7 +106,7 @@ class PaymentController extends Controller
                 // $Message = "Your Buying Order is pending it\'s payment.\n Transaction ID: " . $transaction->trans_id;
                 // Notify::sendMessage([
                 //     'sms_notification' => $user->sms_notification,
-                //     'mobile' => "mobile",
+                //     'mobile' => $user->mobile,
                 //     'telegram_notification' => $user->telegram_notification,
                 //     'telegram_user_id' => $user->telegram_user_id,
                 //     'line_notification' => $user->line_notification,
@@ -117,10 +117,10 @@ class PaymentController extends Controller
                 // ]);
 
                 // Message for Seller
-                $Message = "[Route-Thai] P2P Order (Ending with " . substr($transaction->id, -4) . ") of " . $transaction->quantity . " " . $transaction->currency_id->name . " has been successfully matched with a Buyer.";
+                $Message = "[Route-Thai] P2P Order (Ending with " . substr($transaction->id, -4) . ") of " . $transaction->quantity . " " . $transaction->currency->name . " has been successfully matched with a Buyer.";
                 Notify::sendMessage([
                     'sms_notification' => $transaction->user->sms_notification,
-                    'mobile' => "mobile",
+                    'mobile' => $transaction->user->mobile,
                     'telegram_notification' => $transaction->user->telegram_notification,
                     'telegram_user_id' => $transaction->user->telegram_user_id,
                     'line_notification' => $transaction->user->line_notification,
@@ -193,7 +193,7 @@ class PaymentController extends Controller
         // Message for Buyer
         Notify::sendMessage([
             'sms_notification' => $user->sms_notification,
-            'mobile' => "mobile",
+            'mobile' => $user->mobile,
             'telegram_notification' => $user->telegram_notification,
             'telegram_user_id' => $user->telegram_user_id,
             'line_notification' => $user->line_notification,
@@ -206,7 +206,7 @@ class PaymentController extends Controller
         // Message for Seller
         Notify::sendMessage([
             'sms_notification' => $transaction->user->sms_notification,
-            'mobile' => "mobile",
+            'mobile' => $transaction->user->mobile,
             'telegram_notification' => $transaction->user->telegram_notification,
             'telegram_user_id' => $transaction->user->telegram_user_id,
             'line_notification' => $transaction->user->line_notification,
@@ -239,7 +239,7 @@ class PaymentController extends Controller
             // $Message = 'Payment for your Buy Order has been completed.';
             // Notify::sendMessage([
             //     'sms_notification' => $user->sms_notification,
-            //     'mobile' => "mobile",
+            //     'mobile' => $user->mobile,
             //     'telegram_notification' => $user->telegram_notification,
             //     'telegram_user_id' => $user->telegram_user_id,
             //     'line_notification' => $user->line_notification,
@@ -253,7 +253,7 @@ class PaymentController extends Controller
             $Message = "[Route-Thai] The buyer has marked P2P ( Order " . substr($transaction->trans_id, -4) . " ) as paid. Please release the crypto ASAP after confirming that payment has been received.";
             Notify::sendMessage([
                 'sms_notification' => $transaction->user->sms_notification,
-                'mobile' => "mobile",
+                'mobile' => $transaction->user->mobile,
                 'telegram_notification' => $transaction->user->telegram_notification,
                 'telegram_user_id' => $transaction->user->telegram_user_id,
                 'line_notification' => $transaction->user->line_notification,
@@ -286,10 +286,10 @@ class PaymentController extends Controller
            $buyer_request->delete();
 
             // Message for Buyer
-            $Message = "[Route-Thai] P2P Order (Ending with " . substr($transaction->trans_id, -4) . ") has been completed. The seller has released " . $transaction->quantity . " " . $transaction->currency_id->name . " to your P2P wallet.";
+            $Message = "[Route-Thai] P2P Order (Ending with " . substr($transaction->trans_id, -4) . ") has been completed. The seller has released " . $transaction->quantity . " " . $transaction->currency->name . " to your P2P wallet.";
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
-                'mobile' => "mobile",
+                'mobile' => $user->mobile,
                 'telegram_notification' => $user->telegram_notification,
                 'telegram_user_id' => $user->telegram_user_id,
                 'line_notification' => $user->line_notification,

@@ -178,6 +178,8 @@ return [
 
         Plank\Mediable\MediableServiceProvider::class,
 
+        Aws\Laravel\AwsServiceProvider::class,
+
 
 
         // LINE NOTIFY SERVICE
@@ -239,6 +241,7 @@ return [
 
         'LINE' => Revolution\Line\Facades\Bot::class,
 
+        'AWS' => Aws\Laravel\AwsFacade::class,
         'AmazonSNS' => App\Notifications\AmazonSNS::class,
 
     ],

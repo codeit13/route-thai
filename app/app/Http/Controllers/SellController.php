@@ -131,7 +131,7 @@ class SellController extends Controller
         $Message = "[Route-Thai] P2P Order (Ending with " . substr($trans_id, -4) . ") of " . $data['quantity'] . " " . $selected_currency->name . " has been Successfully created. You will be notified when buyer gets matched.";
         Notify::sendMessage([
             'sms_notification' => $user->sms_notification,
-            'mobile' => "mobile",
+            'mobile' => $user->mobile,
             'telegram_notification' => $user->telegram_notification,
             'telegram_user_id' => $user->telegram_user_id,
             'line_notification' => $user->line_notification,
@@ -265,7 +265,7 @@ class SellController extends Controller
             $Message = "[Route-Thai] P2P Order (Ending with " . substr($transcation->trans_id, -4) . ") has been completed. You have released " . $transcation->quantity . " " . $transcation->currency_id->name . " to the buyer.";
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
-                'mobile' => "mobile",
+                'mobile' => $user->mobile,
                 'telegram_notification' => $user->telegram_notification,
                 'telegram_user_id' => $user->telegram_user_id,
                 'line_notification' => $user->line_notification,
@@ -300,7 +300,7 @@ class SellController extends Controller
             $Message = "Order Deleted";
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
-                'mobile' => "mobile",
+                'mobile' => $user->mobile,
                 'telegram_notification' => $user->telegram_notification,
                 'telegram_user_id' => $user->telegram_user_id,
                 'line_notification' => $user->line_notification,
