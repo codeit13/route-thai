@@ -164,7 +164,7 @@
 
 									</select>
 								</div>
-								<div class="col-8">
+								<div class="col-8 xs-flush-right">
 									<input class="coin backend-filter-input" type="search" placeholder="Search Coin Name" value="{{$request->search??''}}" name="search" />
 								</div>
 							</div>	
@@ -349,7 +349,7 @@
 						</div>
 					</div>
 							</div>
-							<div class="col-lg-12 visible-xs col-sm-12 col-12">
+							<div class="col-lg-12 visible-xs col-sm-12 col-12 xs-flush">
 								@foreach($loans as $loan)
 								<div class="table-responsive">
 									<table class="table">
