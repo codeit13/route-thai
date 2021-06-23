@@ -228,4 +228,13 @@ class TransactionController extends Controller
 
 
     }
+    public function remove(Request $request){
+
+        $id = $request['data'];
+        foreach ($id as $key => $value) {
+            
+            Transaction::where('id',$value)->delete();
+        }
+        return response()->json(['status'=>'OK','message'=>  __('The record has been deleted.') ]);
+    }
 }
