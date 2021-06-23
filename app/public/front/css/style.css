@@ -7925,6 +7925,7 @@ section#loans-deshboard-new.instant {
         background: transparent;
         box-shadow: none;
     }
+
     #loans-deshboard-new .my-loan-history .table {
         background: var(--new-card-bg);
         border-radius: 0;
@@ -10359,7 +10360,7 @@ section#loans-deshboard-new.instant {
         height: auto !important;
         float: none !important;
         position: relative;
-        top: -3px;
+        top: -5px;
     }
     .xs-full {
         width: 100% !important;
