@@ -169,13 +169,13 @@ class TransactionController extends Controller
 
         }
         if(strtoupper($type)=="WITHDRAW" && $status=="approved") {
-            $Message = "Your Wihdraw request have been successfully approved.";
+            $Message = "[Route-Thai] Withdrawal Request of " . $transaction->quantity . " " . $transaction->currency->name . " has been successfully completed and transferred to your third-party wallet.";
         } else if(strtoupper($type)=="WITHDRAW" && $status=="rejected") {
-            $Message = "Your Wihdraw request have been rejected.";
+            $Message = "[Route-Thai] Withdrawal Request of " . $transaction->quantity . " " . $transaction->currency->name . " has been rejected.";
         } else if(strtoupper($type)=="DEPOSIT" && $status=="approved") {
-            $Message = "Your Deposit request have been successfully approved.";
+            $Message = "[Route-Thai] Deposit Request of " . $transaction->quantity . " " . $transaction->currency->name . " has been successfully approved and added to your wallet.";
         } else if(strtoupper($type)=="DEPOSIT" && $status=="rejected") {
-            $Message = "Your Deposit request have been rejected.";
+            $Message = "[Route-Thai] Withdrawal Request of " . $transaction->quantity . " " . $transaction->currency->name . " has been rejected.";
         }
 
         Notify::sendMessage([

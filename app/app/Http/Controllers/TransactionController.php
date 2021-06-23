@@ -414,9 +414,9 @@ class TransactionController extends Controller
        $transaction->balance_before_trans = $balance_before_trans;
 
        if(strtoupper($type) == "WITHDRAW") {
-        $Message = "We have successfully recieved your Withdraw Request.";
+        $Message = "[Route-Thai] Withdrawal Request of " . $transaction->quantity . " " . $transaction->currency->name . " has been recieved successfully.";
        } else if(strtoupper($type) == "DEPOSIT") {
-        $Message = "We have successfully recieved your Deposit Request.";
+        $Message = "[Route-Thai] Deposit Request of " . $transaction->quantity . " " . $transaction->currency->name . " has been recieved successfully.";
        }
        
        Notify::sendMessage([
