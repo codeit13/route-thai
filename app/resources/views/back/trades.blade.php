@@ -3,7 +3,19 @@
     Trades |
 @endsection
 <style>
-
+    .img_icon{
+        width: 29px !important;
+        height: auto !important;
+    }
+    .red-scrollbar table tr td span{
+        padding: 7px 4px !important;
+    }
+    .td p {
+        margin-bottom: 0px !important;
+    }
+    .b6{
+        bottom: 6px !important;
+    }
 </style>
 @section('content')
 <div class="container-fluid mt-6 team-members">
@@ -22,13 +34,12 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col"><input type="checkbox" id="selectall_seller_list" class="checked" /></th>
-                                                <th>TRANS. ID</th>
+                                                <th class="text-center">TRANS. ID</th>
                                                 <th>Seller</th>
-                                                <th>Type of coin</th>
-                                                <th>Price</th>
-                                                <th>Quantity</th>
-                                                <th>Status</th>
-                                                <th>Date</th>
+                                                <th class="text-center">Type of coin</th>
+                                                <th class="text-center">Price</th>
+                                                <th class="text-center">Quantity</th>
+                                                <th class="text-center">Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -36,13 +47,16 @@
                                                 @if($item->buyer_trans == null)
                                                     <tr>
                                                         <th scope="col"><input type="checkbox" class="select_seller_list" class="checked" value="{{$item->id}}"/></th>
-                                                        <td>{{ $item->trans_id }}</td>
+                                                        <td class="text-center">{{ $item->trans_id }}</td>
                                                         <td>{{ ucfirst($item->user->name) }}</td>
-                                                        <td>{{ ucfirst($item->currency->name) }}</td>
-                                                        <td>{{ number_format(number_format((float)$item->trans_amount,2,'.','') / number_format((float)$item->quantity,2,'.',''),2,'.','')}}</td>
-                                                        <td>{{ ucfirst(number_format((float)$item->quantity, 2, '.', '')) }}</td>
-                                                        <td>{{ ucfirst($item->status) }}</td>
-                                                        <td>{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
+                                                        <td class="text-center">
+                                                            <img class="img_icon" src="{{ $item->currency->getMedia('icon')->first()->getUrl() }}"><span class="b6">{{ ucfirst($item->currency->short_name) }}</span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <img class="img_icon" src="{{ $item->fiat_currency->getMedia('icon')->first()->getUrl() }}"><span class="b6">{{ $item->trans_amount }}</span>
+                                                        </td>
+                                                        <td class="text-center">{{ ucfirst(number_format((float)$item->quantity, 2, '.', '')) }}</td>
+                                                        <td class="text-center">{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
                                                     </tr>
                                                 @endif
                                             @endforeach
@@ -81,65 +95,30 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col"><input type="checkbox" id="selectall_pending" class="checked" /></th>
-                                                <th>TRANS. ID</th>
+                                                <th class="text-center">TRANS. ID</th>
                                                 <th>Seller</th>
-                                                <th>Type of coin</th>
-                                                <th>Price</th>
-                                                <th>Quantity</th>
-                                                <th>Status</th>
-                                                <th>Date</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($sell as $item)
-                                                @if($item->buyer_trans == null)
-                                                    <tr>
-                                                        <th scope="col"><input type="checkbox" class="select_pending" class="checked" value="{{$item->id}}" /></th>
-                                                        <td>{{ $item->trans_id }}</td>
-                                                        <td>{{ ucfirst($item->user->name) }}</td>
-                                                        <td>{{ ucfirst($item->currency->name) }}</td>
-                                                        <td>{{ number_format(number_format((float)$item->trans_amount,2,'.','') / number_format((float)$item->quantity,2,'.',''),2,'.','')}}</td>
-                                                        <td>{{ ucfirst(number_format((float)$item->quantity, 2, '.', '')) }}</td>
-                                                        <td>{{ ucfirst($item->status) }}</td>
-                                                        <td>{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade inp" id="pending" role="tabpanel" aria-labelledby="pending-tab">
-                        <h2>Pending</h2>
-                        <div class="table-responsive red-scrollbar">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="example" class="datatables table table-striped table-bordered text-left no-footer dtr-inline" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"><input type="checkbox" id="selectall_pending" class="checked" /></th>
-                                                <th>TRANS. ID</th>
-                                                <th>Seller</th>
-                                                <th>Type of coin</th>
-                                                <th>Price</th>
-                                                <th>Quantity</th>
+                                                <th class="text-center">Type of coin</th>
+                                                <th class="text-center">Price</th>
+                                                <th class="text-center">Quantity</th>
                                                 <th>Buyer</th>
-                                                <th>Status</th>
-                                                <th>Date</th>
+                                                <th class="text-center">Status</th>
+                                                <th class="text-center">Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($sell as $item)
-                                                @if($item->buyer_requests->where('status','open')->first() != null and $item->buyer_trans == null and $item->status != 'approved')
+                                                @if($item->buyer_trans != null and $item->status != 'approved')
                                                     <tr onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">
-                                                        <th scope="col"><input type="checkbox" class="select_pending" class="checked" value="{{$item->id}}"/></th>
-                                                        <td>{{ $item->trans_id }}</td>
+                                                        <th scope="col"><input type="checkbox" class="select_pending" class="checked" value="{{$item->id}}" /></th>
+                                                        <td class="text-center">{{ $item->trans_id }}</td>
                                                         <td>{{ ucfirst($item->user->name) }}</td>
-                                                        <td>{{ ucfirst($item->currency->name) }}</td>
-                                                        <td>{{ number_format(number_format((float)$item->trans_amount,2,'.','') / number_format((float)$item->quantity,2,'.',''),2,'.','')}}</td>
-                                                        <td>{{ ucfirst(number_format((float)$item->quantity, 2, '.', '')) }}</td>
+                                                        <td class="text-center">
+                                                            <img class="img_icon" src="{{ $item->currency->getMedia('icon')->first()->getUrl() }}"><span class="b6">{{ ucfirst($item->currency->short_name) }}</span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <img class="img_icon" src="{{ $item->fiat_currency->getMedia('icon')->first()->getUrl() }}"><span class="b6">{{ $item->trans_amount }}</span>
+                                                        </td>
+                                                        <td class="text-center">{{ ucfirst(number_format((float)$item->quantity, 2, '.', '')) }}</td>
                                                         <td>
                                                             @if($item->buyer_trans != null)
                                                                 {{ ucfirst($item->buyer_trans->first()->user->name) }}
@@ -149,8 +128,8 @@
                                                                 No-Buyer 
                                                             @endif
                                                         </td>
-                                                        <td>{{ ucfirst($item->status) }}</td>
-                                                        <td>{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
+                                                        <td class="text-center">{{ ucfirst($item->status) }}</td>
+                                                        <td class="text-center">{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
                                                     </tr>
                                                 @endif
                                             @endforeach
@@ -168,24 +147,42 @@
                                     <table id="example" class="datatables table table-striped table-bordered text-left no-footer dtr-inline" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th scope="col"><input type="checkbox" id="selectall_approved" class="checked" /></th>
-                                                <th>TRANS. ID</th>
+                                                <th scope="col"><input type="checkbox" id="selectall_pending" class="checked" /></th>
+                                                <th class="text-center">TRANS. ID</th>
                                                 <th>Seller</th>
+                                                <th class="text-center">Type of coin</th>
+                                                <th class="text-center">Price</th>
+                                                <th class="text-center">Quantity</th>
                                                 <th>Buyer</th>
-                                                <th>Status</th>
-                                                <th>Date</th>
+                                                <th class="text-center">Status</th>
+                                                <th class="text-center">Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($sell as $item)
                                                 @if($item->status == 'approved')
-                                                    <tr>
-                                                        <th scope="col"><input type="checkbox" class="select_approved" class="checked" value="{{$item->id}}"/></th>
-                                                        <td  onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">{{ $item->trans_id }}</td>
-                                                        <td  onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">{{ ucfirst($item->user->name) }}</td>
-                                                        <td  onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">@if($item->buyer_trans != null){{ ucfirst($item->buyer_trans->first()->user->name) }}@else No-Buyer @endif</td>
-                                                        <td  onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">{{ ucfirst($item->status) }}</td>
-                                                        <td  onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
+                                                    <tr onclick="redirect('{{ route('admin.trade.show', $item->trans_id) }}','_self')">
+                                                        <th scope="col"><input type="checkbox" class="select_pending" class="checked" value="{{$item->id}}" /></th>
+                                                        <td class="text-center">{{ $item->trans_id }}</td>
+                                                        <td>{{ ucfirst($item->user->name) }}</td>
+                                                        <td class="text-center">
+                                                            <img class="img_icon" src="{{ $item->currency->getMedia('icon')->first()->getUrl() }}"><span class="b6">{{ ucfirst($item->currency->short_name) }}</span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <img class="img_icon" src="{{ $item->fiat_currency->getMedia('icon')->first()->getUrl() }}"><span class="b6">{{ $item->trans_amount }}</span>
+                                                        </td>
+                                                        <td class="text-center">{{ ucfirst(number_format((float)$item->quantity, 2, '.', '')) }}</td>
+                                                        <td>
+                                                            @if($item->buyer_trans != null)
+                                                                {{ ucfirst($item->buyer_trans->first()->user->name) }}
+                                                            @elseif($item->buyer_requests->where('status','open')->first() != null)
+                                                                {{ ucfirst($item->buyer_requests->where('status','open')->first()->user->name) }}
+                                                            @else 
+                                                                No-Buyer 
+                                                            @endif
+                                                        </td>
+                                                        <td class="text-center">{{ ucfirst($item->status) }}</td>
+                                                        <td class="text-center">{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
                                                     </tr>
                                                 @endif
                                             @endforeach
