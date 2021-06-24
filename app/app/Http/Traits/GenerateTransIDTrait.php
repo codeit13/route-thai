@@ -20,7 +20,7 @@ trait GenerateTransIDTrait {
 	public function generateID(){
 		$refrence_id = '';
 		do {
-		   $refrence_id = random_string(8);
+		   $refrence_id = $this->random_string(8);
 		} while ( Transaction::where('trans_id', $refrence_id )->exists() );
 
 		return $refrence_id;
