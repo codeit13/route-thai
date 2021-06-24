@@ -118,7 +118,7 @@ class PaymentController extends Controller
                 // ]);
                 
                 // Message for Seller
-                $Message = "[Route-Thai] P2P Order (Ending with " . substr($transaction->id, -4) . ") of " . $transaction->quantity . " " . $transaction->currency->name . " has been successfully matched with a Buyer.";
+                $Message = "[Route-Thai] P2P Order (Ending with " . substr($transaction->id, -4) . ") of " . $transaction->quantity . " " . $transaction->currency->name . " has been successfully matched with a Buyer. Login now to complete the order.";
                 Notify::sendMessage([
                     'sms_notification' => $transaction->user->sms_notification,
                     'mobile' => $transaction->user->mobile,
@@ -190,7 +190,7 @@ class PaymentController extends Controller
             $buyer_request->save();
             $transaction->buyer_trans->update(['rejected']);
         }
-        $Message = "Order has been Cancelled";
+        $Message = "[Route-Thai] P2P Order (Ending with " . substr($transaction->id, -4) . ") has been canceled because payment was not transferred in time. Contact Customer Support if you have any questions.";
 
         // Message for Buyer
         Notify::sendMessage([
