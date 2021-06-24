@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Currency;
 use App\Models\Wallet;
 use App\Models\Transaction;
+use App\Models\Message;
 use App\Models\UserPaymentMethod;
 use App\Http\Traits\GenerateTransIDTrait;
 
@@ -256,6 +257,14 @@ class SellController extends Controller
             $buyer_wallet_update->coin = $buyer_wallet_update->coin+$amount;
             $buyer_wallet_update->user_id = $transcation->buyer_trans->user_id;
             $buyer_wallet_update->save();                                            
+
+            Message::where('from_user',$transcation->user_id)
+                        ->where('to_user',$transcation->buyer_trans->user_id)
+                        ->delete();
+
+            Message::where('to_user',$transcation->user_id)
+                        ->where('from_user',$transcation->buyer_trans->user_id)
+                        ->delete();                        
 
             $user_payment_methods = UserPaymentMethod::with('payment_methods')
                                                         ->with('user')

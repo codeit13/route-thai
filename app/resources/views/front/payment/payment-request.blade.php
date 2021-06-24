@@ -97,16 +97,16 @@ Route: P2P Trading Platform
                         <div class="row seller-payment">
                             <div class="col-lg-6 col-sm-6 col-12">
                                 <div class="row">
-                                    <div class="col-lg-12 col-sm-12 col-7">
-                                        <h6 style="cursor:pointer;" data-toggle="modal" data-target="#exampleModal3">Seller’s payment method</h6>
+                                    <div class="col-lg-12 col-sm-12 col-7 MethodPayment">
+                                        <h6>Seller’s payment method <i class="fa fa-angle-down" aria-hidden="true"></i></h6>
                                     </div>
-                                    <div class="col-lg-12 text-left xs-right col-sm-12 col-5">
+                                    <div class="col-lg-12 text-left xs-right col-sm-12 col-5 intro">
                                         @foreach($transaction->user->user_payment_method as $payment_method)
-                                        @if($payment_method->payment_methods->hasMedia('icon'))
-                                        <a href="#">
-                                        <img src="{{$payment_method->payment_methods->getMedia('icon')->first()->getUrl()}}" alt="{{__($payment_method->payment_methods->name)}}"/>
-                                        </a> 
-                                        @endif
+                                            @if($payment_method->payment_methods->hasMedia('icon'))
+                                            <a href="#">
+                                            <img src="{{$payment_method->payment_methods->getMedia('icon')->first()->getUrl()}}" alt="{{__($payment_method->payment_methods->name)}}"/>
+                                            </a> 
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>
@@ -120,6 +120,45 @@ Route: P2P Trading Platform
                                     </div>
                                 </div>
                             </div>
+                            <div id="PaymentImps">
+                                @foreach($transaction->user->user_payment_method as $single_user_payment_method)
+                                    <div class="payment-line  @if($transaction->user->user_payment_method->last()) b-last-none @endif">
+                                        <div class="col-lg-12 flush col-sm-12 col-12">
+                                            <h3> <a href="javascript:void(0)"><img src="{{ $single_user_payment_method->payment_methods->getMedia('icon')->first()->getUrl() }}" alt=""/></a>{{ $single_user_payment_method->payment_methods->name }}</h3>
+                                        </div>
+                                        <div class="field">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-sm-6 col-6">
+                                                    <label class="gray-c">Full Name</label>
+                                                </div>
+                                                <div class="col-lg-6 b-c text-right col-sm-6 col-6">
+                                                    <label>{{ $single_user_payment_method->user->name }}</label>
+                                                </div>
+                                            </div>
+                                            @if($single_user_payment_method->account_label != '')
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-sm-6 col-6">
+                                                        <label class="gray-c">{{ $single_user_payment_method->account_label }}</label>
+                                                    </div>
+                                                    <div class="col-lg-6 b-c text-right col-sm-6 col-6">
+                                                        <label>{{ $single_user_payment_method->account_number }}</label>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            @if($single_user_payment_method->code_label != '')
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-sm-6 col-6">
+                                                        <label class="gray-c">{{ $single_user_payment_method->code_label }}</label>
+                                                    </div>
+                                                    <div class="col-lg-6 b-c text-right col-sm-6 col-6">
+                                                        <label>{{ $single_user_payment_method->code }}</label>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -128,7 +167,7 @@ Route: P2P Trading Platform
                 </div>
                 <div class="col-lg-12 flush  space-xs col-sm-12 col-12">
                     <div class="row">
-                        <div class="col-lg-12 col-sm-12 col-12">	<a href="#" data-toggle="modal" data-target="#exampleModal3" class="btn-success">{{__('Transferred, Next')}}</a>
+                        <div class="col-lg-12 col-sm-12 col-12">	<a href="{{route('payment.order.release',$transaction->trans_id)}}" class="btn-success">{{__('Transferred, Next')}}</a>
                         </div>
                         {{-- <div class="col-lg-3 col-sm-3 col-4">	<a href="{{route('payment.order.cancel',['transaction'=>$transaction->trans_id])}}" class="btn-success cancel">Cancel</a>
                         </div> --}}
@@ -220,6 +259,13 @@ Route: P2P Trading Platform
     var message_url = '{{ route('message.index') }}';
     var message_save_url = '{{ route('message.store') }}';
     var token = "{{ csrf_token() }}";
+</script>
+<script>
+    $(".MethodPayment").click(function(){
+        $("#PaymentImps").toggle();
+        $(".intro").toggle();
+        $(".MethodPayment h6").toggleClass('intro-new');
+    });
 </script>
 <script type="text/javascript" src="{{asset('front/js/chat.js')}}"></script>
 <script type = "text/javascript" >
