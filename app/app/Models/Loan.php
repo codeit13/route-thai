@@ -29,4 +29,9 @@ class Loan extends Model
 {
     return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d/m/Y');
 }
+
+  public function repay_request()
+  {
+    return $this->hasOne('App\Models\Loan','loan_opening_id','id');
+  }
 }

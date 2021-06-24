@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Traits\UniqueLoanIDTrait;
 
+use App\Notifications\Notify;
+
+
 class LoanController extends Controller
 {
     use UniqueLoanIDTrait;
@@ -198,6 +201,8 @@ class LoanController extends Controller
 
         $message='Your loan request is created and pending for approval.';
 
+        $notification='[Route-Thai] Loan request (Ending with '.substr($loan->loan_id,-7).') with Collateral of '.$loan->collateral_amount.' '.$loan->collateral_currency->short_name.' and Loan amount '.$loan->loan_amount.' '.$loan->loan_currency->short_name.', Validity of '.$loan->duration.' '.$loan->duration_type.' has been created. You will be notified when your Loan is approved.';
+
         if(isset($loan_detail->is_wallet))
         {
             $wallet=$user->wallet()->where('currency_id',$loan_detail->currency_id)->first();
@@ -229,7 +234,23 @@ class LoanController extends Controller
             $loan->save();
 
             $message='Your loan request is approved successfully.';
+
+            $notification='[Route-Thai] Loan request (Ending with '.substr($loan->loan_id,-7).') with Collateral of '.$loan->collateral_amount.' '.$loan->collateral_currency->short_name.' and Loan amount '.$loan->loan_amount.' '.$loan->loan_currency->short_name.', Validity of '.$loan->duration.' '.$loan->duration_type.' has been successfully approved. The Loan amount transferred to your Loan wallet.';
         }
+
+        $user = auth()->user();
+
+          Notify::sendMessage([
+            'sms_notification' => $user->sms_notification,
+            'mobile' => $user->mobile,
+            'telegram_notification' => $user->telegram_notification,
+            'telegram_user_id' => $user->telegram_user_id,
+            'line_notification' => $user->line_notification,
+            'line_user_id' => $user->line_user_id,
+            'email_notification' => $user->email_notification,
+            'email_id' => $user->email,
+            'Message' => $notification,
+        ]);
          
           $request->session()->forget('loan_detail');
      
