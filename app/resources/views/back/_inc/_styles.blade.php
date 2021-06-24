@@ -18,4 +18,13 @@ tr {
 div.dataTables_wrapper div.dataTables_filter input{
     padding-left: 45px; 
 }
+
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: none !important;
+    }
+
+    table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
+        padding: 10px 5px !important;
+        text-align: center !important;
+    }
 </style>
