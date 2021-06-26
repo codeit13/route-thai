@@ -109,7 +109,7 @@
 					</div>
 					<div class="row">
 						<div class="col-lg-12 xs-flush col-sm-12 col-12">
-							<table>
+							<table class="loan_main_table">
 								<thead>
 									<tr>
 											@php 
