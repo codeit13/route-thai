@@ -273,6 +273,8 @@ class LoanController extends Controller
     {
         $loan=Loan::whereLoanId($id)->first();
 
+        $loan->usdt_currency=\App\Models\Currency::where('short_name','USDT')->first();
+
         $loan->current_value='0.000';
 
        // $loan->current_value=$this->get_crypto_exchange_row($loan->collateral_currency)->lastPrice;
