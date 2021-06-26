@@ -5953,9 +5953,8 @@ body.dark-mode #loans-deshboard-new .how-to-start img.show_white {
     font-weight: 400;
     padding: 12px 10px;
 }
-#wallet-content .white-box td .btn-success,
-#wallet-content .white-box td .btn-primary {
-    padding: 0px 7px;
+#wallet-content .white-box td .btn-success, #wallet-content .white-box td .btn-primary {
+    padding: 5px 5px !important;
     font-size: 13px;
     margin: 0px !important;
 }
@@ -8539,7 +8538,7 @@ section#loans-deshboard-new.instant {
         width: 100%;
         display: inline-block;
         border: none;
-        padding: 6px 15px;
+        padding: 4px 15px;
     }
     #loans-deshboard-new .my-loan-history table tbody {
         width: 48%;
@@ -8554,7 +8553,7 @@ section#loans-deshboard-new.instant {
         display: inline-block;
         text-align: right;
         border: none !important;
-        padding: 6px 15px;
+        padding: 4px 15px;
     }
     #loans-deshboard-new .my-loan-history tbody td img {
         max-width: 18px !important;
@@ -10459,6 +10458,15 @@ section#loans-deshboard-new.instant {
     }
     #wallet-content.order-history td.buy h2 {
         padding-right: 10px;
+        margin: 0px;
+        position: relative;
+        top: 10px;
+    }
+    #wallet-content.order-history td.sell h2 {
+        padding-right: 10px;
+        margin: 0px;
+        position: relative;
+        top: 10px;
     }
     #wallet-content.request.crypto .white-box td:last-child img {
         height: auto !important;
