@@ -9,7 +9,7 @@ class Loan extends Model
 {
     use HasFactory;
 
-    protected $fillable=['loan_id','currency_id','collateral_amount','loan_currency_id','loan_amount','duration','duration_type','min_price','max_price','interest_value','price_down_percentage','term_percentage','term_id','on_wallet','collateral_currency_rate','loan_repayment_amount','has_close_price','close_price','is_agree','loan_currency_rate','request_type','loan_opening_id','crypto_wallet_address'];
+    protected $fillable=['loan_id','currency_id','collateral_amount','loan_currency_id','loan_amount','duration','duration_type','min_price','max_price','interest_value','price_down_percentage','term_percentage','term_id','on_wallet','collateral_currency_rate','loan_repayment_amount','has_close_price','close_price','is_agree','loan_currency_rate','request_type','loan_opening_id','crypto_wallet_address','repay_date'];
 
     public function loan_currency()
     {
@@ -33,5 +33,10 @@ class Loan extends Model
   public function repay_request()
   {
     return $this->hasOne('App\Models\Loan','loan_opening_id','id');
+  }
+
+  public function loan_request()
+  {
+    return $this->belongsTo('App\Models\Loan','loan_opening_id','id');
   }
 }
