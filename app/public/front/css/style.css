@@ -9096,7 +9096,7 @@ section#loans-deshboard-new.instant {
         float: left;
         margin-bottom: 5px;
         position: relative;
-        top: -2px;
+        top: -11px;
     }
     .table-hover tbody tr:hover {
         background-color: transparent !important;
@@ -9807,7 +9807,7 @@ section#loans-deshboard-new.instant {
     #wallet-content.order-history .order_h tbody tr:nth-of-type(odd) {
         background: transparent;
         box-shadow: none;
-        padding-bottom: 10px !important;
+        padding-bottom: 5px !important;
     }
     #wallet-content.request.crypto .order_h tr {
         background: transparent;
@@ -9831,6 +9831,7 @@ section#loans-deshboard-new.instant {
         margin-top: 5px;
         text-align: left;
         padding-left: 0px !important;
+        display: none !important;
     }
     #wallet-content.request.crypto .white-box td.ftl_right {
         float: right;
@@ -10415,7 +10416,7 @@ section#loans-deshboard-new.instant {
         padding: 5px;
     }
     #wallet-content.request.crypto .white-box td label span {
-        font-size: 12px;
+        font-size: 14px;
         margin: 0;
     }
     #wallet-content.request.crypto .white-box td label span.btcon {
@@ -10434,7 +10435,7 @@ section#loans-deshboard-new.instant {
     #wallet-content.request.crypto td img {
         height: 21px;
         margin-right: 4px;
-        margin-top: 1px !important;
+        margin-top: -1px !important;
     }
     #wallet-content.request.crypto .white-box td.xs-full {
         /* display: inline-block; */
@@ -10452,7 +10453,7 @@ section#loans-deshboard-new.instant {
     #wallet-content.request.crypto .white-box td.last_conh {
         position: absolute;
         right: 0;
-        bottom: 2px;
+        bottom: 4px;
     }
     #wallet-content.order-history td.buy h2 {
         padding-right: 10px;
@@ -10474,15 +10475,16 @@ section#loans-deshboard-new.instant {
         display: inline-block;
         text-align: center;
         width: 100% !important;
-        margin-top: 5px;
+        margin-top: -4px;
         margin-bottom: 10px;
     }
     #wallet-content .white-box .order_h td label {
-        font-size: 14px;
+        font-size: 14px !important;
         font-weight: normal;
         line-height: 22px;
         margin-bottom: 0px;
         color: var(--white-black-text);
+        margin-top: 4px;
     }
     #wallet-content.request.crypto .white-box td.show_on:nth-child(3n) {
         display: inline-block !important;
@@ -10490,7 +10492,7 @@ section#loans-deshboard-new.instant {
         text-align: right;
         position: absolute;
         left: 0;
-        top: 79%;
+        top: 74.5%;
     }
     #wallet-content.order-history .order_h td.center_small.sub_buttons a.btn-primary, #wallet-content.order-history .order_h td.center_small.sub_buttons a.btn-success {
         padding: 6px 13px !important;
@@ -10507,7 +10509,7 @@ section#loans-deshboard-new.instant {
     }
     #wallet-content.order-history .history-details td.light {
         float: left;
-        width: 100% !important;
+        width: 50% !important;
         text-align: left;
     }
     #wallet-content.order-history .history-details a.file {
