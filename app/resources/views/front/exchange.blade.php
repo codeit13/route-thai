@@ -148,7 +148,7 @@ Route: P2P Trading Platform
                                                 <td class="text-center">
                                                     <span id="bm_btc">Available <span>{{ $single_transaction->quantity }} {{ $single_transaction->currency->short_name }}</span>
                                                 </td>
-<<<<<<< HEAD
+
                                                 <td class="text-center">
                                                     @foreach($single_transaction->user->user_payment_method as $single_payment_method)
                                                         <span data-bs-toggle="tooltip" data-bs-placement="top" title="" data-original-title="{{ $single_payment_method->payment_methods->name }}">
@@ -156,9 +156,7 @@ Route: P2P Trading Platform
                                                         </span>
                                                     @endforeach
                                                 </td>
-=======
-                                                <td class="text-center"><span data-bs-toggle="tooltip" data-bs-placement="top" title="" data-original-title="Payment Modes" class="payment_tooltip"><i class="fal fa-university"></i></span> <span data-bs-toggle="tooltip" data-bs-placement="top" title="" data-original-title="Payment Modes" class="payment_tooltip"><i class="fal fa-university"></i></span> <span data-bs-toggle="tooltip" data-bs-placement="top" title="" data-original-title="Payment Modes" class="payment_tooltip"><i class="fal fa-university"></i></span></td>
->>>>>>> e87401a751f9a4748fc997bb857bcad6ab1e6677
+
                                                 <td class="text-center">
                                                     <a href="{{ route('payment.show',['transaction'=>$single_transaction->trans_id]) }}" class="table_btn">Buy {{ $single_transaction->currency->short_name }}</a>
                                                 </td>

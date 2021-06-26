@@ -170,10 +170,11 @@ Route: P2P Trading Platform
                                             </div>
                                         </td>
                                         <td>
-                                        <select name="type" class="filter-type">
+                                        <select name="type" class="filter-type order_type">
                                             <option value="all" @if($request->type=='' or $request->type=='all') selected @endif>All</option>
                                             <option value="sell" @if($request->type=='sell') selected @endif >{{__('Sell')}}</option>
                                             <option value="buy" @if($request->type=='buy') selected @endif>{{__('Buy')}}</option>
+                                            <input type="hidden" name="order_type" class="order_type_class" id="order_type_id" value=""/>
                                         </select>
                                         </td>
                                         <td>
@@ -192,11 +193,7 @@ Route: P2P Trading Platform
                     </form>
                     </div>
                     <div class="row">
-<<<<<<< HEAD
                         <div class="col-lg-12 history-details order_h col-sm-12 col-12">
-=======
-                        <div class="col-lg-12 history-details order_h  col-sm-12 col-12">
->>>>>>> e87401a751f9a4748fc997bb857bcad6ab1e6677
                             <table>
                                 <thead>
                                     <tr>
@@ -212,21 +209,12 @@ Route: P2P Trading Platform
                                 <tbody>
                                     @foreach($transactions as $tIndex => $transaction)
                                     <tr class="xs-full">
-<<<<<<< HEAD
                                         <td class="@if($transaction->type=='buy')buy @else sell @endif">
                                             <h2>{{__(ucwords($transaction->type))}}</h2>
                                         </td>
                                         <td class="" colspan="2"><span>{{__("Order number")}}</span>{{$transaction->trans_id}}</td>
                                         <td class="xs-full" colspan="2" style="padding-left: 90px;"><span>{{__("Created time")}}</span>{{$transaction->created_at}}</td>
                                         <td class="last_conh"></td>
-=======
-                                        <td class="@if($transaction->type=='buy')buy @else sell @endif ">
-                                            <h2>{{__(ucwords($transaction->type))}}</h2>
-                                        </td>
-                                        <td class="" colspan="2"><span>{{__("Order number")}}</span>{{$transaction->trans_id}}</td>
-                                        <td class="xs-full" colspan="2"><span>{{__("Created time")}}</span>{{$transaction->created_at}}</td>
-                                        <td class=""></td>
->>>>>>> e87401a751f9a4748fc997bb857bcad6ab1e6677
                                     </tr>
                                     <tr>
                                         <td>
@@ -235,7 +223,6 @@ Route: P2P Trading Platform
                                             @endif
                                             <label class="visible-xs">{{__($transaction->currency->short_name)}} <span class="btcon">{{__($transaction->currency->name)}}</span></label>
                                         </td>
-<<<<<<< HEAD
                                         <td class="size-t">
                                             <label class="">{{$transaction->trans_amount}} {{__($transaction->fiat_currency->short_name)}}</label> <label class="visible-xs">{{__("Quantity")}} <span>{{$transaction->trans_amount}}</span></label></td>
                                         <td class="ftl_left">{{number_format((float)$transaction->quantity/$transaction->trans_amount, 5, '.', '')}}/{{$transaction->currency->short_name}}</td>
@@ -264,37 +251,31 @@ Route: P2P Trading Platform
                                             {{-- <a class="file visible-xs" href="#">View File</a> --}}
                                         </td>
                                         <td class="show_on">
-=======
-                                        <td class="size-t"><label class="">{{$transaction->trans_amount}} {{__($transaction->fiat_currency->short_name)}}</label> <label class="visible-xs">{{__("Quantity")}} <span>{{$transaction->trans_amount}}</span></label></td>
-                                        <td class="ftl_left">{{number_format((float)$transaction->quantity/$transaction->trans_amount, 5, '.', '')}}/{{$transaction->currency->short_name}}</td>
-                                        <td class="ftl_right">{{$transaction->quantity}}&nbsp;{{__($transaction->currency->short_name)}}</td>
-                                        <td class="light"><label class="">{{$transaction->receiver->name??''}}</label> 
-                                            <a class="file visible-xs hidden-xs" href="#">View File</a>
-                                        </td>
-                                        <td class=" show_on">
->>>>>>> e87401a751f9a4748fc997bb857bcad6ab1e6677
                                             @switch($transaction->status)
                                                 @case('pending')
                                                     <img src="{{asset('front/img/icon-27.png')}}" alt=""/>
                                                     {{__('In progress')}}
-                                                    <a class="" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif">{{__("Detail")}}</a>
+                                                    {{-- <a class="hidden-xs" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif">{{__("Detail")}}</a> --}}
                                                 @break
                                                 @case('approved')
                                                 <img src="{{asset('front/img/icon-28.png')}}" alt=""/>
                                                 {{__('Approved')}}
-                                                <a class="" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif">{{__("Detail")}}</a>
+                                                    {{-- <a class="hidden-xs" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif">{{__("Detail")}}</a> --}}
                                                 @break
                                                 @case('rejected')
                                                     <img src="{{asset('front/img/icon-29.png')}}" alt=""/>
                                                     {{__('Rejected')}}
-                                                    <a class="" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif">{{__("Detail")}}</a>
+                                                    {{-- <a class="hidden-xs" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif">{{__("Detail")}}</a> --}}
                                                 @break
                                             @endswitch
                                         </td>
                                         <td class="center_small sub_buttons">
-                                            @if($transaction->status == 'pending')
+                                            @if($transaction->status == 'pending' and $transaction->buyer_requests->count() == 0 and $transaction->type != 'buy')
                                                 <a class="btn-primary" href="{{ route('sell.create',['trans_id'=>$transaction->trans_id]) }}" style="padding: 6px;color: white;"><i class="fa fa-edit"></i></a> 
                                                 <a class="btn-success" href="{{ route('sell.destroy',['trans_id'=>$transaction->trans_id]) }}" style="padding: 7px;color: white;"><i class="fa fa-trash"></i></a> 
+                                            @endif
+                                            @if($transaction->status != 'approved')
+                                                <a class="btn-success" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif" style="padding: 7px;color: white;"><i class="fa fa-eye"></i></a> 
                                             @endif
                                         </td>
                                     </tr>
@@ -304,7 +285,7 @@ Route: P2P Trading Platform
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 text-center nav-pagi  col-sm-12 col-12">
+                        <div class="col-lg-12 text-center nav-pagi hidden-xs col-sm-12 col-12">
                             {{ $transactions->links('front._inc._paginator') }}
                         </div>
                     </div>
@@ -400,21 +381,34 @@ Route: P2P Trading Platform
         $('.currencyDropdown .dropdown-toggle').html($(this).html());
         submitform();
     });
+
+    $('.order_type').change(function(e){
+
+        var currency_id = $('.dropdown-item').attr('data-id');
+        
+    })
     
+
+    // name="order_type" class="order_type_class" id="order_type_id"
+
+
     function submitform()
     {
         if($('#filterForm1').parent('.head-xs').css('display') !='none')
         {
+            // console.log('if');
             document.getElementById("filterForm1").submit();    
         }
         else
+            // console.log('else');
         {
             document.getElementById("filterForm").submit();    
         }
     }
     
-    $(document).on('change','.filter-type',function()
+    $(".options li").on('click',function()
     {
+        console.log('hi');
         submitform();
     })
     
