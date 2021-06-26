@@ -10446,14 +10446,16 @@ section#loans-deshboard-new.instant {
         font-size: 12px !important;
         float: right;
         position: relative;
-        top: -17px;
+        top: -1px;
         right: 0;
         margin-bottom: 0;
     }
     #wallet-content.request.crypto .white-box td.last_conh {
-        position: absolute;
+        position: relative;
         right: 0;
-        bottom: 4px;
+        bottom: 0;
+        width: 100% !important;
+        display: inline-block !important;
     }
     #wallet-content.order-history td.buy h2 {
         padding-right: 10px;
