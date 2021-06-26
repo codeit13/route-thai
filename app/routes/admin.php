@@ -15,6 +15,7 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
         Route::get('trades','TransactionController@index')->name('trades.list');
         Route::get('trade/{id}/details','TransactionController@view')->name('trade.show');
         Route::post('trade/update/status','TransactionController@updateStatus')->name('trade.update.status');
+        Route::post('trade/delete','TransactionController@remove')->name('trade.remove');
         Route::get('deposit/requests/{type}/{name}','TransactionController@show')->name('deposit.requests.show');
         Route::get('withdraw/requests/{type?}/{name?}','TransactionController@show_withdraw')->name('withdraw.requests.show');
         Route::get('wallet/{type}/{transaction}/change/status/{status}','TransactionController@changeStatus')->name('wallet.change.status');
@@ -49,6 +50,16 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
 
         Route::post('settings/loan/collateral/{id}','SettingsController@collateral_address_update')->name('settings.loan.collateral');
 
+        Route::get('loan/data','LoanController@loanData')->name('loan.data');
+
+        Route::get('loan/data/updated','LoanController@loanUpdated')->name('loan.data.updated');
+
+        Route::get('loans/list','LoanController@loans')->name('loan.all');
+
+
+
+        
+
         Route::resource('/loan', 'LoanController', [
             'names' => [
                 'index' => 'loan.list',
@@ -59,7 +70,8 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
             ]
         ]);
         Route::get('loan/update/{id}/status/{status}','LoanController@updateStatus')->name('loan.update.status');
-        
+
+
     });
 
     Route::get('test',function()
