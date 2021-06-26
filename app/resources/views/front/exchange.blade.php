@@ -146,7 +146,7 @@ Route: P2P Trading Platform
                                                     <span id="bb_btc_p">{{ $single_transaction->trans_amount }} </span><span>{{ $single_transaction->fiat_currency->short_name }}</span>
                                                 </td>
                                                 <td class="text-center">
-                                                    <span id="bm_btc">Available <span>{{ $single_transaction->quantity }} {{ $single_transaction->currency->short_name }}</span>
+                                                    <span id="bm_btc"><span>{{ $single_transaction->quantity }} {{ $single_transaction->currency->short_name }}</span>
                                                 </td>
 
                                                 <td class="text-center">

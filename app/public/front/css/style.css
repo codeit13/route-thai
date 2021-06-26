@@ -7891,7 +7891,7 @@ section#loans-deshboard-new.instant {
         display: none;
     }
     #content.p2p th.ft_first {
-        padding: 10px 0px;
+        padding: 5px 0px;
         padding-left: 0px;
         font-weight: normal;
         width: 100%;
@@ -7906,7 +7906,7 @@ section#loans-deshboard-new.instant {
         display: inline-block;
         margin: 0px;
         font-size: 13px;
-        float: right;
+        float: left;
     }
     #content.p2p {
         margin-top: 0;
@@ -7922,7 +7922,7 @@ section#loans-deshboard-new.instant {
         vertical-align: middle;
         padding-right: 0;
         float: left;
-        width: 50%;
+        width: 100%;
         text-align: left !important;
         border: none;
     }
@@ -7944,7 +7944,7 @@ section#loans-deshboard-new.instant {
         display: inline-block;
     }
     #content.p2p .right_ssd {
-        width: 91%;
+        width: 91% !important;
     }
     #wallet-content .white-box table.loan_main_table td:nth-child(2n) {
         text-align: right;
@@ -9061,7 +9061,21 @@ section#loans-deshboard-new.instant {
     #content.p2p .main_data_dable table thead tr th:last-child,
     #content.p2p .main_data_dable table tr td:last-child,
     #content.p2p .main_data_dable table tr td:nth-child(4n) {
-        display: revert;
+        display: inline-block;
+        width: 50%;
+    }
+    #content.p2p #bm_btc span {
+        font-weight: 400;
+        display: inline-block;
+        position: relative;
+        top: -6px;
+        font-size: 12px;
+    }
+    span#bb_btc_p {
+        font-size: 14px;
+    }
+    .main_data_dable table tr td:last-child a {
+        float: right !important;
     }
     #content.p2p .right_ssd {
         float: right;
@@ -9077,12 +9091,15 @@ section#loans-deshboard-new.instant {
     }
     #content.p2p .main_data_dable table tr td a {
         padding: 8px 20px;
-        color: #fff;
-        background-color: #00C98E;
         border-radius: 3px;
         text-decoration: none;
         float: left;
         margin-bottom: 5px;
+        position: relative;
+        top: -2px;
+    }
+    .table-hover tbody tr:hover {
+        background-color: transparent !important;
     }
     .nav-header a.btn.btn-primary {
         display: block;
