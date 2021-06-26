@@ -122,7 +122,7 @@ class LoanController extends Controller
                 return '<div class="media-body text-left">
                       <span class="name mb-0 text-sm">'.$loan->user->name.'</span>
                     </div>
-                    <small class="text-muted">'.$loan->user->email.'</small>';
+                    <small class="text-muted d-table-row">'.$loan->user->email.'</small>';
             })
 
              ->editColumn('term_percentage', function ($loan) {
@@ -187,9 +187,9 @@ class LoanController extends Controller
 
             $wallet=$user->wallet()->where('currency_id',$loan_detail->currency_id)->first();
 
-            $wallet->coin=$wallet->coin-$loan_detail->collateral_amount;
+           // $wallet->coin=$wallet->coin-$loan_detail->collateral_amount;
 
-            $wallet->save();
+           // $wallet->save();
 
             $loanWallet=$user->wallet()->where('currency_id',$loan_detail->loan_currency->id)->where('wallet_type',4)->first();
 

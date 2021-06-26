@@ -237,7 +237,7 @@
 
                          
 
-                        <li>Loan Request Type:<b>{{$loan->on_wallet?'wallet':'custom'}} </b></li>
+                        <li>Loan Request Type:<b>{{$loan->on_wallet?'Wallet':'Manual Deposit'}} </b></li>
 
                         <li>Collateral:<b> <img class="mb-1" style="width:20px;height:20px;" src="{{$loan->collateral_currency->firstMedia('icon')->getUrl()}}"/> {{$loan->collateral_currency->short_name}} </b></li>
 
@@ -272,25 +272,11 @@
     </div>
 
 </div>
+
+@endsection
+
 @section('page_scripts')
 <script>
-$('.statusUpdate').on('click',function(e){
-    e.preventDefault();
-    var status = $(this).data('value');
-    var id = $(this).data('id');
-     $.ajax({
-        type:'POST',
-        dataType:'JSON',
-        async:true,
-        url:"{{ route('admin.trade.update.status') }}",
-        data:{ status : status,id:{{ $loan->id }}, _token: "{{ csrf_token() }}" },
-        success:function(data) {
-           $('.msg'+id).html(data.message).show();
-           setTimeout(function() { $(".msg"+id).hide() }, 2000);
-           location.reload();      
-        }
-     });
-});
+
 </script>
-@endsection
 @endsection
