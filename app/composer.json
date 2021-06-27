@@ -17,6 +17,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/notifications": "^8.46",
         "illuminate/support": "^7.0|^8.0",
+        "kreait/laravel-firebase": "^3.1",
         "laravel-notification-channels/aws-sns": "^1.2",
         "laravel-notification-channels/telegram": "^0.5.1",
         "laravel/framework": "^8.12",

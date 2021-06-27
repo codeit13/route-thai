@@ -308,7 +308,7 @@ class SellController extends Controller
         if ($transcation) {
             $transcation->delete();
 
-            $Message = "Order Deleted";
+            $Message = "[Route-Thai] P2P Order (Ending with " . substr($trans_id, -4) . ") has been deleted.";
             Notify::sendMessage([
                 'sms_notification' => $user->sms_notification,
                 'mobile' => $user->mobile,
