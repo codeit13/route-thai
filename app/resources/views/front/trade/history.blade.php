@@ -214,14 +214,14 @@ Route: P2P Trading Platform
                                         </td>
                                         <td class="" colspan="2"><span>{{__("Order number")}}</span>{{$transaction->trans_id}}</td>
                                         <td class="xs-full" colspan="2" style="padding-left: 90px;"><span>{{__("Created time")}}</span>{{$transaction->created_at}}</td>
-                                        <td class=""></td>
+                                        <td class="last_conh"></td>
                                     </tr>
                                     <tr>
                                         <td>
                                             @if($transaction->currency->hasMedia('icon'))
                                             <img style="max-width: 28px;" class="top-xs-m" src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 
                                             @endif
-                                            <label class="visible-xs">{{__($transaction->currency->short_name)}} <span>{{__($transaction->currency->name)}}</span></label>
+                                            <label class="visible-xs">{{__($transaction->currency->short_name)}} <span class="btcon">{{__($transaction->currency->name)}}</span></label>
                                         </td>
                                         <td class="size-t">
                                             <label class="">{{$transaction->trans_amount}} {{__($transaction->fiat_currency->short_name)}}</label> <label class="visible-xs">{{__("Quantity")}} <span>{{$transaction->trans_amount}}</span></label></td>
