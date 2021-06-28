@@ -34,4 +34,11 @@ class Loan extends Model
   {
     return $this->hasOne('App\Models\Loan','loan_opening_id','id');
   }
+
+
+  public function loan_request()
+  {
+    return $this->belongsTo('App\Models\Loan','loan_opening_id');
+  }
+
 }
