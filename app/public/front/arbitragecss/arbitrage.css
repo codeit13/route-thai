@@ -359,7 +359,7 @@ button.btn.dropdown-toggle.btn-light {
     border-color: #707070;
 }
 
-.main_data_dable {
+.arbitrage_data_dable {
 	margin-top: 10px;
 	margin-bottom: 0px;
 	display: inline-block;
@@ -367,7 +367,7 @@ button.btn.dropdown-toggle.btn-light {
     overflow-y: hidden;
 }
 
-.main_data_dable table {
+.arbitrage_data_dable table {
 	margin-bottom: 0px;
     white-space: nowrap;
     border-collapse: separate;
@@ -376,34 +376,35 @@ button.btn.dropdown-toggle.btn-light {
     padding: 15px;
 }
 
-.main_data_dable table thead{
+.arbitrage_data_dable table thead{
 	background-color: var(--arbitrage-new-card-bg);
 	border: none;
 }
 
-.main_data_dable table thead tr th {
+.arbitrage_data_dable table thead tr th {
 	text-transform: uppercase;
 	font-size: 12px;
 	vertical-align: middle;
 	text-align: center;
     padding: 10px 20px;
+    border:unset;
 }
 
-.main_data_dable table thead tr th:first-child {
+.arbitrage_data_dable table thead tr th:first-child {
 	text-align: left;
 }
 
-.main_data_dable table thead tr th img {
+.arbitrage_data_dable table thead tr th img {
 	width: 15px;
 	height: 15px;
 	margin-top: -3px;
 }
 
-.main_data_dable table tr td:first-child {
+.arbitrage_data_dable table tr td:first-child {
     text-align: left;
 }
 
-.main_data_dable table tr th.first img {
+.arbitrage_data_dable table tr th.first img {
     width: 18px;
     height: 18px;
     border-radius: 50%;
@@ -415,25 +416,26 @@ button.btn.dropdown-toggle.btn-light {
     left: -10px;
 }
 
-.main_data_dable table tr th.first a i.fa {
+.arbitrage_data_dable table tr th.first a i.fa {
     margin-right: 5px;
     width: auto;
     height: auto;
     color: var(--arbitrage-text-color);
 }
 
-.main_data_dable table tr th.first {
+.arbitrage_data_dable table tr th.first {
     font-size: 13px;
     width: 90px !important;
     line-height: 23px;
+
 }
 
-.main_data_dable table tr th.first span {
+.arbitrage_data_dable table tr th.first span {
 	font-size: 10px;
 	color: var(--arbitrage-table-text);
 }
 
-.main_data_dable table tr td {
+.arbitrage_data_dable table tr td {
     font-size: 13px;
     font-weight: 600;
     color: var(--arbitrage-table-text);
@@ -443,31 +445,31 @@ button.btn.dropdown-toggle.btn-light {
     white-space: nowrap !important;
 }
 
-.main_data_dable table {
+.arbitrage_data_dable table {
 	margin-bottom: 0px;
 }
 
-.main_data_dable table .highlight {
+.arbitrage_data_dable table .highlight {
 	background-color: var(--arbitrage-highlighted-cell);
 	border-left: 2px solid var(--arbitrage-border-color);
 	border-right: 2px solid var(--arbitrage-border-color);
 }
 
-.main_data_dable table .highlight-top {
+.arbitrage_data_dable table .highlight-top {
 	background-color: var(--arbitrage-highlighted-cell);
 	border-top: 2px solid var(--arbitrage-border-color);
 	border-left: 2px solid var(--arbitrage-border-color);
 	border-right: 2px solid var(--arbitrage-border-color);
 }
 
-.main_data_dable table .highlight-bottom {
+.arbitrage_data_dable table .highlight-bottom {
 	background-color: var(--arbitrage-highlighted-cell);
 	border-bottom: 2px solid var(--arbitrage-border-color);
 	border-left: 2px solid var(--arbitrage-border-color);
 	border-right: 2px solid var(--arbitrage-border-color);
 }
 
-.main_data_dable table td.updated {
+.arbitrage_data_dable table td.updated {
 	animation: highlightupdate 1s 1;
 }
 @keyframes highlightupdate {
@@ -476,13 +478,13 @@ button.btn.dropdown-toggle.btn-light {
 }
 
 
-.main_data_dable table tr td i.fa.fa-star-o {
+.arbitrage_data_dable table tr td i.fa.fa-star-o {
     text-align: center;
     color: var(--arbitrage-text-color);
     font-size: 15px;
 }
 
-.main_data_dable table tr td i.fa.fa-star {
+.arbitrage_data_dable table tr td i.fa.fa-star {
     text-align: center;
     color: var(--arbitrage-text-color);
     font-size: 15px;
@@ -1077,7 +1079,7 @@ img.header_img {
 @media (max-width: 767px){
 
     .table-row {margin-top: 10px;}
-    .main_data_dable table tr td {
+    .arbitrage_data_dable table tr td {
         font-size: 12px;
         font-weight: 600;
         color: var(--arbitrage-table-text);
@@ -1086,13 +1088,14 @@ img.header_img {
         vertical-align: middle;
         width: 75px !important;
     }
-    .main_data_dable table tr td:first-child {
+    .arbitrage_data_dable table tr td:first-child {
         text-align: left;
         padding: 0px 0px;
         font-size:10px;
     }
-    .main_data_dable table thead tr th:first-child {
+    .arbitrage_data_dable table thead tr th:first-child {
         background-color:var(--arbitrage-body-bg) !important;
+        padding-left: 20px;
     }
     form.form-inline input {
         width:100%;
@@ -1117,7 +1120,7 @@ img.header_img {
     padding: 0px 15px;
 }
 
-.main_data_dable {
+.arbitrage_data_dable {
     overflow: scroll;
 }
 
@@ -1367,21 +1370,22 @@ td{
     .big-modal-menu .ex-select .btn,.big-modal-menu .ex-select a{
         font-size: 14px;
     }
-    .main_data_dable table thead tr th {
+    .arbitrage_data_dable table thead tr th {
         padding: 0px 17px 0 1px;
+        border: unset;
         }
-    .main_data_dable table tr td:first-child {
+    .arbitrage_data_dable table tr td:first-child {
         text-align: left;
         padding: 0px 0px;
         font-size:10px;
     }
-    .main_data_dable table tr th.first {
+    .arbitrage_data_dable table tr th.first {
         font-size: 13px;
         width: 90px !important;
         line-height: 23px;
         padding: 7.5px 0 7.5px 20px;
         margin-left: 2px;
-        border-bottom: unset;
+        border-bottom:unset;
     }
         
         
