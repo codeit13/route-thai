@@ -36,6 +36,7 @@ class Loan extends Model
     return $this->hasOne('App\Models\Loan','loan_opening_id','id');
   }
 
+<<<<<<< HEAD
   public function save_Loan_To_Firebase($data) {
     $database = app('firebase.database');
 
@@ -46,4 +47,12 @@ class Loan extends Model
 
     return $value;
 }
+=======
+
+>>>>>>> origin/master
+  public function loan_request()
+  {
+    return $this->belongsTo('App\Models\Loan','loan_opening_id');
+  }
+
 }

@@ -1841,7 +1841,7 @@ th.ft_first img {
     width: 28px;
     height: 28px;
     vertical-align: middle;
-    margin-top: -5px;
+    margin-top: -3px;
 }
 th.ft_first span {
     color: #ADADAD;
@@ -5953,9 +5953,8 @@ body.dark-mode #loans-deshboard-new .how-to-start img.show_white {
     font-weight: 400;
     padding: 12px 10px;
 }
-#wallet-content .white-box td .btn-success,
-#wallet-content .white-box td .btn-primary {
-    padding: 0px 7px;
+#wallet-content .white-box td .btn-success, #wallet-content .white-box td .btn-primary {
+    padding: 5px 5px !important;
     font-size: 13px;
     margin: 0px !important;
 }
@@ -7887,6 +7886,65 @@ section#loans-deshboard-new.instant {
 /* Landscape phones and portrait tablets */
 
 @media (max-width: 767px) {
+    .main_data_dable table thead {
+        display: none;
+    }
+    #content.p2p th.ft_first {
+        padding: 5px 0px;
+        padding-left: 0px;
+        font-weight: normal;
+        width: 100%;
+        display: inline-block;
+        text-align: left;
+        font-size: 14px;
+        border-top: 1px solid var(--light_dark_border);
+    }
+    #content.p2p span#bm_btc {
+        color: #8A8A8A;
+        font-weight: 400;
+        display: inline-block;
+        margin: 0px;
+        font-size: 13px;
+        float: left;
+    }
+    #content.p2p {
+        margin-top: 0;
+        background: var(--body-bg-2);
+        padding: 20px 0px;
+    }
+    .main_data_dable table tr td {
+        font-size: 13px;
+        font-weight: 400;
+        color: var(--table-text);
+        text-align: right;
+        padding: 10px 0px;
+        vertical-align: middle;
+        padding-right: 0;
+        float: left;
+        width: 100%;
+        text-align: left !important;
+        border: none;
+    }
+    #content.p2p .main_data_dable table tr td a {
+        padding: 5px 20px;
+        color: #fff;
+        background-color: #00C98E;
+        border-radius: 3px;
+        text-decoration: none;
+        float: right;
+        margin-bottom: 0;
+    }
+    #content .table-striped tbody tr:nth-of-type(odd) {
+        background-color: var(--body-bg-2);
+    }
+    #content.p2p .card tbody {
+        box-shadow: none;
+        padding: 0px 15px;
+        display: inline-block;
+    }
+    #content.p2p .right_ssd {
+        width: 91% !important;
+    }
     #wallet-content .white-box table.loan_main_table td:nth-child(2n) {
         text-align: right;
         float: right;
@@ -8321,6 +8379,7 @@ section#loans-deshboard-new.instant {
     }
     #wallet-content.my-loan .white-box h3 {
         font-size: 14px;
+        margin-top: 8px;
     }
     #wallet-content.my-loan .white-box a.green-c {
         font-size: 9px;
@@ -8479,7 +8538,7 @@ section#loans-deshboard-new.instant {
         width: 100%;
         display: inline-block;
         border: none;
-        padding: 6px 15px;
+        padding: 4px 15px;
     }
     #loans-deshboard-new .my-loan-history table tbody {
         width: 48%;
@@ -8494,7 +8553,7 @@ section#loans-deshboard-new.instant {
         display: inline-block;
         text-align: right;
         border: none !important;
-        padding: 6px 15px;
+        padding: 4px 15px;
     }
     #loans-deshboard-new .my-loan-history tbody td img {
         max-width: 18px !important;
@@ -8508,6 +8567,7 @@ section#loans-deshboard-new.instant {
         background: none;
         font-size: 12px;
         text-align: right;
+        line-height: 30px;
     }
     #loans-deshboard-new .my-loan-history tbody td:first-child {
         font-size: 12px;
@@ -9000,7 +9060,21 @@ section#loans-deshboard-new.instant {
     #content.p2p .main_data_dable table thead tr th:last-child,
     #content.p2p .main_data_dable table tr td:last-child,
     #content.p2p .main_data_dable table tr td:nth-child(4n) {
-        display: revert;
+        display: inline-block;
+        width: 50%;
+    }
+    #content.p2p #bm_btc span {
+        font-weight: 400;
+        display: inline-block;
+        position: relative;
+        top: -6px;
+        font-size: 12px;
+    }
+    span#bb_btc_p {
+        font-size: 14px;
+    }
+    .main_data_dable table tr td:last-child a {
+        float: right !important;
     }
     #content.p2p .right_ssd {
         float: right;
@@ -9016,12 +9090,15 @@ section#loans-deshboard-new.instant {
     }
     #content.p2p .main_data_dable table tr td a {
         padding: 8px 20px;
-        color: #fff;
-        background-color: #00C98E;
         border-radius: 3px;
         text-decoration: none;
         float: left;
         margin-bottom: 5px;
+        position: relative;
+        top: -11px;
+    }
+    .table-hover tbody tr:hover {
+        background-color: transparent !important;
     }
     .nav-header a.btn.btn-primary {
         display: block;
@@ -9678,6 +9755,7 @@ section#loans-deshboard-new.instant {
         display: inline-block;
         padding: 0px 0px;
         padding-bottom: 20px;
+        margin: 0px;
     }
     #wallet-content {
         padding-top: 0px !important;
@@ -9728,7 +9806,7 @@ section#loans-deshboard-new.instant {
     #wallet-content.order-history .order_h tbody tr:nth-of-type(odd) {
         background: transparent;
         box-shadow: none;
-        padding-bottom: 10px !important;
+        padding-bottom: 5px !important;
     }
     #wallet-content.request.crypto .order_h tr {
         background: transparent;
@@ -9749,9 +9827,10 @@ section#loans-deshboard-new.instant {
     #wallet-content.request.crypto .white-box td.ftl_left {
         float: left;
         width: 50% !important;
-        margin-top: 11px;
+        margin-top: 5px;
         text-align: left;
         padding-left: 0px !important;
+        display: none !important;
     }
     #wallet-content.request.crypto .white-box td.ftl_right {
         float: right;
@@ -10336,8 +10415,14 @@ section#loans-deshboard-new.instant {
         padding: 5px;
     }
     #wallet-content.request.crypto .white-box td label span {
-        font-size: 12px;
+        font-size: 14px;
         margin: 0;
+    }
+    #wallet-content.request.crypto .white-box td label span.btcon {
+        font-size: 14px;
+        margin: 0;
+        display: inline-block;
+        margin-top: 6px !important;
     }
     #wallet-content.request.crypto tr {
         box-shadow: 0px 2px 12px rgb(0 0 0 / 10%);
@@ -10349,7 +10434,7 @@ section#loans-deshboard-new.instant {
     #wallet-content.request.crypto td img {
         height: 21px;
         margin-right: 4px;
-        margin-top: 1px !important;
+        margin-top: -1px !important;
     }
     #wallet-content.request.crypto .white-box td.xs-full {
         /* display: inline-block; */
@@ -10359,12 +10444,29 @@ section#loans-deshboard-new.instant {
         padding: 0 !important;
         font-size: 12px !important;
         float: right;
-        position: absolute;
-        top: 20px;
+        position: relative;
+        top: -1px;
         right: 0;
+        margin-bottom: 0;
+    }
+    #wallet-content.request.crypto .white-box td.last_conh {
+        position: relative;
+        right: 0;
+        bottom: 0;
+        width: 100% !important;
+        display: inline-block !important;
     }
     #wallet-content.order-history td.buy h2 {
         padding-right: 10px;
+        margin: 0px;
+        position: relative;
+        top: 10px;
+    }
+    #wallet-content.order-history td.sell h2 {
+        padding-right: 10px;
+        margin: 0px;
+        position: relative;
+        top: 10px;
     }
     #wallet-content.request.crypto .white-box td:last-child img {
         height: auto !important;
@@ -10383,15 +10485,16 @@ section#loans-deshboard-new.instant {
         display: inline-block;
         text-align: center;
         width: 100% !important;
-        margin-top: 15px;
-        margin-bottom: 15px;
+        margin-top: -4px;
+        margin-bottom: 10px;
     }
     #wallet-content .white-box .order_h td label {
-        font-size: 14px;
+        font-size: 14px !important;
         font-weight: normal;
         line-height: 22px;
         margin-bottom: 0px;
         color: var(--white-black-text);
+        margin-top: 4px;
     }
     #wallet-content.request.crypto .white-box td.show_on:nth-child(3n) {
         display: inline-block !important;
@@ -10399,7 +10502,7 @@ section#loans-deshboard-new.instant {
         text-align: right;
         position: absolute;
         left: 0;
-        top: 74%;
+        top: 74.5%;
     }
     #wallet-content.order-history .order_h td.center_small.sub_buttons a.btn-primary, #wallet-content.order-history .order_h td.center_small.sub_buttons a.btn-success {
         padding: 6px 13px !important;
@@ -10416,6 +10519,8 @@ section#loans-deshboard-new.instant {
     }
     #wallet-content.order-history .history-details td.light {
         float: left;
+        width: 50% !important;
+        text-align: left;
     }
     #wallet-content.order-history .history-details a.file {
         font-style: normal;
