@@ -125,14 +125,14 @@ class RepaymentController extends Controller
             ->editColumn('loan_amount',function($loan){
                 $loan_info='<div class="media align-items-center">
                       <a href="#" class="rounded-circle mr-2">';
-                      if($loan->loan_request_loan_currency->hasMedia('icon'))
+                      if($loan->loan_request->loan_currency->hasMedia('icon'))
                       {
-                         $loan_info.='<img alt="Image placeholder" width="20" src="'.$loan->loan_currency->firstMedia('icon')->getUrl().'">';
+                         $loan_info.='<img alt="Image placeholder" width="20" src="'.$loan->loan_request->loan_currency->firstMedia('icon')->getUrl().'">';
                       }
                         
                     $loan_info.=' </a>
                       <div class="media-body text-left">
-                        <span class="name mb-0 text-sm">'.$loan->loan_amount.'</span>
+                        <span class="name mb-0 text-sm">'.$loan->loan_request->loan_amount.'</span>
                       </div>
                     </div>';
 

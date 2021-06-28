@@ -37,6 +37,6 @@ class Loan extends Model
 
   public function loan_request()
   {
-    return $this->belongsTo('App\Models\Loan','loan_opening_id','id');
+    return $this->belongsTo('App\Models\Loan','loan_opening_id');
   }
 }
