@@ -32,13 +32,9 @@ class Loan extends Model
 
   public function repay_request()
   {
-    return $this->hasOne('App\Models\Loan','loan_opening_id','id');
+    return $this->hasOne('App\Models\LoanRepayRequest','loan_opening_id','id');
   }
 
 
-  public function loan_request()
-  {
-    return $this->belongsTo('App\Models\Loan','loan_opening_id');
-  }
 
 }

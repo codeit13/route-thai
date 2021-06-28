@@ -31,7 +31,7 @@ class LoanController extends Controller
     public function loanData()
     {
        // echo 'fsdflslf';die;
-        $loans = Loan::with(['user','loan_currency','collateral_currency'])->where('request_type','opening')->whereIn('status',['pending']);
+        $loans = Loan::with(['user','loan_currency','collateral_currency'])->whereIn('status',['pending']);
 
           return $this->makeTable($loans);
         
@@ -41,7 +41,7 @@ class LoanController extends Controller
     public function loanUpdated(Request $request)
     {
        // echo 'fsdflslf';die;
-        $loans = Loan::with(['user','loan_currency','collateral_currency'])->where('request_type','opening')->whereIn('status',['approved','rejected','close','paid']);
+        $loans = Loan::with(['user','loan_currency','collateral_currency'])->whereIn('status',['approved','rejected','close','paid']);
 
         if($request->status)
         {
