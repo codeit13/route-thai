@@ -159,7 +159,7 @@
                   <li class="nav-item">
                     <!--  -->
                      <a class="nav-link" href="{{ route('admin.loan.list') }}"> <i class="ni ni-money-coins text-red" aria-hidden="true"></i>
-                     <span class="nav-link-text">Loan Requests</span>
+                     <span class="nav-link-text">Loan Requestes</span>
                      </a>
                   </li>
                   <li class="nav-item">
