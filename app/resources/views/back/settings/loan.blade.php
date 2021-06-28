@@ -742,29 +742,29 @@ text-decoration: none !important; }
     // $('#loanable_currency').select2({
     //   placeholder: "Select a currency",
     // });
-    var collateralCurrencyList = new Choices('#collateral_currency', {
-        removeItemButton: true,
-        maxItemCount:100,
-        searchResultLimit:8,
-        renderChoiceLimit:100,
-        items: [],
-        choices: @json($cryptoCurrencies),
-    }); 
-    var loanCurrencyList = new Choices('#loanable_currency', {
-        removeItemButton: true,
-        maxItemCount:100,
-        searchResultLimit:8,
-        renderChoiceLimit:100,
-        items: [],
-        choices: @json($cryptoCurrencies),
-    }); 
+    // var collateralCurrencyList = new Choices('#collateral_currency', {
+    //     removeItemButton: true,
+    //     maxItemCount:100,
+    //     searchResultLimit:8,
+    //     renderChoiceLimit:100,
+    //     items: [],
+    //     choices: @json($cryptoCurrencies),
+    // }); 
+    // var loanCurrencyList = new Choices('#loanable_currency', {
+    //     removeItemButton: true,
+    //     maxItemCount:100,
+    //     searchResultLimit:8,
+    //     renderChoiceLimit:100,
+    //     items: [],
+    //     choices: @json($cryptoCurrencies),
+    // }); 
   //  $('#loanable_currency').select2({
    //   placeholder: "Select a currency",
     // });
 
     $(document).ready(function(){
 
-    var LoanCurrencyList = new Choices('#loan-list', {
+    var LoanCurrencyList = new Choices('#loanable_currency', {
     removeItemButton: true,
     maxItemCount:100,
     searchResultLimit:8,
@@ -774,7 +774,7 @@ text-decoration: none !important; }
    
     });  
 
-    var CollateralCurrencyList = new Choices('#collateral-list', {
+    var CollateralCurrencyList = new Choices('#collateral_currency', {
     removeItemButton: true,
     maxItemCount:100,
     searchResultLimit:8,

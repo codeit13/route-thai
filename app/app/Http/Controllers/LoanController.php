@@ -173,6 +173,8 @@ class LoanController extends Controller
 
         $loan_detail=$this->loan_data($request);
 
+        $repay_date=$this->repay_date($loan_detail);
+
         if($loan_detail)
         {
             $loan_data=array('loan_id'=>$this->generateID(),
@@ -188,6 +190,7 @@ class LoanController extends Controller
                              'term_percentage'=>$loan_detail->term_detail->terms_percentage,
                              'term_id'=>$loan_detail->term_detail->id,
                              'on_wallet'=>$loan_detail->on_wallet??0,'collateral_currency_rate'=>$loan_detail->usdt,'loan_repayment_amount'=>$loan_detail->loan_repayment,
+                             'repay_date'=>$repay_date,
                              'has_close_price'=>$loan_detail->set_close_price??0,
                              'close_price'=>$loan_detail->close_price??'',
                              'is_agree'=>$request->agree,
@@ -366,7 +369,7 @@ class LoanController extends Controller
 
         if($loan){
 
-        $close_request=array('loan_opening_id'=>$loan->id,'currency_id'=>$loan->currency_id,'loan_currency_id'=>$request->currency_id,'collateral_amount'=>$loan->collateral_amount,'loan_amount'=>$request->loan_amount,'loan_repayment_amount'=>$request->loan_repayment_amount,'term_id'=>$loan->term_id,'request_type'=>'closing','crypto_wallet_address'=>$request->crypto_wallet_address);
+        $close_request=array('loan_opening_id'=>$loan->id,'currency_id'=>$loan->currency_id,'loan_currency_id'=>$request->currency_id,'collateral_amount'=>$loan->collateral_amount,'loan_amount'=>$request->loan_amount,'loan_repayment_amount'=>$request->loan_repayment_amount,'term_id'=>$loan->term_id,'request_type'=>'closing','crypto_wallet_address'=>$request->crypto_wallet_address,'repay_date'=>$loan->repay_date);
 
         $loan_close_request=auth()->user()->loans()->create($close_request);
 
@@ -658,6 +661,29 @@ class LoanController extends Controller
 public function repaid()
 {
 
+}
+
+public function repay_date($loan)
+{
+    if($loan->term_detail->duration_type=='month')
+    {
+        $repay_date=\Carbon\Carbon::now()->addMonths($loan->term_detail->no_of_duration);
+    //echo '<pre> tt1';print_r($repay_date);die;
+
+    }
+
+    if($loan->term_detail->duration_type=='year')
+    {
+        $repay_date=\Carbon\Carbon::now()->addYears($loan->term_detail->no_of_duration);
+    }
+    if($loan->term_detail->duration_type=='days')
+    {
+        $repay_date=\Carbon\Carbon::now()->addDays($loan->term_detail->no_of_duration);
+    }
+
+   // echo '<pre> tt';print_r($repay_date);die;
+
+    return $repay_date;
 }
 
 }
