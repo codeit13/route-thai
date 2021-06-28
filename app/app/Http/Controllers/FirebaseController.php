@@ -18,12 +18,10 @@ class FirebaseController extends Controller
 
     public function save_Loan_To_Firebase() {
 
-        $database = $this->firestore->database();
-        
-        $value = $this->firestore->getReference('')
-            ->set([
-                $data->id => $data,
-            ]);
+        // $database = $this->firestore->database();
+        // $value = $database->collection('samples/php/cities')->document($data->id)->set($data);
+
+        $value = 'pass';
 
         return $value;
     }
