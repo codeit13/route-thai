@@ -28,16 +28,18 @@
                             <li class="{{ in_array($loan->status, ['approved','close','paid']) ? "active" : "" }}">
                                 <p>Loan In Progress</p><br><span>2</span>
                             </li>
-                             <li class="{{ in_array($loan->status, ['approved','close','paid']) ? "active" : "" }}">
-                                <p>Loan Approved</p><br><span>3</span>
+                           
+
+                            <li class="{{ in_array($loan->status, ['close','paid']) ? "active" : "" }}">
+                                <p>Loan Repaid</p><br><span>3</span>
+                            </li>
+
+                             <li class="{{ in_array($loan->status, ['close','paid']) ? "active" : "" }}">
+                                <p>Loan liquidated</p><br><span>4</span>
                             </li>
 
                             <li class="{{ in_array($loan->status, ['close','paid']) ? "active" : "" }}">
-                                <p>Loan Repaid</p><br><span>4</span>
-                            </li>
-
-                            <li class="{{ in_array($loan->status, ['close','paid']) ? "active" : "" }}">
-                                <p>Loan Close</p><br><span>5</span>
+                                <p>Loan Closed</p><br><span>5</span>
                             </li>
 
                            {{--
@@ -88,9 +90,9 @@
 
                         <div class="col-md-7 text-left">
 
-                            <img class="mb-1" style="width:20px;height:20px;" src="{{$loan->loan_currency->firstMedia('icon')->getUrl()}}"/>
+                            <img class="mb-1" style="width:20px;height:20px;" src="{{$loan->usdt_currency->firstMedia('icon')->getUrl()}}"/>
 
-                          {{ $loan->loan_amount }} {{ $loan->loan_currency->short_name }}
+                          {{ $loan->loan_amount*$loan->loan_currency_rate }} {{ $loan->usdt_currency->short_name }}
 
                         </div>
                     </div>
@@ -105,8 +107,8 @@
 
                         <div class="col-md-7 text-left">
 
-                            <img class="mb-1" style="width:20px;height:20px;" src="{{$loan->loan_currency->firstMedia('icon')->getUrl()}}"/>
-{{ $loan->loan_repayment_amount-$loan->loan_amount }} {{ $loan->loan_currency->short_name }}
+                            <img class="mb-1" style="width:20px;height:20px;" src="{{$loan->usdt_currency->firstMedia('icon')->getUrl()}}"/>
+{{ ($loan->loan_repayment_amount-$loan->loan_amount)*$loan->loan_currency_rate }} {{ $loan->usdt_currency->short_name }}
 
                         </div>
                     </div>
@@ -120,9 +122,9 @@
 
                         <div class="col-md-7 text-left">
 
-                            <img class="mb-1" style="width:20px;height:20px;" src="{{$loan->loan_currency->firstMedia('icon')->getUrl()}}"/>
+                            <img class="mb-1" style="width:20px;height:20px;" src="{{$loan->usdt_currency->firstMedia('icon')->getUrl()}}"/>
 
-                            {{ $loan->loan_repayment_amount }} {{ $loan->loan_currency->short_name }}
+                            {{ $loan->loan_repayment_amount*$loan->loan_currency_rate }} {{ $loan->usdt_currency->short_name }}
 
                         </div>
 
@@ -218,7 +220,7 @@
                                      
                          <li>Loan Repay Date: <b>
 
-                             @if(!in_array($loan->status,['pending','rejected','auto_close','close']))    
+                             @if(!in_array($loan->status,['rejected','auto_close','close']))    
                            
 
                           {{$repay_date->isoFormat('Do-MMMM,Y')}}| {{$repay_date->isoFormat('h:mm a')}} ( {{$days}} days left)
@@ -235,7 +237,7 @@
 
                          
 
-                        <li>Loan Request Type:<b>{{$loan->on_wallet?'wallet':'custom'}} </b></li>
+                        <li>Loan Request Type:<b>{{$loan->on_wallet?'Wallet':'Manual Deposit'}} </b></li>
 
                         <li>Collateral:<b> <img class="mb-1" style="width:20px;height:20px;" src="{{$loan->collateral_currency->firstMedia('icon')->getUrl()}}"/> {{$loan->collateral_currency->short_name}} </b></li>
 
@@ -270,25 +272,11 @@
     </div>
 
 </div>
+
+@endsection
+
 @section('page_scripts')
 <script>
-$('.statusUpdate').on('click',function(e){
-    e.preventDefault();
-    var status = $(this).data('value');
-    var id = $(this).data('id');
-     $.ajax({
-        type:'POST',
-        dataType:'JSON',
-        async:true,
-        url:"{{ route('admin.trade.update.status') }}",
-        data:{ status : status,id:{{ $loan->id }}, _token: "{{ csrf_token() }}" },
-        success:function(data) {
-           $('.msg'+id).html(data.message).show();
-           setTimeout(function() { $(".msg"+id).hide() }, 2000);
-           location.reload();      
-        }
-     });
-});
+
 </script>
-@endsection
 @endsection
