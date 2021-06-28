@@ -171,6 +171,7 @@ text-decoration: none !important; }
                  <label class="form-control-label" for="collateral_currency">Collateral Currency Address</label>
                 <div class="">
                     @foreach($collateralCruptoCurrencies as $key=>$record)
+
                         @csrf
                         <div class="row">
                             <div class="col-lg-2">
@@ -200,8 +201,10 @@ text-decoration: none !important; }
 
                             <div class="col-lg-2">
                           <div class="form-group">
+                           @if($record->Collateral_address)
                             @if($record->collateral_address->hasMedia('qr_code'))
                                              <img style="width: 50px;" src="{{$record->collateral_address->firstMedia('qr_code')->getUrl()}}"/>
+                                             @endif
                                              @else
                                            
                              <input type="file" name="collateral_crypto_rows[{{$key}}][qr]" class="form-control-file d-block" id="exampleFormControlFile1">
