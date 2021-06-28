@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLoanRequestsTable extends Migration
+class CreateLoanRepayRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLoanRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('loan_requests', function (Blueprint $table) {
+        Schema::create('loan_repay_requests', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateLoanRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loan_requests');
+        Schema::dropIfExists('loan_repay_requests');
     }
 }
