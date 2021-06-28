@@ -171,6 +171,7 @@ text-decoration: none !important; }
                  <label class="form-control-label" for="collateral_currency">Collateral Currency Address</label>
                 <div class="">
                     @foreach($collateralCruptoCurrencies as $key=>$record)
+
                         @csrf
                         <div class="row">
                             <div class="col-lg-2">
@@ -200,9 +201,15 @@ text-decoration: none !important; }
 
                             <div class="col-lg-2">
                           <div class="form-group">
+                           @if($record->Collateral_address)
                             @if($record->collateral_address->hasMedia('qr_code'))
                                              <img style="width: 50px;" src="{{$record->collateral_address->firstMedia('qr_code')->getUrl()}}"/>
+
                                              @else
+                                           
+                             <input type="file" name="collateral_crypto_rows[{{$key}}][qr]" class="form-control-file d-block" id="exampleFormControlFile1">
+                             @endif
+                               @else
                                            
                              <input type="file" name="collateral_crypto_rows[{{$key}}][qr]" class="form-control-file d-block" id="exampleFormControlFile1">
                              @endif
@@ -742,29 +749,29 @@ text-decoration: none !important; }
     // $('#loanable_currency').select2({
     //   placeholder: "Select a currency",
     // });
-    var collateralCurrencyList = new Choices('#collateral_currency', {
-        removeItemButton: true,
-        maxItemCount:100,
-        searchResultLimit:8,
-        renderChoiceLimit:100,
-        items: [],
-        choices: @json($cryptoCurrencies),
-    }); 
-    var loanCurrencyList = new Choices('#loanable_currency', {
-        removeItemButton: true,
-        maxItemCount:100,
-        searchResultLimit:8,
-        renderChoiceLimit:100,
-        items: [],
-        choices: @json($cryptoCurrencies),
-    }); 
+    // var collateralCurrencyList = new Choices('#collateral_currency', {
+    //     removeItemButton: true,
+    //     maxItemCount:100,
+    //     searchResultLimit:8,
+    //     renderChoiceLimit:100,
+    //     items: [],
+    //     choices: @json($cryptoCurrencies),
+    // }); 
+    // var loanCurrencyList = new Choices('#loanable_currency', {
+    //     removeItemButton: true,
+    //     maxItemCount:100,
+    //     searchResultLimit:8,
+    //     renderChoiceLimit:100,
+    //     items: [],
+    //     choices: @json($cryptoCurrencies),
+    // }); 
   //  $('#loanable_currency').select2({
    //   placeholder: "Select a currency",
     // });
 
     $(document).ready(function(){
 
-    var LoanCurrencyList = new Choices('#loan-list', {
+    var LoanCurrencyList = new Choices('#loanable_currency', {
     removeItemButton: true,
     maxItemCount:100,
     searchResultLimit:8,
@@ -774,7 +781,7 @@ text-decoration: none !important; }
    
     });  
 
-    var CollateralCurrencyList = new Choices('#collateral-list', {
+    var CollateralCurrencyList = new Choices('#collateral_currency', {
     removeItemButton: true,
     maxItemCount:100,
     searchResultLimit:8,
