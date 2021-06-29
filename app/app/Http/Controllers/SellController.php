@@ -29,6 +29,7 @@ class SellController extends Controller
 
         $transcation =  Transaction::where('trans_id',$trans_id)
                                         ->where('status','pending')
+                                        ->where('type','sell')
                                         ->first();
 
     	$crypto_currencies = Currency::where('is_tradable',1)->where('type_id',1)->get();

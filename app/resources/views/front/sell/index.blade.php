@@ -53,7 +53,7 @@ Route: P2P Trading Platform - sell crypto
 	                    <div class="field">
 						    <label>Choose Fiat Currency</label>
 						    <div class="dropdown currency_two three_coins crypto">
-						    	@if(isset($transcation) and $transcation != null)
+						    	@if(isset($transcation))
 							        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							            <img src="{{ $transcation->fiat_currency->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_2"> 
 							            <span style="color: black" id="text_2">{{ $transcation->fiat_currency->short_name }} <span>{{ $transcation->fiat_currency->name }}</span></span>
