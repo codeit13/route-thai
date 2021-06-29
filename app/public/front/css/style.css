@@ -4327,15 +4327,15 @@ span.active {
     margin-top:30px;
     padding:15px 15px;
 }
-.multi_form .dropdown-menu.show {
+.multi_form.loan .dropdown-menu.show {
     margin-top: 18px;
 }
-.multi_form .dropdown-menu.show a {
+.multi_form.loan .dropdown-menu.show a {
     padding: 6px 15px;
     color: var(--text-color);
     line-height: 20px;
 }
-.dropdown.currency_two.three_coins .dropdown-menu.show a.dropdown-item img {
+.multi_form.loan .dropdown.currency_two.three_coins .dropdown-menu.show a.dropdown-item img {
     width: 18px;
     margin-right: 5px;
     margin-top: -4px;
@@ -4469,9 +4469,10 @@ span.active {
     font-size:18px !important;
 }
 #loans-deshboard-new .final-loan.collateral h4 span {
-    color:#797979!important;
-    font-size:16px!important;
-    font-weight:normal!important;
+    color: #797979!important;
+    font-size: 16px!important;
+    font-weight: normal!important;
+    padding-left: 3px;
 }
 #loans-deshboard-new .space-normal .dropdown.currency_two.three_coins button#dropdownMenuButton {
     border: none !important;

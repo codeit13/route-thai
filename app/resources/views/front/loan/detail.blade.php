@@ -125,7 +125,7 @@
 
 									<div class="col-lg-2 col-sm-4 col-6">
 										<h6>Loan Term Value</h6>
-										<h5><b>{{$loan->term_percentage}}%</b><br><span>{{$loan->duration}}{{$loan->duration_type}}</span></h5>
+										<h5><b>{{$loan->term_percentage}}%</b><span>{{$loan->duration}}{{$loan->duration_type}}</span></h5>
 									</div>
 									<div class="col-lg-2 col-sm-4 col-6">
 										<h6>Close price set at</h6>
