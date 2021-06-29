@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\CurrencyType;
 use MediaUploader;
 use App\Http\Traits\GenerateTransIDTrait;
+use App\Notifications\Notify;
+
 
 class TransactionController extends Controller
 {

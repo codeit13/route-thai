@@ -274,7 +274,7 @@ Route: P2P Trading Platform
               </div>
             </div>
 
-          <div class="main_data_dable">
+          <div class="arbitrage_data_dable">
             <table id="main_data_table" class="table table-hover p-0" style="width: 100%">
               <thead id="currency_header">
                 <tr id="currency_header_row">

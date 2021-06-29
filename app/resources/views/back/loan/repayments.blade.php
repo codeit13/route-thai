@@ -93,12 +93,12 @@
             { data: 'collateral_info', name: 'collateral_amount' },
 
             { data: 'loan_amount', name: 'loan_amount' },
-            { data: 'loan_repayment_amount', name: 'loan_amount' },
+            { data: 'loan_repayment_amount', name: 'loan_repayment_amount' },
 
-            { data: 'repay_date', name: 'repay_date' },
+            { data: 'loan_request.repay_date', name: 'loan_request.repay_date' },
 
             //{ data: 'loan_term', name: 'loan_term' },
-            { data: 'term_percentage', name: 'term_percentage' },
+            { data: 'loan_request.term_percentage', name: 'loan_request.term_percentage' },
             { data: 'created_at', name: 'created_at' },
             { data: 'action', name: 'action' },
 

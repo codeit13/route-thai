@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Loan;
+use App\Models\LoanRepayRequest;
 use App\Notifications\Notify;
 use Yajra\Datatables\Datatables;
 
@@ -25,15 +25,16 @@ class RepaymentController extends Controller
     public function repayment_requests(Request $request)
     {
        
-        $repayments = Loan::with(['user','loan_currency','collateral_currency','loan_request'])->where('request_type','closing')->whereIn('status',['pending']);
-        //echo '<pre>';print_r($repayments->toArray());die;
+        $repayments = LoanRepayRequest::select('loan_repay_requests.*')->leftJoin('loans as loan_request','loan_request.id','=','loan_repay_requests.loan_opening_id')->with(['user','loan_currency','collateral_currency','loan_request']);
 
 
 
-        if($request->status)
-        {
-            $repayments=$repayments->where('status',$request->status);
-        }
+        
+             $repayments=$repayments->where('loan_repay_requests.status','pending');
+
+        //echo '<pre>';print_r($repayments->get()->toArray());die;
+
+        
 
 
 
@@ -42,19 +43,20 @@ class RepaymentController extends Controller
     }
 
 
-    public function makeTable($loans)
+    public function makeTable($repayments)
     {
-        return Datatables::of($loans)
-          ->orderColumn('id', '-id $1')
+        return Datatables::of($repayments)
+
+          ->orderColumn('loan_repay_requests.id', '-id $1')
+
+           
+
+        
 
            ->addColumn('detail_link',function($loan){
               return '<a class="text-info" href="'.route('admin.loan.show',['loan'=>$loan->loan_request->loan_id]).'">
                        Details
                       </a>';
-           })
-           ->editColumn('repay_date',function($loan)
-           {
-              return date('d-m-Y',strtotime($loan->repay_date));
            })
             ->addColumn('action', function ($loan) {
 
@@ -110,29 +112,34 @@ class RepaymentController extends Controller
                     $action.='</div>'; 
                     return $action;
             })
+           ->editColumn('loan_request.repay_date',function($loan)
+           {
+              return date('d-m-Y',strtotime($loan->loan_request->repay_date));
+           })
+           
 
             ->addColumn('user', function ($loan) {
                 return '<div class="media-body text-left">
-                      <span class="name mb-0 text-sm">'.$loan->user->name.'</span>
+                      <span class="name mb-0 text-sm">'.$loan->loan_request->user->name.'</span>
                     </div>
-                    <small class="text-muted d-table-row">'.$loan->user->email.'</small>';
+                    <small class="text-muted d-table-row">'.$loan->loan_request->user->email.'</small>';
             })
 
-             ->editColumn('term_percentage', function ($loan) {
+             ->editColumn('loan_request.term_percentage', function ($loan) {
                 return $loan->loan_request->term_percentage.'% ('.$loan->loan_request->duration.' '.$loan->loan_request->duration_type.')';
             })
 
             ->editColumn('loan_amount',function($loan){
                 $loan_info='<div class="media align-items-center">
                       <a href="#" class="rounded-circle mr-2">';
-                      if($loan->loan_request_loan_currency->hasMedia('icon'))
+                      if($loan->loan_request->loan_currency->hasMedia('icon'))
                       {
-                         $loan_info.='<img alt="Image placeholder" width="20" src="'.$loan->loan_currency->firstMedia('icon')->getUrl().'">';
+                         $loan_info.='<img alt="Image placeholder" width="20" src="'.$loan->loan_request->loan_currency->firstMedia('icon')->getUrl().'">';
                       }
                         
                     $loan_info.=' </a>
                       <div class="media-body text-left">
-                        <span class="name mb-0 text-sm">'.$loan->loan_amount.'</span>
+                        <span class="name mb-0 text-sm">'.$loan->loan_request->loan_amount.'</span>
                       </div>
                     </div>';
 
