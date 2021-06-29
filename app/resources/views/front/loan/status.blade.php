@@ -53,18 +53,12 @@
 									<div class="col-lg-4 xs-flush-right col-sm-4 col-5">
 										<h6>My Collateral is</h6>
 										<h5><b>{{$loan->collateral_amount}}</b> &nbsp;{{__($loan->collateral_currency->short_name)}}&nbsp;
-											@if($loan->collateral_currency->hasMedia('icon'))
-										 <img style="max-width:28px;" src="{{$loan->collateral_currency->firstMedia('icon')->getUrl()}}" alt="{{$loan->collateral_currency->short_name}}"/>
-
-										 @endif</h5>
+										</h5>
 									</div>
 									<div class="col-lg-4 col-sm-4 col-7">
 										<h6>Current value</h6>
 										<p>
-										@if($loan->collateral_currency->hasMedia('icon'))
-										 <img style="max-width:28px;" src="{{$loan->collateral_currency->firstMedia('icon')->getUrl()}}" alt="{{$loan->collateral_currency->short_name}}"/>
-
-										 @endif
+									
 
 										 {{$loan->collateral_currency->short_name}}:<b>{{number_format($loan->current_value,2)}}</b> USDT <a href="#"><!-- +0.73%; --></a></p>
 									</div>

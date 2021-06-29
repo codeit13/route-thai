@@ -172,9 +172,9 @@ function showCurrencyRate()
 		newUpdateLoanPrice=(parseFloat(newUpdateLoanPrice)+parseFloat(Interest)).toFixed(5);
 
 
-		$('#backend-loan-repayment,#backend-final-loan-amount').html(newUpdateLoanPrice+'<span>'+fiatRow.short_name+'</span>');
+		$('#backend-loan-repayment,#backend-final-loan-amount').html(newUpdateLoanPrice+'<span> '+fiatRow.short_name+'</span>');
 
-		$('#backend-collateral-amount').html(collateral_quantity+'<span>'+cryptoRow.short_name+'</span>')
+		$('#backend-collateral-amount').html(collateral_quantity+'<span> '+cryptoRow.short_name+'</span>')
 
 
 

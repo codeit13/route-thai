@@ -54,7 +54,9 @@
                                 
                                  <option value="approved">Approved</option>
                                  <option value="rejected">Rejected</option>
-                                 <option value="paid">Paid</option>
+                                 <option value="repaid">Repaid</option>
+                                 <option value="liquidate">Liquidate</option>
+
                                  <option value="close">Close</option>
 
                               </select>
