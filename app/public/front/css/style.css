@@ -44,6 +44,8 @@
     --light_dark_border: #00000014;
 
     --gray_bg_color: #393838;
+
+    --light-green: #EAFFF9;
 }
 
 .dark-mode {
@@ -91,6 +93,8 @@
     --light_dark_border: #ffffff14;
 
     --gray_bg_color: #17171a;
+
+    --light-green: transparent;
 }
 
 @font-face {
@@ -4317,11 +4321,24 @@ span.active {
     color:#00c98e;
 }
 #loans-deshboard-new .final-loan {
-    background:var(--light_green);
+    background:var(--light-green);
     float:left;
     width:100%;
     margin-top:30px;
     padding:15px 15px;
+}
+.multi_form .dropdown-menu.show {
+    margin-top: 18px;
+}
+.multi_form .dropdown-menu.show a {
+    padding: 6px 15px;
+    color: var(--text-color);
+    line-height: 20px;
+}
+.dropdown.currency_two.three_coins .dropdown-menu.show a.dropdown-item img {
+    width: 18px;
+    margin-right: 5px;
+    margin-top: -4px;
 }
 #loans-deshboard-new .final-loan label {
     color:var(--white-black-text);
@@ -4623,22 +4640,28 @@ body.dark-mode #loans-deshboard-new .how-to-start img.show_white {
     font-weight:normal;
 }
 #your-application .white-box h5 b {
-    color:var(--white-black-text);
-    font-size:18px;
+    color: var(--white-black-text);
+    font-size: 14px;
 }
 #your-application .white-box h5 b.green {
     color:#00cb8b;
     font-weight:900;
 }
 #your-application .white-box h5 img {
-    position:relative;
-    top:-4px;
+    position: relative;
+    top: -4px;
+    height: 20px;
+}
+#loans-deshboard-new .my-loan-history tbody td img {
+    height: 20px;
+    margin-top: -1px;
 }
 #your-application .white-box p img {
-    float:left;
-    margin-top:3px;
-    margin-bottom:15px;
-    margin-right:3px;
+    float: left;
+    margin-top: 2px;
+    margin-bottom: 15px;
+    margin-right: 4px;
+    height: 20px;
 }
 #your-application .white-box p a {
     color:#00cb8b;
@@ -8358,14 +8381,35 @@ section#loans-deshboard-new.instant {
         line-height: 24px;
         font-size: 14px;
     }
+    #your-application .l-coins .one-1 img {
+        width: 18px;
+    }
+    #your-application .white-box h5 {
+        font-size: 12px;
+    }
+    #your-application .white-box h5 b {
+        font-size: 12px;
+    }
     #your-application .white-box h6 {
         margin-top: 20px;
+        font-size: 12px;
+    }
+    #your-application .white-box p {
+        font-size: 12px;
+    }
+    #your-application .white-box h5 img {
+        top: 4px;
+        height: 19px;
+    }
+    #your-application .white-box p img {
+        margin-top: 1px;
+        height: 16px;
     }
     .xs-flush-right {
         padding-right: 0px !important;
     }
     #your-application .white-box {
-        padding: 5px 10px;
+        padding: 0px 0px;
     }
     #wallet-content.my-loan {
         padding-top: 15px !important;
@@ -8470,6 +8514,8 @@ section#loans-deshboard-new.instant {
     }
     #loans-deshboard-new .my-loan-history h4 {
         margin-bottom: 20px;
+        font-size: 12px;
+        margin-top: 20px;
     }
     #loans-deshboard-new .final-loan {
         margin-top: 0px;

@@ -204,7 +204,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-12 hidden-xs col-sm-12 col-12">
+				<div class="col-lg-12 hidden-xs col-sm-12 col-12 flush">
 					<div class="table-responsive">
 						<table class="table">
 							<thead>
