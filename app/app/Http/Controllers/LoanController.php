@@ -485,6 +485,8 @@ class LoanController extends Controller
 
          $loan_detail = (object)$request->session()->get('loan_detail');
 
+     //    echo '<pre>';print_r($loan_detail);die;
+
          $loan_detail->collateral_currency=\App\Models\Currency::find($loan_detail->currency_id);
 
          $loan_detail->loan_currency=\App\Models\Currency::find($loan_detail->loan_currency
