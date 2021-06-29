@@ -41,7 +41,7 @@ class LoanController extends Controller
     public function loanUpdated(Request $request)
     {
        // echo 'fsdflslf';die;
-        $loans = Loan::with(['user','loan_currency','collateral_currency'])->whereIn('status',['approved','rejected','close','paid']);
+        $loans = Loan::with(['user','loan_currency','collateral_currency'])->whereNotIn('status',['pending']);
 
         if($request->status)
         {
@@ -185,7 +185,7 @@ class LoanController extends Controller
          if($status=='approved')
         {
 
-            $wallet=$user->wallet()->where('currency_id',$loan_detail->currency_id)->first();
+            $wallet=$user->wallet()->where('wallet_type',1)->where('currency_id',$loan_detail->currency_id)->first();
 
            // $wallet->coin=$wallet->coin-$loan_detail->collateral_amount;
 
@@ -207,7 +207,9 @@ class LoanController extends Controller
                 $user->wallet()->create($newWallet);
             }
 
-            
+            $repay_date=$this->repay_date($loan_detail);
+
+            $loan_detail->repay_date=$repay_date;
 
             $loan_detail->status='approved';
 
@@ -215,7 +217,7 @@ class LoanController extends Controller
 
            
 
-            $notification='[Route-Thai] Loan request (Ending with '.substr($loan_detail->loan_id,-7).') with Collateral of '.$loan_detail->collateral_amount.' '.$loan_detail->collateral_currency->short_name.' and Loan amount '.$loan_detail->loan_amount.' '.$loan_detail->loan_currency->short_name.', Validity of '.$loan_detail->duration.' '.$loan_detail->duration_type.' has been successfully approved. The Loan amount transferred to your Loan wallet.';
+            $notification='[Route-Thai] Loan request (Ending with '.substr($loan_detail->loan_id,-4).') with Collateral of '.$loan_detail->collateral_amount.' '.$loan_detail->collateral_currency->short_name.' and Loan amount '.$loan_detail->loan_amount.' '.$loan_detail->loan_currency->short_name.', Validity of '.$loan_detail->duration.' '.$loan_detail->duration_type.' has been successfully approved. The Loan amount transferred to your Loan wallet.';
         }
         elseif ($status=='rejected') {
 
@@ -223,7 +225,16 @@ class LoanController extends Controller
 
             $loan_detail->save();
 
-            $notification='[Route-Thai] Loan request (Ending with '.substr($loan_detail->loan_id,-7).') with Collateral of '.$loan_detail->collateral_amount.' '.$loan_detail->collateral_currency->short_name.' and Loan amount '.$loan_detail->loan_amount.' '.$loan_detail->loan_currency->short_name.', Validity of '.$loan_detail->duration.' '.$loan_detail->duration_type.' has been rejected. Please contact support for more details.';
+            $notification='[Route-Thai] Loan request (Ending with '.substr($loan_detail->loan_id,-4).') with Collateral of '.$loan_detail->collateral_amount.' '.$loan_detail->collateral_currency->short_name.' and Loan amount '.$loan_detail->loan_amount.' '.$loan_detail->loan_currency->short_name.', Validity of '.$loan_detail->duration.' '.$loan_detail->duration_type.' has been rejected. Please contact support for more details.';
+        }
+
+        elseif ($status=='close') {
+
+            $loan_detail->status='close';
+
+            $loan_detail->save();
+
+            $notification='[Route-Thai] Loan request (Ending with '.substr($loan_detail->loan_id,-4).') with Collateral of '.$loan_detail->collateral_amount.' '.$loan_detail->collateral_currency->short_name.' and Loan amount '.$loan_detail->loan_amount.' '.$loan_detail->loan_currency->short_name.', Validity of '.$loan_detail->duration.' '.$loan_detail->duration_type.' has been successfully closed .';
         }
 
           Notify::sendMessage([
@@ -277,7 +288,7 @@ class LoanController extends Controller
 
         $loan->current_value='0.000';
 
-       // $loan->current_value=$this->get_crypto_exchange_row($loan->collateral_currency)->lastPrice;
+     //   $loan->current_value=$this->get_crypto_exchange_row($loan->collateral_currency)->lastPrice;
 
       //  echo '<pre>';print_r($loan->toArray());die;
 
@@ -373,6 +384,29 @@ class LoanController extends Controller
 
     return $crypto_exchange_row;
 
+}
+
+public function repay_date($loan)
+{
+    if($loan->duration_type=='month')
+    {
+        $repay_date=\Carbon\Carbon::now()->addMonths($loan->duration);
+    //echo '<pre> tt1';print_r($repay_date);die;
+
+    }
+
+    if($loan->duration_type=='year')
+    {
+        $repay_date=\Carbon\Carbon::now()->addYears($loan->duration);
+    }
+    if($loan->duration_type=='days')
+    {
+        $repay_date=\Carbon\Carbon::now()->addDays($loan->duration);
+    }
+
+   // echo '<pre> tt';print_r($repay_date);die;
+
+    return $repay_date;
 }
 
 }
