@@ -74,7 +74,7 @@
 											<label>Loan Term Value</label>
 										</div>
 										<div class="col-lg-12 xs-right col-sm-12 col-6">
-											<h4>{{$loan_detail->term_detail->terms_percentage}}% <br><span>{{$loan_detail->term_detail->no_of_duration}} &nbsp;{{$loan_detail->term_detail->duration_type}}</span></h4>
+											<h4>{{$loan_detail->term_detail->terms_percentage}}% <span>{{$loan_detail->term_detail->no_of_duration}} {{$loan_detail->term_detail->duration_type}}</span></h4>
 										</div>
 									</div>
 								</div>

@@ -103,7 +103,7 @@ $loan_variables=(object)$loan_variables;
 									</div>
 									<div class="row">
 										<div class="col-lg-12 col-sm-12 col-12">
-											<div class="multi_form">
+											<div class="multi_form loan">
 												<div class="dropdown currencyDropdown currency_two three_coins crypto">
 
 												  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

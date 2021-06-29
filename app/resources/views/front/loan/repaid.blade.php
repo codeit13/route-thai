@@ -68,7 +68,7 @@
 									</div>
 									<div class="col-lg-4 col-sm-4 col-6">
 										<h6>Loan Term Value</h6>
-										<h5><b>90%</b><br><span>30Days</span></h5>
+										<h5><b>90%</b><span>30Days</span></h5>
 									</div>
 								</div>
 							</div>
