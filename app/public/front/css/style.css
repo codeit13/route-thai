@@ -42,6 +42,8 @@
 
     --new_dropdown_bg: #FAFAFA;
     --light_dark_border: #00000014;
+
+    --gray_bg_color: #393838;
 }
 
 .dark-mode {
@@ -87,6 +89,8 @@
 
     --new_dropdown_bg: #21242e;
     --light_dark_border: #ffffff14;
+
+    --gray_bg_color: #17171a;
 }
 
 @font-face {
@@ -4110,7 +4114,7 @@ span.active {
 /***** Loan Pages Css *****/
 
 #banner_search.loans-deshboard {
-    background:#393838;
+    background:var(--gray_bg_color);
     padding-top:30px;
     padding-bottom:40px;
 }
@@ -5953,7 +5957,7 @@ body.dark-mode #loans-deshboard-new .how-to-start img.show_white {
     font-weight: 400;
     padding: 12px 10px;
 }
-#wallet-content .white-box td .btn-success, #wallet-content .white-box td .btn-primary {
+#wallet-content .white-box td.center_small.sub_buttons .btn-success, #wallet-content .white-box td.center_small.sub_buttons .btn-primary {
     padding: 5px 5px !important;
     font-size: 13px;
     margin: 0px !important;
@@ -5961,6 +5965,9 @@ body.dark-mode #loans-deshboard-new .how-to-start img.show_white {
 #wallet-content .white-box td .btn-success {
     margin-left: 0px;
     margin-right: 10px;
+}
+#wallet-content .white-box td.center_small a {
+    padding: 0px 10px !important;
 }
 #wallet-content .white-box td .btn-primary {} #wallet-content .white-box table {
     width: 100%;
