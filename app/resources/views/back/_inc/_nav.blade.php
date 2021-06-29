@@ -163,6 +163,12 @@
                      </a>
                   </li>
                   <li class="nav-item">
+                    <!--  -->
+                     <a class="nav-link" href="{{ route('admin.repayments.index') }}"> <i class="ni ni-money-coins text-red" aria-hidden="true"></i>
+                     <span class="nav-link-text">Repay Requestes</span>
+                     </a>
+                  </li>
+                  <li class="nav-item">
                      <a class="nav-link" href="{{ route('admin.settings.loan') }}"> <i class="ni ni-money-coins text-red" aria-hidden="true"></i>
                      <span class="nav-link-text">Loan Settings</span>
                      </a>

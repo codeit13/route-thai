@@ -22,7 +22,7 @@ class LoanController extends Controller
      */
     public function index(Request $request)
     {
-        $loans=auth()->user()->loans()->where('request_type','opening');
+        $loans=auth()->user()->loans();
 
         $currentCurrency='';
 
@@ -301,7 +301,7 @@ class LoanController extends Controller
 
 
 
-        $loans=auth()->user()->loans()->where('request_type','opening')->latest()->limit(5)->get();
+        $loans=auth()->user()->loans()->latest()->limit(5)->get();
 
 
         return view('front.loan.detail',compact('loan','loans'));
@@ -364,9 +364,9 @@ class LoanController extends Controller
 
         if($loan){
 
-        $close_request=array('loan_opening_id'=>$loan->id,'currency_id'=>$loan->currency_id,'loan_currency_id'=>$request->currency_id,'collateral_amount'=>$loan->collateral_amount,'loan_amount'=>$request->loan_amount,'loan_repayment_amount'=>$request->loan_repayment_amount,'term_id'=>$loan->term_id,'request_type'=>'closing','crypto_wallet_address'=>$request->crypto_wallet_address);
+        $close_request=array('loan_opening_id'=>$loan->id,'currency_id'=>$loan->currency_id,'loan_currency_id'=>$request->currency_id,'collateral_amount'=>$loan->collateral_amount,'loan_amount'=>$request->loan_amount,'loan_repayment_amount'=>$request->loan_repayment_amount,'crypto_wallet_address'=>$request->crypto_wallet_address,'user_id'=>auth()->id());
 
-        $loan_close_request=auth()->user()->loans()->create($close_request);
+        $loan_close_request=$loan->repay_request()->create($close_request);
 
 
         if($request->payment_method=='wallet')
