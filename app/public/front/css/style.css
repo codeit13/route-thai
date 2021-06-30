@@ -7973,6 +7973,9 @@ section#loans-deshboard-new.instant {
         padding: 0px 15px;
         display: inline-block;
     }
+    #content.p2p .card tbody.no_spaceing {
+        padding: 0px 0px;
+    }
     #content.p2p .right_ssd {
         width: 91% !important;
     }
@@ -9150,10 +9153,10 @@ section#loans-deshboard-new.instant {
         float: left;
         margin-bottom: 5px;
         position: relative;
-        top: -11px;
+        top: -2px;
     }
     .table-hover tbody tr:hover {
-        background-color: transparent !important;
+        background-color: var(--table-hover) !important;
     }
     .nav-header a.btn.btn-primary {
         display: block;

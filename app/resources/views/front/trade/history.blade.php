@@ -276,6 +276,8 @@ Route: P2P Trading Platform
                                             @endif
                                             @if($transaction->status != 'approved')
                                                 <a class="btn-success" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif" style="padding: 7px;color: white;"><i class="fa fa-eye"></i></a> 
+                                            @else
+                                                <a class="btn-success" href="@if($transaction->type == 'sell') {{route('sell.order_success',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif" style="padding: 7px;color: white;"><i class="fa fa-eye"></i></a> 
                                             @endif
                                         </td>
                                     </tr>

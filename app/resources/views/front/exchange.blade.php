@@ -118,7 +118,7 @@ Route: P2P Trading Platform
 <section id="content" class="p2p">
     <div class="container">
         <div class="row">
-            <div class="col xs-flush">
+            <div class="col">
                 <div class="card">
                     <div class="main_data_dable">
                         <table class="table table-striped table-hover">
@@ -132,7 +132,7 @@ Route: P2P Trading Platform
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="no_spaceing">
                                 @if($transactions->count() > 0)
                                     @foreach($transactions as $single_transaction)
                                         @if($single_transaction->buyer_requests_count == 0)
