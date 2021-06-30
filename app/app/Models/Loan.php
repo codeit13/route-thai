@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Kreait\Firebase\Database;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,6 +38,19 @@ class Loan extends Model
     return $this->hasOne('App\Models\LoanRepayRequest','loan_opening_id','id');
   }
 
+  public function save_Loan_To_Firebase($data) {
+    $database = app('firebase.database');
 
+    $value = $database->getReference('')
+        ->set([
+            $data->id => (array)$data,
+        ]);
 
+    return $value;
+}
+
+  public function loan_request()
+  {
+    return $this->belongsTo('App\Models\Loan','loan_opening_id');
+  }
 }
