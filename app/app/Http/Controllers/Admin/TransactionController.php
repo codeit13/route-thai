@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use App\Notifications\Notify;
+
 
 class TransactionController extends Controller
 {
@@ -165,9 +167,30 @@ class TransactionController extends Controller
 
         if($status=='approved'){
             $this->updateUserWallet($transaction,$type);
-
+            // $type == "WITHDRAW";
 
         }
+        if(strtoupper($type)=="WITHDRAW" && $status=="approved") {
+            $Message = "[Route-Thai] Withdrawal Request of " . $transaction->quantity . " " . $transaction->currency->name . " has been successfully completed and transferred to your third-party wallet.";
+        } else if(strtoupper($type)=="WITHDRAW" && $status=="rejected") {
+            $Message = "[Route-Thai] Withdrawal Request of " . $transaction->quantity . " " . $transaction->currency->name . " has been rejected.";
+        } else if(strtoupper($type)=="DEPOSIT" && $status=="approved") {
+            $Message = "[Route-Thai] Deposit Request of " . $transaction->quantity . " " . $transaction->currency->name . " has been successfully approved and added to your wallet.";
+        } else if(strtoupper($type)=="DEPOSIT" && $status=="rejected") {
+            $Message = "[Route-Thai] Withdrawal Request of " . $transaction->quantity . " " . $transaction->currency->name . " has been rejected.";
+        }
+
+        Notify::sendMessage([
+            'sms_notification' => $transaction->user->sms_notification,
+            'mobile' => $transaction->user->mobile,
+            'telegram_notification' => $transaction->user->telegram_notification,
+            'telegram_user_id' => $transaction->user->telegram_user_id,
+            'line_notification' => $transaction->user->line_notification,
+            'line_user_id' => $transaction->user->line_user_id,
+            'email_notification' => $transaction->user->email_notification,
+            'email_id' => $transaction->user->email,
+            'Message' => $Message,
+        ]);
          $transaction->status=$status;
 
          $transaction->save();
@@ -222,10 +245,17 @@ class TransactionController extends Controller
          //      $this->service = new \App\Services\SMSService();
          //      $res=$this->service->send(['+66630370558'],'RouteDWR',$sms_variables);
 
-              
 
 
 
+    }
+    public function remove(Request $request){
 
+        $id = $request['data'];
+        foreach ($id as $key => $value) {
+            
+            Transaction::where('id',$value)->delete();
+        }
+        return response()->json(['status'=>'OK','message'=>  __('The record has been deleted.') ]);
     }
 }

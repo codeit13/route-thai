@@ -118,7 +118,7 @@ Route: P2P Trading Platform
 <section id="content" class="p2p">
     <div class="container">
         <div class="row">
-            <div class="col xs-flush">
+            <div class="col">
                 <div class="card">
                     <div class="main_data_dable">
                         <table class="table table-striped table-hover">
@@ -132,23 +132,31 @@ Route: P2P Trading Platform
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="no_spaceing">
                                 @if($transactions->count() > 0)
                                     @foreach($transactions as $single_transaction)
                                         @if($single_transaction->buyer_requests_count == 0)
                                             <tr>
                                                 <th scope="row" class="ft_first">
                                                     <img src="{{ $single_transaction->currency->getMedia('icon')->first()->getUrl() }}" alt="">
-                                                    <div class="right_ssd">⚡ {{ $single_transaction->user->name }} ⚡
+                                                    <div class="right_ssd">{{ $single_transaction->user->name }}
                                                     </div>
                                                 </th>
                                                 <td class="text-center">
                                                     <span id="bb_btc_p">{{ $single_transaction->trans_amount }} </span><span>{{ $single_transaction->fiat_currency->short_name }}</span>
                                                 </td>
                                                 <td class="text-center">
-                                                    <span id="bm_btc">Available <span>{{ $single_transaction->quantity }} {{ $single_transaction->currency->short_name }}</span>
+                                                    <span id="bm_btc"><span>{{ $single_transaction->quantity }} {{ $single_transaction->currency->short_name }}</span>
                                                 </td>
-                                                <td class="text-center"><span data-bs-toggle="tooltip" data-bs-placement="top" title="" data-original-title="Payment Modes" class="payment_tooltip"><i class="fal fa-university"></i> Bank Transfer</span></td>
+
+                                                <td class="text-center">
+                                                    @foreach($single_transaction->user->user_payment_method as $single_payment_method)
+                                                        <span data-bs-toggle="tooltip" data-bs-placement="top" title="" data-original-title="{{ $single_payment_method->payment_methods->name }}">
+                                                            <img src="{{ $single_payment_method->payment_methods->getMedia('icon')->first()->getUrl() }}" alt="">
+                                                        </span>
+                                                    @endforeach
+                                                </td>
+
                                                 <td class="text-center">
                                                     <a href="{{ route('payment.show',['transaction'=>$single_transaction->trans_id]) }}" class="table_btn">Buy {{ $single_transaction->currency->short_name }}</a>
                                                 </td>

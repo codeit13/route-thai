@@ -134,7 +134,7 @@ $current_loan_currency=$loan->loan_currency_id;
 									</div>
 									<div class="col-lg-4 col-sm-4 col-6">
 										<h6>Loan Term Value</h6>
-											<h5><b>{{$loan->term_percentage}}%</b><br><span>{{$loan->duration}}{{$loan->duration_type}}</span></h5>
+											<h5><b>{{$loan->term_percentage}}%</b><span>{{$loan->duration}}{{$loan->duration_type}}</span></h5>
 									</div>
 									<div class="col-lg-4 visible-xs col-sm-4 col-6">
 										<h6>Close price set at</h6>
@@ -518,26 +518,8 @@ $current_loan_currency=$loan->loan_currency_id;
 									</div>
 								</div>
 								<div class="col-lg-12 col-sm-12 col-12">
-									<div class="network-w">
-										<div class="row">
-											<div class="col-lg-6 b-right col-sm-6 col-12">
-												<label>Loan Repayment Address <img src="{{asset('front/img/bitcoin.png')}}" alt=""/></label>
-												<p>Network Name: <b>BTC</b><br>
-												Average arrival time: <b>1 minutes</b></p>
-											</div>
-											<div class="col-lg-6 col-sm-6 col-12">
-												<label>Address</label>
-												<div class="row top-n">
-													<div class="col-lg-9 col-sm-9 col-9">
-														<p>1JFAe8qq9wshJRLkdia3
-														zZ94Nk9VLc4W3y</p>
-													</div>	
-													<div class="col-lg-3 col-sm-3 col-3 flush-left">
-														<img src="{{asset('front/img/icon-14.png')}}" alt=""/>
-													</div>	
-												</div>	
-											</div>
-										</div>
+									<div class="network-w" style="display:none;">
+										
 									</div>
 								</div>	
 								<div class="collateral-w">
@@ -609,6 +591,8 @@ $current_loan_currency=$loan->loan_currency_id;
 
  
 });
+
+	updateBalance();
 
 	$(document).on('click','.backend-loan-method',function()
 	{
@@ -781,7 +765,23 @@ function wallet_balance()
     crypto_address+='<img style="width:28px;" src="'+currencyRow.image_url+'" alt="'+currencyRow.short_name+'">';
     }
 
-    crypto_address+='</label><p>Network Name: <b>'+currencyRow.short_name+'</b><br> Average arrival time: <b>1 minutes</b></p></div><div class="col-lg-6 col-sm-6 col-12"> <label>Address</label><div class="row top-n"><div class="col-lg-9 col-sm-9 col-9"><p>'+loan_repay_currency.crypto_wallet_address+'</p></div><div class="col-lg-3 col-sm-3 col-3 flush-left"> <img src="http://127.0.0.1:8000/front/img/icon-14.png" alt=""></div></div></div></div></div>';
+    crypto_address+='</label><p>Network Name: <b>'+currencyRow.short_name+'</b><br> Average arrival time: <b>1 minutes</b></p></div><div class="col-lg-6 col-sm-6 col-12"> <label>Address</label><div class="row top-n"><div class="col-lg-9 col-sm-9 col-9"><p>'+loan_repay_currency.crypto_wallet_address+'</p></div><div class="col-lg-3 col-sm-3 col-3 flush-left">';
+
+   //  <img src="http://127.0.0.1:8000/front/img/icon-14.png" alt="">
+
+    crypto_address+='<ul style="display: flex;justify-content: space-between;"><li><a class="text-dark" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top"  title="Copy Address"><i class="fa fa-clone" aria-hidden="true"></i></a></li><li class="css-11nldkw"> <a href="#" class="text-dark"><i class="fa fa-qrcode" aria-hidden="true"></i></a><div class="QrCode css-jac2fa"><div class="css-ghsb4z"></div>';
+
+    if(currencyRow.qr_code.length)
+    {
+       crypto_address+='<canvas height="120" width="120" style="height: 120px; width: 120px; background: url('+currencyRow.qr_code+');"></canvas>'
+    }
+
+  
+
+
+    
+
+     crypto_address+=' </div></li></ul></div></div></div></div></div>';
 
     $('.network-w').replaceWith(crypto_address);
 

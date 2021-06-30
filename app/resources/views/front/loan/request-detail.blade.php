@@ -64,7 +64,7 @@
 											<label>Loan Amount</label>
 										</div>
 										<div class="col-lg-12 xs-right col-sm-12 col-6">	
-											<h4>{{$loan_detail->loan_amount}}<span>{{$loan_detail->loan_currency->short_name}}</span></h4>
+											<h4>{{$loan_detail->loan_amount}} <span>{{$loan_detail->loan_currency->short_name}}</span></h4>
 										</div>
 									</div>
 								</div>
@@ -74,7 +74,7 @@
 											<label>Loan Term Value</label>
 										</div>
 										<div class="col-lg-12 xs-right col-sm-12 col-6">
-											<h4>{{$loan_detail->term_detail->terms_percentage}}% <br><span>{{$loan_detail->term_detail->no_of_duration}} &nbsp;{{$loan_detail->term_detail->duration_type}}</span></h4>
+											<h4>{{$loan_detail->term_detail->terms_percentage}}% <span>{{$loan_detail->term_detail->no_of_duration}} {{$loan_detail->term_detail->duration_type}}</span></h4>
 										</div>
 									</div>
 								</div>
@@ -118,7 +118,7 @@
 							</div>
 						</div>	
 						<div class="col-lg-12 col-sm-12 col-12 xs-flush">
-							@if($loan_detail->collateral_currency->collateral_address->crypto_wallet_address && !(isset($loan_detail->is_wallet)))
+							@if(isset($loan_detail->collateral_currency->collateral_address)&& $loan_detail->collateral_currency->collateral_address->crypto_wallet_address && !(isset($loan_detail->is_wallet)))
 							<div class="collateral-deposit-details">
 								<div class="row">
 									<div class="col-lg-5 col-sm-5 col-12">
@@ -156,7 +156,17 @@
 											<div class="col-lg-6 text-right col-sm-6 col-6">
 												<ul class="loan_code">
 													<li><a href="#"><i class="fa fa-clone" aria-hidden="true"></i></a></li>
-													<li><a href="#"><i class="fa fa-qrcode" aria-hidden="true"></i></a></li>
+													<!-- <li><a href="#"><i class="fa fa-qrcode" aria-hidden="true"></i></a></li> -->
+													<li class="css-11nldkw">
+																	<a href="#"><i class="fa fa-qrcode" aria-hidden="true"></i></a>
+																	<div class="QrCode css-jac2fa"><div class="css-ghsb4z"></div>
+																	@if(isset($loan_detail->collateral_currency->collateral_address) && $loan_detail->collateral_currency->collateral_address->hasMedia('qr_code'))
+
+																	<canvas height="120" width="120" style="height: 120px; width: 120px; background: url({{$loan_detail->collateral_currency->collateral_address->firstMedia('qr_code')->getUrl()}});"></canvas>
+
+																	@endif
+																</div>
+																</li>
 												</ul>
 											</div>
 										</div>
@@ -183,11 +193,11 @@
 									<div class="row">
 										<div class="col-lg-6 col-sm-6 col-12">
 											<label>Final Loan Amount</label>
-											<h3>{{$loan_detail->loan_repayment}}<span>{{$loan_detail->loan_currency->short_name}}</span></h3>
+											<h3>{{$loan_detail->loan_repayment}}<span>&nbsp;{{$loan_detail->loan_currency->short_name}}</span></h3>
 										</div>
 										<div class="col-lg-6 col-sm-6 col-12">
 											<label>Collateral Amount</label>
-											<h3>{{$loan_detail->collateral_amount}} <span>{{$loan_detail->collateral_currency->short_name}}</span></h3>
+											<h3>{{$loan_detail->collateral_amount}}<span>&nbsp;{{$loan_detail->collateral_currency->short_name}}</span></h3>
 										</div>
 									</div>
 								</div>
@@ -244,112 +254,93 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>2212 <span>USD</span></td>
-										<td>CDFKM9483</td>
-										<td>23/05/2021</td>
-										<td><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> 2 BTC</td>
-										<td>30 Days</td>
-										<td>90%</td>
-										<td>Paid</td>
-										<td><a href="#">View Details</a></td>
-									</tr>
-									<tr>
-										<td>23 <span>USD</span></td>
-										<td>CDFKM9483</td>
-										<td>23/05/2021</td>
-										<td><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> 2 BTC</td>
-										<td>30 Days</td>
-										<td>90%</td>
-										<td class="red-c">UnPaid</td>
-										<td><a href="#">View Details</a></td>
-									</tr>
-									<tr>
-										<td>2212 <span>USD</span></td>
-										<td>CDFKM9483</td>
-										<td>23/05/2021</td>
-										<td><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> 2 BTC</td>
-										<td>30 Days</td>
-										<td>90%</td>
-										<td>Paid</td>
-										<td><a href="#">View Details</a></td>
-									</tr>
-									<tr>
-										<td>23 <span>USD</span></td>
-										<td>CDFKM9483</td>
-										<td>23/05/2021</td>
-										<td><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> 2 BTC</td>
-										<td>30 Days</td>
-										<td>90%</td>
-										<td class="red-c">UnPaid</td>
-										<td><a href="#">View Details</a></td>
-									</tr>
+										@foreach($loans as $loan)
+											<tr>
+
+												<td>{{$loan->loan_amount}} <span>{{$loan->loan_currency->short_name}}</span></td>
+												<td>{{$loan->loan_id}}</td>
+												<td>{{$loan->loan_date}}</td>
+												<td>
+													@if($loan->collateral_currency->hasMedia('icon'))
+													<img style="max-width:28px;" src="{{$loan->collateral_currency->firstMedia('icon')->getUrl()}}" alt="{{$loan->collateral_currency->short_name}}"/>
+
+													@endif
+
+													{{$loan->collateral_amount}} {{$loan->collateral_currency->short_name}}</td>
+												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
+												<td>{{$loan->term_percentage}}%</td>
+												<td>{{ucwords($loan->status)}}</td>
+												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
+
+											</tr>
+
+											@endforeach
 								</tbody>
 							</table>
 						</div>	
 					</div>
-					<div class="col-lg-12 visible-xs col-sm-12 col-12">
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Loan Amount</th>
-										<th>Order Number</th>
-										<th>Order Date</th>
-										<th>Collateral</th>
-										<th>Loan Term</th>
-										<th>LTV</th>
-										<th>Status</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>2212 <span>USD</span></td>
-										<td>CDFKM9483</td>
-										<td>23/05/2021</td>
-										<td><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> 2 BTC</td>
-										<td>30 Days</td>
-										<td>90%</td>
-										<td>Paid</td>
-										<td><a href="#">View Details</a></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>	
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Loan Amount</th>
-										<th>Order Number</th>
-										<th>Order Date</th>
-										<th>Collateral</th>
-										<th>Loan Term</th>
-										<th>LTV</th>
-										<th>Status</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>2212 <span>USD</span></td>
-										<td>CDFKM9483</td>
-										<td>23/05/2021</td>
-										<td><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> 2 BTC</td>
-										<td>30 Days</td>
-										<td>90%</td>
-										<td>Paid</td>
-										<td><a href="#">View Details</a></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>	
+					<div class="col-lg-12 visible-xs col-sm-12 col-12 xs-flush">
+						@foreach($loans as $loan)
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Loan Amount</th>
+												<th>Order Number</th>
+												<th>Order Date</th>
+												<th>Collateral</th>
+												<th>Loan Term</th>
+												<th>LTV</th>
+												<th>Status</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												
+
+														<td>{{$loan->loan_amount}} <span>{{$loan->loan_currency->short_name}}</span></td>
+												<td>{{$loan->loan_id}}</td>
+												<td>{{$loan->loan_date}}</td>
+												<td>
+													@if($loan->collateral_currency->hasMedia('icon'))
+													<img style="max-width:28px;" src="{{$loan->collateral_currency->firstMedia('icon')->getUrl()}}" alt="{{$loan->collateral_currency->short_name}}"/>
+
+													@endif
+
+													{{$loan->collateral_amount}} {{$loan->collateral_currency->short_name}}</td>
+												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
+												<td>{{$loan->term_percentage}}%</td>
+												<td>{{ucwords($loan->status)}}</td>
+												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+								@endforeach
 					</div>
 				</div>
 			</div>
       </div> 
    </section>
+
+    <div class="modal" id="exampleModalloan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body text-center">
+				<img src="{{asset('front/img/img-7.png')}}" alt=""/>
+				<p>I confirm that I have made deposit of my collateral 
+				to the wallet address shown in this page.</p>
+				<a href="#" onclick="confirmSubmit()" class="btn-primary">I Understand</a>
+            </div>
+         </div>
+      </div>
+   </div>
 
 
 @endsection
@@ -366,7 +357,11 @@
 	  if($('#backend-i-agree').prop('checked')==true)
 	  {
          $('#backend-i-agree').css('border','1px solid black');
+         @if(!(isset($loan_detail->is_wallet)))
+         $('#exampleModalloan').modal('show');
+         @else
         $('#loanForm').submit();
+        @endif
 
 	  }
 	  else
@@ -378,6 +373,12 @@
 
 
 	  }
+	}
+
+	function confirmSubmit()
+	{
+        $('#loanForm').submit();
+
 	}
 </script>
 

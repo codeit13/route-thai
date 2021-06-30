@@ -56,7 +56,7 @@ $loan_variables=(object)$loan_variables;
 
 				<p>
 
-					@foreach($collateral_currencies as $cl_currency)
+					@foreach($loanable_currencies as $cl_currency)
 
 					@if($cl_currency->hasMedia('icon'))
 
@@ -103,7 +103,7 @@ $loan_variables=(object)$loan_variables;
 									</div>
 									<div class="row">
 										<div class="col-lg-12 col-sm-12 col-12">
-											<div class="multi_form">
+											<div class="multi_form loan">
 												<div class="dropdown currencyDropdown currency_two three_coins crypto">
 
 												  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -298,9 +298,9 @@ $loan_variables=(object)$loan_variables;
 							</div>
 						</div>	
 						<div class="close-price">
-							<div class="row">
-								<div class="col-lg-8 b-right col-sm-8 col-12">
-									<label><input type="checkbox" name="set_close_price" id="backend-set-close-price" /> Set close price at  <formL><input type="number" name="close_price" id="backend-close-price" disabled="" placeholder="Enter amount"/><button type="button">USDT</button></formL>
+							<div class="row" style="min-height: 51px;">
+								<div class="col-lg-8  col-sm-8 col-12">
+									<label><al style="margin-top:11px;display: inline-block;"><input  type="checkbox" name="set_close_price" id="backend-set-close-price" /> Set close price at </al> <formL style="display: none"><input type="number" name="close_price" id="backend-close-price"  placeholder="Enter amount"/><button type="button">USDT</button></formL>
                                   
                                    @error('close_price')
                                 <p class="invalid-value text-danger" role="alert">
@@ -310,7 +310,7 @@ $loan_variables=(object)$loan_variables;
 
 									</label>
 								</div>
-								<div class="col-lg-4 col-sm-4 col-12">
+								<div class="col-lg-4 col-sm-4 col-12" style="display:none;">
 									<div class="row">
 										<div class="col-lg-12 text-right col-sm-12 col-12">
 											<p>Min: <span id="backend-min-price">1,797,994.87</span> USDT &nbsp;&nbsp; <mark>Max: <span id="backend-max-price">1,797,994.87</span> USDT</mark></p>
@@ -318,7 +318,7 @@ $loan_variables=(object)$loan_variables;
 									</div>	
 									<div class="row">
 										<div class="col-lg-12 text-right col-sm-12 col-12">
-											<p><a href="#">Know More</a></p>
+											<!-- <p><a href="#">Know More</a></p> -->
 										</div>
 									</div>	
 								</div>
@@ -362,7 +362,7 @@ $loan_variables=(object)$loan_variables;
 						<h4>My Loan History</h4>
 					</div>
 					<div class="col-lg-6 text-right col-sm-6 col-6">
-						<a href="#" class="btn-success">View All</a>
+						<a href="{{route('loan.history')}}" class="btn-success">View All</a>
 					</div>
 				</div>
 				<div class="row">
@@ -382,107 +382,73 @@ $loan_variables=(object)$loan_variables;
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>2212 <span>USD</span></td>
-										<td>CDFKM9483</td>
-										<td>23/05/2021</td>
-										<td><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> 2 BTC</td>
-										<td>30 Days</td>
-										<td>90%</td>
-										<td>Paid</td>
-										<td><a href="#">View Details</a></td>
-									</tr>
-									<tr>
-										<td>23 <span>USD</span></td>
-										<td>CDFKM9483</td>
-										<td>23/05/2021</td>
-										<td><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> 2 BTC</td>
-										<td>30 Days</td>
-										<td>90%</td>
-										<td class="red-c">UnPaid</td>
-										<td><a href="#">View Details</a></td>
-									</tr>
-									<tr>
-										<td>2212 <span>USD</span></td>
-										<td>CDFKM9483</td>
-										<td>23/05/2021</td>
-										<td><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> 2 BTC</td>
-										<td>30 Days</td>
-										<td>90%</td>
-										<td>Paid</td>
-										<td><a href="#">View Details</a></td>
-									</tr>
-									<tr>
-										<td>23 <span>USD</span></td>
-										<td>CDFKM9483</td>
-										<td>23/05/2021</td>
-										<td><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> 2 BTC</td>
-										<td>30 Days</td>
-										<td>90%</td>
-										<td class="red-c">UnPaid</td>
-										<td><a href="#">View Details</a></td>
-									</tr>
+									@foreach($loans as $loan)
+											<tr>
+
+												<td>{{$loan->loan_amount}} <span>{{$loan->loan_currency->short_name}}</span></td>
+												<td>{{$loan->loan_id}}</td>
+												<td>{{$loan->loan_date}}</td>
+												<td>
+													@if($loan->collateral_currency->hasMedia('icon'))
+													<img style="max-width:28px;" src="{{$loan->collateral_currency->firstMedia('icon')->getUrl()}}" alt="{{$loan->collateral_currency->short_name}}"/>
+
+													@endif
+
+													{{$loan->collateral_amount}} {{$loan->collateral_currency->short_name}}</td>
+												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
+												<td>{{$loan->term_percentage}}%</td>
+												<td>{{ucwords($loan->status)}}</td>
+												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
+
+											</tr>
+
+											@endforeach
+									
 								</tbody>
 							</table>
 						</div>	
 					</div>
-					<div class="col-lg-12 visible-xs col-sm-12 col-12">
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Loan Amount</th>
-										<th>Order Number</th>
-										<th>Order Date</th>
-										<th>Collateral</th>
-										<th>Loan Term</th>
-										<th>LTV</th>
-										<th>Status</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>2212 <span>USD</span></td>
-										<td>CDFKM9483</td>
-										<td>23/05/2021</td>
-										<td><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> 2 BTC</td>
-										<td>30 Days</td>
-										<td>90%</td>
-										<td>Paid</td>
-										<td><a href="#">View Details</a></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>	
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Loan Amount</th>
-										<th>Order Number</th>
-										<th>Order Date</th>
-										<th>Collateral</th>
-										<th>Loan Term</th>
-										<th>LTV</th>
-										<th>Status</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>2212 <span>USD</span></td>
-										<td>CDFKM9483</td>
-										<td>23/05/2021</td>
-										<td><img src="{{asset('front/img/bitcoin.png')}}" alt=""/> 2 BTC</td>
-										<td>30 Days</td>
-										<td>90%</td>
-										<td>Paid</td>
-										<td><a href="#">View Details</a></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>	
+					<div class="col-lg-12 visible-xs col-sm-12 col-12 xs-flush">
+							@foreach($loans as $loan)
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Loan Amount</th>
+												<th>Order Number</th>
+												<th>Order Date</th>
+												<th>Collateral</th>
+												<th>Loan Term</th>
+												<th>LTV</th>
+												<th>Status</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												
+
+														<td>{{$loan->loan_amount}} <span>{{$loan->loan_currency->short_name}}</span></td>
+												<td>{{$loan->loan_id}}</td>
+												<td>{{$loan->loan_date}}</td>
+												<td>
+													@if($loan->collateral_currency->hasMedia('icon'))
+													<img style="max-width:28px;" src="{{$loan->collateral_currency->firstMedia('icon')->getUrl()}}" alt="{{$loan->collateral_currency->short_name}}"/>
+
+													@endif
+
+													{{$loan->collateral_amount}} {{$loan->collateral_currency->short_name}}</td>
+												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
+												<td>{{$loan->term_percentage}}%</td>
+												<td>{{ucwords($loan->status)}}</td>
+												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+								@endforeach
+							
 					</div>
 				</div>
 			</div>

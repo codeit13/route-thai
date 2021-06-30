@@ -143,7 +143,7 @@ class SettingsController extends Controller
 
         // loan
 
-        if($currency->type_id==1 && $currency->is_crypto)
+        if($currency->type_id==1)
         {
              $row=array('id'=>$currency->id,'value'=>$currency->short_name,'selected'=>false);
 
@@ -164,7 +164,7 @@ class SettingsController extends Controller
 
          // collateral
 
-        if($currency->type_id==1 && $currency->is_crypto)
+        if($currency->type_id==1)
         {
              $row=array('id'=>$currency->id,'value'=>$currency->short_name,'selected'=>false);
 
@@ -185,7 +185,7 @@ class SettingsController extends Controller
 
         // repay
 
-        if($currency->type_id==1 && $currency->is_crypto)
+        if($currency->type_id==1)
         {
              $row=array('id'=>$currency->id,'value'=>$currency->short_name,'selected'=>false);
 
@@ -264,6 +264,14 @@ class SettingsController extends Controller
           $rules['loan_min_percentage']='required|numeric|min:1|max:100';
           $rules['loan_max_percentage']='required|numeric|gt:loan_min_percentage|min:1|max:100';
           $rules['loan_interest_rate']='required|numeric|gt:0';
+
+           if($request->has('collateral_crypto_rows'))
+          {
+            foreach($request->collateral_crypto_rows as $key => $val) {
+              $rules['collateral_crypto_rows.'.$key.'.qr'] = 'image|dimensions:ratio=0/0';
+              
+            }
+          }
 
           $request->validate($rules);
 
@@ -346,6 +354,14 @@ class SettingsController extends Controller
     public function loan_terms_repay_update(Request $request) {
 
     //  echo '<pre>';print_r($request->all());die;
+      if($request->has('collateral_crypto_rows1'))
+          {
+            foreach($request->collateral_crypto_rows1 as $key => $val) {
+              $rules['collateral_crypto_rows1.'.$key.'.qr'] = 'image|dimensions:ratio=0/0';
+              
+            }
+          }
+          $request->validate($rules);
       $adminId = Auth::user()->id;
       try {
         
@@ -366,11 +382,42 @@ class SettingsController extends Controller
               }
 
 
-             if($request->has('collateral_crypto_rows') && count($request->collateral_crypto_rows))
+             if($request->has('collateral_crypto_rows1') && count($request->collateral_crypto_rows1))
              {
-              foreach ($request->collateral_crypto_rows as $key => $value) {
+              foreach ($request->collateral_crypto_rows1 as $key => $value) {
                  
                 LoanRepayCurrency::where('currency_id',$value['currency_id'])->update(array('crypto_wallet_address'=>$value['crypto_wallet_address'],'crypto_wallet_memo'=>$value['crypto_wallet_memo']));
+
+                $loan_repay_row=LoanRepayCurrency::whereCurrencyId($value['currency_id'])->first();
+
+                //echo '<pre>';print_r($loan_repay_row->toArray());die;
+
+                if($request->hasFile('collateral_crypto_rows1.'.$key.'.qr'))
+        {
+   
+
+            $fileName=time().'____'.$request->file('collateral_crypto_rows1.'.$key.'.qr')->getClientOriginalName();
+
+          //  echo '<pre';print_r($fileName);die;
+
+           
+
+               if($loan_repay_row->hasMedia('qr_code'))
+               {
+                  $loan_repay_row->detachMediaTags('qr_code');
+               }
+               
+                 $media=\MediaUploader::fromSource($request->{'collateral_crypto_rows1.'.$key.'.qr'})
+                               ->useFilename($fileName)
+                               ->toDirectory('crypto_address')
+                               ->upload();
+
+                 $loan_repay_row->attachMedia($media,'qr_code');
+
+                              
+        }
+
+
 
               }
             } 
@@ -419,15 +466,41 @@ class SettingsController extends Controller
       $adminId = Auth::user()->id;
 
       
-  // echo '<pre';print_r($request->collateral_crypto_rows);die;
       foreach ($request->collateral_crypto_rows as $key => $value) {
 
         $value['crypto_address']=$value['crypto_address']?$value['crypto_address']:'';
 
+        $collateral_address= CollateralAddress::updateOrCreate(['currency_id'=>$value['currency_id']],["currency_id"=>$value['currency_id'],"crypto_wallet_address"=>$value['crypto_address'],'crypto_memo'=>$value['crypto_memo'],"updated_by"=>$adminId]);
+
+        if($request->hasFile('collateral_crypto_rows.'.$key.'.qr'))
+        {
+   
+
+            $fileName=time().'____'.$request->file('collateral_crypto_rows.'.$key.'.qr')->getClientOriginalName();
+
+          //  echo '<pre';print_r($fileName);die;
+
+           
+
+               if($collateral_address->hasMedia('qr_code'))
+               {
+                  $collateral_address->detachMediaTags('qr_code');
+               }
+               
+                 $media=\MediaUploader::fromSource($request->{'collateral_crypto_rows.'.$key.'.qr'})
+                               ->useFilename($fileName)
+                               ->toDirectory('crypto_address')
+                               ->upload();
+
+                 $collateral_address->attachMedia($media,'qr_code');
+
+                              
+        }
+
    //      $newvalue=(object)$value;
    // echo '<pre>';print_r($newvalue->currency_id);die;
 
-        CollateralAddress::updateOrCreate(['currency_id'=>$value['currency_id']],["currency_id"=>$value['currency_id'],"crypto_wallet_address"=>$value['crypto_address'],'crypto_memo'=>$value['crypto_memo'],"updated_by"=>$adminId]);
+       
       }
     
     }

@@ -31,17 +31,42 @@
       @endif 
     @endforeach
 
+  
+
+   <!--  second table  -->
+
+
     <div class="row">
+     
       <div class="col">
         <div class="card">
           <!-- Card header -->
           <div class="card-header border-0">
-            <h3 class="mb-0">{{ __("Loan Request Table") }}</h3>
+            <h3 class="mb-0">{{ __("Loans") }}</h3>
+           
           </div>
+
+           <div class="d-flex justify-content-center w-25 p-2">
+                           <div class="col-md-5"><h3><i class="fa fa-filter" aria-hidden="true"></i> Filter</h3></div>
+                           <div class="col-md-7">
+                              <select name="status" class="" onchange="submitForm()" id="status_change">
+                                 <option value="">All</option>
+                                
+                                 <option value="approved">Approved</option>
+                                 <option value="rejected">Rejected</option>
+                                 <option value="repaid">Repaid</option>
+                                 <option value="liquidate">Liquidate</option>
+
+                                 <option value="close">Close</option>
+
+                              </select>
+                            </div>
+                          </div>
+                           
           <!-- Light table -->
           <div class="table-responsive">
             
-            <table class="table table-bordered" id="loan-table">
+            <table class="table table-bordered" id="loan-updated">
         <thead>
             <tr>
                  
@@ -52,7 +77,9 @@
                   <th scope="col" class="sort" data-sort="completion">Loan Terms</th>
                   
                   <th scope="col" class="sort" data-sort="status">Order date</th>
+                  <th scope="col" class="sort" data-sort="completion">Status</th>
                   <th scope="col" class="sort" data-sort="completion">Action</th>
+
 
             </tr>
         </thead>
@@ -66,7 +93,7 @@
       </div>
     </div>
 
-
+   <!--end -->
 </div>
 @endsection
 
@@ -77,10 +104,20 @@
 <script type="text/javascript">
   
   $(function() {
-    $('#loan-table').DataTable({
+   
+
+    // loans updated
+   var loansUpdatedTable= $('#loan-updated').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{!! route('admin.loan.data') !!}',
+        ajax: {
+
+            url: '{!! route('admin.loan.data.updated') !!}',
+            data: function (d) {
+                d.status = $('#status_change').val();
+               
+            }
+        },
         columns: [
             { data: 'id', name: 'id' },
        //     { data: 'loan_id', name: 'loan_id' },
@@ -90,14 +127,19 @@
             //{ data: 'loan_term', name: 'loan_term' },
             { data: 'term_percentage', name: 'term_percentage' },
             { data: 'created_at', name: 'created_at' },
-            { data: 'action', name: 'action' },
+            { data: 'action', name: 'status' },
+            { data: 'detail_link', name: 'detail_link' },
+
 
 
 
         ]
     });
 
-    
+   $('#status_change').on('change', function(e) {
+        loansUpdatedTable.draw();
+        e.preventDefault();
+    });
 });
 </script>
 @endsection

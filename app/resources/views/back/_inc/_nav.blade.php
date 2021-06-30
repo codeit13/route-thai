@@ -152,8 +152,20 @@
                  <ul class="navbar-nav mb-md-3">
                   <li class="nav-item">
                     <!--  -->
+                     <a class="nav-link" href="{{ route('admin.loan.all') }}"> <i class="ni ni-money-coins text-red" aria-hidden="true"></i>
+                     <span class="nav-link-text">Loans</span>
+                     </a>
+                  </li>
+                  <li class="nav-item">
+                    <!--  -->
                      <a class="nav-link" href="{{ route('admin.loan.list') }}"> <i class="ni ni-money-coins text-red" aria-hidden="true"></i>
                      <span class="nav-link-text">Loan Requestes</span>
+                     </a>
+                  </li>
+                  <li class="nav-item">
+                    <!--  -->
+                     <a class="nav-link" href="{{ route('admin.repayments.index') }}"> <i class="ni ni-money-coins text-red" aria-hidden="true"></i>
+                     <span class="nav-link-text">Repay Requestes</span>
                      </a>
                   </li>
                   <li class="nav-item">

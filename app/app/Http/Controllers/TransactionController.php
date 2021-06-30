@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\CurrencyType;
 use MediaUploader;
 use App\Http\Traits\GenerateTransIDTrait;
+use App\Notifications\Notify;
+
 
 class TransactionController extends Controller
 {
@@ -163,7 +165,7 @@ class TransactionController extends Controller
     {
 
     
-        $request->validate(['quantity' =>'required|numeric|gt:0','currency_id'=>'required|numeric','transaction_image'=>'required']);
+        $request->validate(['quantity' =>'required|numeric|gt:0','currency_id'=>'required|numeric','transaction_image'=>'required|image']);
 
 
         $fileName=time().'____'.$request->file('transaction_image')->getClientOriginalName();
@@ -178,6 +180,8 @@ class TransactionController extends Controller
        
         if($this->makeTransaction($request,$type,$media))
         {
+          
+          
 
           return redirect()->back()->with('success','The deposit request is created.');
 
@@ -410,6 +414,24 @@ class TransactionController extends Controller
        $transaction->trans_id = $this->generateID();
 
        $transaction->balance_before_trans = $balance_before_trans;
+
+       if(strtoupper($type) == "WITHDRAW") {
+        $Message = "[Route-Thai] Withdrawal Request of " . $transaction->quantity . " " . $transaction->currency->name . " has been recieved successfully.";
+       } else if(strtoupper($type) == "DEPOSIT") {
+        $Message = "[Route-Thai] Deposit Request of " . $transaction->quantity . " " . $transaction->currency->name . " has been recieved successfully.";
+       }
+       
+       Notify::sendMessage([
+        'sms_notification' => $user->sms_notification,
+        'mobile' => $user->mobile,
+        'telegram_notification' => $user->telegram_notification,
+        'telegram_user_id' => $user->telegram_user_id,
+        'line_notification' => $user->line_notification,
+        'line_user_id' => $user->line_user_id,
+        'email_notification' => $user->email_notification,
+        'email_id' => $user->email,
+        'Message' => $Message,
+    ]);
 
        return $transaction->save();
     }

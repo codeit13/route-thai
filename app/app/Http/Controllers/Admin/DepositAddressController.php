@@ -38,12 +38,47 @@ class DepositAddressController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['address'=>'required','currency'=>'required']);
+
+      
+
+        $request->validate(['address'=>'required','currency'=>'required','qr'=>'image|dimensions:ratio=0/0']);
+
+
+          
+
+       
 
         $row=['address'=>$request->address,'admin_id'=>auth()->id()];
 
-        if(\App\Models\DepositAddress::updateOrCreate(['currency_id'=>$request->currency],$row))
+        
+
+        if($address=\App\Models\DepositAddress::updateOrCreate(['currency_id'=>$request->currency],$row))
         {
+
+            if($request->hasFile('qr'))
+        {
+            $fileName=time().'____'.$request->file('qr')->getClientOriginalName();
+
+           
+
+               if($address->hasMedia('qr_code'))
+               {
+                  $address->detachMediaTags('qr_code');
+               }
+               
+                 $media=\MediaUploader::fromSource($request->qr)
+                               ->useFilename($fileName)
+                               ->toDirectory('crypto_address')
+                               ->upload();
+
+                 $address->attachMedia($media,'qr_code');
+
+                              
+        }
+         
+
+
+
             return redirect()->back()->with('success','The address is attaced to the currency');
         }
 
@@ -89,11 +124,33 @@ class DepositAddressController extends Controller
     public function update(Request $request, \App\Models\DepositAddress $deposit_address)
     {
 
+        $request->validate(['address'=>'required','currency'=>'required','qr'=>'image|dimensions:ratio=0/0']);
+
         $deposit_address->address=$request->address;
         $deposit_address->currency_id=$request->currency;
 
         if($deposit_address->save())
         {
+            if($request->hasFile('qr'))
+        {
+            $fileName=time().'____'.$request->file('qr')->getClientOriginalName();
+
+           
+
+               if($deposit_address->hasMedia('qr_code'))
+               {
+                  $deposit_address->detachMediaTags('qr_code');
+               }
+               
+                 $media=\MediaUploader::fromSource($request->qr)
+                               ->useFilename($fileName)
+                               ->toDirectory('crypto_address')
+                               ->upload();
+
+                 $deposit_address->attachMedia($media,'qr_code');
+
+                              
+        }
              return redirect()->route('admin.deposit.address')->with('success','The address is attaced to the currency');
         }
         else

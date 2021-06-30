@@ -37,7 +37,7 @@ class CheckWalletBalance implements Rule
           }
           else
           {
-            $wallet=$wallet->where('wallet_type','!=',3);
+            $wallet=$wallet->where('wallet_type','=',1);
           }
 
           $wallet=$wallet->first();

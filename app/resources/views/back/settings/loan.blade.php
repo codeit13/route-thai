@@ -99,7 +99,7 @@ text-decoration: none !important; }
       @endif 
     @endforeach
       <!-- Loan Apply Setting -->
-      <form action="{{ route('admin.settings.loan') }}" method="POST">
+      <form action="{{ route('admin.settings.loan') }}" method="POST" enctype="multipart/form-data">
             @csrf()
         <div class="card">
           <div class="card-header">
@@ -171,6 +171,7 @@ text-decoration: none !important; }
                  <label class="form-control-label" for="collateral_currency">Collateral Currency Address</label>
                 <div class="">
                     @foreach($collateralCruptoCurrencies as $key=>$record)
+
                         @csrf
                         <div class="row">
                             <div class="col-lg-2">
@@ -180,16 +181,39 @@ text-decoration: none !important; }
                                 </select>
                               </div>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-4">
                               <div class="form-group">
                                 <input type="text" class="form-control"  name="collateral_crypto_rows[{{$key}}][crypto_address]" placeholder="Crypto Address" value="{{ $record->collateral_address->crypto_wallet_address??'' }}">
                               </div>
                             </div>
 
-                            <div class="col-lg-5">
+                            <div class="col-lg-4">
                           <div class="form-group">
                             <input type="text" class="form-control" id="crypto_memo" name="collateral_crypto_rows[{{$key}}][crypto_memo]" placeholder="Crypto Memo" value="{{$record->collateral_address->crypto_memo??''}}">
                             @error('crypto_memo')
+                            <p class="invalid-value" role="alert">
+                                <strong>{{ __($message) }}</strong>
+                            </p>
+                            @enderror
+                          </div>
+                        </div>
+
+
+                            <div class="col-lg-2">
+                          <div class="form-group">
+                           @if($record->Collateral_address)
+                            @if($record->collateral_address->hasMedia('qr_code'))
+                                             <img style="width: 50px;" src="{{$record->collateral_address->firstMedia('qr_code')->getUrl()}}"/>
+
+                                             @else
+                                           
+                             <input type="file" name="collateral_crypto_rows[{{$key}}][qr]" class="form-control-file d-block" id="exampleFormControlFile1">
+                             @endif
+                               @else
+                                           
+                             <input type="file" name="collateral_crypto_rows[{{$key}}][qr]" class="form-control-file d-block" id="exampleFormControlFile1">
+                             @endif
+                              @error("collateral_crypto_rows.".$key.".qr")
                             <p class="invalid-value" role="alert">
                                 <strong>{{ __($message) }}</strong>
                             </p>
@@ -421,7 +445,7 @@ text-decoration: none !important; }
     @csrf()
     {{ method_field('PUT') }}
 @else
-    <form action="{{ route('admin.settings.loan.repay') }}" method="POST">
+    <form action="{{ route('admin.settings.loan.repay') }}" method="POST" enctype="multipart/form-data">
     @csrf()
 @endif
         <div class="card">
@@ -604,21 +628,37 @@ text-decoration: none !important; }
                         <div class="row">
                             <div class="col-lg-2">
                               <div class="form-group">
-                                <select class="form-control" name="collateral_crypto_rows[{{$key}}][currency_id]">
+                                <select class="form-control" name="collateral_crypto_rows1[{{$key}}][currency_id]">
                                   <option value="{{$record->currency_id}}">{{ $record->currency->name }}</option>
                                 </select>
                               </div>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-4">
                               <div class="form-group">
-                                <input type="text" class="form-control"  name="collateral_crypto_rows[{{$key}}][crypto_wallet_address]" placeholder="Crypto Address" value="{{ $record->crypto_wallet_address??'' }}">
+                                <input type="text" class="form-control"  name="collateral_crypto_rows1[{{$key}}][crypto_wallet_address]" placeholder="Crypto Address" value="{{ $record->crypto_wallet_address??'' }}">
                               </div>
                             </div>
 
-                            <div class="col-lg-5">
+                            <div class="col-lg-4">
                           <div class="form-group">
-                            <input type="text" class="form-control" id="crypto_memo" name="collateral_crypto_rows[{{$key}}][crypto_wallet_memo]" placeholder="Crypto Memo" value="{{$record->crypto_wallet_memo??''}}">
+                            <input type="text" class="form-control" id="crypto_memo" name="collateral_crypto_rows1[{{$key}}][crypto_wallet_memo]" placeholder="Crypto Memo" value="{{$record->crypto_wallet_memo??''}}">
                             @error('crypto_memo')
+                            <p class="invalid-value" role="alert">
+                                <strong>{{ __($message) }}</strong>
+                            </p>
+                            @enderror
+                          </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                          <div class="form-group">
+                            @if($record->hasMedia('qr_code'))
+                                             <img style="width: 50px;" src="{{$record->firstMedia('qr_code')->getUrl()}}"/>
+                                             @else
+                                           
+                             <input type="file" name="collateral_crypto_rows1[{{$key}}][qr]" class="form-control-file d-block" id="exampleFormControlFile1">
+                             @endif
+                              @error("collateral_crypto_rows1.".$key.".qr")
                             <p class="invalid-value" role="alert">
                                 <strong>{{ __($message) }}</strong>
                             </p>
@@ -709,29 +749,29 @@ text-decoration: none !important; }
     // $('#loanable_currency').select2({
     //   placeholder: "Select a currency",
     // });
-    var collateralCurrencyList = new Choices('#collateral_currency', {
-        removeItemButton: true,
-        maxItemCount:100,
-        searchResultLimit:8,
-        renderChoiceLimit:100,
-        items: [],
-        choices: @json($cryptoCurrencies),
-    }); 
-    var loanCurrencyList = new Choices('#loanable_currency', {
-        removeItemButton: true,
-        maxItemCount:100,
-        searchResultLimit:8,
-        renderChoiceLimit:100,
-        items: [],
-        choices: @json($cryptoCurrencies),
-    }); 
+    // var collateralCurrencyList = new Choices('#collateral_currency', {
+    //     removeItemButton: true,
+    //     maxItemCount:100,
+    //     searchResultLimit:8,
+    //     renderChoiceLimit:100,
+    //     items: [],
+    //     choices: @json($cryptoCurrencies),
+    // }); 
+    // var loanCurrencyList = new Choices('#loanable_currency', {
+    //     removeItemButton: true,
+    //     maxItemCount:100,
+    //     searchResultLimit:8,
+    //     renderChoiceLimit:100,
+    //     items: [],
+    //     choices: @json($cryptoCurrencies),
+    // }); 
   //  $('#loanable_currency').select2({
    //   placeholder: "Select a currency",
     // });
 
     $(document).ready(function(){
 
-    var LoanCurrencyList = new Choices('#loan-list', {
+    var LoanCurrencyList = new Choices('#loanable_currency', {
     removeItemButton: true,
     maxItemCount:100,
     searchResultLimit:8,
@@ -741,7 +781,7 @@ text-decoration: none !important; }
    
     });  
 
-    var CollateralCurrencyList = new Choices('#collateral-list', {
+    var CollateralCurrencyList = new Choices('#collateral_currency', {
     removeItemButton: true,
     maxItemCount:100,
     searchResultLimit:8,

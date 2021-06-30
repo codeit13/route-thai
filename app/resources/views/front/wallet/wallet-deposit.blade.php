@@ -283,26 +283,38 @@
 
 										<div class="tab-pane fade show active" id="currency_tab_{{$currency->id}}" role="tabpanel" aria-labelledby="home-tab">
 
-												<div class="col-lg-12 xs-flush heading-p text-center col-sm-12 col-12">
+												<div class="col-lg-12 xs-flush heading-p text-center col-sm-12 col-12 position-relative">
 										<p>Network Name: {{__($currency->name)}}({{__($currency->short_name)}})&nbsp;&nbsp;Average arrival time: 1 minutes</p>
 									</div>
 
-											<div class="gray-c">
+									<h6 class="backend-copied-elem text-center position-relative" style="top:53px; z-index:1000;margin-top:-26px;display:none"><b style="padding:5px 17px;border-radius:4px;background:#8c8383;font-weight:normal;color: white;">Copy Successful</b></h6>
+
+											<div class="gray-c" >
+
+												
+
 												<div class="col-12">
 													<h6>{{__("Address")}}</h6>
 												</div>
 												<div class="col-12">
 													<div class="row">
 														<div class="col-6 col-sm-6 col-lg-6">
-															<h3>{{$currency->deposit_address->address??''}}</h3>
+															<h3 class="backend-deposit-address">{{$currency->deposit_address->address??''}}</h3>
+															<input type="hidden" class="backend-deposit-address-value" value="{{$currency->deposit_address->address??''}}" name="fdfsf">
 														</div>
 														<div class="col-6 text-right col-sm-6 col-lg-6">
 															<!-- <img class="small_mobiledd" src="{{asset('front/img/icon-14.png')}}" alt=""> -->
 															<ul>
-																<li><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy Address"><i class="fa fa-clone" aria-hidden="true"></i></a></li>
+																<li><a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" onclick="copyAddress('{{$currency->deposit_address->address??''}}')" title="Copy Address"><i class="fa fa-clone" aria-hidden="true"></i></a></li>
 																<li class="css-11nldkw">
 																	<a href="#"><i class="fa fa-qrcode" aria-hidden="true"></i></a>
-																	<div class="QrCode css-jac2fa"><div class="css-ghsb4z"></div><canvas height="120" width="120" style="height: 120px; width: 120px; background: url({{asset('front/img/qrcode.png')}});"></canvas></div>
+																	<div class="QrCode css-jac2fa"><div class="css-ghsb4z"></div>
+																	@if(isset($currency->deposit_address) && $currency->deposit_address->hasMedia('qr_code'))
+
+																	<canvas height="120" width="120" style="height: 120px; width: 120px; background: url({{$currency->deposit_address->firstMedia('qr_code')->getUrl()}});"></canvas>
+
+																	@endif
+																</div>
 																</li>
 															</ul>
 														</div>
@@ -529,6 +541,31 @@ $(document).on('keyup','#quantity',function()
     }
 
 })
+
+// function copyAddress(address)
+// {
+// 	console.log(address);
+// }
+
+function copyAddress(text) {
+ const elem = document.createElement('textarea');
+   elem.value = text;
+   document.body.appendChild(elem);
+   elem.select();
+   document.execCommand('copy');
+   document.body.removeChild(elem);
+  document.execCommand("copy");
+
+  $('.backend-copied-elem').css('display','block');
+
+  setTimeout(function(){
+
+  $('.backend-copied-elem').css('display','none');
+   
+  },1000);
+}
+
+
 
 </script>
 

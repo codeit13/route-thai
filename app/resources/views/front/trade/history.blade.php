@@ -63,7 +63,7 @@ Route: P2P Trading Platform
                                         <label>{{__('Types of Currency')}}</label>
                                     </div>
                                 </div>
-                                <div class="dropdown currency_two three_coins crypto currencyDropdown">
+                                <div class="dropdown currency_two three_coins crypto currencyDropdown nerro_space">
                                     @foreach($currencies as $cIndex=> $currency)
                                     @if($currency->id==$currentCurrency)
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -193,7 +193,7 @@ Route: P2P Trading Platform
                     </form>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 history-details  col-sm-12 col-12">
+                        <div class="col-lg-12 history-details order_h col-sm-12 col-12">
                             <table>
                                 <thead>
                                     <tr>
@@ -209,26 +209,26 @@ Route: P2P Trading Platform
                                 <tbody>
                                     @foreach($transactions as $tIndex => $transaction)
                                     <tr class="xs-full">
-                                        <td class="@if($transaction->type=='buy')buy @else sell @endif hidden-xs">
+                                        <td class="@if($transaction->type=='buy')buy @else sell @endif">
                                             <h2>{{__(ucwords($transaction->type))}}</h2>
                                         </td>
-                                        <td class="hidden-xs" colspan="2"><span>{{__("Order number")}}</span>{{$transaction->trans_id}}</td>
+                                        <td class="" colspan="2"><span>{{__("Order number")}}</span>{{$transaction->trans_id}}</td>
                                         <td class="xs-full" colspan="2" style="padding-left: 90px;"><span>{{__("Created time")}}</span>{{$transaction->created_at}}</td>
-                                        <td class="hidden-xs"></td>
+                                        <td class="last_conh"></td>
                                     </tr>
                                     <tr>
                                         <td>
                                             @if($transaction->currency->hasMedia('icon'))
                                             <img style="max-width: 28px;" class="top-xs-m" src="{{$transaction->currency->firstMedia('icon')->getUrl()}}" alt="{{__($transaction->currency->name)}}"/> 
                                             @endif
-                                            <label class="visible-xs">{{__($transaction->currency->short_name)}} <span>{{__($transaction->currency->name)}}</span></label>
+                                            <label class="visible-xs">{{__($transaction->currency->short_name)}} <span class="btcon">{{__($transaction->currency->name)}}</span></label>
                                         </td>
                                         <td class="size-t">
-                                            <label class="hidden-xs">{{$transaction->trans_amount}} {{__($transaction->fiat_currency->short_name)}}</label> <label class="visible-xs">{{__("Quantity")}} <span>{{$transaction->trans_amount}}</span></label></td>
-                                        <td class="hidden-xs">{{number_format((float)$transaction->quantity/$transaction->trans_amount, 5, '.', '')}}/{{$transaction->currency->short_name}}</td>
-                                        <td class="hidden-xs">{{$transaction->quantity}}&nbsp;{{__($transaction->currency->short_name)}}</td>
+                                            <label class="">{{$transaction->trans_amount}} {{__($transaction->fiat_currency->short_name)}}</label> <label class="visible-xs">{{__("Quantity")}} <span>{{$transaction->trans_amount}}</span></label></td>
+                                        <td class="ftl_left">{{number_format((float)$transaction->quantity/$transaction->trans_amount, 5, '.', '')}}/{{$transaction->currency->short_name}}</td>
+                                        <td class="ftl_right">{{$transaction->quantity}}&nbsp;{{__($transaction->currency->short_name)}}</td>
                                         <td class="light">
-                                            <label class="hidden-xs">
+                                            <label class="">
                                                 @if($transaction->type == 'sell')
                                                     @if($transaction->status == 'approved')
                                                         {{ $transaction->buyer_trans->user->name }}
@@ -250,7 +250,7 @@ Route: P2P Trading Platform
                                             </label> 
                                             {{-- <a class="file visible-xs" href="#">View File</a> --}}
                                         </td>
-                                        <td class="hidden-xs show_on">
+                                        <td class="show_on">
                                             @switch($transaction->status)
                                                 @case('pending')
                                                     <img src="{{asset('front/img/icon-27.png')}}" alt=""/>
@@ -276,6 +276,8 @@ Route: P2P Trading Platform
                                             @endif
                                             @if($transaction->status != 'approved')
                                                 <a class="btn-success" href="@if($transaction->type == 'sell') {{route('sell.buyer_request',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif" style="padding: 7px;color: white;"><i class="fa fa-eye"></i></a> 
+                                            @else
+                                                <a class="btn-success" href="@if($transaction->type == 'sell') {{route('sell.order_success',['trans_id'=>$transaction->trans_id])}} @else {{route('payment.show',['transaction'=>$transaction->trans_id])}} @endif" style="padding: 7px;color: white;"><i class="fa fa-eye"></i></a> 
                                             @endif
                                         </td>
                                     </tr>

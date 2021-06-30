@@ -98,7 +98,7 @@ function showCurrencyRate()
 
 	var newText='<img src="" alt=""/>&nbsp; '+cryptoRow.short_name+':<b>'+numberWithCommas(usdPrice)+'</b> USDT <span></span> <a href="#"></a>';
 
-	  $('plimit').html((usdPrice*parseFloat(price_down_limit)/100).toFixed(2));
+	  $('plimit').html((usdPrice-usdPrice*parseFloat(price_down_limit)/100).toFixed(2));
 
 	 // $('#backend-limit-text').html('USDT');
 
@@ -172,9 +172,9 @@ function showCurrencyRate()
 		newUpdateLoanPrice=(parseFloat(newUpdateLoanPrice)+parseFloat(Interest)).toFixed(5);
 
 
-		$('#backend-loan-repayment,#backend-final-loan-amount').html(newUpdateLoanPrice+'<span>'+fiatRow.short_name+'</span>');
+		$('#backend-loan-repayment,#backend-final-loan-amount').html(newUpdateLoanPrice+'<span> '+fiatRow.short_name+'</span>');
 
-		$('#backend-collateral-amount').html(collateral_quantity+'<span>'+cryptoRow.short_name+'</span>')
+		$('#backend-collateral-amount').html(collateral_quantity+'<span> '+cryptoRow.short_name+'</span>')
 
 
 
@@ -271,15 +271,28 @@ $(document).ready(function(){
 	})
 
 	$(document).on('click','#backend-set-close-price',function(){
+		$('#backend-close-price').keyup();
 
 		if($(this).prop('checked')==true)
 		{
-			$('#backend-close-price').attr('disabled',false);
-			$('#backend-close-price').keyup();
+			//$('#backend-close-price').attr('disabled',false);
+
+			$(this).parents('div').eq(0).find('formL').css('display','inline-block');
+			$(this).parents('div').eq(0).next('div').css('display','inline-block');
+
+			$(this).parents('div').eq(0).addClass('b-right');
+
+			$('#backend-close-price').val('');
 		}
 		else
 		{
-			$('#backend-close-price').attr('disabled',true);
+			//$('#backend-close-price').attr('disabled',true);
+
+			$(this).parents('div').eq(0).find('formL').css('display','none');
+			$(this).parents('div').eq(0).next('div').css('display','none');
+			$(this).parents('div').eq(0).removeClass('b-right');
+
+
 			
 		}
 
