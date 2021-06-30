@@ -9,7 +9,7 @@
   <!-- Argon JS -->
   <script src="{{ asset('back/js/argon.js?v=1.2.0') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js"></script>
-  <script src="{{ asset('back/js/darkmode.js') }}" charset="utf-8"></script>
+  {{-- <script src="{{ asset('back/js/darkmode.js') }}" charset="utf-8"></script> --}}
   <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
   <script type="text/javascript">

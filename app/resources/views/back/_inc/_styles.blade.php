@@ -24,7 +24,7 @@ table.dataTable thead th, table.dataTable thead td {
     }
 
     table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
-        padding: 10px 5px !important;
-        text-align: center !important;
+        /*padding: 10px 5px !important;*/
+        /*text-align: center !important;*/
     }
 </style>
