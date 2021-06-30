@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Kreait\Firebase\Database;
+use Google\Cloud\Firestore\FirestoreClient;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,12 +39,14 @@ class Loan extends Model
   }
 
   public function save_Loan_To_Firebase($data) {
-    $database = app('firebase.database');
-
-    $value = $database->getReference('')
-        ->set([
-            $data->id => (array)$data,
+    $projectId = "routethai-loan-liquidation";
+        
+        $db = new FirestoreClient([
+            'projectId' => $projectId,
+            'keyFile' => json_decode(file_get_contents(base_path(env('GOOGLE_APPLICATION_CREDENTIALS'))), true),
         ]);
+
+        $db->collection('loans')->document($data->id)->set($data);
 
     return $value;
 }
