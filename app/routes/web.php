@@ -64,6 +64,9 @@ Route::middleware('auth')->group(function(){
         Route::get('profile',[App\Http\Controllers\UserController::class, 'profile'])->name('profile');
         Route::get('deviceManagement',[App\Http\Controllers\UserController::class, 'deviceManagement'])->name('deviceManagement');
         Route::get('security',[App\Http\Controllers\UserController::class, 'security'])->name('security');
+        Route::get('sendOTP/{channel}',[App\Http\Controllers\UserController::class, 'sendOTP'])->name('sendOTP');
+        
+        Route::post('activity/verify/2fa',[App\Http\Controllers\UserController::class, 'verifyActivity'])->name('activity.verify.2fa');
         Route::get('notifications',[App\Http\Controllers\UserController::class, 'notifications'])->name('notification');
         
         // Secuirity
@@ -76,6 +79,8 @@ Route::middleware('auth')->group(function(){
             Route::post('change-password/save', [App\Http\Controllers\ChangePasswordController::class,'store'])->name('change.password.save');
             Route::get('2fa/google',[App\Http\Controllers\UserController::class, 'addGoogle2fa'])->name('security.2fa.google.add');
             Route::post('2fa/google/save',[App\Http\Controllers\UserController::class, 'saveGoogle2fa'])->name('security.2fa.google.save');
+
+            
         });
         Route::get('payments',[App\Http\Controllers\UserPaymentMethodsController::class, 'index'])->name('payments');
         Route::get('payment/mode/edit/{id}',[App\Http\Controllers\UserPaymentMethodsController::class, 'edit'])->name('payment.edit');
