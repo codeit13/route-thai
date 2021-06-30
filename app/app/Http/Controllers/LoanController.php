@@ -22,7 +22,7 @@ class LoanController extends Controller
      */
     public function index(Request $request)
     {
-        $loans=auth()->user()->loans()->where('request_type','opening');
+        $loans=auth()->user()->loans();
 
         $currentCurrency='';
 
@@ -98,6 +98,8 @@ class LoanController extends Controller
 
         $terms=\App\Models\LoanTerms::all();
 
+        $loans=auth()->user()->loans()->orderBy('created_at','desc')->limit(5)->get();
+
         $loanSettings=\App\Models\Settings::whereIn('setting_code',['loan_price_down_limit','loan_max_percentage','loan_min_percentage','loan_interest_rate'])->get();
 
       //  $price_down=(object)(['percentage'=>5]);
@@ -112,7 +114,7 @@ class LoanController extends Controller
 
         
 
-        return view('front.loan.request',compact('currencies','wallets','crypto_rates','terms','loanSettings','loanable_currencies','collateral_currencies'));
+        return view('front.loan.request',compact('currencies','wallets','crypto_rates','terms','loanSettings','loanable_currencies','collateral_currencies','loans'));
     }
 
 
@@ -145,6 +147,8 @@ class LoanController extends Controller
 
         $request->session()->put('loan_detail', $request->all());
 
+
+
        
 
         return redirect()->route('loan.request.detail');
@@ -173,7 +177,8 @@ class LoanController extends Controller
 
         $loan_detail=$this->loan_data($request);
 
-        $repay_date=$this->repay_date($loan_detail);
+
+       
 
         if($loan_detail)
         {
@@ -190,7 +195,6 @@ class LoanController extends Controller
                              'term_percentage'=>$loan_detail->term_detail->terms_percentage,
                              'term_id'=>$loan_detail->term_detail->id,
                              'on_wallet'=>$loan_detail->on_wallet??0,'collateral_currency_rate'=>$loan_detail->usdt,'loan_repayment_amount'=>$loan_detail->loan_repayment,
-                             'repay_date'=>$repay_date,
                              'has_close_price'=>$loan_detail->set_close_price??0,
                              'close_price'=>$loan_detail->close_price??'',
                              'is_agree'=>$request->agree,
@@ -204,11 +208,11 @@ class LoanController extends Controller
 
         $message='Your loan request is created and pending for approval.';
 
-        $notification='[Route-Thai] Loan request (Ending with '.substr($loan->loan_id,-7).') with Collateral of '.$loan->collateral_amount.' '.$loan->collateral_currency->short_name.' and Loan amount '.$loan->loan_amount.' '.$loan->loan_currency->short_name.', Validity of '.$loan->duration.' '.$loan->duration_type.' has been created. You will be notified when your Loan is approved.';
+        $notification='[Route-Thai] Loan request (Ending with '.substr($loan->loan_id,-4).') with Collateral of '.$loan->collateral_amount.' '.$loan->collateral_currency->short_name.' and Loan amount '.$loan->loan_amount.' '.$loan->loan_currency->short_name.', Validity of '.$loan->duration.' '.$loan->duration_type.' has been created. You will be notified when your Loan is approved.';
 
         if(isset($loan_detail->is_wallet))
         {
-            $wallet=$user->wallet()->where('currency_id',$loan_detail->currency_id)->first();
+            $wallet=$user->wallet()->where('wallet_type',1)->where('currency_id',$loan_detail->currency_id)->first();
 
             $wallet->coin=$wallet->coin-$loan_detail->collateral_amount;
 
@@ -230,6 +234,10 @@ class LoanController extends Controller
                 $user->wallet()->create($newWallet);
             }
 
+            $repay_date=$this->repay_date($loan_detail);
+
+            $loan->repay_date=$repay_date;
+
             $loan->on_wallet=1;
 
             $loan->status='approved';
@@ -238,7 +246,7 @@ class LoanController extends Controller
 
             $message='Your loan request is approved successfully.';
 
-            $notification='[Route-Thai] Loan request (Ending with '.substr($loan->loan_id,-7).') with Collateral of '.$loan->collateral_amount.' '.$loan->collateral_currency->short_name.' and Loan amount '.$loan->loan_amount.' '.$loan->loan_currency->short_name.', Validity of '.$loan->duration.' '.$loan->duration_type.' has been successfully approved. The Loan amount transferred to your Loan wallet.';
+            $notification='[Route-Thai] Loan request (Ending with '.substr($loan->loan_id,-4).') with Collateral of '.$loan->collateral_amount.' '.$loan->collateral_currency->short_name.' and Loan amount '.$loan->loan_amount.' '.$loan->loan_currency->short_name.', Validity of '.$loan->duration.' '.$loan->duration_type.' has been successfully approved. The Loan amount transferred to your Loan wallet.';
         }
 
         $loan->save_Loan_To_Firebase($loan);
@@ -274,6 +282,11 @@ class LoanController extends Controller
 
         $loan_detail=$this->loan_data($request);
 
+        //echo '<pre>';print_r($loan_detail);die;
+
+        $loans=auth()->user()->loans()->latest()->limit(5)->get();
+
+
         $collateral_currencies=\App\Models\Currency::where('is_collateral',1)->get();
 
 
@@ -282,7 +295,7 @@ class LoanController extends Controller
 
 
 
-          return view('front.loan.request-detail',compact('loan_detail','collateral_currencies'));
+          return view('front.loan.request-detail',compact('loan_detail','collateral_currencies','loans'));
     }
 
     /**
@@ -306,7 +319,7 @@ class LoanController extends Controller
 
 
 
-        $loans=auth()->user()->loans()->where('request_type','opening')->latest()->limit(5)->get();
+        $loans=auth()->user()->loans()->latest()->limit(5)->get();
 
 
         return view('front.loan.detail',compact('loan','loans'));
@@ -369,16 +382,20 @@ class LoanController extends Controller
 
         if($loan){
 
-        $close_request=array('loan_opening_id'=>$loan->id,'currency_id'=>$loan->currency_id,'loan_currency_id'=>$request->currency_id,'collateral_amount'=>$loan->collateral_amount,'loan_amount'=>$request->loan_amount,'loan_repayment_amount'=>$request->loan_repayment_amount,'term_id'=>$loan->term_id,'request_type'=>'closing','crypto_wallet_address'=>$request->crypto_wallet_address,'repay_date'=>$loan->repay_date);
+        $close_request=array('loan_opening_id'=>$loan->id,'currency_id'=>$loan->currency_id,'loan_currency_id'=>$request->currency_id,'collateral_amount'=>$loan->collateral_amount,'loan_amount'=>$request->loan_amount,'loan_repayment_amount'=>$request->loan_repayment_amount,'crypto_wallet_address'=>$request->crypto_wallet_address,'user_id'=>auth()->id());
 
-        $loan_close_request=auth()->user()->loans()->create($close_request);
-
-
-        if($request->payment_method=='wallet')
+         if($request->payment_method=='wallet')
         {
             $close_request['on_wallet']=1;
 
         }
+
+        $close_request['collateral_method']='wallet';
+
+        $loan_close_request=$loan->repay_request()->create($close_request);
+
+
+       
 
 
        
@@ -428,7 +445,7 @@ class LoanController extends Controller
                 $value->image_url=$value->firstMedia('icon')->getUrl();
 
             }
-            if($value->loan_repay_currency->hasMedia('qr_code'))
+            if(isset($value->loan_repay_currency) && $value->loan_repay_currency->hasMedia('qr_code'))
             {
                 $value->qr_code=$value->loan_repay_currency->firstMedia('qr_code')->getUrl();
 
@@ -469,6 +486,8 @@ class LoanController extends Controller
 
 
          $loan_detail = (object)$request->session()->get('loan_detail');
+
+     //    echo '<pre>';print_r($loan_detail);die;
 
          $loan_detail->collateral_currency=\App\Models\Currency::find($loan_detail->currency_id);
 
@@ -658,11 +677,6 @@ class LoanController extends Controller
 
 }
 
-public function repaid()
-{
-
-}
-
 public function repay_date($loan)
 {
     if($loan->term_detail->duration_type=='month')
@@ -685,5 +699,7 @@ public function repay_date($loan)
 
     return $repay_date;
 }
+
+
 
 }

@@ -25,22 +25,32 @@
                             <li class="active">
                                 <p>Loan Started</p><br><span>1</span>
                             </li>
-                            <li class="{{ in_array($loan->status, ['approved','close','paid']) ? "active" : "" }}">
+                            <li class="{{ in_array($loan->status, ['approved','repaid','close','paid']) ? "active" : "" }}">
                                 <p>Loan In Progress</p><br><span>2</span>
                             </li>
                            
 
-                            <li class="{{ in_array($loan->status, ['close','paid']) ? "active" : "" }}">
+                            <li class="{{ in_array($loan->status, ['close','paid','repaid']) ? "active" : "" }}">
                                 <p>Loan Repaid</p><br><span>3</span>
                             </li>
 
-                             <li class="{{ in_array($loan->status, ['close','paid']) ? "active" : "" }}">
+                             <li class="{{ in_array($loan->status, ['liquidate']) ? "active" : "" }}">
                                 <p>Loan liquidated</p><br><span>4</span>
                             </li>
+
+                            @if($loan->status=='rejected')
+
+                               <li class="active">
+                                <p>Loan Rejected</p><br><span>5</span>
+                            </li>
+
+                          @else
 
                             <li class="{{ in_array($loan->status, ['close','paid']) ? "active" : "" }}">
                                 <p>Loan Closed</p><br><span>5</span>
                             </li>
+
+                              @endif
 
                            {{--
                                                                                   <li class="{{ in_array($loan->status, ['rejected']) ? "active" : "d-none" }}">
@@ -49,13 +59,32 @@
                             </ul>
                         </div>
                     </div>
-                    <a href="{{route('admin.loan.update.status',['id'=>$loan->id, 'status'=>'approved'])}}" class="btn btn-primary text-white {{ $loan->status == 'pending' ? "" : "d-none" }}">Change to Approved</a>
-                    <a href="{{route('admin.loan.update.status',['id'=>$loan->id, 'status'=>'rejected'])}}" class="btn btn-primary  text-white {{ $loan->status == 'pending' ? "" : "d-none" }}" >Change to Rejected</a>
+                    <a href="{{route('admin.loan.update.status',['id'=>$loan->id, 'status'=>'approved'])}}" class="btn btn-success text-white p-1 {{ $loan->status == 'pending' ? "" : "d-none" }}">Change to Approved</a>
+
+                    @if($loan->repay_request && $loan->repay_request->status !='approved')
+
+                    @if($loan->repay_request->collateral_method != 'wallet')
+
+                     <a onclick="return confirm_action(this);" href="{{route('admin.repayment.update.status',['id'=>$loan->repay_request->id, 'status'=>'approved'])}}" class="btn btn-success text-white p-1 {{ $loan->status == 'approved' ? "" : "d-none" }}">Change To Repaid</a>
+
+                     @else
+
+                     <a  href="{{route('admin.repayment.update.status',['id'=>$loan->repay_request->id, 'status'=>'approved'])}}" class="btn btn-success text-white p-1 {{ $loan->status == 'approved' ? "" : "d-none" }}">Change To Repaid</a>
+
+                     @endif
 
 
-                  {{--  <a class="btn btn-primary text-white {{ $trans->status == 'approved' ? "disabled" : "d-none" }}" id="btn-status-change-from-">ORDER FINISHED</a>
-                                                        <a class="btn btn-primary text-white {{ $trans->status == 'rejected' ? "disabled" : "d-none" }}" id="btn-status-change-from-">ORDER REJECTED</a>
-                                                        <a data-value="rejected" class="btn btn-primary statusUpdate text-white {{ $trans->status == 'pending' || $trans->status == 'in_progress' ? "" : "d-none" }}" id="change-to-uploaded">Change to Rejected</a> --}}
+                     @endif
+
+                        @if($loan->status == 'repaid')
+
+                     <a  href="{{route('admin.loan.update.status',['id'=>$loan->id, 'status'=>'close'])}}" class="btn btn-success text-white p-1 {{ $loan->status == 'repaid' ? "" : "d-none" }}">Change To Close</a>
+
+                     @endif
+
+                    <a href="{{route('admin.loan.update.status',['id'=>$loan->id, 'status'=>'rejected'])}}" class="btn btn-danger p-1  text-white {{ $loan->status == 'pending' ? "" : "d-none" }}" >Change to Rejected</a>
+
+
                 </div>
             </div>
             <div class="col-lg-4 col-xs-12">
@@ -146,20 +175,8 @@
         <div class="row row-eq-height space-inner">
             @php 
 
-                            $days=$loan->duration;
 
-                          if($loan->duration_type=='month')
-                          {
-                            $days=$loan->duration*30;
-                          }
-                          if($loan->duration_type=='year')
-                          {
-                              $days=$loan->duration*365;
-                          }
-
-                          $repay_date=$loan->created_at->addDays($days);
-
-                          $days=\Carbon\Carbon::now()->diffInDays($repay_date);
+                          $days=\Carbon\Carbon::now()->diffInDays($loan->repay_date);
 
                           $loan_repay_detail=$loan->repay_request;
 
@@ -176,22 +193,68 @@
                          <li>Loan Repaid Date: <b>
                            
 
-                          {{$repay_date->isoFormat('Do-MMMM,Y')}}| {{$repay_date->isoFormat('h:mm a')}} ( {{$days}} days left)
+                          {{$loan->repay_date->isoFormat('Do-MMMM,Y')}}| {{$loan->repay_date->isoFormat('h:mm a')}} ( {{$days}} days left)
 
 
                          
 
                         </b></li>
 
-                        <li>Loan Repay Repa: <b>
+                        <li>Repay Request Date: 
                            
 
-                          {{$repay_date->isoFormat('Do-MMMM,Y')}}| {{$repay_date->isoFormat('h:mm a')}} ( {{$days}} days left)
+                          <b>{{$loan_repay_detail->created_at->isoFormat('Do-MMMM,Y')}}| {{$loan_repay_detail->created_at->isoFormat('h:mm a')}}</b>
+
+                             </li>
+
+                             <li>Repay Currency: 
+                           
+
+                         <b>
+                            @if($loan_repay_detail->loan_currency->hasMedia('icon'))
+       
+                          <img class="mb-1" style="width:20px;height:20px;" src="{{$loan_repay_detail->loan_currency->firstMedia('icon')->getUrl()}}"/> 
+
+                          @endif
+
+                          {{$loan_repay_detail->loan_currency->short_name}} </b>
+
+                             </li>
+
+                              <li>Loan Repaid Amount: <b>
+                           
+
+                          {{$loan_repay_detail->loan_repayment_amount}}  {{$loan_repay_detail->loan_currency->short_name}}
 
 
                          
 
                         </b></li>
+
+                        <li>Loan Repaid Method: <b>
+
+                            @if($loan_repay_detail->collateral_method=='wallet')
+
+                            Wallet
+
+                            @else
+
+                            Manual Deposit
+
+                            @endif
+                           
+                          </b></li>
+
+                            @if($loan_repay_detail->collateral_method != 'wallet')
+
+                            <li>
+                                  Collateral Wallet Address: <b>{{$loan_repay_detail->crypto_wallet_address}}</b>
+                            </li>
+
+
+                            @endif
+
+
 
                     </ul>
                        @else
@@ -220,10 +283,10 @@
                                      
                          <li>Loan Repay Date: <b>
 
-                             @if(!in_array($loan->status,['rejected','auto_close','close']))    
+                             @if(!in_array($loan->status,['rejected','auto_close','close','pending']))    
                            
 
-                          {{$repay_date->isoFormat('Do-MMMM,Y')}}| {{$repay_date->isoFormat('h:mm a')}} ( {{$days}} days left)
+                          {{$loan->repay_date->isoFormat('Do-MMMM,Y')}}| {{$loan->repay_date->isoFormat('h:mm a')}} ( {{$days}} days left)
 
                           @else
 
@@ -273,10 +336,50 @@
 
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background:#151c31 !important;color: white !important;">
+        <h5 class="modal-title text-light" id="exampleModalLabel">Suggestion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Collateral transferred manually.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="markAsDone()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('page_scripts')
-<script>
+<script type="text/javascript">
+
+    var current_repay_request='';
+
+ 
+  function confirm_action(selector)
+  {
+    current_repay_request=$(selector).attr('href');
+
+     $('#confirmModal').modal('show');
+
+     return false;
+
+     
+  }
+
+  function markAsDone()
+  {
+    window.location.href=current_repay_request;
+  }
 
 </script>
 @endsection

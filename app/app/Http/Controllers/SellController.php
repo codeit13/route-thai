@@ -29,6 +29,7 @@ class SellController extends Controller
 
         $transcation =  Transaction::where('trans_id',$trans_id)
                                         ->where('status','pending')
+                                        ->where('type','sell')
                                         ->first();
 
     	$crypto_currencies = Currency::where('is_tradable',1)->where('type_id',1)->get();
@@ -290,6 +291,25 @@ class SellController extends Controller
                 'transcation',
                 'user_payment_methods'
             ));
+        }
+
+        if ($transcation->status == 'approved') {
+            $transcation = Transaction::with('buyer_requests')
+                                        ->with('buyer_trans')
+                                        ->withCount('buyer_requests')
+                                        ->where('trans_id',$trans_id)->first();
+
+            $user_payment_methods = UserPaymentMethod::with('payment_methods')
+                                                        ->with('user')
+                                                        ->where('user_id',auth()->user()->id)
+                                                        ->where('status','active')
+                                                        ->get();                                           
+            $show = true;                                                        
+            return view('front.sell.success',compact(
+                'transcation',
+                'user_payment_methods',
+                'show'
+            ));   
         }
 
         return redirect()->route('home');

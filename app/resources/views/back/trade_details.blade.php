@@ -3,6 +3,15 @@
     Trade Details |
 @endsection
 @section('content')
+<style type="text/css">
+.form-wizard .form-wizard-steps li:last-child::before {
+    width: 0% !important;
+}
+
+.form-wizard .form-wizard-steps li{
+    width: 20% !important;
+}
+</style>
     <div class="container-fluid mt-6 team-members transaction">
         <div class="row row-eq-height">
             <div class="col-lg-8 col-xs-12">
@@ -11,18 +20,21 @@
                     <div class="form-wizard">
                         <div class="form-wizard-header text-center">
                             <ul class="list-unstyled form-wizard-steps clearfix">
-                            <li class="active">
-                                <p>Order Started</p><br><span>1</span>
-                            </li>
-                            <li class="{{ in_array($trans->status, ['in_progress','approved','rejected']) ? "active" : "" }}">
-                                <p>Order In Progress</p><br><span>2</span>
-                            </li>
-                            <li class="{{ in_array($trans->status, ['approved'])  ? "active" : ($trans->status == "rejected"  ? "d-none" : "") }}">
-                                <p>Order Finished</p><br><span>3</span>
-                            </li>
-                            <li class="{{ in_array($trans->status, ['rejected']) ? "active" : "d-none" }}">
-                                <p>Order Rejected</p><br><span>3</span>
-                            </li>
+                                <li class="active">
+                                    <p>Order Started</p><br><span>1</span>
+                                </li>
+                                <li>
+                                    <p>Order In Progress</p><br><span>2</span>
+                                </li>
+                                <li>
+                                    <p>Order In Appeal</p><br><span>3</span>
+                                </li>
+                                <li>
+                                    <p>Order Finished</p><br><span>4</span>
+                                </li>
+                                <li>
+                                    <p>Order Cancelled</p><br><span>5</span>
+                                </li>
                             </ul>
                         </div>
                     </div>

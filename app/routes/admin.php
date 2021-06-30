@@ -71,12 +71,13 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('guest:ad
         ]);
         Route::get('loan/update/{id}/status/{status}','LoanController@updateStatus')->name('loan.update.status');
 
-        // Repayments
+         // Repayments
 
         Route::get('repayments','RepaymentController@index')->name('repayments.index');
 
         Route::get('repayments/data','RepaymentController@repayment_requests')->name('repayments.request.list');
 
+         Route::get('repayment/update/{id}/status/{status}','RepaymentController@updateStatus')->name('repayment.update.status');
 
 
     });

@@ -73,6 +73,29 @@
 
 
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background:#151c31 !important;color: white !important;">
+        <h5 class="modal-title text-light" id="exampleModalLabel">Suggestion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Collateral transferred manually.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="markAsDone()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 @endsection
 
 @section('page_scripts')
@@ -93,12 +116,12 @@
             { data: 'collateral_info', name: 'collateral_amount' },
 
             { data: 'loan_amount', name: 'loan_amount' },
-            { data: 'loan_repayment_amount', name: 'loan_amount' },
+            { data: 'loan_repayment_amount', name: 'loan_repayment_amount' },
 
-            { data: 'repay_date', name: 'repay_date' },
+            { data: 'loan_request.repay_date', name: 'loan_request.repay_date' },
 
             //{ data: 'loan_term', name: 'loan_term' },
-            { data: 'term_percentage', name: 'term_percentage' },
+            { data: 'loan_request.term_percentage', name: 'loan_request.term_percentage' },
             { data: 'created_at', name: 'created_at' },
             { data: 'action', name: 'action' },
 
@@ -109,5 +132,24 @@
 
     
 });
+
+  var current_repay_request='';
+
+ 
+  function confirm_action(selector)
+  {
+    current_repay_request=$(selector).attr('href');
+
+     $('#confirmModal').modal('show');
+
+     return false;
+
+     
+  }
+
+  function markAsDone()
+  {
+    window.location.href=current_repay_request;
+  }
 </script>
 @endsection

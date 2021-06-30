@@ -125,7 +125,7 @@
 
 									<div class="col-lg-2 col-sm-4 col-6">
 										<h6>Loan Term Value</h6>
-										<h5><b>{{$loan->term_percentage}}%</b><br><span>{{$loan->duration}}{{$loan->duration_type}}</span></h5>
+										<h5><b>{{$loan->term_percentage}}%</b><span>{{$loan->duration}}{{$loan->duration_type}}</span></h5>
 									</div>
 									<div class="col-lg-2 col-sm-4 col-6">
 										<h6>Close price set at</h6>
@@ -150,23 +150,14 @@
 							<!-- <a href="{{route('loan.close',$loan->loan_id)}}" class="btn-info close-now">Close now</a> -->
 						</div>
 
-						@if($loan->status =='approved')
+						@if($loan->status =='approved' && !$loan->repay_request)
 						<div class="col-lg-6 hidden-xs text-right pdl-2 col-sm-4 col-7">
 							<label>Live Price: <span>{{number_format($loan->current_value,2)}} USDT</span> <a href="{{route('loan.repay',$loan->loan_id)}}" class="btn-info">Repay Loan</a></label>
 							@php 
 
-							$days=$loan->duration;
+							
 
-                          if($loan->duration_type=='month')
-                          {
-                          	$days=$loan->duration*30;
-                          }
-                          if($loan->duration_type=='year')
-                          {
-                              $days=$loan->duration*365;
-                          }
-
-                          $repay_date=$loan->created_at->addDays($days);
+                          $repay_date=$loan->repay_date;
 
                           $days=\Carbon\Carbon::now()->diffInDays($repay_date);
 
@@ -204,7 +195,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-12 hidden-xs col-sm-12 col-12">
+				<div class="col-lg-12 hidden-xs col-sm-12 col-12 flush">
 					<div class="table-responsive">
 						<table class="table">
 							<thead>
