@@ -46,7 +46,7 @@ class Loan extends Model
             'keyFile' => json_decode(file_get_contents(base_path(env('GOOGLE_APPLICATION_CREDENTIALS'))), true),
         ]);
 
-        $db->collection('loans')->document($data->id)->set($data);
+        $value = $db->collection('loans')->document($data->id)->set((array)$data);
 
     return $value;
 }
