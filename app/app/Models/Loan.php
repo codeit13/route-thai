@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Google\Cloud\Firestore\FirestoreClient;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,6 +38,21 @@ class Loan extends Model
     return $this->hasOne('App\Models\LoanRepayRequest','loan_opening_id','id');
   }
 
+  public function save_Loan_To_Firebase($data) {
+    $projectId = "routethai-loan-liquidation";
+        
+        $db = new FirestoreClient([
+            'projectId' => $projectId,
+            'keyFile' => json_decode(file_get_contents(base_path(env('GOOGLE_APPLICATION_CREDENTIALS'))), true),
+        ]);
 
+        $value = $db->collection('loans')->document($data->id)->set((array)$data);
 
+    return $value;
+}
+
+  public function loan_request()
+  {
+    return $this->belongsTo('App\Models\Loan','loan_opening_id');
+  }
 }
