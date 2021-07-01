@@ -49,8 +49,7 @@ class UserController extends Controller
         $user->mobile = $request->mobile;
         $user->sms_auth = 1;
         $user->save();
-        Auth::logout();
-        return redirect()->route('login')->with('message','Your mobile has been updated. Please login again.');
+        return redirect()->route('user.security')->with('message','Your mobile has been updated.');
     }
     public function confimrUpdateEmail(Request $request){
 
@@ -74,8 +73,7 @@ class UserController extends Controller
             $user = Auth::user();
             $user->email = $request->email;
             $user->save();
-            Auth::logout();
-	        return redirect()->route('login')->with('message','Your email has been updated. Please login with your new email address.');
+            return redirect()->route('user.security')->with('message','Your email has been updated.');
             
         } else{
             return redirect()->route('user.updateEmail');
@@ -193,6 +191,25 @@ class UserController extends Controller
         $user->save();
         return redirect()->route('user.security');
     }
+    public function verifyActivity(Request $request){
+        
+        $google2fa = app('pragmarx.google2fa');
 
-   
+        $request->validate([
+            'code' => ['required'] 
+        ]);
+        $secret = $request->code;
+
+        $valid = $google2fa->verifyKey(Auth::user()->google2fa_secret, $secret);
+        $status = 'failed';
+        if($valid) {
+            $status = 'success';
+        }
+        return response()->json(['status'=>$status]);
+    }   
+
+    public function sendOTP($channel){
+        $data = $this->service->sendOTP(Auth::user()->email, $channel);
+        return $data;
+    }
 }

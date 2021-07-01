@@ -180,6 +180,8 @@ return [
 
         Aws\Laravel\AwsServiceProvider::class,
 
+        Kreait\Laravel\Firebase\ServiceProvider::class,
+
 
 
         // LINE NOTIFY SERVICE

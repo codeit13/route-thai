@@ -9,6 +9,8 @@ use LINE;
 use Illuminate\Http\Request;
 use AWS;
 
+use App\Exceptions\NotifyMessageException;
+
 class Notify
 {
     public static function sendMessage($user)
@@ -21,30 +23,43 @@ class Notify
         if ($user['sms_notification']) {
             $sms = AWS::createClient('sns');
 
-            $sms->publish([
-                'Message' => $user['Message'],
-                'PhoneNumber' => $user['mobile'],
-                'MessageAttributes' => [
-                    'AWS.SNS.SMS.SMSType'  => [
-                        'DataType'    => 'String',
-                        'StringValue' => 'Transactional',
-                    ]
-                ],
-            ]);
+            try {
+                    $sms->publish([
+                    'Message' => $user['Message'],
+                    'PhoneNumber' => $user['mobile'],
+                    'MessageAttributes' => [
+                        'AWS.SNS.SMS.SMSType'  => [
+                            'DataType'    => 'String',
+                            'StringValue' => 'Transactional',
+                        ]
+                    ],
+                ]);
+            } catch(NotifyMessageException $exception) {
+                report($exception);
+            }
         }
 
         if ($user['telegram_notification']) {
-            Auth::user()->notify(new LaravelTelegramNotification([
-                'telegram_user_id' => $user['telegram_user_id'],
-                'text' => str_replace(array('_'), '\\_', $user['Message']),
-            ]));
+            try {
+                Auth::user()->notify(new LaravelTelegramNotification([
+                    'telegram_user_id' => $user['telegram_user_id'],
+                    'text' => str_replace(array('_'), '\\_', $user['Message']),
+                ]));
+            } catch(NotifyMessageException $exception) {
+                report($exception);
+                \Log::debug('Exception generated jh');
+            }
         }
 
         if ($user['line_notification']) {
-            LINE::pushmessage(
-                $user['line_user_id'],
-                new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($user['Message'])
-            );
+            try {
+                LINE::pushmessage(
+                    $user['line_user_id'],
+                    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($user['Message'])
+                );
+            } catch(NotifyMessageException $exception) {
+                report($exception);
+            }
         }
 
     }
