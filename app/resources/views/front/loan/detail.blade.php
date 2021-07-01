@@ -52,6 +52,151 @@
 					</div>
 				</div>
 			</div>	
+
+			<!--repay detail -->
+
+			@if($loan->repay_request && $loan->status !='close')
+
+				<div class="row tb-l pb-3">
+				<div class="col-lg-12 col-sm-12 col-12">
+					<div class="row">
+						<div class="col-lg-6 col-sm-6 col-6">
+							<h3>Repay Details</h3>
+						</div>
+						<div class="col-lg-6 text-right col-sm-6 col-6">
+							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-sm-6 col-6">
+							<label>Repay Request Date:{{$loan->repay_request->created_at->isoFormat('Do-MMMM')}}
+
+   <!-- 23rd may --> <span>|</span>&nbsp;{{$loan->repay_request->created_at->isoFormat('h:mm a')}}<!--  14:34PM --></label>
+						</div>
+						<!-- <div class="col-lg-6 text-right col-sm-6 col-6">
+							<label>Order Number: {{$loan->loan_id}}</label>
+						</div> -->
+					</div>
+
+					<div class="row">
+						<div class="col-lg-12 col-sm-12 col-12">
+							<div class="white-box">
+								<div class="row">
+									<div class="col-lg-2 xs-flush-right col-sm-4 col-6">
+										<h6>Repayment Amount</h6>
+										<h5><b>{{number_format($loan->loan_repayment_amount,5,".","")}}</b> {{$loan->loan_currency->short_name}}
+											
+										</h5>
+									</div>
+									<div class="col-lg-2 col-sm-4 col-6">
+										<h6>Amount Paid</h6>
+										<h5>
+											
+
+										 <b>{{number_format($loan->repay_request->loan_repayment_amount,5)}}<!-- 1,797,994.87 --></b> {{$loan->repay_request->loan_currency->short_name}} <!-- <br><a href="#">+0.73%;</a> --></h5>
+									</div>
+
+									<div class="col-lg-2 col-sm-4 col-6">
+										<h6>Payment Method</h6>
+										<h5>{{$loan->repay_request->on_wallet?'Wallet':'Manual Deposit'}}</h5>
+									</div>
+
+									<div class="col-lg-2 col-sm-4 col-6">
+										<h6>Collateral Info</h6>
+										<h5>{{$loan->repay_request->collateral_method?'Wallet':'Crypto Address'}}</h5>
+									</div>
+									
+									<div class="col-lg-2 col-sm-4 col-6">
+										<h6>Crypto Address</h6>
+										<h5><b>{{$loan->repay_request->crypto_wallet_address}}</b></h5>
+									</div>
+
+										<div class="col-lg-2 col-sm-4 col-6">
+										<h6>Status</h6><h5>
+
+									@switch($loan->repay_request->status)
+
+							@case('pending')
+							<b class="text-success">Pending</b>
+							@break
+
+							@case('rejected')
+
+							<b class="text-danger">Rejected</b>
+
+
+							@break
+
+							@case('approved')
+
+							<b class="text-success">Approved</b>
+                        
+							@break
+
+							@case('close')
+
+							<b class="text-success">Closed</b>
+                        
+							@break
+
+							@default
+
+							<b class="text-success">{{ucwords($loan->repay_request->status)}}</b>
+							
+
+							@break
+
+
+
+							@endswitch
+						</h5>
+						</div>
+
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-sm-8 col-5">
+							<!-- <a href="{{route('loan.close',$loan->loan_id)}}" class="btn-info close-now">Close now</a> -->
+						</div>
+
+						@if($loan->status =='approved' && !$loan->repay_request)
+						<div class="col-lg-6 hidden-xs text-right pdl-2 col-sm-4 col-7">
+							<label>Live Price: <span>{{number_format($loan->current_value,2)}} USDT</span> <a href="{{route('loan.repay',$loan->loan_id)}}" class="btn-info">Repay Loan</a></label>
+							@php 
+
+							
+
+                          $repay_date=$loan->repay_date;
+
+                          $days=\Carbon\Carbon::now()->diffInDays($repay_date);
+
+
+
+							@endphp
+							<p>Repay to {{$days}} days ({{$repay_date->isoFormat('Do-MMMM,Y')}}| {{$repay_date->isoFormat('h:mm a')}})</p>
+						</div>
+
+
+						<div class="col-lg-4 visible-xs text-right pdl-2 col-sm-4 col-7">
+							<label><a href="{{route('loan.repay',$loan->loan_id)}}" class="btn-info">Repay Loan</a></label>
+							<p>Repay to {{$days}} days ({{$repay_date->isoFormat('Do-MMMM,Y')}}| {{$repay_date->isoFormat('h:mm a')}})</p>
+						</div>
+
+						<div class="visible-xs xs-l-flush hidden-xs col-7">
+							<a href="#" class="btn-info repay-now">REPAY LOAN</a>
+							<p class="red-position">Repay to {{$days}} days (21st Sep, 2021 14:23)</p>
+						</div>
+						@endif
+					</div>
+				</div>
+			</div>
+
+
+			@endif
+
+			<!--end -->
+
 			<div class="row tb-l">
 				<div class="col-lg-12 col-sm-12 col-12">
 					<div class="row">
@@ -62,7 +207,7 @@
 							@switch($loan->status)
 
 							@case('pending')
-							<span class="in-progress">In Progress</span>
+							<span class="in-progress">Pending</span>
 							@break
 
 							@case('rejected')
@@ -74,13 +219,19 @@
 
 							@case('approved')
 
-							<span class="in-progress">Approved</span>
+							<span class="in-progress">In Progress</span>
+                        
+							@break
+
+							@case('close')
+
+							<span class="in-progress">Closed</span>
                         
 							@break
 
 							@default
 
-							<span class="in-progress">{{ucwords($loan->status)}}</span>
+							<span class="in-progress">{{$loan->front_status}}</span>
 							
 
 							@break
@@ -120,7 +271,7 @@
 
 									<div class="col-lg-2 col-sm-4 col-6">
 										<h6>Price Down Limit</h6>
-										<h5><b>{{$loan->price_down_percentage}}</b><span> USDT</span></h5>
+										<h5><b>{{$loan->price_down_value}}</b><span> USDT</span></h5>
 									</div>
 
 									<div class="col-lg-2 col-sm-4 col-6">
@@ -226,7 +377,7 @@
 													{{$loan->collateral_amount}} {{$loan->collateral_currency->short_name}}</td>
 												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
 												<td>{{$loan->term_percentage}}%</td>
-												<td>{{ucwords($loan->status)}}</td>
+												<td>{{$loan->front_status}}</td>
 												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
 
 											</tr>
@@ -269,7 +420,7 @@
 													{{$loan->collateral_amount}} {{$loan->collateral_currency->short_name}}</td>
 												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
 												<td>{{$loan->term_percentage}}%</td>
-												<td>{{ucwords($loan->status)}}</td>
+												<td>{{$loan->front_status}}</td>
 												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
 											</tr>
 

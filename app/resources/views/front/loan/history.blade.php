@@ -158,7 +158,7 @@
 									<select name="status" class="backend-filter">
 										<option value="">All</option>
 										<option value="pending" @if($request->status=='pending') selected @endif>{{__('Pending')}}</option>
-										<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
+										<option value="approved" @if($request->status=='approved') selected @endif>{{__('In Progress')}}</option>
 
 										<option value="close" @if($request->status=='close') selected @endif>{{__('Close')}}</option>
 
@@ -273,7 +273,7 @@
 												<select name="status" class="backend-filter">
 										<option value="">All</option>
 										<option value="pending" @if($request->status=='pending') selected @endif>{{__('Pending')}}</option>
-										<option value="approved" @if($request->status=='approved') selected @endif>{{__('Approved')}}</option>
+										<option value="approved" @if($request->status=='approved') selected @endif>{{__('In Progress')}}</option>
 
 										<option value="close" @if($request->status=='close') selected @endif>{{__('Close')}}</option>
 
@@ -329,7 +329,7 @@
 													{{$loan->collateral_amount}} {{$loan->collateral_currency->short_name}}</td>
 												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
 												<td>{{$loan->term_percentage}}%</td>
-												<td>{{ucwords($loan->status)}}</td>
+												<td>{{$loan->front_status}}</td>
 												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
 
 											</tr>
@@ -381,7 +381,7 @@
 													{{$loan->collateral_amount}} {{$loan->collateral_currency->short_name}}</td>
 												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
 												<td>{{$loan->term_percentage}}%</td>
-												<td>{{ucwords($loan->status)}}</td>
+												<td>{{$loan->front_status}}</td>
 												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
 											</tr>
 										</tbody>

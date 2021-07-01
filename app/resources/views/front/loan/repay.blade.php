@@ -102,7 +102,7 @@ $current_loan_currency=$loan->loan_currency_id;
 
 							@case('approved')
 
-							<span class="in-progress">Approved</span>
+							<span class="in-progress">In Progress</span>
                         
 							@break;
 
@@ -171,6 +171,10 @@ $current_loan_currency=$loan->loan_currency_id;
 					<div class="use-wallet">
 						<form action="{{route('loan.close.request',$loan->loan_id)}}" method="post" id="backend-loan-repay-form">
 							@csrf
+
+							<input type="hidden" name="loan_currency_rate" id="loan_currency_rate"/>
+
+
 						<div class="crypto-b">
 							<ul class="nav nav-tabs" id="myTab" role="tablist">
 								<li class="nav-item">
@@ -635,11 +639,15 @@ wallet_balance();
    	//console.log(cryptoRow);
            usdtPrice=parseFloat(filteredCryptoExchangeRow.lastPrice);
 
-           var loan_amount=parseFloat('{{$loan->loan_amount}}');
+           var loan_amount=parseFloat('{{$loan->loan_amount*$loan->loan_currency_rate}}');
 
-           var repay_amount=parseFloat('{{$loan->loan_repayment_amount}}');
+           var repay_amount=parseFloat('{{$loan->loan_repayment_amount*$loan->loan_currency_rate}}');
 
            var newUsdt=usdtPrice/parseFloat('{{$loanUsdt}}');
+
+           //change due to usdt base
+
+           var newUsdt=usdtPrice;
 
            console.log(newUsdt,usdtPrice);
 
@@ -651,18 +659,20 @@ wallet_balance();
 
            var loan_currency='{{$loan->loan_currency_id}}';
 
-           if(cryptoRow.id==loan_currency)
-           {
-           	  newLoanAmount=repay_amount;
+           // if(cryptoRow.id==loan_currency)
+           // {
+           // 	  newLoanAmount=repay_amount;
 
-           	  only_loan_amount=loan_amount;
+           // 	  only_loan_amount=loan_amount;
 
-           	  newInterest=(repay_amount-loan_amount).toFixed(5);
-           }
+           // 	  newInterest=(repay_amount-loan_amount).toFixed(5);
+           // }
 
 
            $('[name="loan_amount"]').val(only_loan_amount);
            $('[name="loan_repayment_amount"]').val(newLoanAmount);
+
+           $('#loan_currency_rate').val(usdtPrice);
 
 
 

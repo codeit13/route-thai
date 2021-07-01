@@ -9,7 +9,7 @@ class LoanRepayRequest extends Model
 {
     use HasFactory;
 
-    protected $fillable=['currency_id','loan_currency_id','collateral_amount','loan_amount','loan_repayment_amount','crypto_wallet_address','user_id','on_wallet','collateral_method'];
+    protected $fillable=['currency_id','loan_currency_id','collateral_amount','loan_amount','loan_repayment_amount','crypto_wallet_address','user_id','on_wallet','collateral_method','loan_currency_rate'];
 
  public function loan_request()
   {
