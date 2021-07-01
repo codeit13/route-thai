@@ -269,7 +269,7 @@
 													{{$loan->collateral_amount}} {{$loan->collateral_currency->short_name}}</td>
 												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
 												<td>{{$loan->term_percentage}}%</td>
-												<td>{{ucwords($loan->status)}}</td>
+												<td>{{$loan->front_status}}</td>
 												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
 
 											</tr>
@@ -311,7 +311,7 @@
 													{{$loan->collateral_amount}} {{$loan->collateral_currency->short_name}}</td>
 												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
 												<td>{{$loan->term_percentage}}%</td>
-												<td>{{ucwords($loan->status)}}</td>
+												<td>{{$loan->front_status}}</td>
 												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
 											</tr>
 										</tbody>

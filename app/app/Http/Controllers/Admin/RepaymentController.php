@@ -134,8 +134,7 @@ class RepaymentController extends Controller
             ->addColumn('user', function ($loan) {
                 return '<div class="media-body text-left">
                       <span class="name mb-0 text-sm">'.$loan->loan_request->user->name.'</span>
-                    </div>
-                    <small class="text-muted d-table-row">'.$loan->loan_request->user->email.'</small>';
+                    </div>';
             })
 
              ->editColumn('loan_request.term_percentage', function ($loan) {
@@ -287,6 +286,10 @@ class RepaymentController extends Controller
             $repayment->status='rejected';
 
             $repayment->save();
+
+            $repayment->loan_request->status='approved';
+
+            $repayment->loan_request->save();
 
           $notification='[Route-Thai] Your Loan order (Ending with '.substr($repayment->loan_request->loan_id,-4).' of '.$repayment->loan_request->loan_repayment_amount.' '.$repayment->loan_request->loan_currency->short_name.' has been rejected. Please contact support for more details.) ';
         }
