@@ -249,6 +249,8 @@ class LoanController extends Controller
             $notification='[Route-Thai] Loan request (Ending with '.substr($loan->loan_id,-4).') with Collateral of '.$loan->collateral_amount.' '.$loan->collateral_currency->short_name.' and Loan amount '.$loan->loan_amount.' '.$loan->loan_currency->short_name.', Validity of '.$loan->duration.' '.$loan->duration_type.' has been successfully approved. The Loan amount transferred to your Loan wallet.';
         }
 
+        $loan->save_Loan_To_Firebase($loan);
+
         $user = auth()->user();
 
           Notify::sendMessage([
