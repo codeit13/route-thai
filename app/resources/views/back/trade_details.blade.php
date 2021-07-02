@@ -23,26 +23,25 @@
                                 <li class="active">
                                     <p>Order Started</p><br><span>1</span>
                                 </li>
-                                <li>
+                                <li @if(in_array($trans->status,['pending','approved','in_appeal','rejected'])) class="active" @endif>
                                     <p>Order In Progress</p><br><span>2</span>
                                 </li>
-                                <li>
+                                <li @if(in_array($trans->status,['approved','in_appeal','rejected'])) class="active" @endif>
                                     <p>Order In Appeal</p><br><span>3</span>
                                 </li>
-                                <li>
+                                <li @if(in_array($trans->status,['approved','rejected'])) class="active" @endif>
                                     <p>Order Finished</p><br><span>4</span>
                                 </li>
-                                <li>
+                                <li @if(in_array($trans->status,['rejected'])) class="active" @endif>
                                     <p>Order Cancelled</p><br><span>5</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <a data-value="in_progress" class="btn btn-primary statusUpdate text-white {{ $trans->status == 'pending' ? "" : "d-none" }}" id="change-to-uploaded">Change to In Progress</a>
-                    <a data-value="approved" class="btn btn-primary statusUpdate text-white {{ $trans->status == 'in_progress' ? "" : "d-none" }}" id="change-to-uploaded">Change to Completed</a>
-                    <a class="btn btn-primary text-white {{ $trans->status == 'approved' ? "disabled" : "d-none" }}" id="btn-status-change-from-">ORDER FINISHED</a>
-                    <a class="btn btn-primary text-white {{ $trans->status == 'rejected' ? "disabled" : "d-none" }}" id="btn-status-change-from-">ORDER REJECTED</a>
-                    <a data-value="rejected" class="btn btn-primary statusUpdate text-white {{ $trans->status == 'pending' || $trans->status == 'in_progress' ? "" : "d-none" }}" id="change-to-uploaded">Change to Rejected</a>
+                    @if($trans->status == 'pending')
+                        <a data-value="approved" class="btn btn-primary statusUpdate text-white">Change to Finished</a>
+                        <a data-value="rejected" class="btn btn-danger statusUpdate text-white">Change to Rejected</a>
+                    @endif
                 </div>
             </div>
             <div class="col-lg-4 col-xs-12">

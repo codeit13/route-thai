@@ -3,9 +3,24 @@
     Trades |
 @endsection
 <style>
+    .card.inner-tabs li.nav-item:first-child a{
+        background: #ed960b !important;
+        color: #fff !important;
+    }
+    .card.inner-tabs li.nav-item:last-child a{
+        background: green !important;
+        color: #fff;
+    }
+    .card.inner-tabs li.nav-item:last-child a.active{
+        background: green !important;
+    }
+    .red-scrollbar table tr td span{
+        font-size: 13px !important;
+    }
     .img_icon{
-        width: 29px !important;
+        width: 20px !important;
         height: auto !important;
+        margin-bottom: 11px;
     }
     .red-scrollbar table tr td span{
         padding: 7px 4px !important;
@@ -21,13 +36,36 @@
         padding-left: 0px !important;
     }
 </style>
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 @section('content')
-<div class="container-fluid mt-6 team-members">
+<div class="container-fluid mt-6">
     <div class="row">
         <div class="col-xl-12">
-             <small class="msg"></small>
+            <small class="msg"></small>
+            <div class="card">
+                <div class="card-body" style="padding-bottom: 0px !important;">
+                    {{ Form::open(['route'=>'admin.trades.list','id'=>'search_form','method'=>'GET']) }}
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {{ Form::select('currency',$crypto_currencies,Request::get('currency')?Request::get('currency'):null,['class'=>'form-control search_form','placeholder'=>'Select currency']); }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {{ Form::select('fiat_currency',$fiat_currencies,Request::get('fiat_currency')?Request::get('fiat_currency'):null,['class'=>'form-control search_form','placeholder'=>'Select fiat currency']); }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {{ Form::select('payment_method_id',$payment_methods,Request::get('payment_method_id')?Request::get('payment_method_id'):null,['class'=>'form-control search_form','placeholder'=>'Select payment method']); }}
+                                </div>
+                            </div>
+                        </div>
+                    {{ Form::close() }}
+                </div>
+            </div>
             <div class="card inner-tabs">
-               
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active inp" id="seller_list" role="tabpanel" aria-labelledby="seller_list-tab">
                         <h2>Seller List</h2>
@@ -204,10 +242,11 @@
 </div>
 @section('page_scripts')
     <script>
-        $('.datatables').DataTable({
-            "paging":   false,
+        $('.datatables').DataTable();
+        
+        $('.search_form').change(function(){
+            $('#search_form').submit();
         });
-       
 
        $('#selectall_pending,#selectall_approved,#selectall_seller_list').click(function(){
            

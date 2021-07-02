@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use App\Models\Currency;
 use App\Notifications\Notify;
-
+use App\Models\PaymentMethod;
 
 class TransactionController extends Controller
 {
@@ -15,13 +16,40 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $crypto_currencies = Currency::where('is_tradable',1)->where('type_id',1)->pluck('short_name','id');
+        $fiat_currencies = Currency::where('type_id',2)->pluck('short_name','id');
+        $payment_methods = PaymentMethod::pluck('name','id');
 
-        $sell = Transaction::where('type','sell')->orderBy('created_at','DESC')->get();
-        // dd($sell);
-        $buy = Transaction::where('type','buy')->orderBy('created_at','DESC')->get();
-        return view('back.trades',compact(['sell','buy']));
+        $sell = Transaction::where('type','sell');
+
+        if ($request->get('currency') != '') {
+            $sell = $sell->where('currency_id',$request->get('currency'));
+        }
+
+        if ($request->get('fiat_currency') != '') {
+            $sell = $sell->where('fiat_currency_id',$request->get('fiat_currency'));
+        }
+
+        if ($request->get('payment_method_id') != '') {
+            $sell = $sell->whereHas('user', function ($query) use ($request) {
+                $query->whereHas('user_payment_method', function ($query) use ($request) {
+                    $query->where('payment_method_id', $request->get('payment_method_id'));
+                });
+            });
+            // $sell = $sell->where('user.user_payment_method.payment_method_id',$request->get('payment_method_id'));
+        }
+
+        $sell = $sell->orderBy('created_at','DESC')->get();
+
+
+        return view('back.trades',compact(
+            'sell',
+            'crypto_currencies',
+            'fiat_currencies',
+            'payment_methods'
+        ));
     }
 
     /**
