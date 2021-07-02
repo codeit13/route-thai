@@ -11,7 +11,12 @@ use App\Http\Requests\SendOTPonLogin;
 use App\Http\Requests\SendOTPonRegister;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 use Auth;
+
+use App\Notifications\Notify;
 
 class HomeController extends Controller
 {
@@ -69,6 +74,33 @@ class HomeController extends Controller
         return $this->service->sendOtpSms($user->mobile);
     }
 
+    public function getToken() {
+        return csrf_token();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sendMessage($user_id='', $loan_id='')
+    {   Log::debug("Debug: " . $user_id . "," . $loan_id);
+        $user = DB::table('users')->where('id', $user_id)->first();
+        $Message = "[Route-Thai] Loan Order (Ending with " . substr($loan_id, -4) . ") got liquidated automatically.";
+        Notify::sendMessage([   
+            'sms_notification' => $user->sms_notification,
+            'mobile' => $user->mobile,
+            'telegram_notification' => $user->telegram_notification,
+            'telegram_user_id' => $user->telegram_user_id,
+            'line_notification' => $user->line_notification,
+            'line_user_id' => $user->line_user_id,
+            'email_notification' => $user->email_notification,
+            'email_id' => $user->email,
+            'Message' => $Message,
+        ]);
+        return response()->json(['message'=>$Message]);
+    }
+
     public function sendOTPOnRegister(SendOTPonRegister $request)
     {   
         $data = $this->otpservice->sendOTP($request->email, 'email');
@@ -88,4 +120,3 @@ class HomeController extends Controller
         return redirect()->intended('login')->with('message', 'The password has been updated.');
     }
 }
-    

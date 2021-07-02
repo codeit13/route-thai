@@ -13,7 +13,9 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        CouldNotSendNotification::class,
+        ClientException::class,
+        RequestException::class,
     ];
 
     /**
@@ -49,7 +51,10 @@ class Handler extends ExceptionHandler
      * @throws \Throwable
      */
     public function render($request, Throwable $exception)
-    {
+    {   
+        // if ($exception instanceof RequestException) {
+        //     return response()->json(['error' => 'External API call failed.'], 500);
+        // }
         return parent::render($request, $exception);
     }
 

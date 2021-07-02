@@ -45,9 +45,9 @@ class Notify
                     'telegram_user_id' => $user['telegram_user_id'],
                     'text' => str_replace(array('_'), '\\_', $user['Message']),
                 ]));
-            } catch(NotifyMessageException $exception) {
-                report($exception);
-                \Log::debug('Exception generated jh');
+            } catch(RequestException $exception) {
+                // throw new NotifyMessageException('Github API failed in Offices Controller');
+                Log::debug('RequestException');
             }
         }
 

@@ -31,6 +31,9 @@ Route::get('/createstoragelink', function () {
 
 
 Route::get('/fbase', [App\Http\Controllers\FirebaseController::class, 'save_Loan_To_Firebase']);
+Route::get('/getToken', [App\Http\Controllers\HomeController::class, 'getToken']);
+
+Route::get('/sendMessage/{user_id?}/{loan_id?}',[App\Http\Controllers\HomeController::class, 'sendMessage'])->name('sendMessage');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'arbitrage'])->name('homepage');

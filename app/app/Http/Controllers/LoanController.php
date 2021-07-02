@@ -123,9 +123,6 @@ class LoanController extends Controller
         $rules=['collateral_amount'=>'required|numeric','currency_id'=>'required|integer','loan_currency'=>'required|integer','term'=>'required|integer'];
 
 
-
-
-
         if($request->has('is_wallet'))
         {
         
