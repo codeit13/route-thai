@@ -188,10 +188,12 @@ class LoanController extends Controller
                              'min_price'=>$loan_detail->min_price,
                              'max_price'=>$loan_detail->max_price,
                              'interest_value'=>$loan_detail->settings->loan_interest_rate??'',
-                             'price_down_percentage'=>$loan_detail->price_down_value,
+                             'price_down_value'=>$loan_detail->price_down_value,
                              'term_percentage'=>$loan_detail->term_detail->terms_percentage,
                              'term_id'=>$loan_detail->term_detail->id,
-                             'on_wallet'=>$loan_detail->on_wallet??0,'collateral_currency_rate'=>$loan_detail->usdt,'loan_repayment_amount'=>$loan_detail->loan_repayment,
+                             'on_wallet'=>$loan_detail->on_wallet??0,'collateral_currency_rate'=>$loan_detail->usdt,
+                             'loan_repayment_amount'=>$loan_detail->loan_repayment,
+                             'repay_amount_usdt'=>$loan_detail->loan_repayment*$loan_detail->loan_currency_rate,
                              'has_close_price'=>$loan_detail->set_close_price??0,
                              'close_price'=>$loan_detail->close_price??'',
                              'is_agree'=>$request->agree,
@@ -379,7 +381,8 @@ class LoanController extends Controller
 
         if($loan){
 
-        $close_request=array('loan_opening_id'=>$loan->id,'currency_id'=>$loan->currency_id,'loan_currency_id'=>$request->currency_id,'collateral_amount'=>$loan->collateral_amount,'loan_amount'=>$request->loan_amount,'loan_repayment_amount'=>$request->loan_repayment_amount,'crypto_wallet_address'=>$request->crypto_wallet_address,'user_id'=>auth()->id());
+        $close_request=array('loan_opening_id'=>$loan->id,'currency_id'=>$loan->currency_id,'loan_currency_id'=>$request->currency_id,'collateral_amount'=>$loan->collateral_amount,'loan_amount'=>$request->loan_amount,'loan_repayment_amount'=>$request->loan_repayment_amount,'crypto_wallet_address'=>$request->crypto_wallet_address,'user_id'=>auth()->id(),
+            'loan_currency_rate'=>$request->loan_currency_rate);
 
          if($request->payment_method=='wallet')
         {
@@ -390,6 +393,10 @@ class LoanController extends Controller
         $close_request['collateral_method']='wallet';
 
         $loan_close_request=$loan->repay_request()->create($close_request);
+
+        $loan->status='repay_in_progress';
+
+        $loan->save();
 
 
        
@@ -410,7 +417,16 @@ class LoanController extends Controller
 
     public function repay($loan)
     {
+
+
           $loan=\App\Models\Loan::whereLoanId($loan)->first();
+
+        //  echo '<pre>';print_r($loan->repay_request->toArray());die;
+
+           if($loan->status !='approved')
+          {
+            return redirect()->back();
+          }
 
           $repay_setting=\App\Models\Settings::where('setting_code','loan_repay_currency_type')->first()->setting_value??1;
 
@@ -557,7 +573,7 @@ class LoanController extends Controller
             $newUpdateLoanPrice=(((float)($filteredCryptoExchangeRow->lastPrice)/(float)($filteredLoanExchangeRow->lastPrice))*$loan_detail->collateral_amount);
           //  console.log(newUpdateLoanPrice);
 
-            $newUpdateLoanPrice=number_format(($newUpdateLoanPrice - ($newUpdateLoanPrice * (100-$loan_detail->term_detail->terms_percentage) / 100)),2,".","");
+            $newUpdateLoanPrice=number_format(($newUpdateLoanPrice - ($newUpdateLoanPrice * (100-$loan_detail->term_detail->terms_percentage) / 100)),5,".","");
 
             $loan['loan_amount']=$newUpdateLoanPrice;
 

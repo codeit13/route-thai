@@ -300,7 +300,7 @@ $loan_variables=(object)$loan_variables;
 						<div class="close-price">
 							<div class="row" style="min-height: 51px;">
 								<div class="col-lg-8  col-sm-8 col-12">
-									<label><al style="margin-top:11px;display: inline-block;"><input  type="checkbox" name="set_close_price" id="backend-set-close-price" /> Set close price at </al> <formL style="display: none"><input type="number" name="close_price" id="backend-close-price"  placeholder="Enter amount"/><button type="button">USDT</button></formL>
+									<label><al style="margin-top:11px;display: inline-block;"><input  type="checkbox" name="set_close_price" id="backend-set-close-price" value="1" /> Set close price at </al> <formL style="display: none"><input type="number" name="close_price" id="backend-close-price"  placeholder="Enter amount"/><button type="button">USDT</button></formL>
                                   
                                    @error('close_price')
                                 <p class="invalid-value text-danger" role="alert">
@@ -397,7 +397,7 @@ $loan_variables=(object)$loan_variables;
 													{{$loan->collateral_amount}} {{$loan->collateral_currency->short_name}}</td>
 												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
 												<td>{{$loan->term_percentage}}%</td>
-												<td>{{ucwords($loan->status)}}</td>
+												<td>{{$loan->front_status}}</td>
 												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
 
 											</tr>
@@ -440,7 +440,7 @@ $loan_variables=(object)$loan_variables;
 													{{$loan->collateral_amount}} {{$loan->collateral_currency->short_name}}</td>
 												<td>{{$loan->duration}} &nbsp;{{$loan->duration_type}}</td>
 												<td>{{$loan->term_percentage}}%</td>
-												<td>{{ucwords($loan->status)}}</td>
+												<td>{{$loan->front_status}}</td>
 												<td><a href="{{route('loan.show.detail',['loan'=>$loan->loan_id])}}">View Details</a></td>
 											</tr>
 										</tbody>

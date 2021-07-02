@@ -25,7 +25,7 @@
                             <li class="active">
                                 <p>Loan Started</p><br><span>1</span>
                             </li>
-                            <li class="{{ in_array($loan->status, ['approved','repaid','close','paid']) ? "active" : "" }}">
+                            <li class="{{ in_array($loan->status, ['approved','repay_in_progress','repaid','close','paid']) ? "active" : "" }}">
                                 <p>Loan In Progress</p><br><span>2</span>
                             </li>
                            
@@ -65,20 +65,20 @@
 
                     @if($loan->repay_request->collateral_method != 'wallet')
 
-                     <a onclick="return confirm_action(this);" href="{{route('admin.repayment.update.status',['id'=>$loan->repay_request->id, 'status'=>'approved'])}}" class="btn btn-success text-white p-1 {{ $loan->status == 'approved' ? "" : "d-none" }}">Change To Repaid</a>
+                     <a onclick="return confirm_action(this);" href="{{route('admin.repayment.update.status',['id'=>$loan->repay_request->id, 'status'=>'approved'])}}" class="btn btn-success text-white p-1 ">Change To Repaid</a>
 
                      @else
 
-                     <a  href="{{route('admin.repayment.update.status',['id'=>$loan->repay_request->id, 'status'=>'approved'])}}" class="btn btn-success text-white p-1 {{ $loan->status == 'approved' ? "" : "d-none" }}">Change To Repaid</a>
+                     <a  href="{{route('admin.repayment.update.status',['id'=>$loan->repay_request->id, 'status'=>'approved'])}}" class="btn btn-success text-white p-1 {{ $loan->status == 'repay_in_progress' ? "" : "d-none" }}">Change To Repaid</a>
 
                      @endif
 
 
                      @endif
 
-                        @if($loan->status == 'repaid')
+                        @if($loan->status == 'repaid' || $loan->status=='approved' || $loan->status=='repay_in_progress')
 
-                     <a  href="{{route('admin.loan.update.status',['id'=>$loan->id, 'status'=>'close'])}}" class="btn btn-success text-white p-1 {{ $loan->status == 'repaid' ? "" : "d-none" }}">Change To Close</a>
+                     <a  href="{{route('admin.loan.update.status',['id'=>$loan->id, 'status'=>'close'])}}" class="btn btn-danger text-white p-1 ">Change To Close</a>
 
                      @endif
 
@@ -327,6 +327,22 @@
                         <li>Mobile Number: <b>{{ ($loan->user->mobile)?$loan->user->mobile:"N/A" }}</b></li>
                         <li>Line ID: <b>{{ ($loan->user->line_number)?$loan->user->line_number:"N/A" }}</b></li>
                     </ul>
+                </div>
+        </div>
+
+         <div class="col-xs-12 col">
+    <div class="card inner-tabs">
+                    <h2 class="text-left">Close Price Details</h2>
+                    @if($loan->has_close_price)
+                    <ul class="details nospace">
+                       <li>Profits:<b>{{number_format(($loan->loan_repayment_amount*$loan->loan_currency_rate)-($loan->loan_repayment_amount*$loan->close_price),5)}} USDT</b>
+                    </ul>
+                     @else
+                       <ul class="details nospace">
+                    <li><b>N/A</b></li>
+                    </ul>
+
+                    @endif
                 </div>
         </div>
 
