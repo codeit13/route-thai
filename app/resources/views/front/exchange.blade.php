@@ -37,31 +37,43 @@ Route: P2P Trading Platform
                 <div class="col-lg-12">
                     <ul class="search_bar">
                         <li>
-                            <label>Amount</label>
+                            <label>Payment Method</label>
                             <br/>
                             <div class="dropdown currency_two three_coins">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Payments
+                                    <span id="text_3" style="color: black">
+                                        @if(Request::get('payment_method_id') != '') {{ $payment_methods->where('id',Request::get('payment_method_id'))->first()->name }} @else ALL @endif
+                                    </span>
                                 </button>
-                                <input type="hidden" name="currency_id" id="currency_id" value="{{ $crypto_currencies->first()->id }}">
+                                <input type="hidden" name="payment_method_id" id="payment_method_id" value="{{ Request::get('payment_method_id') }}">
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    @foreach($crypto_currencies as $single_currency_id)
-                                        <a class="dropdown-item" href="#">
-                                            10,000
+                                    @foreach($payment_methods as $single_payment_method)
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                        data-img=""
+                                        data-name="{{ $single_payment_method->name }}"
+                                        data-short_name=""
+                                        data-currency="{{ $single_payment_method->id }}"
+                                        onclick="selectCurrency(this,'payment_method_id','','text_3')">
+                                            {{ $single_payment_method->name }}
                                         </a>
                                     @endforeach
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <label>Fiat</label>
+                            <label>Crypto</label>
                             <br/>
                             <div class="dropdown currency_two three_coins">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="{{ $crypto_currencies->first()->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_1"> 
-                                        <span id="text_1" style="color: black">{{ $crypto_currencies->first()->short_name }} <span>{{ $crypto_currencies->first()->name }}</span></span>
+                                    @if(Request::get('currency_id') != '')
+                                        <img src="{{ $crypto_currencies->where('id',Request::get('currency_id'))->first()->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_1"> 
+                                            <span id="text_1" style="color: black">{{ $crypto_currencies->first()->short_name }} <span>{{ $crypto_currencies->first()->name }}</span></span>
+                                    @else
+                                        <img src="" alt="" id="img_main_1" style="display: none;"> 
+                                        <span id="text_1" style="color: black">All</span>
+                                    @endif
                                 </button>
-                                <input type="hidden" name="currency_id" id="currency_id" value="{{ $crypto_currencies->first()->id }}">
+                                <input type="hidden" name="currency_id" id="currency_id" value="{{ Request::get('currency_id') }}">
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     @foreach($crypto_currencies as $single_currency_id)
                                         <a class="dropdown-item" href="javascript:void(0)" 
@@ -83,10 +95,15 @@ Route: P2P Trading Platform
                             <br/>
                             <div class="dropdown currency_two three_coins" style="width: 259px">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 259px">
-                                    <img src="{{ $fiat_currencies->first()->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_2"> 
-                                    <span style="color: black" id="text_2">{{ $fiat_currencies->first()->short_name }} <span>{{ $fiat_currencies->first()->name }}</span></span>
+                                    @if(Request::get('fiat_currency_id') != '')
+                                        <img src="{{ $fiat_currencies->where('id',Request::get('fiat_currency_id'))->first()->getMedia('icon')->first()->getUrl() }}" alt="" id="img_main_2"> 
+                                        <span style="color: black" id="text_2">{{ $fiat_currencies->first()->short_name }} <span>{{ $fiat_currencies->first()->name }}</span></span>
+                                    @else
+                                        <img src="" alt="" id="img_main_2" style="display: none;"> 
+                                        <span id="text_2" style="color: black">All</span>
+                                    @endif
                                 </button>
-                                <input type="hidden" name="fiat_currency_id" id="fiat_currency_id" value="{{ $fiat_currencies->first()->id }}">
+                                <input type="hidden" name="fiat_currency_id" id="fiat_currency_id" value="{{ Request::get('fiat_currency_id') }}">
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     @foreach($fiat_currencies as $single_fiat_currency_id)
                                         <a class="dropdown-item" href="javascript:void(0)" 
@@ -106,6 +123,10 @@ Route: P2P Trading Platform
                         <li class="full_li hidden-xs">
                             <a href="javascript::void(0)" onclick="searchForm()" class="refresh">
                             <img src="{{asset('front/img/refresh.png')}}">Refresh</a>
+                        </li>
+                        <li class="full_li hidden-xs">
+                            <a href="javascript::void(0)" onclick="resetForm()" class="refresh">
+                            <img src="{{asset('front/img/refresh.png')}}">Reset</a>
                         </li>
                     </ul>
                 </div>
@@ -259,6 +280,14 @@ Route: P2P Trading Platform
     function searchForm(){
         $('#search_form').submit();
     }
+
+    function resetForm(){
+        $('#payment_method_id').val('');
+        $('#currency_id').val('');
+        $('#fiat_currency_id').val('');
+        $('#search_form').submit();
+    }
+
     function selectCurrency(current_obj,input_id,image_id,text_id){
         var current_obj = $(current_obj);
         var current_image = current_obj.attr('data-img');

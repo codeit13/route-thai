@@ -121,8 +121,7 @@ class LoanController extends Controller
             ->addColumn('user', function ($loan) {
                 return '<div class="media-body text-left">
                       <span class="name mb-0 text-sm">'.$loan->user->name.'</span>
-                    </div>
-                    <small class="text-muted d-table-row">'.$loan->user->email.'</small>';
+                    </div>';
             })
 
              ->editColumn('term_percentage', function ($loan) {
